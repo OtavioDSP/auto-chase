@@ -6,7 +6,7 @@
 
 ## 🧾 Sobre o Projeto
 
-O Autochase foi desenvolvido como parte do curso Técnico em Desenvolvimento de Sistemas do Instituto Federal Sul-Rio-Grandense – Câmpus Pelotas - Visconde da Graça.
+O Autochase foi desenvolvido como parte do curso Técnico em Desenvolvimento de Sistemas do Instituto Federal Sul-Rio-Grandense – Câmpus - Visconde da Graça.
 
 - **Autores**: Andrei Buss Farias dos Santos & Otávio da Silva Pacheco  
 - **Orientador**: Dr. Fernando Augusto Treptow Brod  
@@ -80,7 +80,7 @@ Desenvolver um website marketplace com foco total em veículos de leve e médio 
 
 ## 📄 Licença
 
-Este projeto é de uso acadêmico e segue as diretrizes institucionais do IFSul – Campus Pelotas Visconde da Graça.
+Este projeto é de uso acadêmico e segue as diretrizes institucionais do IFSul – Campus Visconde da Graça.
 
 ---
 
@@ -88,7 +88,7 @@ Este projeto é de uso acadêmico e segue as diretrizes institucionais do IFSul 
 
 Para dúvidas ou sugestões, entre em contato:
 
-- **Andrei Buss Farias dos Santos**  
-- **Otávio da Silva Pacheco**
+- **[Andrei Buss Farias dos Santos](https://github.com/andreicuruja)**  
+- **[Otávio da Silva Pacheco](https://github.com/OtavioDSP)**
 
 ---
