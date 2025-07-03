@@ -74,7 +74,7 @@ Desenvolver um website marketplace com foco total em veículos de leve e médio 
 
 ## 🔗 Links Úteis
 
-- [Relatório Completo (Google Docs)](https://docs.google.com/document/d/13U6gm1k4F6qcifSKi5TySDGWiLTYduYAomKqnvopJ1I)
+- [Relatório Completo (Google Docs)]([https://docs.google.com/document/d/13U6gm1k4F6qcifSKi5TySDGWiLTYduYAomKqnvopJ1I](https://docs.google.com/document/d/13U6gm1k4F6qcifSKi5TySDGWiLTYduYAomKqnvopJ1I/edit?tab=t.0))
 
 ---
 
