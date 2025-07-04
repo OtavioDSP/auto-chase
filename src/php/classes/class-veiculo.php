@@ -2,6 +2,49 @@
 
 Class Veiculo{
 
+    private $carro_id;
+    private $carro_descricao;
+    private $cor_id;
+    private $modelo_id;
+    private $chassi_id;
+    private $comb_id;
+    private $marca_id;
+    private $anuncio_id;
+
+    public function __construct($carro_id, $carro_descricao, $cor_id, $modelo_id, $chassi_id, $comb_id, $marca_id, $anuncio_id) {
+        $this->carro_id = $carro_id;
+        $this->carro_descricao = $carro_descricao;
+        $this->cor_id = $cor_id;
+        $this->modelo_id = $modelo_id;
+        $this->chassi_id = $chassi_id;
+        $this->comb_id = $comb_id;
+        $this->marca_id = $marca_id;
+        $this->anuncio_id = $anuncio_id;
+    }
+
+    public function insereCarro(){
+        $sql = "INSERT INTO Carro (carro_id, carro_descricao, cor_id, modelo_id, chassi_id, comb_id, marca_id) 
+                VALUES (?,?,?,?,?,?,?)";
+        
+        $stmt = this->conexao->prepare($sql);
+        $stmt->bind_param("issiiii", 
+            $this->carro_id, 
+            $this->carro_descricao, 
+            $this->cor_id, 
+            $this->modelo_id, 
+            $this->chassi_id, 
+            $this->comb_id, 
+            $this->marca_id
+        );
+        if($stmt->execute()){
+            echo "veiculo inserida";
+        }else{
+            echo "Erro ao inserir veiculo". $stmt->error;
+        }
+        
+        
+    }
+
 
 
 }
@@ -10,29 +53,8 @@ Class Veiculo{
 
 
 
-// CREATE DATABASE IF NOT EXISTS autochase;
-// USE autochase;
 
-// -- TABELA CLIENTE
-// CREATE TABLE Cliente (
-//     cliente_id INT AUTO_INCREMENT PRIMARY KEY,
-//     cliente_nome VARCHAR(100),
-//     cliente_email VARCHAR(100) UNIQUE,
-//     cliente_senha VARCHAR(100),
-//     cliente_telefone VARCHAR(20),
-//     cliente_endereco VARCHAR(200),
-//     doc_cpf_cnpj VARCHAR(20) UNIQUE
-// );
 
-// -- TABELA CHAT
-// CREATE TABLE Chat (
-//     chat_id INT AUTO_INCREMENT PRIMARY KEY,
-//     conteudo TEXT,
-//     data_envio DATETIME,
-//     lido BOOLEAN DEFAULT FALSE,
-//     cliente_id INT,
-//     FOREIGN KEY (cliente_id) REFERENCES Cliente(cliente_id)
-// );
 
 // -- TABELA ANUNCIO
 // CREATE TABLE Anuncio (
@@ -76,34 +98,8 @@ Class Veiculo{
 //     marca_descricao VARCHAR(100)
 // );
 
-// -- TABELA FIPE
-// CREATE TABLE Fipe (
-//     fipe_id INT AUTO_INCREMENT PRIMARY KEY,
-//     fipe_valor DECIMAL(10,2)
-// );
 
-// -- TABELA MODELO
-// CREATE TABLE Modelo (
-//     modelo_id INT AUTO_INCREMENT PRIMARY KEY,
-//     marca_id INT,
-//     fipe_id INT,
-//     FOREIGN KEY (marca_id) REFERENCES Marca(marca_id),
-//     FOREIGN KEY (fipe_id) REFERENCES Fipe(fipe_id)
-// );
 
-// -- TABELA CARRO
-// CREATE TABLE Carro (
-//     carro_id INT AUTO_INCREMENT PRIMARY KEY,
-//     carro_descricao VARCHAR(255),
-//     cor_id INT,
-//     modelo_id INT,
-//     chassi_id INT,
-//     comb_id INT,
-//     FOREIGN KEY (cor_id) REFERENCES Cor(cor_id),
-//     FOREIGN KEY (modelo_id) REFERENCES Modelo(modelo_id),
-//     FOREIGN KEY (chassi_id) REFERENCES Chassi(chassi_id),
-//     FOREIGN KEY (comb_id) REFERENCES Combustivel(comb_id)
-// );
 
 // -- RELACIONAMENTO ANUNCIO - CARRO (1:1)
 // ALTER TABLE Anuncio
