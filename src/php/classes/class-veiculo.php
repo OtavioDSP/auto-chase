@@ -10,8 +10,9 @@ Class Veiculo{
     private $comb_id;
     private $marca_id;
     private $anuncio_id;
+    private $conexao;
 
-    public function __construct($carro_id, $carro_descricao, $cor_id, $modelo_id, $chassi_id, $comb_id, $marca_id, $anuncio_id) {
+    public function __construct($carro_id, $carro_descricao, $cor_id, $modelo_id, $chassi_id, $comb_id, $marca_id, $anuncio_id, $conexao) {
         $this->carro_id = $carro_id;
         $this->carro_descricao = $carro_descricao;
         $this->cor_id = $cor_id;
@@ -20,13 +21,13 @@ Class Veiculo{
         $this->comb_id = $comb_id;
         $this->marca_id = $marca_id;
         $this->anuncio_id = $anuncio_id;
+        $this->conexao = $conexao;
     }
 
     public function insereCarro(){
-        $sql = "INSERT INTO Carro (carro_id, carro_descricao, cor_id, modelo_id, chassi_id, comb_id, marca_id) 
-                VALUES (?,?,?,?,?,?,?)";
+        $sql = "INSERT INTO Carro (carro_id, carro_descricao, cor_id, modelo_id, chassi_id, comb_id, marca_id) VALUES (?,?,?,?,?,?,?)";
         
-        $stmt = this->conexao->prepare($sql);
+        $stmt = $this->conexao->prepare($sql);
         $stmt->bind_param("issiiii", 
             $this->carro_id, 
             $this->carro_descricao, 
