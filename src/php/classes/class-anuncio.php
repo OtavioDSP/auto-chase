@@ -16,7 +16,8 @@
 
         }
         public function criaAnuncio(){
-            $sql = "INSERT INTO anuncio (anuncio_valor, data_de_criacao, data_de_exclusao) VALUES ???" ;
+            $sql = "INSERT INTO anuncio (anuncio_valor, data_de_criacao, data_de_exclusao) VALUES ???";
+            $stmt = 
 
 
 
