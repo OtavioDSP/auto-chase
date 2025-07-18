@@ -1,14 +1,14 @@
 <?php
-    class Combustivel{
+    class Chassi{
 
-        private $comb_id;
-        private $comb_tipo;
+        private $chassi_id;
+        private $chassi_desc;
         private $conexao;
 
-        public function __construct($comb_id,$comb_tipo, $conexao){
+        public function __construct($chassi_id,$chassi_desc, $conexao){
 
-            $this->comb_id = $comb_id;
-            $this->comb_tipo = $comb_tipo;
+            $this->chassi_id = $chassi_id;
+            $this->chassi_desc = $chassi_desc;
             $this->conexao = $conexao;
 
         }
@@ -16,7 +16,7 @@
             $sql = "INSERT INTO Combustivel (comb_tipo) VALUES ?";
             $stmt = $this->conexao->prepare($sql);
             $stmt->bind_param('s',
-            $this->comb_tipo,
+            $this->chassi_desc,
             );
              if($stmt->execute()){
                 echo " combustivel inserido";
