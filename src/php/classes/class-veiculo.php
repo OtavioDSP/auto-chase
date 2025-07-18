@@ -57,15 +57,7 @@ Class Veiculo{
 
 
 
-// -- TABELA ANUNCIO
-// CREATE TABLE Anuncio (
-//     id_anuncio INT AUTO_INCREMENT PRIMARY KEY,
-//     anuncio_valor DECIMAL(10, 2),
-//     data_de_criacao DATE,
-//     data_de_exclusao DATE,
-//     cliente_id INT,
-//     FOREIGN KEY (cliente_id) REFERENCES Cliente(cliente_id)
-// );
+
 
 // -- TABELA FOTOS
 // CREATE TABLE Fotos (

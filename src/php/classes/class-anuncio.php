@@ -1,5 +1,6 @@
 <?php
     class anuncio{
+
         private $anuncio_id;
         private $anuncio_valor;
         private $data_de_criacao;
@@ -17,7 +18,20 @@
         }
         public function criaAnuncio(){
             $sql = "INSERT INTO anuncio (anuncio_valor, data_de_criacao, data_de_exclusao) VALUES ???";
-            $stmt = 
+            $stmt = $this->conexao->prepare($sql);
+            $stmt->bind_param('iss',
+            $this->anuncio_valor,
+            $this->data_de_criacao,
+            $this->data_de_exclusao
+
+            );
+             if($stmt->execute()){
+                echo "anuncio criado";
+            }else{
+                echo "Erro ao criar anuncio". $stmt->error;
+            }
+        
+
 
 
 
