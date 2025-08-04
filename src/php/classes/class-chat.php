@@ -37,6 +37,22 @@ class Chat{
 
 
     }
+    public function deletarChat(){
+        $sql = "DELETE FROM chat WHERE chat_id = ?";
+        $stmt = $this->conexao->prepare($sql);
+        $stmt->bind_param('i',$this->chat_id);
+        if($stmt->execute()){
+
+            echo "Chat deletado com sucesso";
+    
+
+        }else{
+
+            echo "erro ao deletar chat" .$stmt->error;
+
+        }
+
+    }
 
 
 
