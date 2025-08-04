@@ -16,6 +16,8 @@
             $this->conexao = $conexao;
 
         }
+
+
         public function criaAnuncio(){
             $sql = "INSERT INTO anuncio (anuncio_valor, data_de_criacao, data_de_exclusao) VALUES ???";
             $stmt = $this->conexao->prepare($sql);
@@ -32,6 +34,24 @@
             }
         
 
+
+
+
+
+        }
+        public function deletarAnuncio(){
+            $sql = "DELETE FROM anuncio WHERE anuncio_id = ?";
+            $stmt = $this->conexao->prepare($sql);
+            $stmt->bind_param('i',$this->anuncio_id);
+            if($stmt->execute()){
+
+                echo "Anuncio deletado com sucesso"; 
+
+
+            }else{
+                echo "erro ao deletar anuncio" .$stmt->error;
+
+            }
 
 
 
