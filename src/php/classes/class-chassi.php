@@ -12,8 +12,9 @@
             $this->conexao = $conexao;
 
         }
-        public function insereCombustivel(){
-            $sql = "INSERT INTO Combustivel (comb_tipo) VALUES ?";
+        public function insereChassi(){
+            
+            $sql = "INSERT INTO Chassi (chassi_desc) VALUES ?";
             $stmt = $this->conexao->prepare($sql);
             $stmt->bind_param('s',
             $this->chassi_desc,
@@ -27,6 +28,22 @@
 
 
 
+
+
+        }public function deletarChassi(){
+
+            $sql = "DELETE FROM Chassi WHERE chassi_id = ?";
+            $stmt = $this->conexao->prepare($sql);
+            $stmt->bind_param('i',$this->chassi_id);
+            if($stmt->execute()){
+
+                echo "Chassi excluido com sucesso";
+
+            }else{
+
+                echo "Erro ao deletar: " . $stmt->error;
+
+            }
 
 
         }
