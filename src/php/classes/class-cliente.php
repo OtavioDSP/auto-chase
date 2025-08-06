@@ -42,7 +42,23 @@ Class Cliente{
         }else{
             echo "Erro ao inserir cliente". $stmt->error;
         }
+    } public function deletarCliente(){
+        $sql = "DELETE FROM Cliente WHERE cliente_id = ?";
+        $stmt = $this->conexao->prepare($sql);
+        $stmt->bind_param('i',$this->cliente_id);
+        if($stmt->execute()){
+
+            echo "CLiente deletado com sucesso";
+    
+
+        }else{
+
+            echo "erro ao deletar Cliente" .$stmt->error;
+
+        }
+
     }
+
 
 
 
