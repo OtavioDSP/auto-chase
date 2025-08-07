@@ -14,7 +14,7 @@ Class Modelo{
         $this->conexao = $conexao;
     }
 
-    function insereFipe(){
+    public function insereFipe(){
         $sql = "INSERT INTO fipe (marca_id, fipe) VALUES (?,?)";
 
         $stmt = $this->conexao->prepare($sql);
@@ -30,6 +30,27 @@ Class Modelo{
         }
 
 
+
+
+
+    }public function deletarModelo(){
+
+        $sql = "DELETE FROM modelo WHERE modelo_id = ?";
+        $stmt = $this->conexao->prepare($sql);
+        $stmt->bind_param('i',$this->modelo_id);
+    
+        if($stmt->execute()){
+
+        echo "modelo deletado com sucesso";
+
+
+    }else{
+
+        echo "erro ao deletar modelo" .$stmt->error;
+
+        
+
+    }
 
 
 
