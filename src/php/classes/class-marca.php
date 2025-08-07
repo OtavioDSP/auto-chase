@@ -12,7 +12,7 @@
             $this->conexao = $conexao;
 
         }
-        public function criaAnuncio(){
+        public function criaMarca(){
             $sql = "INSERT INTO Marca (marca_desc) VALUES ?";
             $stmt = $this->conexao->prepare($sql);
             $stmt->bind_param('s',
@@ -26,6 +26,27 @@
         
 
 
+
+
+
+        }public function deletarMarca(){
+
+            $sql = "DELETE FROM Marca WHERE marca_id = ?";
+            $stmt = $this->conexao->prepare($sql);
+            $stmt->bind_param('i',$this->marca_id);
+        
+            if($stmt->execute()){
+
+            echo "Marca deletada com sucesso";
+
+
+        }else{
+
+            echo "erro ao deletar marca" .$stmt->error;
+
+            
+
+        }
 
 
 
