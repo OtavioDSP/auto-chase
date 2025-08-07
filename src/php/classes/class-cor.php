@@ -35,12 +35,12 @@
         $stmt->bind_param('i',$this->cor_id);
         if($stmt->execute()){
 
-            echo "Combustivel deletado com sucesso";
+            echo "cor deletada com sucesso";
 
 
         }else{
 
-            echo "erro ao deletar Combustivel" .$stmt->error;
+            echo "erro ao deletar cor" .$stmt->error;
 
             
 
