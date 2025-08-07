@@ -29,10 +29,25 @@
 
 
 
+        } public function deletarCor(){
+        $sql = "DELETE FROM Cor WHERE cor_id = ?";
+        $stmt = $this->conexao->prepare($sql);
+        $stmt->bind_param('i',$this->cor_id);
+        if($stmt->execute()){
+
+            echo "Combustivel deletado com sucesso";
+
+
+        }else{
+
+            echo "erro ao deletar Combustivel" .$stmt->error;
+
+            
+
         }
 
 
 
+        }
     }
-
 ?>
