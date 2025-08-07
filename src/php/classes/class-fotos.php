@@ -29,6 +29,27 @@
 
 
 
+        }public function deletarFoto(){
+
+            $sql = "DELETE FROM Foto WHERE fotos_id = ?";
+            $stmt = $this->conexao->prepare($sql);
+            $stmt->bind_param('i',$this->fotos_id);
+        
+            if($stmt->execute()){
+
+            echo "Foto deletada com sucesso";
+
+
+        }else{
+
+            echo "erro ao deletar foto" .$stmt->error;
+
+            
+
+        }
+
+
+
         }
 
 
