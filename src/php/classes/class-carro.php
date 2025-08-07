@@ -44,6 +44,27 @@ Class Veiculo{
         }
         
         
+    }public function deletarVeiculo(){
+
+        $sql = "DELETE FROM carro WHERE carro_id = ?";
+        $stmt = $this->conexao->prepare($sql);
+        $stmt->bind_param('i',$this->carro_id);
+    
+        if($stmt->execute()){
+
+        echo "veiculo deletado com sucesso";
+
+
+    }else{
+
+        echo "erro ao deletar veiculo" .$stmt->error;
+
+        
+
+    }
+
+
+
     }
 
 
