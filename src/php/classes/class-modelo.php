@@ -54,7 +54,26 @@ Class Modelo{
 
 
 
-    }
+    }public function listarModelo(){
+            $sql = "
+            SELECT 
+                modelo.modelo_desc
+            FROM 
+                modelo
+            ";
+            $stmt = $this->conexao->prepare($sql);
+            $stmt->execute();
+            $resultado = $stmt->get_result();
+            $modelos = [];
+
+            while($modelo = $resultado->fetch_assoc()){
+                $modelos[] = $modelo;
+            }
+
+            return $modelos;
+
+        }
+
 
 
 }
