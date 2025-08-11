@@ -48,6 +48,23 @@
 
 
 
+        } Public function listarCombustivel(){
+            $sql = "
+            SELECT
+                combustivel.comb_tipo
+            FROM 
+                combustivel
+            ";
+            $stmt = $this->conexao->prepare($sql);
+            $stmt->execute();
+            $resultado = $stmt->get_result();
+            $combustiveis = [];
+
+            while($combustivel = $resultado->fetch_assoc()){
+                $combustiveis[] = $combustivel;
+            }
+
+            return $combustiveis;
         }
     }
 ?>
