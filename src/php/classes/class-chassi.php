@@ -46,9 +46,25 @@
             }
 
 
+        }public function listarChassi(){
+
+            $sql = "
+            SELECT 
+                chassi.chassi_desc
+            FROM 
+                chassi
+            ";
+            $stmt = $this->conexao->prepare($sql);
+            $stmt->execute();
+            $resultado = $stmt->get_result();
+            $chassis = [];
+
+            while($chassi = $resultado->fetch_assoc()){
+                $chassis[] = $chassi;
+            }
+
+            return $chassis;
         }
-
-
 
     }
 

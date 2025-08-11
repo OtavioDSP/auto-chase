@@ -38,8 +38,7 @@
 
 
 
-        }
-        public function deletarAnuncio(){
+        } public function deletarAnuncio(){
             $sql = "DELETE FROM anuncio WHERE anuncio_id = ?";
             $stmt = $this->conexao->prepare($sql);
             $stmt->bind_param('i',$this->anuncio_id);
