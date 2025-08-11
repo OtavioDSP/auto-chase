@@ -50,7 +50,26 @@
 
 
 
+        }public function listarMarcas(){
+            $sql = "
+            SELECT 
+                marca.marca_desc
+            FROM 
+                marca
+            ";
+            $stmt = $this->conexao->prepare($sql);
+            $stmt->execute();
+            $resultado = $stmt->get_result();
+            $marcas = [];
+
+            while($marca = $resultado->fetch_assoc()){
+                $marcas[] = $marca;
+            }
+
+            return $marcas;
+
         }
+
 
 
 

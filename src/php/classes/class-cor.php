@@ -48,6 +48,27 @@
 
 
 
+        } public function listarCor(){
+            $sql = "
+            SELECT 
+                cor.cor_desc
+            FROM 
+                cor
+            ";
+            $stmt = $this->conexao->prepare($sql);
+            $stmt->execute();
+            $resultado = $stmt->get_result();
+            $cores = [];
+
+            while($cor = $resultado->fetch_assoc()){
+                $cores[] = $cor;
+            }
+
+            return $cores;
+
         }
+
+
+
     }
 ?>
