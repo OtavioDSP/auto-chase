@@ -2,13 +2,16 @@
     class Fotos{
 
         private $fotos_id;
-        private $foto;
+        private $foto_caminho;
+        private $foto_user;
+        private $data_de_upload;
         private $conexao;
 
-        public function __construct($fotos_id, $foto, $conexao){
+        public function __construct($fotos_id, $foto_caminho, $foto_user, $data_de_upload, $conexao){
 
             $this->fotos_id = $fotos_id;
-            $this->foto = $foto;
+            $this->foto_user = $foto_user;
+            $this->foto_caminho = $foto_caminho;
             $this->conexao = $conexao;
 
         }
