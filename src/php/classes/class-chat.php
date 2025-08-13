@@ -52,6 +52,11 @@ class Chat{
 
         }
 
+    }public function listarChat(){
+        $sql = "SELECT * FROM "
+
+
+
     }
 
 
