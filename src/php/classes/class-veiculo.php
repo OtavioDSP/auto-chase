@@ -6,42 +6,43 @@ Class Veiculo{
     private $carro_descricao;
     private $carro_quilometragem;
     private $carro_ano;
-    private $cor_id;
-    private $modelo_id;
-    private $chassi_id;
-    private $comb_id;
-    private $marca_id;
-    private $anuncio_id;
+    private $fk_cor_id;
+    private $fk_modelo_id;
+    private $fk_chassi_id;
+    private $fk_comb_id;
+    private $fk_marca_id;
+    private $fk_anuncio_id;
     private $conexao;
 
-    public function __construct($carro_id, $carro_descricao,$carro_quilometragem,  $carro_ano, $cor_id, $modelo_id, $chassi_id, $comb_id, $marca_id, $anuncio_id, $conexao) {
+    public function __construct($carro_id, $carro_descricao,$carro_quilometragem,  $carro_ano, $fk_cor_id, $fk_modelo_id, $fk_chassi_id, $fk_comb_id, $fk_marca_id, $fk_anuncio_id, $conexao) {
         $this->carro_id = $carro_id;
         $this->carro_descricao = $carro_descricao;
         $this->carro_quilometragem = $carro_quilometragem;
         $this->carro_ano = $carro_ano;
-        $this->cor_id = $cor_id;
-        $this->modelo_id = $modelo_id;
-        $this->chassi_id = $chassi_id;
-        $this->comb_id = $comb_id;
-        $this->marca_id = $marca_id;
-        $this->anuncio_id = $anuncio_id;
+        $this->fk_cor_id = $fk_cor_id;
+        $this->fk_modelo_id = $fk_modelo_id;
+        $this->fk_chassi_id = $fk_chassi_id;
+        $this->fk_comb_id = $fk_comb_id;
+        $this->fk_marca_id = $fk_marca_id;
+        $this->fk_anuncio_id = $fk_anuncio_id;
         $this->conexao = $conexao;
     }
 
     public function insereCarro(){
-        $sql = "INSERT INTO Carro (carro_id, carro_descricao, carro_quilometragem, carro_ano, cor_id, modelo_id, chassi_id, comb_id, marca_id) VALUES (?,?,?,?,?,?,?,?,?)";
+        $sql = "INSERT INTO Carro (carro_id, carro_descricao, carro_quilometragem, carro_ano, fk_cor_id, fk_modelo_id, fk_chassi_id, fk_comb_id, fk_marca_id, fk_anuncio_id) VALUES (?,?,?,?,?,?,?,?,?,?)";
 
         $stmt = $this->conexao->prepare($sql);
-        $stmt->bind_param("isssiiiii", 
+        $stmt->bind_param("isssi", 
             $this->carro_id, 
             $this->carro_descricao, 
             $this->carro_quilometragem, 
             $this->carro_ano, 
-            $this->cor_id, 
-            $this->modelo_id, 
-            $this->chassi_id, 
-            $this->comb_id, 
-            $this->marca_id
+            $this->fk_cor_id, 
+            $this->fk_modelo_id, 
+            $this->fk_chassi_id, 
+            $this->fk_comb_id, 
+            $this->fk_marca_id,
+            $this->fk_anuncio_id
         );
         if($stmt->execute()){
             echo "veiculo inserida";
