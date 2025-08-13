@@ -4,18 +4,18 @@
         private $anuncio_id;
         private $anuncio_desc;
         private $fk_usuario_id;
-        private $fk_carro_id;
+        private $fk_veiculo_id;
         private $anuncio_valor;
         private $data_de_criacao;
         private $data_de_exclusao;
         private $conexao;
 
-        public function __construct($anuncio_id, $anuncio_desc, $fk_usuario_id, $fk_carro_id, $anuncio_valor, $data_de_criacao, $data_de_exclusao, $conexao){
+        public function __construct($anuncio_id, $anuncio_desc, $fk_usuario_id, $fk_veiculo_id, $anuncio_valor, $data_de_criacao, $data_de_exclusao, $conexao){
 
             $this->anuncio_id = $anuncio_id;
             $this->anuncio_desc = $anuncio_desc;
             $this->fk_usuario_id = $fk_usuario_id;
-            $this->fk_carro_id = $fk_carro_id;
+            $this->fk_veiculo_id = $fk_veiculo_id;
             $this->anuncio_valor = $anuncio_valor;
             $this->data_de_criacao = $data_de_criacao;
             $this->data_de_exclusao = $data_de_exclusao;
@@ -31,7 +31,7 @@
             $this->anuncio_valor,
             $this->anuncio_desc,
             $this->fk_cliente_id,
-            $this->fk_carro_id,
+            $this->fk_veiculo_id,
             $this->data_de_criacao,
             $this->data_de_exclusao
 
@@ -83,9 +83,15 @@
             INNER JOIN 
                 usuario ON usuario.usuario_id = anuncio.fk_usuario_id
             INNER JOIN
-                carro ON carro.carro_id = anuncio.fk_carro_id
+                carro ON carro.carro_id = anuncio.fk_veiculo_id
             INNER JOIN 
-                modelo ON carro 
+                modelo ON carro.fk_modelo_id = modelo.modelo_id
+            INNER JOIN 
+                marca ON carro.fk_marca_id = marca.marca_id
+            INNER JOIN
+                combustivel ON carro.fk_comb_id = combustivel.combustivel_id
+            INNER JOIN
+                chassi ON carro.fk_chassi_id = chassi.chassi_id
             ";
 
 
