@@ -1,0 +1,18 @@
+<?php
+
+
+$host ="localhost";
+$password ="";  
+$user ="root"; 
+$db = "autochase";
+$conexao = new mysqli($host, $user, $password, $db);
+
+
+if($conexao->connect_errno){
+    echo "Falha ao conectar MySQL".$conexao->connect_error;
+    exit();
+}
+
+?>
+
+?>
