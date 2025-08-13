@@ -72,6 +72,21 @@ Class Modelo{
 
             return $modelos;
 
+        }public function editarModelo(){
+
+            $sql = "UPDATE modelo SET modelo_desc = ? WHERE modelo_id = ?";
+
+            $stmt = $this->conexao->prepare($sql);
+
+            $stmt->bind_param('si', $this->modelo_desc, $this->modelo_id);
+            
+            if($stmt->execute()){
+                echo "Modelo editado com sucesso";
+            }else{
+                echo "Erro ao editar modelo" .$stmt->error;
+            }
+
+
         }
 
 
