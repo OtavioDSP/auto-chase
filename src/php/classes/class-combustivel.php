@@ -48,13 +48,8 @@
 
 
 
-        } Public function listarCombustivel(){
-            $sql = "
-            SELECT
-                combustivel.comb_tipo
-            FROM 
-                combustivel
-            ";
+        } public function listarCombustivel(){
+            $sql = "SELECT comb_tipo FROM combustivel";
             $stmt = $this->conexao->prepare($sql);
             $stmt->execute();
             $resultado = $stmt->get_result();
@@ -65,6 +60,17 @@
             }
 
             return $combustiveis;
+        }public function editarCombustivel(){
+            $sql = "UPDATE combustivel SET comb_tipo = ? WHERE comb_id = ?";
+            $stmt = $this->conexao->prepare($sql);
+            $stmt->bind_param('si', $this->comb_tipo, $this->comb_id);
+            if($stmt->execute()){
+                echo "Combustivel editado com sucesso";
+            }else{
+                echo "Erro ao editar combustivel" .$stmt->error;
+            }
+
         }
+
     }
 ?>

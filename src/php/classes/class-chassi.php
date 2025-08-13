@@ -64,6 +64,18 @@
             }
 
             return $chassis;
+
+        }public function editarChassi(){
+
+            $sql = "UPDATE Chassi SET chassi_desc = ? WHERE chassi_id = ?";
+            $stmt = $this->conexao->prepare($sql);
+            $stmt->bind_param('si', $this->chassi_desc, $this->chassi_id);
+            if($stmt->execute()){
+                echo "Chassi editado com sucesso";
+            }else{
+                echo "Erro ao editar chassi" .$stmt->error;
+            }
+
         }
 
     }
