@@ -68,8 +68,6 @@ Class Veiculo{
 
         echo "erro ao deletar veiculo" .$stmt->error;
 
-        
-
     }
 
 
