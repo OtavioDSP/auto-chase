@@ -25,15 +25,13 @@
 
 
         public function criaAnuncio(){
-            $sql = "INSERT INTO anuncio (anuncio_valor, data_de_criacao, data_de_exclusao) VALUES ???";
+            $sql = "INSERT INTO anuncio (anuncio_valor, anuncio_desc, fk_usuario_id, fk_veiculo_id) VALUES (?,?,?,?)";
             $stmt = $this->conexao->prepare($sql);
-            $stmt->bind_param('iss',
+            $stmt->bind_param('issi',
             $this->anuncio_valor,
             $this->anuncio_desc,
-            $this->fk_cliente_id,
+            $this->fk_usuario_id,
             $this->fk_veiculo_id,
-            $this->data_de_criacao,
-            $this->data_de_exclusao
 
             );
              if($stmt->execute()){
