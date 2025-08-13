@@ -50,7 +50,7 @@
 
             $sql = "
             SELECT 
-                chassi.chassi_desc
+                *
             FROM 
                 chassi
             ";

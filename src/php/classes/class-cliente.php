@@ -57,9 +57,24 @@ Class Cliente{
 
         }
 
-    }
+    }public function listarCliente(){
+        $sql = "
+        SELECT 
+            *
+        FROM 
+            Cliente";
 
+            $stmt = $this->conexao->prepare($sql);
+            $stmt->execute();
+            $resultado = $stmt->get_result();
+            $clientes = [];
 
+            while($cliente = $resultado->fetch_assoc()){
+                $clientes[] = $cliente;
+            }
+
+            return $clientes;
+        }
 
 
 

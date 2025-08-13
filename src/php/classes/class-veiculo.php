@@ -72,7 +72,7 @@ Class Veiculo{
 
 
 
-    } public function listarVeiculo{
+    } public function listarVeiculo(){
 
         $sql = "
         SELECT 
