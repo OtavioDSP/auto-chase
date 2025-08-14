@@ -53,7 +53,31 @@ class Chat{
         }
 
     }public function listarChat(){
-        $sql = "SELECT * FROM "
+        $sql = "SELECT * FROM chat";
+
+        $stmt = $this->conexao=>prepare($sql);
+        $stmt->execute();
+        $resultado =$stmt->get_result();
+        $chats = [];
+
+        while($chat = $resultado->fetch_assoc()){
+
+            $chats[] = $chat; 
+
+        }
+        
+        return $chats;
+
+
+    }public function editarChat(){
+
+        $sql = "UPDATE chat SET conteudo = ? WHERE chat_id = ?"; 
+
+        $stmt =$this->conexao->prepare($sql);
+
+        $stmt->bind_param('si',
+        $this->conteudo, $this->chat_id);
+
 
 
 
