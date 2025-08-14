@@ -77,6 +77,11 @@ class Chat{
 
         $stmt->bind_param('si',
         $this->conteudo, $this->chat_id);
+        if($stmt->execute()){
+            echo "chat editado com sucesso";
+        }else{
+            echo "Erro ao editar chat" .$stmt->error;
+        }
 
 
 
