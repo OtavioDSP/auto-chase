@@ -53,6 +53,34 @@
 
 
 
+        }public function listarFoto(){
+            $sql = "SELECT foto.foto_caminho, foto.foto_user FROM fotos WHERE foto_id = ?";
+            $stmt = $this->conexao->prepare();
+
+            $stmt->bind('ssi',$this->foto_caminho, $this->foto_user, $this->foto_id);
+
+            if($stmt->execute()){
+                echo "foto listar com sucesso";
+            }else{
+                echo "Erro ao listar fotos" .$stmt->error;
+            }
+
+
+        }public function editarModelo(){
+
+            $sql = "UPDATE foto SET foto_caminho = ? WHERE foto_id = ?";
+
+            $stmt = $this->conexao->prepare($sql);
+
+            $stmt->bind_param('si', $this->modelo_desc, $this->modelo_id);
+            
+            if($stmt->execute()){
+                echo "foto editada com sucesso";
+            }else{
+                echo "Erro ao editar foto" .$stmt->error;
+            }
+
+
         }
 
 
