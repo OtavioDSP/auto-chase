@@ -107,7 +107,7 @@
 
         }public function editarAnuncio(){
 
-            $sql = "UPDATE "
+            $sql = "UPDATE ";
 
 
         }
