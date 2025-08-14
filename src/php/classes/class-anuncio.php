@@ -91,6 +91,23 @@
             INNER JOIN
                 chassi ON carro.fk_chassi_id = chassi.chassi_id
             ";
+            $stmt = $this->conexao->prepare($sql);
+            $stmt->execute();
+            $resultado = $stmt->get_result();
+            $anuncios = [];
+            while($anuncio = $resultado->fetch_assoc()){
+                $anuncios[] = $anuncio;
+
+            }
+
+            return $anuncios;
+
+
+
+
+        }public function editarAnuncio(){
+
+            $sql = "UPDATE "
 
 
         }
