@@ -3,7 +3,7 @@
 
         private $fotos_id;
         private $foto_caminho;
-        private $fk_foto_user;
+        private $foto_user;
         private $data_de_upload;
         private $conexao;
 
@@ -19,7 +19,7 @@
             $sql = "INSERT INTO Foto (foto) VALUES ?";
             $stmt = $this->conexao->prepare($sql);
             $stmt->bind_param('s',
-            $this->foto_caminho,
+            $this->foto,
             );
              if($stmt->execute()){
                 echo "foto inserida";

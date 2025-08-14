@@ -5,7 +5,7 @@
         private $cor_desc;
         private $conexao;
 
-        public function __construct($cor_id,$cor_desc, $conexao){
+        public function __construct($cor_id, $cor_desc, $conexao){
 
             $this->cor_id = $cor_id;
             $this->cor_desc = $cor_desc;
@@ -49,12 +49,7 @@
 
 
         } public function listarCor(){
-            $sql = "
-            SELECT 
-                cor.cor_desc
-            FROM 
-                cor
-            ";
+            $sql = "SELECT cor.cor_desc FROM cor";
             $stmt = $this->conexao->prepare($sql);
             $stmt->execute();
             $resultado = $stmt->get_result();
@@ -65,6 +60,17 @@
             }
 
             return $cores;
+
+        } public function editarCor(){
+
+            $sql = "UPDATE Cor SET cor_desc = ? WHERE cor_id = ?";
+            $stmt = $this->conexao->prepare($sql);
+            $stmt->bind_param('si', $this->cor_desc, $this->cor_id);
+            if($stmt->execute()){
+                echo "Cor editada com sucesso";
+            }else{
+                echo "Erro ao editar cor" .$stmt->error;
+            }
 
         }
 

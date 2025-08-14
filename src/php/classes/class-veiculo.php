@@ -2,10 +2,11 @@
 
 Class Veiculo{
 
-    private $carro_id;
-    private $carro_descricao;
-    private $carro_quilometragem;
-    private $carro_ano;
+    private $veiculo_id;
+    private $veiculo_descricao;
+    private $veiculo_quilometragem;
+    private $veiculo_ano;
+    private $fk_usuario_id;
     private $fk_cor_id;
     private $fk_modelo_id;
     private $fk_chassi_id;
@@ -14,11 +15,12 @@ Class Veiculo{
     private $fk_anuncio_id;
     private $conexao;
 
-    public function __construct($carro_id, $carro_descricao,$carro_quilometragem,  $carro_ano, $fk_cor_id, $fk_modelo_id, $fk_chassi_id, $fk_comb_id, $fk_marca_id, $fk_anuncio_id, $conexao) {
-        $this->carro_id = $carro_id;
-        $this->carro_descricao = $carro_descricao;
-        $this->carro_quilometragem = $carro_quilometragem;
-        $this->carro_ano = $carro_ano;
+    public function __construct($veiculo_id, $veiculo_descricao,$veiculo_quilometragem,  $veiculo_ano, $fk_usuario_id, $fk_cor_id, $fk_modelo_id, $fk_chassi_id, $fk_comb_id, $fk_marca_id, $fk_anuncio_id, $conexao) {
+        $this->veiculo_id = $veiculo_id;
+        $this->veiculo_descricao = $veiculo_descricao;
+        $this->veiculo_quilometragem = $veiculo_quilometragem;
+        $this->veiculo_ano = $veiculo_ano;
+        $this->fk_usuario_id = $fk_usuario_id;
         $this->fk_cor_id = $fk_cor_id;
         $this->fk_modelo_id = $fk_modelo_id;
         $this->fk_chassi_id = $fk_chassi_id;
@@ -28,15 +30,15 @@ Class Veiculo{
         $this->conexao = $conexao;
     }
 
-    public function insereCarro(){
-        $sql = "INSERT INTO Carro (carro_id, carro_descricao, carro_quilometragem, carro_ano, fk_cor_id, fk_modelo_id, fk_chassi_id, fk_comb_id, fk_marca_id, fk_anuncio_id) VALUES (?,?,?,?,?,?,?,?,?,?)";
+    public function insereVeiculo(){
+        $sql = "INSERT INTO Veiculo (veiculo_id, veiculo_descricao, veiculo_quilometragem, veiculo_ano, fk_usuario_id, fk_cor_id, fk_modelo_id, fk_chassi_id, fk_comb_id, fk_marca_id, fk_anuncio_id) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
 
         $stmt = $this->conexao->prepare($sql);
         $stmt->bind_param("isssi", 
-            $this->carro_id, 
-            $this->carro_descricao, 
-            $this->carro_quilometragem, 
-            $this->carro_ano, 
+            $this->veiculo_id, 
+            $this->veiculo_descricao, 
+            $this->veiculo_quilometragem, 
+            $this->veiculo_ano, 
             $this->fk_cor_id, 
             $this->fk_modelo_id, 
             $this->fk_chassi_id, 
@@ -53,10 +55,10 @@ Class Veiculo{
         
     }public function deletarVeiculo(){
 
-        $sql = "DELETE FROM carro WHERE carro_id = ?";
+        $sql = "DELETE FROM veiculo WHERE veiculo_id = ?";
         $stmt = $this->conexao->prepare($sql);
-        $stmt->bind_param('i',$this->carro_id);
-    
+        $stmt->bind_param('i',$this->veiculo_id);
+
         if($stmt->execute()){
 
         echo "veiculo deletado com sucesso";
@@ -66,33 +68,38 @@ Class Veiculo{
 
         echo "erro ao deletar veiculo" .$stmt->error;
 
-        
-
     }
 
 
 
-    } public function listarVeiculo{
+    } public function listarVeiculo(){
 
         $sql = "
         SELECT 
 
-            carro.carro_id,
-            carro.carro_descricao,
-            carro.carro_quilometragem,
-            carro.carro_ano,
+            veiculo.veiculo_id,
+            veiculo.veiculo_descricao,
+            veiculo.veiculo_quilometragem,
+            veiculo.veiculo_ano,
             marca.marca_desc,
             cor.cor_desc,
-            chassi.chassi_desc
+            chassi.chassi_desc,
+            combustivel.combustivel_desc,
+            marca.marca_desc,
+            usuario.usuario_nome
 
         FROM 
-            carro
+            veiculo
         INNER JOIN 
-            cor ON carro.cor_id = cor.cor_id
+            cor ON veiculo.cor_id = cor.cor_id
         INNER JOIN
-            chassi ON carro.chassi_id = chassi.chassi_id
+            chassi ON veiculo.chassi_id = chassi.chassi_id
         INNER JOIN
-            marca ON carro.marca_id = marca.marca_id
+            marca ON veiculo.marca_id = marca.marca_id
+        INNER JOIN
+            combustivel ON veiculo.combustivel_id = combustivel.combustivel_id
+        INNER JOIN
+            usuario ON veiculo.usuario_id = usuario.usuario_id
         ";
         $stmt = $this->conexao->prepare($sql);
         $stmt->execute();
