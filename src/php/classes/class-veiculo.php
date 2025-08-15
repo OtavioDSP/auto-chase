@@ -111,6 +111,20 @@ Class Veiculo{
         }
 
         return $veiculos;
+    }  public function editarVeiculo(){
+        $sql = "UPDATE veiculo SET veiculo_descricao = ?, veiculo_quilometragem = ?, veiculo_ano = ?,  WHERE veiculo_id = ?";
+        $stmt = $this->conexao->prepare($sql);
+        $stmt->bind_param("sssi", 
+            $this->veiculo_descricao, 
+            $this->veiculo_quilometragem, 
+            $this->veiculo_ano, 
+            $this->veiculo_id  
+        );
+        if($stmt->execute()){
+            echo "veiculo editada";
+        }else{
+            echo "Erro ao editar veiculo". $stmt->error;
+        }
     }
 
 
