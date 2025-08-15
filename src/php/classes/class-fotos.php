@@ -19,7 +19,7 @@
             $sql = "INSERT INTO Foto (foto) VALUES ?";
             $stmt = $this->conexao->prepare($sql);
             $stmt->bind_param('s',
-            $this->foto,
+            $this->foto_caminho,
             );
              if($stmt->execute()){
                 echo "foto inserida";
@@ -54,10 +54,10 @@
 
 
         }public function listarFoto(){
-            $sql = "SELECT foto.foto_caminho, foto.foto_user FROM fotos WHERE foto_id = ?";
+            $sql = "SELECT foto.foto_caminho, foto.foto_user, foto.data_de_upload FROM fotos WHERE fotos_id = ?";
             $stmt = $this->conexao->prepare();
 
-            $stmt->bind('ssi',$this->foto_caminho, $this->foto_user, $this->foto_id);
+            $stmt->bind('ssi',$this->foto_caminho, $this->foto_user, $this->fotos_id);
 
             if($stmt->execute()){
                 echo "foto listar com sucesso";
@@ -66,13 +66,13 @@
             }
 
 
-        }public function editarModelo(){
+        }public function editarFoto(){
 
             $sql = "UPDATE foto SET foto_caminho = ? WHERE foto_id = ?";
 
             $stmt = $this->conexao->prepare($sql);
 
-            $stmt->bind_param('si', $this->modelo_desc, $this->modelo_id);
+            $stmt->bind_param('si', $this->foto_caminho, $this->fotos_id);
             
             if($stmt->execute()){
                 echo "foto editada com sucesso";

@@ -55,7 +55,7 @@ class Chat{
     }public function listarChat(){
         $sql = "SELECT * FROM chat";
 
-        $stmt = $this->conexao=>prepare($sql);
+        $stmt = $this->conexao->prepare($sql);
         $stmt->execute();
         $resultado =$stmt->get_result();
         $chats = [];
