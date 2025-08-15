@@ -75,6 +75,24 @@ Class Usuario{
             }
 
             return $usuarios;
+        }public function editarUsuario(){
+            $sql = "UPDATE Usuario SET usuario_nome = ?, usuario_email = ?, usuario_senha = ?, usuario_telefone = ?, usuario_endereco = ?, doc_cpf_cnpj = ? WHERE usuario_id = ?";
+            $stmt = $this->conexao->prepare($sql);
+            $stmt->bind_param('ssssssi',
+                $this->usuario_nome,
+                $this->usuario_email,
+                $this->usuario_senha,
+                $this->usuario_telefone,
+                $this->usuario_endereco,
+                $this->doc_cpf_cnpj,
+                $this->usuario_id
+            );
+            if($stmt->execute()){
+                echo "Usuario editado com sucesso";
+            }else{
+                echo "Erro ao editar usuario" .$stmt->error;
+            }
+
         }
 
 

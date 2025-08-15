@@ -118,10 +118,7 @@
                 echo "Erro ao editar cor" .$stmt->error;
             }
 
-
         }
-
-
 
     }
 
