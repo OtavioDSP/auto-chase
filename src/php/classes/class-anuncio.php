@@ -109,9 +109,9 @@
 
             $sql = "UPDATE anuncio SET anuncio_desc = ?, anuncio_valor = ?, WHERE anuncio_id = ?";
 
-            $stmt = $this->coenxao->prepare($sql);
+            $stmt = $this->conexao->prepare($sql);
         
-            $stmt->bind_param('ssi'$this->anuncio_desc, $this->anuncio_valor, $this->anuncio_id);
+            $stmt->bind_param('ssi', $this->anuncio_desc, $this->anuncio_valor, $this->anuncio_id);
             if($stmt->execute()){
                 echo "Cor editada com sucesso";
             }else{
