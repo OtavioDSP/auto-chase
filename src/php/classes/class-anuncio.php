@@ -1,5 +1,5 @@
 <?php
-    class anuncio{
+    class Anuncio{
 
         private $anuncio_id;
         private $anuncio_desc;

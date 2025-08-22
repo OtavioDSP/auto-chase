@@ -1,5 +1,5 @@
 <?php
-    class Combustivel{
+    class Cor{
 
         private $cor_id;
         private $cor_desc;
