@@ -90,6 +90,8 @@
                 combustivel ON carro.fk_comb_id = combustivel.combustivel_id
             INNER JOIN
                 chassi ON carro.fk_chassi_id = chassi.chassi_id
+            INNER JOIN
+                fotos ON fotos.fotos_id = anuncio.anuncio_id
             ";
             $stmt = $this->conexao->prepare($sql);
             $stmt->execute();

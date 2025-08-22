@@ -4,7 +4,7 @@ Class Modelo{
 
     private $modelo_id;
     private $marca_id;
-    private $fipe; 
+    private $fipe_id; 
     private $conexao;
 
     public function __construct($modelo_id, $marca_id, $fipe, $conexao) {

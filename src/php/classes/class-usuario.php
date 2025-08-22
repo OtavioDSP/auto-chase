@@ -8,9 +8,10 @@ Class Usuario{
     private $usuario_telefone;
     private $usuario_endereco;
     private $doc_cpf_cnpj;
+    private $nivel_acesso;
     private $conexao;
 
-    public function __construct($usuario_id, $usuario_nome, $usuario_email, $usuario_senha, $usuario_telefone, $usuario_endereco, $doc_cpf_cnpj, $conexao){
+    public function __construct($usuario_id, $usuario_nome, $usuario_email, $usuario_senha, $usuario_telefone, $usuario_endereco, $doc_cpf_cnpj, $nivel_acesso, $conexao){
 
         $this->usuario_id = $usuario_id;
         $this->usuario_nome = $usuario_nome;
@@ -19,23 +20,24 @@ Class Usuario{
         $this->usuario_telefone = $usuario_telefone;
         $this->usuario_endereco = $usuario_endereco;
         $this->doc_cpf_cnpj = $doc_cpf_cnpj;
-        
+        $this->nivel_acesso = $nivel_acesso;
         $this->conexao = $conexao;
         
     }
     public function insereUsuario(){
 
-        $sql = "INSERT INTO Usuario (usuario_nome, usuario_email, usuario_senha, usuario_telefone, usuario_endereco, doc_cpf_cnpj) VALUES (?,?,?,?,?,?)";
+        $sql = "INSERT INTO Usuario (usuario_nome, usuario_email, usuario_senha, usuario_telefone, usuario_endereco, doc_cpf_cnpj, nivel_acesso) VALUES (?,?,?,?,?,?,?)";
 
         $stmt = $this->conexao->prepare($sql);
 
-        $stmt->bind_param('ssssss', 
+        $stmt->bind_param('sssssss', 
             $this->usuario_nome,
             $this->usuario_email,
             $this->usuario_endereco,
             $this->usuario_senha,
             $this->usuario_telefone,
             $this->doc_cpf_cnpj,
+            $this->nivel_acesso
         );
         
         if($stmt->execute()){
@@ -76,16 +78,17 @@ Class Usuario{
 
             return $usuarios;
         }public function editarUsuario(){
-            $sql = "UPDATE Usuario SET usuario_nome = ?, usuario_email = ?, usuario_senha = ?, usuario_telefone = ?, usuario_endereco = ?, doc_cpf_cnpj = ? WHERE usuario_id = ?";
+            $sql = "UPDATE Usuario SET usuario_nome = ?, usuario_email = ?, usuario_senha = ?, usuario_telefone = ?, usuario_endereco = ?, doc_cpf_cnpj = ?, nivel_acesso = ? WHERE usuario_id = ?";
             $stmt = $this->conexao->prepare($sql);
-            $stmt->bind_param('ssssssi',
+            $stmt->bind_param('ssssssis',
                 $this->usuario_nome,
                 $this->usuario_email,
                 $this->usuario_senha,
                 $this->usuario_telefone,
                 $this->usuario_endereco,
                 $this->doc_cpf_cnpj,
-                $this->usuario_id
+                $this->usuario_id,
+                $this->nivel_acesso
             );
             if($stmt->execute()){
                 echo "Usuario editado com sucesso";
