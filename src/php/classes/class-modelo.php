@@ -3,26 +3,24 @@
 Class Modelo{
 
     private $modelo_id;
-    private $marca_id;
-    private $fipe_id; 
+    private $modelo_desc;
     private $conexao;
 
-    public function __construct($modelo_id, $marca_id, $fipe, $conexao) {
+    public function __construct($modelo_id, $modelo_desc, $conexao) {
         $this->modelo_id = $modelo_id;
-        $this->marca_id = $marca_id;
-        $this->fipe = $fipe;
+        $this->$modelo_desc = $modelo_desc;
+    
         $this->conexao = $conexao;
     }
 
     public function insereFipe(){
-        $sql = "INSERT INTO fipe (marca_id, fipe) VALUES (?,?)";
+        $sql = "INSERT INTO modelo (modelo_desc) VALUES (?,?)";
 
         $stmt = $this->conexao->prepare($sql);
         
-        $stmt->bind_param('ii', 
-            $this->marca_id, 
-            $this->fipe
-        );
+        $stmt->bind_param('s', 
+            $this->modelo_desc,
+            );
         if($stmt->execute()){
             echo "fipe inserida";
         }else{

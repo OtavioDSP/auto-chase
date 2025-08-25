@@ -6,45 +6,26 @@ Class Veiculo{
     private $veiculo_descricao;
     private $veiculo_quilometragem;
     private $veiculo_ano;
-    private $fk_usuario_id;
-    private $fk_cor_id;
-    private $fk_modelo_id;
-    private $fk_chassi_id;
-    private $fk_comb_id;
-    private $fk_marca_id;
-    private $fk_anuncio_id;
     private $conexao;
 
-    public function __construct($veiculo_id, $veiculo_descricao,$veiculo_quilometragem,  $veiculo_ano, $fk_usuario_id, $fk_cor_id, $fk_modelo_id, $fk_chassi_id, $fk_comb_id, $fk_marca_id, $fk_anuncio_id, $conexao) {
+    public function __construct($veiculo_id, $veiculo_descricao,$veiculo_quilometragem,  $veiculo_ano, $conexao) {
         $this->veiculo_id = $veiculo_id;
         $this->veiculo_descricao = $veiculo_descricao;
         $this->veiculo_quilometragem = $veiculo_quilometragem;
         $this->veiculo_ano = $veiculo_ano;
-        $this->fk_usuario_id = $fk_usuario_id;
-        $this->fk_cor_id = $fk_cor_id;
-        $this->fk_modelo_id = $fk_modelo_id;
-        $this->fk_chassi_id = $fk_chassi_id;
-        $this->fk_comb_id = $fk_comb_id;
-        $this->fk_marca_id = $fk_marca_id;
-        $this->fk_anuncio_id = $fk_anuncio_id;
         $this->conexao = $conexao;
     }
 
     public function insereVeiculo(){
-        $sql = "INSERT INTO Veiculo (veiculo_id, veiculo_descricao, veiculo_quilometragem, veiculo_ano, fk_usuario_id, fk_cor_id, fk_modelo_id, fk_chassi_id, fk_comb_id, fk_marca_id, fk_anuncio_id) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+        $sql = "INSERT INTO Veiculo (veiculo_id, veiculo_descricao, veiculo_quilometragem, veiculo_ano) VALUES (?,?,?,?)";
 
         $stmt = $this->conexao->prepare($sql);
-        $stmt->bind_param("isssi", 
+        $stmt->bind_param("ssss", 
             $this->veiculo_id, 
             $this->veiculo_descricao, 
             $this->veiculo_quilometragem, 
             $this->veiculo_ano, 
-            $this->fk_cor_id, 
-            $this->fk_modelo_id, 
-            $this->fk_chassi_id, 
-            $this->fk_comb_id, 
-            $this->fk_marca_id,
-            $this->fk_anuncio_id
+        
         );
         if($stmt->execute()){
             echo "veiculo inserida";
@@ -91,7 +72,7 @@ Class Veiculo{
         FROM 
             veiculo
         INNER JOIN 
-            cor ON veiculo.cor_id = cor.cor_id
+            cor ON veiculo.fk_cor_id = cor.cor_id
         INNER JOIN
             chassi ON veiculo.chassi_id = chassi.chassi_id
         INNER JOIN

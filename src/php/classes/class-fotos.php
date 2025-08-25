@@ -3,14 +3,12 @@
 
         private $foto_id;
         private $foto_caminho;
-        private $fk_foto_usuario;
-        private $data_de_upload;
+    
         private $conexao;
 
-        public function __construct($foto_id, $foto_caminho, $fk_foto_usuario, $data_de_upload, $conexao){
+        public function __construct($foto_id, $foto_caminho, $conexao){
 
             $this->foto_id = $foto_id;
-            $this->fk_foto_usuario = $fk_foto_usuario;
             $this->foto_caminho = $foto_caminho;
             $this->conexao = $conexao;
 
@@ -36,7 +34,7 @@
 
             $sql = "DELETE FROM Foto WHERE fotos_id = ?";
             $stmt = $this->conexao->prepare($sql);
-            $stmt->bind_param('i',$this->fotos_id);
+            $stmt->bind_param('i',$this->foto_id);
         
             if($stmt->execute()){
 
@@ -54,10 +52,10 @@
 
 
         }public function listarFoto(){
-            $sql = "SELECT foto.foto_caminho, foto.foto_user, foto.data_de_upload FROM fotos WHERE fotos_id = ?";
-            $stmt = $this->conexao->prepare();
+            $sql = "SELECT foto.foto_caminho, foto.data_de_upload FROM fotos INNER JOIN usuario ON fotos.fk_usuario_id = usuario.usuario_id WHERE fotos_id = ?";
+            $stmt = $this->conexao->prepare($sql);
 
-            $stmt->bind('ssi',$this->foto_caminho, $this->foto_user, $this->fotos_id);
+            $stmt->bind('ssi',$this->foto_caminho, $this->foto_id);
 
             if($stmt->execute()){
                 echo "foto listar com sucesso";
@@ -72,7 +70,7 @@
 
             $stmt = $this->conexao->prepare($sql);
 
-            $stmt->bind_param('si', $this->foto_caminho, $this->fotos_id);
+            $stmt->bind_param('si', $this->foto_caminho, $this->foto_id);
             
             if($stmt->execute()){
                 echo "foto editada com sucesso";
