@@ -3,20 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Login</title>
 </head>
 <body>
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Document</title>
-    </head>
-    <body>
-        
-        
-    </body>
-    </html>
+
+<form action="/src/php/global/global.php" method="post">
+
+    <h2>Operações de usuário</h2>
+
+    <input type="text" name="usuario_nome" placeholder="Nome de usuário">
+
+    <div style="position:relative; display:inline-block;">
+        <input type="password" id="senha" name="usuario_senha" style="padding-right:30px;" placeholder="Senha">
+        <button type="button" onclick="toggleSenha()" 
+                style="position:absolute; right:5px; top:50%; transform:translateY(-50%); border:none; background:none; cursor:pointer;">👁</button>
+    </div>
+    <input type="text" name="usuario_email" placeholder="Nome de usuário">
+    <input type="text" name="usuario_telefone" placeholder="telefone">
+    <input type="text" name="usuario_endereco" placeholder="endereço">
+    <input type="text" name="doc_cpf_cnpj" placeholder="documento">
+    <br><br>
+    <input type="submit" value="Enviar">
+
+</form>
+
+
+<script>
+function toggleSenha() {
+  const campo = document.getElementById("senha");
+  campo.type = (campo.type === "password") ? "text" : "password";
+}
+</script>
+
 </body>
 </html>
