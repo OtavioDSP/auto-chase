@@ -11,7 +11,7 @@ Class Usuario{
     private $nivel_acesso;
     private $conexao;
 
-    public function __construct($usuario_id, $usuario_nome, $usuario_email, $usuario_senha, $usuario_telefone, $usuario_endereco, $doc_cpf_cnpj, $nivel_acesso, $conexao){
+    public function __construct($usuario_id, $usuario_nome, $usuario_email, $usuario_senha, $usuario_telefone, $usuario_endereco, $doc_cpf_cnpj, $conexao){
 
         $this->usuario_id = $usuario_id;
         $this->usuario_nome = $usuario_nome;
@@ -20,24 +20,24 @@ Class Usuario{
         $this->usuario_telefone = $usuario_telefone;
         $this->usuario_endereco = $usuario_endereco;
         $this->doc_cpf_cnpj = $doc_cpf_cnpj;
-        $this->nivel_acesso = $nivel_acesso;
+    
         $this->conexao = $conexao;
         
     }
     public function insereUsuario(){
 
-        $sql = "INSERT INTO Usuario (usuario_nome, usuario_email, usuario_senha, usuario_telefone, usuario_endereco, doc_cpf_cnpj, nivel_acesso) VALUES (?,?,?,?,?,?,?)";
+        $sql = "INSERT INTO usuario (usuario_nome, usuario_email, usuario_senha, usuario_telefone, usuario_endereco, doc_cpf_cnpj, nivel_de_acesso) VALUES (?,?,?,?,?,?,DEFAULT)";
 
         $stmt = $this->conexao->prepare($sql);
 
-        $stmt->bind_param('sssssss', 
+        $stmt->bind_param('ssssss', 
             $this->usuario_nome,
             $this->usuario_email,
-            $this->usuario_endereco,
             $this->usuario_senha,
+            $this->usuario_endereco,
             $this->usuario_telefone,
             $this->doc_cpf_cnpj,
-            $this->nivel_acesso
+    
         );
         
         if($stmt->execute()){
