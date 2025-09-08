@@ -12,7 +12,7 @@ include_once './../classes/class-combustivel.php';
 include_once './../classes/class-anuncio.php';
 include_once './../classes/class-veiculo.php';
 include_once './../classes/class-fotos.php';
-
+include_once './../functions/main-functions'
 
 
 
