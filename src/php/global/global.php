@@ -15,7 +15,7 @@ if(isset($criar_conta)){
     $usuario_endereco = $_POST['usuario_endereco'];
     $doc_cpf_cnpj = $_POST['doc_cpf_cnpj'];
     
-    $valida_documento()
+    $valida_documento();
 
     $usuario = new Usuario("", $usuario_nome, $usuario_senha, $usuario_email, $usuario_telefone, $usuario_endereco, $doc_cpf_cnpj, $conexao);
     $usuario->insereUsuario();
@@ -26,7 +26,7 @@ if(isset($criar_conta)){
     $modelo_desc = $_POST['modelo_desc'];
 
 
-    $modelo = new Modelo("", $modelo_desc, $conexao)
+    $modelo = new Modelo("", $modelo_desc, $conexao);
 
 
 

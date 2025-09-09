@@ -4,7 +4,7 @@
 $host ="localhost";
 $password ="";  
 $user ="root"; 
-$db = "auto-chase";
+$db = "autochase";
 $conexao = new mysqli($host, $user, $password, $db);
 
 
