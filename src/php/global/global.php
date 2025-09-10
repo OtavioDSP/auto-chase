@@ -15,27 +15,12 @@ if(isset($criar_conta)){
     $usuario_endereco = $_POST['usuario_endereco'];
     $doc_cpf_cnpj = $_POST['doc_cpf_cnpj'];
     
-    $valida_documento();
+    $doc_formatado = formatarDocumento($doc_cpf_cnpj);
 
-    $usuario = new Usuario("", $usuario_nome, $usuario_senha, $usuario_email, $usuario_telefone, $usuario_endereco, $doc_cpf_cnpj, $conexao);
+    $usuario = new Usuario("", $usuario_nome, $usuario_senha, $usuario_email, $usuario_telefone, $usuario_endereco, $doc_formatado, $conexao);
     $usuario->insereUsuario();
 
     echo "Conta criada com sucesso!";
-}if(isset($criar_modelo)){
-
-    $modelo_desc = $_POST['modelo_desc'];
-
-
-    $modelo = new Modelo("", $modelo_desc, $conexao);
-
-
-
-
-
-
-
-
-
 }
 
 

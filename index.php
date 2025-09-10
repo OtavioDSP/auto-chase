@@ -35,19 +35,13 @@
 
     <input type="text" name="modelo_desc">
 
-    <input type="submit" value="Enviar" name="criar_modelo">
+    <input type="submit" value="Enviar modelo" name="criar_modelo">
 
 
 
 
 </form>
 
-<script>
-function toggleSenha() {
-  const campo = document.getElementById("senha");
-  campo.type = (campo.type === "password") ? "text" : "password";
-}
-</script>
-
+<script src="/src/JS/js-functions.js"></script>
 </body>
 </html>
