@@ -1,15 +1,12 @@
 function toggleSenha() {
-  const campo = document.getElementById("senha");
-  campo.type = (campo.type === "password") ? "text" : "password";
+    const campo = document.getElementById("senha");
+    campo.type = (campo.type === "password") ? "text" : "password";
 }
 
 function verificarDocumento() {
     const input = document.getElementById('documento').value;
-
-    // Remove tudo que NÃO for número
     const somenteNumeros = input.replace(/\D/g, '');
-
-    const resultado = document.getElementById('resultado');
+    const resultado = document.getElementById('resultado'); // <- aqui estava errado
 
     if (somenteNumeros.length === 11) {
         resultado.textContent = "É um CPF válido em tamanho.";

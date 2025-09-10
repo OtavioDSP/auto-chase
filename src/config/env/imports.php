@@ -1,5 +1,6 @@
 <?php
-include_once 'logout.php';
+
+
 include_once '../../config/db/connect.php';
 include_once './../classes/class-usuario.php';
 include_once './../classes/class-chassi.php';
@@ -12,7 +13,7 @@ include_once './../classes/class-combustivel.php';
 include_once './../classes/class-anuncio.php';
 include_once './../classes/class-veiculo.php';
 include_once './../classes/class-fotos.php';
-include_once './../functions/main-functions'
+include_once './../functions/main-functions.php';
 
 
 

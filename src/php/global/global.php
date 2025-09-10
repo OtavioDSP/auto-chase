@@ -1,13 +1,9 @@
 <?php
 
-include_once '../../../src/config/env/imports.php';
 
+include_once '../../config/env/imports.php';
 
-
-$criar_conta = $_POST['criar_conta'];
-$criar_modelo = $_POST['criar_modelo'];
-
-if(isset($criar_conta)){
+if(isset($_POST['criar_conta'])){
     $usuario_nome = $_POST['usuario_nome'];
     $usuario_senha = $_POST['usuario_senha'];
     $usuario_email = $_POST['usuario_email'];
@@ -16,11 +12,23 @@ if(isset($criar_conta)){
     $doc_cpf_cnpj = $_POST['doc_cpf_cnpj'];
     
     $doc_formatado = formatarDocumento($doc_cpf_cnpj);
-
+    
     $usuario = new Usuario("", $usuario_nome, $usuario_senha, $usuario_email, $usuario_telefone, $usuario_endereco, $doc_formatado, $conexao);
     $usuario->insereUsuario();
 
-    echo "Conta criada com sucesso!";
+    
+}
+
+if(isset($_POST['listar_usuarios'])){
+    $usuario = new Usuario("", "", "", "", "", "", "", $conexao);
+    $usuarios = $usuario->listarUsuario();
+    
+            foreach ($usuarios as $usuario) {
+                echo "ID: " . $usuario['usuario_id'] . " - ";
+                echo "Nome: " . $usuario['usuario_nome'] . " - ";
+                echo "Email: " . $usuario['usuario_email'] . "<br>";
+                echo "doc: " . $usuario['usuario_doc_cpf_cnpj'] . "<br>";
+        }
 }
 
 

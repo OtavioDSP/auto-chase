@@ -26,7 +26,7 @@ Class Usuario{
     }
     public function insereUsuario(){
 
-        $sql = "INSERT INTO usuario (usuario_nome, usuario_email, usuario_senha, usuario_telefone, usuario_endereco, doc_cpf_cnpj, nivel_de_acesso) VALUES (?,?,?,?,?,?,DEFAULT)";
+        $sql = "INSERT INTO usuario (usuario_nome, usuario_email, usuario_senha, usuario_telefone, usuario_endereco, usuario_doc_cpf_cnpj, usuario_nivel_de_acesso) VALUES (?,?,?,?,?,?,DEFAULT)";
 
         $stmt = $this->conexao->prepare($sql);
 
@@ -78,7 +78,7 @@ Class Usuario{
 
             return $usuarios;
         }public function editarUsuario(){
-            $sql = "UPDATE Usuario SET usuario_nome = ?, usuario_email = ?, usuario_senha = ?, usuario_telefone = ?, usuario_endereco = ?, doc_cpf_cnpj = ?, nivel_acesso = ? WHERE usuario_id = ?";
+            $sql = "UPDATE Usuario SET usuario_nome = ?, usuario_email = ?, usuario_senha = ?, usuario_telefone = ?, usuario_endereco = ?, usuario_doc_cpf_cnpj = ?, nivel_acesso = ? WHERE usuario_id = ?";
             $stmt = $this->conexao->prepare($sql);
             $stmt->bind_param('ssssssis',
                 $this->usuario_nome,
