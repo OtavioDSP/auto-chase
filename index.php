@@ -54,14 +54,35 @@
 
 <form action="src/php/global/global.php" method="post"> 
     
+<?php
+echo __FILE__;
+include('.\src\config\db\connect.php');
+include(".\src\php\classes\class-usuario.php");
+?>
+<table>
+    <tr>
+        <td>ID</td>
+        <td>NOME</td>
+        <td>EMAIL</td>
+        <td>DOC</td>                    
+    </tr>
+<?php
+$usu = new Usuario("", "", "", "", "", "", "", $conexao);
+$usr = $usu->listarUsuario();         
+                          
+               
+    foreach ($usr as $usuario) {?>
+    <tr>
+        <td><?=$usuario['usuario_id']?></td>
+        <td>DESCONHECIDO</td>
+        <td><?=$usuario['usuario_id']?></td>
+        <td><?=$usuario['usuario_id']?></td>                    
+    </tr>
+              
+            
+    <?php } ?>
 
-
-    <div> 
-        <h3>usuarios cadastrados</h3> 
-        <input type="submit" value="Listar" name="listar_usuarios"> 
-
-    </div> 
-
+</table>
 
 </form>
 

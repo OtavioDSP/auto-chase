@@ -1,5 +1,4 @@
 <?php
-
 Class Usuario{
     private $usuario_id;
     private $usuario_nome;
@@ -24,6 +23,7 @@ Class Usuario{
         $this->conexao = $conexao;
         
     }
+    
     public function insereUsuario(){
 
         $sql = "INSERT INTO usuario (usuario_nome, usuario_email, usuario_senha, usuario_telefone, usuario_endereco, usuario_doc_cpf_cnpj, usuario_nivel_de_acesso) VALUES (?,?,?,?,?,?,DEFAULT)";
