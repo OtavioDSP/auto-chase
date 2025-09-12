@@ -61,26 +61,47 @@ include(".\src\php\classes\class-usuario.php");
 ?>
 <table>
     <tr>
-        <td>ID</td>
-        <td>NOME</td>
-        <td>EMAIL</td>
-        <td>DOC</td>                    
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Email</th>
+        <th>CPF/CNPJ</th>
+        <th>Senha (Hash)</th>
+        <th>Nível de Acesso</th>
+        <th colspan="2">Ações</th>            
     </tr>
 <?php
-$usu = new Usuario("", "", "", "", "", "", "", $conexao);
+$usu = new Usuario("", "", "", "", "", "", "", "",$conexao);
+
 $usr = $usu->listarUsuario();         
                           
                
     foreach ($usr as $usuario) {?>
-    <tr>
-        <td><?=$usuario['usuario_id']?></td>
-        <td>DESCONHECIDO</td>
-        <td><?=$usuario['usuario_id']?></td>
-        <td><?=$usuario['usuario_id']?></td>                    
-    </tr>
-              
-            
+    <form action="src/php/global/global.php" method="post">
+       
+       <tr>
+            <td><?= htmlspecialchars($usuario['usuario_id']) ?></td>
+            <td><?= htmlspecialchars($usuario['usuario_nome']) ?></td>
+            <td><?= htmlspecialchars($usuario['usuario_email']) ?></td>
+            <td><?= htmlspecialchars($usuario['usuario_doc_cpf_cnpj']) ?></td>
+            <td><?= htmlspecialchars($usuario['usuario_senha']) ?></td>
+            <td><?= htmlspecialchars($usuario['usuario_nivel_de_acesso']) ?></td>
+            <td>
+                <form method="post" action="caminho_para_deletar.php" onsubmit="return confirm('Tem certeza que deseja deletar este usuário?');">
+                    <input type='hidden' name='usuario_id' value='<?= htmlspecialchars($usuario['usuario_id']) ?>'>
+                    <input type='submit' name='deletar_usuario' value='Deletar'>
+                </form>
+            </td>
+            <td>
+                <a href="src/routes/edits.php?usuario_id=<?= htmlspecialchars($usuario['usuario_id']) ?>">Editar</a>
+            </td>
+        </tr>
+    </form>
+    
+
+
     <?php } ?>
+
+    
 
 </table>
 
