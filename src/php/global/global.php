@@ -32,12 +32,9 @@ if(isset($_POST['criar_conta'])){
     $usuario_doc_cpf_cnpj = $_POST['usuario_doc_cpf_cnpj'];
     $usuario_nivel_de_acesso = $_POST['usuario_nivel_de_acesso'];
     echo $usuario_senha;
-if($usuario_senha !="" and $usuario_doc_cpf_cnpj !=""){
+    
     $usu = new Usuario($usuario_id, $usuario_nome, $usuario_email, $usuario_senha, $usuario_telefone, $usuario_endereco, $usuario_doc_cpf_cnpj, $usuario_nivel_de_acesso, $conexao);
-}else{
-    echo "sem senha";
-    $usu = new Usuario($usuario_id, $usuario_nome, $usuario_email, "", $usuario_telefone, $usuario_endereco,"", $usuario_nivel_de_acesso, $conexao);
-}
+
     
     $usu->editarUsuario();
 }
