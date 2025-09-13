@@ -12,7 +12,7 @@
             $this->conexao = $conexao;
 
         }
-        public function criaMarca(){
+        public function insereMarca(){
             $sql = "INSERT INTO Marca (marca_desc) VALUES ?";
             $stmt = $this->conexao->prepare($sql);
             $stmt->bind_param('s',

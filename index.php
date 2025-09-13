@@ -25,7 +25,7 @@
     </style>
 </head>
 <body>
-
+<a href="src/routes/anuncio.html">Adicionar Anúncio</a>
 <form action="src/php/global/global.php" method="post">
 
     <h2>Operações de usuário</h2>

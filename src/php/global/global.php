@@ -37,5 +37,38 @@ if(isset($_POST['criar_conta'])){
 
     
     $usu->editarUsuario();
+}if(isset($_POST['enviar_informacoes'])){
+    $cor_desc = $_POST['cor_desc'];
+    $marca_desc = $_POST['marca_desc'];
+    $modelo_desc = $_POST['modelo_desc'];
+    $chassi_desc = $_POST['chassi_desc'];
+    $comb_desc = $_POST['comb_desc'];
+    $fipe_valor = $_POST['fipe_valor'];
+
+    echo $cor_desc; 
+    echo $marca_desc;
+    echo $modelo_desc;
+    echo $chassi_desc;
+    echo $comb_desc;
+    echo $fipe_valor;
+
+    $cor = new Cor("", $cor_desc, $conexao);
+    $marca = new Marca("", $marca_desc, $conexao);
+    $modelo = new Modelo("", $modelo_desc, $conexao);
+    $chassi = new Chassi("", $chassi_desc, $conexao);
+    $combustivel = new Combustivel("", $comb_desc, $conexao);
+    $fipe = new Fipe("", $fipe_valor, $conexao);
+    
+
+    $cor->insereCor();
+    $marca->insereMarca(); 
+    $modelo->insereModelo();
+    $chassi->insereChassi();
+    $combustivel->insereCombustivel();
+    $fipe->insereFipe();
+
+    
+}else{
+    echo "Nenhum formulário foi enviado.";
 }
-?>
+?> 

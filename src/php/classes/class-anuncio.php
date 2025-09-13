@@ -21,7 +21,7 @@
         }
 
 
-        public function criaAnuncio(){
+        public function insereAnuncio(){
             $sql = "INSERT INTO anuncio (anuncio_valor, anuncio_desc, fk_usuario_id, fk_veiculo_id) VALUES (?,?,?,?)";
             $stmt = $this->conexao->prepare($sql);
             $stmt->bind_param('issi',
