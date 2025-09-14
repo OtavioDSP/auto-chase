@@ -14,7 +14,7 @@
 
         }
         public function insereFoto(){
-            $sql = "INSERT INTO Foto (foto) VALUES ?";
+            $sql = "INSERT INTO Foto (foto) VALUES (?)";
             $stmt = $this->conexao->prepare($sql);
             $stmt->bind_param('s',
             $this->foto_caminho,

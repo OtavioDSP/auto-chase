@@ -4,23 +4,32 @@ Class Modelo{
 
     private $modelo_id;
     private $modelo_desc;
+    private $modelo_ano;
+    private $modelo_fipe;
+    private $fk_marca_id;
     private $conexao;
-
-    public function __construct($modelo_id, $modelo_desc, $conexao) {
-        $this->modelo_id = $modelo_id;
-        $this->$modelo_desc = $modelo_desc;
     
+    public function __construct($modelo_id, $modelo_desc, $modelo_ano, $modelo_fipe,
+     $fk_marca_id, $conexao) {
+        $this->modelo_id = $modelo_id;
+        $this->modelo_desc = $modelo_desc;
+        $this->modelo_ano = $modelo_ano;
+        $this->modelo_fipe = $modelo_fipe;
+        $this->fk_marca_id = $fk_marca_id;
         $this->conexao = $conexao;
     }
 
-    public function insereFipe(){
-        $sql = "INSERT INTO modelo (modelo_desc) VALUES (?,?)";
+    public function insereModelo(){
+        $sql = "INSERT INTO modelo (modelo_desc, modelo_valor_fipe, modelo_ano, fk_Marca_id) VALUES (?, ?, ?, ?)";
 
         $stmt = $this->conexao->prepare($sql);
         
-        $stmt->bind_param('s', 
+        $stmt->bind_param('sdsi', 
             $this->modelo_desc,
-            );
+            $this->modelo_fipe,
+            $this->modelo_ano,
+            $this->fk_marca_id
+        );
         if($stmt->execute()){
             echo "fipe inserida";
         }else{
@@ -55,7 +64,7 @@ Class Modelo{
     }public function listarModelo(){
             $sql = "
             SELECT 
-                modelo.modelo_desc
+                *
             FROM 
                 modelo
             ";
@@ -72,12 +81,12 @@ Class Modelo{
 
         }public function editarModelo(){
 
-            $sql = "UPDATE modelo SET modelo_desc = ? WHERE modelo_id = ?";
+            $sql = "UPDATE modelo SET modelo_desc = ?, modelo_ano = ?, modelo_valor_fipe = ? WHERE modelo_id = ?";
 
             $stmt = $this->conexao->prepare($sql);
 
-            $stmt->bind_param('si', $this->modelo_desc, $this->modelo_id);
-            
+            $stmt->bind_param('ssii', $this->modelo_desc, $this->modelo_ano, $this->modelo_fipe, $this->modelo_id);
+
             if($stmt->execute()){
                 echo "Modelo editado com sucesso";
             }else{

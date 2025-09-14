@@ -13,7 +13,7 @@
 
         }
         public function insereCor(){
-            $sql = "INSERT INTO Cor (cor_desc) VALUES ?";
+            $sql = "INSERT INTO Cor (cor_desc) VALUES (?)";
             $stmt = $this->conexao->prepare($sql);
             $stmt->bind_param('s',
             $this->cor_desc,

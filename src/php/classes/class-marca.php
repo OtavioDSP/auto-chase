@@ -13,13 +13,15 @@
 
         }
         public function insereMarca(){
-            $sql = "INSERT INTO Marca (marca_desc) VALUES ?";
+            $sql = "INSERT INTO Marca (marca_desc) VALUES (?)";
             $stmt = $this->conexao->prepare($sql);
             $stmt->bind_param('s',
             $this->marca_desc,
             );
              if($stmt->execute()){
+                return $this->conexao->insert_id;
                 echo "marca inserida";
+                
             }else{
                 echo "Erro ao Inserir marca". $stmt->error;
             }

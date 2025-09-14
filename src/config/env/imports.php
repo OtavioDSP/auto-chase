@@ -5,7 +5,6 @@ include_once '../../config/db/connect.php';
 include_once './../classes/class-usuario.php';
 include_once './../classes/class-chassi.php';
 include_once './../classes/class-modelo.php';
-include_once './../classes/class-fipe.php';
 include_once './../classes/class-marca.php';
 include_once './../classes/class-cor.php';
 include_once './../classes/class-chat.php';

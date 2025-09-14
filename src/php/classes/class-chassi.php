@@ -14,7 +14,7 @@
         }
         public function insereChassi(){
             
-            $sql = "INSERT INTO Chassi (chassi_desc) VALUES ?";
+            $sql = "INSERT INTO Chassi (chassi_desc) VALUES (?)";
             $stmt = $this->conexao->prepare($sql);
             $stmt->bind_param('s',
             $this->chassi_desc,
