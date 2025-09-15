@@ -3,28 +3,28 @@
 Class Veiculo{
 
     private $veiculo_id;
-    private $veiculo_descricao;
+    private $veiculo_desc;
     private $veiculo_quilometragem;
-    private $veiculo_ano;
+    
     private $conexao;
 
-    public function __construct($veiculo_id, $veiculo_descricao,$veiculo_quilometragem,  $veiculo_ano, $conexao) {
+    public function __construct($veiculo_id, $veiculo_desc,$veiculo_quilometragem, $conexao) {
         $this->veiculo_id = $veiculo_id;
-        $this->veiculo_descricao = $veiculo_descricao;
+        $this->veiculo_desc = $veiculo_desc;
         $this->veiculo_quilometragem = $veiculo_quilometragem;
-        $this->veiculo_ano = $veiculo_ano;
+        
         $this->conexao = $conexao;
     }
 
     public function insereVeiculo(){
-        $sql = "INSERT INTO Veiculo (veiculo_id, veiculo_descricao, veiculo_quilometragem, veiculo_ano) VALUES (?,?,?,?)";
+        $sql = "INSERT INTO Veiculo (veiculo_id, veiculo_desc, veiculo_quilometragem) VALUES (?,?,?)";
 
         $stmt = $this->conexao->prepare($sql);
         $stmt->bind_param("ssss", 
             $this->veiculo_id, 
-            $this->veiculo_descricao, 
+            $this->veiculo_desc, 
             $this->veiculo_quilometragem, 
-            $this->veiculo_ano, 
+            
         
         );
         if($stmt->execute()){
@@ -59,13 +59,12 @@ Class Veiculo{
         SELECT 
 
             veiculo.veiculo_id,
-            veiculo.veiculo_descricao,
+            veiculo.veiculo_desc,
             veiculo.veiculo_quilometragem,
-            veiculo.veiculo_ano,
             marca.marca_desc,
             cor.cor_desc,
             chassi.chassi_desc,
-            combustivel.combustivel_desc,
+            combustivel.comb_desc,
             marca.marca_desc,
             usuario.usuario_nome
 
@@ -74,11 +73,10 @@ Class Veiculo{
         INNER JOIN 
             cor ON veiculo.fk_cor_id = cor.cor_id
         INNER JOIN
-            chassi ON veiculo.chassi_id = chassi.chassi_id
+            chassi ON veiculo.fk_chassi_id = chassi.chassi_id
+        
         INNER JOIN
-            marca ON veiculo.marca_id = marca.marca_id
-        INNER JOIN
-            combustivel ON veiculo.combustivel_id = combustivel.combustivel_id
+            combustivel ON veiculo.fk_combustivel_id = combustivel.combustivel_id
         INNER JOIN
             usuario ON veiculo.usuario_id = usuario.usuario_id
         ";
@@ -93,12 +91,11 @@ Class Veiculo{
 
         return $veiculos;
     }  public function editarVeiculo(){
-        $sql = "UPDATE veiculo SET veiculo_descricao = ?, veiculo_quilometragem = ?, veiculo_ano = ?,  WHERE veiculo_id = ?";
+        $sql = "UPDATE veiculo SET veiculo_desc = ?, veiculo_quilometragem = ?, veiculo_ano = ?,  WHERE veiculo_id = ?";
         $stmt = $this->conexao->prepare($sql);
-        $stmt->bind_param("sssi", 
-            $this->veiculo_descricao, 
+        $stmt->bind_param("ssi", 
+            $this->veiculo_desc, 
             $this->veiculo_quilometragem, 
-            $this->veiculo_ano, 
             $this->veiculo_id  
         );
         if($stmt->execute()){
