@@ -72,7 +72,5 @@ if(isset($_POST['criar_conta'])){
    
 
     
-}else{
-    echo "Nenhum formulário foi enviado.";
 }
 ?> 

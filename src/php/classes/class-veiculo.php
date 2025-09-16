@@ -65,7 +65,6 @@ Class Veiculo{
             cor.cor_desc,
             chassi.chassi_desc,
             combustivel.comb_desc,
-            marca.marca_desc,
             usuario.usuario_nome
 
         FROM 
@@ -74,11 +73,16 @@ Class Veiculo{
             cor ON veiculo.fk_cor_id = cor.cor_id
         INNER JOIN
             chassi ON veiculo.fk_chassi_id = chassi.chassi_id
-        
         INNER JOIN
-            combustivel ON veiculo.fk_combustivel_id = combustivel.combustivel_id
+            combustivel ON veiculo.fk_combustivel_id = combustivel.comb_id
         INNER JOIN
-            usuario ON veiculo.usuario_id = usuario.usuario_id
+            anuncio ON veiculo.fk_anuncio_id = anuncio.anuncio_id
+        INNER JOIN
+            usuario ON anuncio.fk_usuario_id = usuario.usuario_id  
+        INNER JOIN
+            modelo ON veiculo.fk_modelo_id = modelo.modelo_id
+        INNER JOIN 
+            marca ON modelo.fk_marca_id = marca.marca_Id 
         ";
         $stmt = $this->conexao->prepare($sql);
         $stmt->execute();

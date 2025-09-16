@@ -23,6 +23,27 @@ Class Usuario{
         $this->conexao = $conexao;
         
     }
+    public function deletarUsuario(){
+
+
+        $sql = "DELETE FROM Usuario WHERE usuario_id = ?";
+
+
+        $stmt = $this->conexao->prepare($sql);
+
+
+        $stmt->bind_param('i',$this->usuario_id);
+
+
+        if($stmt->execute()){
+        echo "Usuario deletado com sucesso";
+
+        } // Dentro da sua classe Usuario
+    }
+
+
+
+           
     
     public function insereUsuario(){
 

@@ -50,9 +50,9 @@
 
 
 
-</form> 
 
-<form action="src/php/global/global.php" method="post"> 
+
+
     
 <?php
 echo __FILE__;
@@ -70,7 +70,10 @@ include(".\src\php\classes\class-veiculo.php");
         <th>Nível de Acesso</th>
         <th colspan="2">Ações</th>            
     </tr>
+
 <?php
+
+
 $usu = new Usuario("", "", "", "", "", "", "", "",$conexao);
 
 $usr = $usu->listarUsuario();         
@@ -79,13 +82,14 @@ $usr = $usu->listarUsuario();
     foreach ($usr as $usuario) {?>
     <form action="src/php/global/global.php" method="post">
        
-       <tr>
-            <td><?=$usuario['usuario_id']?></td>
-            <td><?=$usuario['usuario_nome']?></td>
-            <td><?=$usuario['usuario_email']?></td>
-            <td><?=$usuario['usuario_doc_cpf_cnpj']?></td>
-            <td><?=$usuario['usuario_senha']?></td>
-            <td><?=$usuario['usuario_nivel_de_acesso']?></td>
+    <tr>
+        <td><?$usuario['usuario_id']?></td>
+        <td><?$usuario['usuario_nome']?></td>
+        <td><?$usuario['usuario_email']?></td>
+        <td><?$usuario['usuario_doc_cpf_cnpj']?></td>
+        <td><?$usuario['usuario_senha']?></td>
+        <td><?$usuario['usuario_nivel_de_acesso']?></td>
+    </form>
             <td>
                 <form method="post" action="caminho_para_deletar.php" onsubmit="return confirm('Tem certeza que deseja deletar este usuário?');">
                     <input type='hidden' name='usuario_id' value='<?= $usuario['usuario_id']?>'>
@@ -96,36 +100,42 @@ $usr = $usu->listarUsuario();
                 <a href="src/routes/edits.php?usuario_id=<?= $usuario['usuario_id'] ?>">Editar</a>
             </td>
         </tr>
-    </form>
+    <
     
     
     
-    <form action="src/php/global/global.php" method="post">
+    </table>
+   
         
-        <?php
-        $vcl= new Veiculo("","","",$conexao);
-        $vecl= $vcl->listarVeiculo(); 
-        foreach($vcl as $veiculos)?>
-        <tr>
-            <td><?=$usuario['usuario_id']?></td>
-            <td><?=$usuario['usuario_nome']?></td>
-            <td><?=$usuario['usuario_email']?></td>
-            <td><?=$usuario['usuario_doc_cpf_cnpj']?></td>
-            <td><?=$usuario['usuario_senha']?></td>
-            <td><?=$usuario['usuario_nivel_de_acesso']?></td>
-            <td>
-                <form method="post" action="caminho_para_deletar.php" onsubmit="return confirm('Tem certeza que deseja deletar este usuário?');">
-                    <input type='hidden' name='usuario_id' value='<?= $usuario['usuario_id']?>'>
-                    <input type='submit' name='deletar_usuario' value='Deletar'>
-                </form>
-            </td>
-            <td>
-                <a href="src/routes/edits.php?usuario_id=<?= $usuario['usuario_id'] ?>">Editar</a>
-            </td>
-        </tr>    
+      <?php
+    
+    $vcl = new Veiculo("", "", "", $conexao);
+    
+   
+    $veiculosArray = $vcl->listarVeiculo(); 
 
+    
+    foreach ($veiculosArray as $veiculo): 
+?>
+    <tr>
+        <td><?($veiculo['veiculo_desc']) ?></td>
+        
+        <td>
+            <form method="post" action="caminho_para_deletar_veiculo.php" onsubmit="return confirm('Tem certeza que deseja deletar este veículo?');">
+                <input type='hidden' name='veiculo_id' value='<?= $veiculo['veiculo_id'] ?>'>
+                <input type='submit' value='Deletar_veiculo'>
+            </form>
+        </td>
 
-    </form>
+        <td>
+            <a href="src/routes/edits.php?veiculo_id=<?= $veiculo['veiculo_id'] ?>">Editar</a>
+        </td>
+    </tr>
+<?php 
+    // 7. Finaliza o bloco do foreach
+    endforeach; 
+?>
+   
     
 
 
