@@ -65,7 +65,8 @@ Class Veiculo{
             cor.cor_desc,
             chassi.chassi_desc,
             combustivel.comb_desc,
-            usuario.usuario_nome
+            usuario.usuario_nome,
+            modelo.modelo_desc
 
         FROM 
             veiculo
@@ -82,7 +83,8 @@ Class Veiculo{
         INNER JOIN
             modelo ON veiculo.fk_modelo_id = modelo.modelo_id
         INNER JOIN 
-            marca ON modelo.fk_marca_id = marca.marca_Id 
+            marca ON modelo.fk_marca_id = marca.marca_id 
+       
         ";
         $stmt = $this->conexao->prepare($sql);
         $stmt->execute();

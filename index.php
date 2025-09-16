@@ -55,7 +55,7 @@
 
     
 <?php
-echo __FILE__;
+
 include('.\src\config\db\connect.php');
 include(".\src\php\classes\class-usuario.php");
 include(".\src\php\classes\class-veiculo.php");
@@ -83,42 +83,75 @@ $usr = $usu->listarUsuario();
     <form action="src/php/global/global.php" method="post">
        
     <tr>
-        <td><?$usuario['usuario_id']?></td>
-        <td><?$usuario['usuario_nome']?></td>
-        <td><?$usuario['usuario_email']?></td>
-        <td><?$usuario['usuario_doc_cpf_cnpj']?></td>
-        <td><?$usuario['usuario_senha']?></td>
-        <td><?$usuario['usuario_nivel_de_acesso']?></td>
+        <td><?=$usuario['usuario_id']?></td>
+        <td><?=$usuario['usuario_nome']?></td>
+        <td><?=$usuario['usuario_email']?></td>
+        <td><?=$usuario['usuario_doc_cpf_cnpj']?></td>
+        <td><?=$usuario['usuario_senha']?></td>
+        <td><?=$usuario['usuario_nivel_de_acesso']?></td>
+
     </form>
+
             <td>
                 <form method="post" action="caminho_para_deletar.php" onsubmit="return confirm('Tem certeza que deseja deletar este usuário?');">
-                    <input type='hidden' name='usuario_id' value='<?= $usuario['usuario_id']?>'>
+                    <input type='hidden' name='usuario_id' value='<?=$usuario['usuario_id']?>'>
                     <input type='submit' name='deletar_usuario' value='Deletar'>
                 </form>
             </td>
             <td>
-                <a href="src/routes/edits.php?usuario_id=<?= $usuario['usuario_id'] ?>">Editar</a>
+                <a href="src/routes/edits.php?usuario_id=<?=$usuario['usuario_id'] ?>">Editar</a>
             </td>
         </tr>
-    <
-    
-    
-    
     </table>
-   
-        
-      <?php
+
+
+    <?php } ?>
+
+    <table>
+    <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Email</th>
+        <th>CPF/CNPJ</th>
+
+        <th colspan="2">Ações</th>            
+    </tr>
+    <?php
     
     $vcl = new Veiculo("", "", "", $conexao);
-    
-   
-    $veiculosArray = $vcl->listarVeiculo(); 
 
-    
+    $veiculosArray = $vcl->listarVeiculo(); 
+    print_r ($veiculosArray[1]);
     foreach ($veiculosArray as $veiculo): 
-?>
+    ?>
+    
+
+
+    <!-- fk_anuncio_id (UNI, int)
+Coluna
+fk_Chassi_id (MUL, int)
+Coluna
+fk_combustivel_id (MUL, int)
+Coluna
+ (MUL, int)
+Coluna
+ (MUL, int)
+Coluna
+veiculo_desc (varchar, NULL, nullable)
+Coluna
+ (PRI, int)
+Coluna
+ (decimal) -->
+
+
     <tr>
-        <td><?($veiculo['veiculo_desc']) ?></td>
+        <td><?=$veiculo['veiculo_id']?></td>
+        <td><?=$veiculo['veiculo_desc']?></td>
+        <td><?=$veiculo['veiculo_quilometragem']?></td>
+        <td><?=$veiculo['chassi_desc']?></td>
+        <td><?=$veiculo['cor_desc']?></td>
+        <td><?=$veiculo['marca_desc']?></td>
+
         
         <td>
             <form method="post" action="caminho_para_deletar_veiculo.php" onsubmit="return confirm('Tem certeza que deseja deletar este veículo?');">
@@ -128,24 +161,22 @@ $usr = $usu->listarUsuario();
         </td>
 
         <td>
-            <a href="src/routes/edits.php?veiculo_id=<?= $veiculo['veiculo_id'] ?>">Editar</a>
+            <a href="src/routes/edits.php?veiculo_id=<?=$veiculo['veiculo_id'] ?>">Editar</a>
         </td>
     </tr>
-<?php 
-    // 7. Finaliza o bloco do foreach
-    endforeach; 
-?>
+<?php endforeach;?>
+
+    
+    </table>
+    
    
     
 
-
-    <?php } ?>
-
     
 
-</table>
 
-</form>
+
+
 
 <script src="./src/JS/js-functions.js"></script>
 
