@@ -13,7 +13,7 @@ if(isset($_POST['criar_conta'])){
     
     $doc_formatado = formatarDocumento($doc_cpf_cnpj);
     
-    $usuario = new Usuario("", $usuario_nome, $usuario_senha, $usuario_email, $usuario_telefone, $usuario_endereco, $doc_formatado, "", $conexao);
+    $usuario = new Usuario("", $usuario_nome, $usuario_email, $usuario_senha, $usuario_endereco, $usuario_telefone, $doc_formatado, "", $conexao);
     $usuario->insereUsuario();
 
     

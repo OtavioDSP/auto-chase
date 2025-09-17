@@ -41,7 +41,7 @@
     <input type="text" name="usuario_telefone" placeholder="Telefone" required>
     <input type="text" name="usuario_endereco" placeholder="Endereço" required>
     
-    <input type="text" id="documento" oninput="verificarDocumento()" placeholder="Digite CPF ou CNPJ" required>
+    <input type="text" id="documento" oninput="verificarDocumento()" name="doc_cpf_cnpj" placeholder="Digite CPF ou CNPJ" required>
     <p id="resultado">Digite um CPF ou CNPJ.</p>
 
     <br><br>
@@ -80,7 +80,7 @@ $usr = $usu->listarUsuario();
                           
                
     foreach ($usr as $usuario) {?>
-    <form action="src/php/global/global.php" method="post">
+    
        
     <tr>
         <td><?=$usuario['usuario_id']?></td>
@@ -89,31 +89,33 @@ $usr = $usu->listarUsuario();
         <td><?=$usuario['usuario_doc_cpf_cnpj']?></td>
         <td><?=$usuario['usuario_senha']?></td>
         <td><?=$usuario['usuario_nivel_de_acesso']?></td>
+        <td>
+            <form method="post" action="src/php/global/global.php" onsubmit="return confirm('Tem certeza que deseja deletar este usuário?');">
+                <input type='hidden' name='usuario_id' value='<?=$usuario['usuario_id']?>'>
+                <input type='submit' name='deletar_usuario' value='Deletar'>
+            </form></td>
+        <td>
+        <a href="src/routes/edits.php?usuario_id=<?=$usuario['usuario_id'] ?>">Editar</a>
+        </td>
 
-    </form>
-
-            <td>
-                <form method="post" action="caminho_para_deletar.php" onsubmit="return confirm('Tem certeza que deseja deletar este usuário?');">
-                    <input type='hidden' name='usuario_id' value='<?=$usuario['usuario_id']?>'>
-                    <input type='submit' name='deletar_usuario' value='Deletar'>
-                </form>
-            </td>
-            <td>
-                <a href="src/routes/edits.php?usuario_id=<?=$usuario['usuario_id'] ?>">Editar</a>
-            </td>
-        </tr>
+    </tr>
+    
     </table>
 
 
     <?php } ?>
-
+    <br>
+    <br>
+    <br>
     <table>
     <tr>
-        <th>ID</th>
-        <th>Nome</th>
-        <th>Email</th>
-        <th>CPF/CNPJ</th>
-
+        <th>ID do veiculo</th>
+        <th>Descrição do veiculo</th>
+        <th>Quilometragem</th>
+        <th>Carroceria</th>
+        <th>cor</th>
+        <th>Marca</th>
+        <th>Modelo</th>
         <th colspan="2">Ações</th>            
     </tr>
     <?php
@@ -127,21 +129,7 @@ $usr = $usu->listarUsuario();
     
 
 
-    <!-- fk_anuncio_id (UNI, int)
-Coluna
-fk_Chassi_id (MUL, int)
-Coluna
-fk_combustivel_id (MUL, int)
-Coluna
- (MUL, int)
-Coluna
- (MUL, int)
-Coluna
-veiculo_desc (varchar, NULL, nullable)
-Coluna
- (PRI, int)
-Coluna
- (decimal) -->
+
 
 
     <tr>
@@ -151,10 +139,12 @@ Coluna
         <td><?=$veiculo['chassi_desc']?></td>
         <td><?=$veiculo['cor_desc']?></td>
         <td><?=$veiculo['marca_desc']?></td>
-
+        <td><?=$veiculo['comb_desc']?></td>
+        <td><?=$veiculo['modelo_desc']?></td>
+        
         
         <td>
-            <form method="post" action="caminho_para_deletar_veiculo.php" onsubmit="return confirm('Tem certeza que deseja deletar este veículo?');">
+            <form method="post" action="src/php/global/global.php" onsubmit="return confirm('Tem certeza que deseja deletar este veículo?');">
                 <input type='hidden' name='veiculo_id' value='<?= $veiculo['veiculo_id'] ?>'>
                 <input type='submit' value='Deletar_veiculo'>
             </form>
@@ -182,3 +172,8 @@ Coluna
 
 </body>
 </html>
+
+
+
+
+            
