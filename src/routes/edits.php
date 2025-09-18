@@ -14,10 +14,22 @@ include_once '../config/db/connect.php';
 
 include_once '../php/classes/class-usuario.php';
 
+
+
+
 if (!isset($_GET['usuario_id'])) {
     echo "ID do usuário não fornecido.";
     exit;
-}else if($_GET['usuario_id']){
+}elseif($_GET['usuario_id']){ 
+    $usuario_id = intval($_GET['usuario_id']);
+
+
+    $usu = new Usuario("","", "","", "", "", "", "", $conexao);
+
+
+    $usuario = $usu->buscarUsuarioPorId($usuario_id);
+    
+    ?>
      <h1>Editar Usuário</h1>
     <form action="../php/global/global.php" method="POST">
          <input type="hidden" name="usuario_id" value="<?=$usuario['usuario_id']?>">
@@ -46,23 +58,27 @@ if (!isset($_GET['usuario_id'])) {
         <br>
         <button type="submit" name="editar">Salvar Alterações</button>
     </form>
+<?}else if($_GET['veiculo_id']){?>
+    teste
 
 
-}
-
-$usuario_id = intval($_GET['usuario_id']);
 
 
-$usu = new Usuario("","", "","", "", "", "", "", $conexao);
+
+   
+
+</body>
+</html>
+
+    </form>
+<?php
+} else if ($_GET['veiculo_id']) {
+    // Aqui está o erro: Não tem um fechamento correto para o bloco anterior
+    // Código para editar veículo
+}?>
 
 
-$usuario = $usu->buscarUsuarioPorId($usuario_id);
 
-
-if (!$usuario) {
-    echo "Usuário não encontrado!";
-    exit;
-}
 
 
 
