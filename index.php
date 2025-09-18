@@ -25,58 +25,49 @@
     </style>
 </head>
 <body>
-<a href="src/routes/anuncio.php">Adicionar Anúncio</a>
-<form action="src/php/global/global.php" method="post">
+    <a href="src/routes/anuncio.php">Adicionar Anúncio</a>
+    <form action="src/php/global/global.php" method="post">
 
-    <h2>Operações de usuário</h2>
-    <p>criar conta</p>
-    <input type="text" name="usuario_nome" placeholder="Nome de usuário" required>
+        <h2>Operações de usuário</h2>
+        <p>criar conta</p>
+        <input type="text" name="usuario_nome" placeholder="Nome de usuário" required>
 
-    <div class="senha-container">
-        <input type="password" id="senha" name="usuario_senha" placeholder="Senha" required>
-        <button type="button" onclick="toggleSenha()">👁</button>
-    </div>
+        <div class="senha-container">
+            <input type="password" id="senha" name="usuario_senha" placeholder="Senha" required>
+            <button type="button" onclick="toggleSenha()">👁</button>
+        </div>
 
-    <input type="email" name="usuario_email" placeholder="Email" required>
-    <input type="text" name="usuario_telefone" placeholder="Telefone" required>
-    <input type="text" name="usuario_endereco" placeholder="Endereço" required>
-    
-    <input type="text" id="documento" oninput="verificarDocumento()" name="doc_cpf_cnpj" placeholder="Digite CPF ou CNPJ" required>
-    <p id="resultado">Digite um CPF ou CNPJ.</p>
+        <input type="email" name="usuario_email" placeholder="Email" required>
+        <input type="text" name="usuario_telefone" placeholder="Telefone" required>
+        <input type="text" name="usuario_endereco" placeholder="Endereço" required>
+        
+        <input type="text" id="documento" oninput="verificarDocumento()" name="doc_cpf_cnpj" placeholder="Digite CPF ou CNPJ" required>
+        <p id="resultado">Digite um CPF ou CNPJ.</p>
 
-    <br><br>
-    <input type="submit" value="Enviar" name="criar_conta">
-</form>
+        <br><br>
+        <input type="submit" value="Enviar" name="criar_conta">
+    </form>
 
+    <?php
+    include('.\src\config\db\connect.php');
+    include(".\src\php\classes\class-usuario.php");
+    include(".\src\php\classes\class-veiculo.php");
+    ?>
 
+    <table border="1" cellpadding="5" cellspacing="0">
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Email</th>
+            <th>CPF/CNPJ</th>
+            <th>Senha (Hash)</th>
+            <th>Nível de Acesso</th>
+            <th>Ações</th>            
+        </tr>
 
-
-
-
-    
-<?php
-
-include('.\src\config\db\connect.php');
-include(".\src\php\classes\class-usuario.php");
-include(".\src\php\classes\class-veiculo.php");
-?>
-<table>
-    <tr>
-        <th>ID</th>
-        <th>Nome</th>
-        <th>Email</th>
-        <th>CPF/CNPJ</th>
-        <th>Senha (Hash)</th>
-        <th>Nível de Acesso</th>
-        <th colspan="2">Ações</th>            
-    </tr>
-
-<?php
-
-
-$usu = new Usuario("", "", "", "", "", "", "", "",$conexao);
-
-$usr = $usu->listarUsuario();         
+        <?php
+        $usu = new Usuario("", "", "", "", "", "", "", "", $conexao);
+        $usr = $usu->listarUsuario();         
                           
                
     foreach ($usr as $usuario) {?>
@@ -90,7 +81,7 @@ $usr = $usu->listarUsuario();
         <td><?=$usuario['usuario_senha']?></td>
         <td><?=$usuario['usuario_nivel_de_acesso']?></td>
         <td>
-            <form method="post" action="./src/php/global/global.php" onsubmit="return confirm('Tem certeza que deseja deletar este usuário?');">
+            <form method="post" action="src/php/global/global.php" onsubmit="return confirm('Tem certeza que deseja deletar este usuário?');">
                 <input type='hidden' name='usuario_id' value='<?=$usuario['usuario_id']?>'>
                 <input type='submit' name='deletar_usuario' value='Deletar'>
             </form></td>
@@ -144,7 +135,7 @@ $usr = $usu->listarUsuario();
         
         
         <td>
-            <form method="post" action="./src/php/global/global.php" onsubmit="return confirm('Tem certeza que deseja deletar este veículo?');">
+            <form method="post" action="src/php/global/global.php" onsubmit="return confirm('Tem certeza que deseja deletar este veículo?');">
                 <input type='hidden' name='veiculo_id' value='<?= $veiculo['veiculo_id'] ?>'>
                 <input type='submit' value='Deletar_veiculo'>
             </form>
@@ -158,22 +149,7 @@ $usr = $usu->listarUsuario();
 
     
     </table>
-    
-   
-    
 
-    
-
-
-
-
-
-<script src="./src/JS/js-functions.js"></script>
-
+    <script src="./src/JS/js-functions.js"></script>
 </body>
 </html>
-
-
-
-
-            
