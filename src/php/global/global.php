@@ -13,13 +13,15 @@ if(isset($_POST['criar_conta'])){
     
     $doc_formatado = formatarDocumento($doc_cpf_cnpj);
     
+    
+
     $usuario = new Usuario("", $usuario_nome, $usuario_email, $usuario_senha, $usuario_endereco, $usuario_telefone, $doc_formatado, "", $conexao);
     $usuario->insereUsuario();
 
     
 }if(isset($_POST['deletar_usuario'])){
 
-    $usu = new Usuario($_POST['usuario_id'],"","","","","","","",$conexao);
+    $usu = new Usuario($usuario_id,"","","","","","","",$conexao);
     $usu->deletarUsuario();
 
 }if(isset($_POST['editar'])){

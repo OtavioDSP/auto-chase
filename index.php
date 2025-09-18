@@ -90,7 +90,7 @@ $usr = $usu->listarUsuario();
         <td><?=$usuario['usuario_senha']?></td>
         <td><?=$usuario['usuario_nivel_de_acesso']?></td>
         <td>
-            <form method="post" action="src/php/global/global.php" onsubmit="return confirm('Tem certeza que deseja deletar este usuário?');">
+            <form method="post" action="./src/php/global/global.php" onsubmit="return confirm('Tem certeza que deseja deletar este usuário?');">
                 <input type='hidden' name='usuario_id' value='<?=$usuario['usuario_id']?>'>
                 <input type='submit' name='deletar_usuario' value='Deletar'>
             </form></td>
@@ -144,7 +144,7 @@ $usr = $usu->listarUsuario();
         
         
         <td>
-            <form method="post" action="src/php/global/global.php" onsubmit="return confirm('Tem certeza que deseja deletar este veículo?');">
+            <form method="post" action="./src/php/global/global.php" onsubmit="return confirm('Tem certeza que deseja deletar este veículo?');">
                 <input type='hidden' name='veiculo_id' value='<?= $veiculo['veiculo_id'] ?>'>
                 <input type='submit' value='Deletar_veiculo'>
             </form>
