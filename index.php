@@ -1,33 +1,17 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
+<link rel="stylesheet" href="src/css/index.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro Usuário</title>
-    <style>
-        #resultado {
-            font-weight: bold;
-            margin-top: 5px;
-        }
-        .senha-container {
-            position: relative;
-            display: inline-block;
-        }
-        .senha-container button {
-            position: absolute;
-            right: 5px;
-            top: 50%;
-            transform: translateY(-50%);
-            border: none;
-            background: none;
-            cursor: pointer;
-        }
-    </style>
+
 </head>
 <body>
 
 <form action="src/php/global/global.php" method="post">
-
+<div class="login-container">
+    <img src="src/img/r8ph.png" alt="logo" class="logo">
     <h2>Operações de usuário</h2>
     <p>criar conta</p>
     <input type="text" name="usuario_nome" placeholder="Nome de usuário" required>
@@ -46,6 +30,7 @@
 
     <br><br>
     <input type="submit" value="Enviar" name="criar_conta">
+</div>
 </form>
 
 
