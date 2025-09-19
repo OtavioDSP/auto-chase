@@ -10,11 +10,12 @@
 include_once '../config/db/connect.php'; 
 include_once '../php/classes/class-usuario.php';
 include_once '../php/classes/class-veiculo.php';
+
 if (isset($_GET['usuario_id'])) {
     // Converte o ID para inteiro
     $usuario_id = intval($_GET['usuario_id']);
     $veiculo_id = intval($_GET['veiculo_id']);
-
+    $modelo_id = intval($_GET['modelo_id']);
     $usu = new Usuario("", "", "", "", "", "", "", "", $conexao);
     $vec = new Veiculo("","","",$conexao); 
     
@@ -56,9 +57,37 @@ if (isset($_GET['usuario_id'])) {
     }
 
 } elseif (isset($_GET['veiculo_id'])) {?>
-   
-<?php }else {
-    echo "ID do usuário ou veículo não fornecido.";
+
+    <form action="../php/global/global.php" method="post">
+
+
+    </form>
+
+
+<?php }elseif($modelo_id) {
+
+    $vec = new Veiculo("","","","","",$conexao);
+    $modelo = $vec->buscarModeloPorId($modelo_id);
+    if ($modelo) {
+        ?>
+        <h1>Editar Modelo</h1>
+        <form action="../php/global/global.php" method="POST">
+            <input type="hidden" name="modelo_id" value="<?= $modelo['modelo_id'] ?>">
+
+            <label for="modelo_nome">Nome do Modelo:</label>
+            <input type="text" id="modelo_nome" name="modelo_nome" value="<?= $modelo['modelo_nome'] ?>" required>
+            
+            <label for="marca_id">Marca:</label>
+            <input type="text" id="marca_id" name="marca_id" value="<?= $modelo['marca_id'] ?>" required>
+
+            <br>
+            <button type="submit" name="editar_modelo">Salvar Alterações</button>
+        </form>
+        <?php
+    } else {
+        echo "<p>Modelo não encontrado.</p>";
+    }
+
 }
 ?>
 </body>

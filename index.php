@@ -28,6 +28,7 @@
     include('.\src\config\db\connect.php');
     include(".\src\php\classes\class-usuario.php");
     include(".\src\php\classes\class-veiculo.php");
+    include(".\src\php\classes\class-modelo.php");
     ?>
 
     <table border="1" cellpadding="8" cellspacing="0" style="border-collapse: collapse; width: 100%; text-align: left;">
@@ -112,6 +113,39 @@
             </tr>
             <?php endforeach; ?>
         </tbody>
+    </table>
+
+      <table border="1" cellpadding="8" cellspacing="0" style="border-collapse: collapse; width: 100%; text-align: left;">
+        <thead>
+            <tr>
+                <th>ID do modelo</th>
+                <th>Nome do modelo</th>
+                <th>Modelo Fipe</th>
+                <th>Marca do modelo</th>
+                <th>Ano do modelo</th>
+                <th colspan="2">Ações</th>
+            <?php
+            $modelo = new Modelo("", "", "","", "", $conexao);
+            $modelosArray = $modelo->listarModelo();
+            foreach ($modelosArray as $modelo): ?>
+            <tr>
+                <td><?=$modelo['modelo_id']?></td>
+                <td><?=$modelo['modelo_desc']?></td>
+                <td><?=$modelo['modelo_valor_fipe']?></td>
+                <td><?=$modelo['marca_desc']?></td>
+                <td><?=$modelo['modelo_ano']?></td>
+                <td>
+                    <form method="post" action="src/php/global/global.php" onsubmit="return confirm('Tem certeza que deseja deletar este modelo?');">
+                        <input type='hidden' name='modelo_id' value='<?= $modelo['modelo_id'] ?>'>
+                        <input type='submit' value='Deletar Modelo'>
+                    </form>
+                </td>
+                <td>
+                    <a href="src/routes/edits.php?modelo_id=<?=$modelo['modelo_id'] ?>">Editar</a>
+                </td>
+            </tr>
+            <?php endforeach; ?>
+
     </table>
 
     <script src="./src/JS/js-functions.js"></script>
