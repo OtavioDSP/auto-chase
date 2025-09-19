@@ -66,7 +66,8 @@ Class Veiculo{
             chassi.chassi_desc,
             combustivel.comb_desc,
             usuario.usuario_nome,
-            modelo.modelo_desc
+            modelo.modelo_desc,
+            modelo.modelo_ano
 
         FROM 
             veiculo
@@ -109,7 +110,23 @@ Class Veiculo{
         }else{
             echo "Erro ao editar veiculo". $stmt->error;
         }
-    }
+    }public function buscarVeiculoPorId($veiculo_id) {
+            $sql = "SELECT * FROM usuario WHERE usuario_id = ?";
+            
+            $stmt = $this->conexao->prepare($sql);
+            
+            // Vincula o ID do usuário ao placeholder da consulta
+            // 'i' indica que o parâmetro é um inteiro
+            $stmt->bind_param('i', $veiculo_id);
+            
+            $stmt->execute();
+            
+            $result = $stmt->get_result();
+            
+            // Retorna a primeira linha do resultado como um array associativo
+            // Ou 'null' se nenhum usuário for encontrado
+            return $result->fetch_assoc();
+        }
 
 
 

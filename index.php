@@ -79,7 +79,9 @@
                 <th>Carroceria</th>
                 <th>Cor</th>
                 <th>Marca</th>
+                <th>Combustivel</th>
                 <th>Modelo</th>
+                <th>Ano</th>
                 <th colspan="2">Ações</th>
             </tr>
         </thead>
@@ -96,6 +98,8 @@
                 <td><?=$veiculo['cor_desc']?></td>
                 <td><?=$veiculo['marca_desc']?></td>
                 <td><?=$veiculo['comb_desc']?></td>
+                <td><?=$veiculo['modelo_desc']?></td>
+                <td><?=$veiculo['modelo_ano']?></td>
                 <td>
                     <form method="post" action="src/php/global/global.php" onsubmit="return confirm('Tem certeza que deseja deletar este veículo?');">
                         <input type='hidden' name='veiculo_id' value='<?= $veiculo['veiculo_id'] ?>'>
