@@ -18,7 +18,7 @@
         <input type="email" name="usuario_email" placeholder="Email" required>
         <input type="text" name="usuario_telefone" placeholder="Telefone" required>
         <input type="text" name="usuario_endereco" placeholder="Endereço" required>
-        <input type="text" id="documento" oninput="verificarDocumento()" name="doc_cpf_cnpj" placeholder="Digite CPF ou CNPJ" required>
+        <input type="text" id="documento" oninput="verificarDocumento()" name="doc_cpf_cnpj" placeholder="Digite CPF ou CNPJ" required >
         <p id="resultado">Digite um CPF ou CNPJ.</p>
        
         <input type="submit" value="Enviar" name="criar_conta">
@@ -67,6 +67,7 @@
     include(".\src\php\classes\class-cor.php");
     include(".\src\php\classes\class-chassi.php");
     include(".\src\php\classes\class-combustivel.php");
+    include(".\src\php\classes\class-anuncio.php");
     ?>
 
     <table border="1" cellpadding="8" cellspacing="0" style="border-collapse: collapse; width: 100%; text-align: left;">
@@ -303,6 +304,64 @@
 
     </table>
 
+ <table border="1" cellpadding="8" cellspacing="0" style="border-collapse: collapse; width: 100%; text-align: left;">
+    <thead>
+        <tr>
+            <!-- do anuncio -->
+            <th>ID do Anúncio</th>
+            <th>Descrição do Anúncio</th>
+            <th>Data de Criação</th>
+            <th>Valor</th>
+
+            <!-- do carro -->
+            <th>Nome do Veículo</th>
+            <th>Modelo</th>
+            <th>Ano</th>
+            <th>Marca</th>
+            <th>Chassi</th>
+            <th>Combustível</th>
+
+            <!-- Ações -->
+            <th colspan="2">Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php
+        // Crie uma instância da classe Anuncio e busque os anúncios
+        $anuncio = new Anuncio("", "", "", "", "", $conexao);
+        $anuncioArray = $anuncio->listarAnuncios();
+
+        // Itera sobre os anúncios e exibe os dados
+        foreach ($anuncioArray as $anuncio): ?>
+            <tr>
+                <td><?=$anuncio['anuncio_id']?></td>
+                <td><?=$anuncio['anuncio_desc']?></td>
+                <td><?=$anuncio['data_de_criacao']?></td>
+                <td><?=number_format($anuncio['anuncio_valor'], 2, ',', '.')?></td> <!-- Valor formatado -->
+                
+                <!-- Informações do carro -->
+                <td><?=$anuncio['carro_desc']?></td>
+                <td><?=$anuncio['modelo_desc']?></td>
+                <td><?=$anuncio['carro_ano']?></td>
+                <td><?=$anuncio['marca_desc']?></td>
+                <td><?=$anuncio['chassi_desc']?></td>
+                <td><?=$anuncio['combustivel_desc']?></td>
+
+                <!-- Ações -->
+                <td>
+                    <form method="post" action="src/php/global/global.php" onsubmit="return confirm('Tem certeza que deseja deletar este anúncio?');">
+                        <input type='hidden' name='anuncio_id' value='<?= $anuncio['anuncio_id'] ?>'>
+                        <input type='submit' value='Deletar Anúncio'>
+                    </form>
+                </td>
+                <td>
+                    <a href="src/routes/edits.php?anuncio_id=<?=$anuncio['anuncio_id'] ?>">Editar</a>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>
+<br><br>
 
 
     
