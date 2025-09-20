@@ -49,7 +49,7 @@
 
 
         } public function listarCombustivel(){
-            $sql = "SELECT comb_desc FROM combustivel";
+            $sql = "SELECT * FROM combustivel";
             $stmt = $this->conexao->prepare($sql);
             $stmt->execute();
             $resultado = $stmt->get_result();

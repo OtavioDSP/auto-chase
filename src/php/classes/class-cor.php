@@ -48,8 +48,8 @@
 
 
 
-        } public function listarCor(){
-            $sql = "SELECT cor.cor_desc FROM cor";
+        } public function listarCores(){
+            $sql = "SELECT * FROM cor";
             $stmt = $this->conexao->prepare($sql);
             $stmt->execute();
             $resultado = $stmt->get_result();

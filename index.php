@@ -20,8 +20,9 @@
         <input type="text" name="usuario_endereco" placeholder="Endereço" required>
         <input type="text" id="documento" oninput="verificarDocumento()" name="doc_cpf_cnpj" placeholder="Digite CPF ou CNPJ" required>
         <p id="resultado">Digite um CPF ou CNPJ.</p>
-        <br><br>
+       
         <input type="submit" value="Enviar" name="criar_conta">
+         <br><br>
     </form>
 
     <?php
@@ -29,6 +30,10 @@
     include(".\src\php\classes\class-usuario.php");
     include(".\src\php\classes\class-veiculo.php");
     include(".\src\php\classes\class-modelo.php");
+    include(".\src\php\classes\class-marca.php");
+    include(".\src\php\classes\class-cor.php");
+    include(".\src\php\classes\class-chassi.php");
+    include(".\src\php\classes\class-combustivel.php");
     ?>
 
     <table border="1" cellpadding="8" cellspacing="0" style="border-collapse: collapse; width: 100%; text-align: left;">
@@ -114,7 +119,7 @@
             <?php endforeach; ?>
         </tbody>
     </table>
-
+    <br><br>
       <table border="1" cellpadding="8" cellspacing="0" style="border-collapse: collapse; width: 100%; text-align: left;">
         <thead>
             <tr>
@@ -147,6 +152,129 @@
             <?php endforeach; ?>
 
     </table>
+
+
+
+<br><br>
+
+    <table border="1" cellpadding="8" cellspacing="0" style="border-collapse: collapse; width: 100%; text-align: left;">
+        <thead>
+            <tr>
+                <th>ID da marca</th>
+                <th>Nome da marca</th>
+                <th colspan="2">Ações</th>
+            <?php
+            $marca = new Marca("","", $conexao);
+            $marcaArray = $marca->listarMarcas();
+            foreach ($marcaArray as $marca): ?>
+            <tr>
+                <td><?=$marca['marca_id']?></td>
+                <td><?=$marca['marca_desc']?></td>
+                <td>
+                    <form method="post" action="src/php/global/global.php" onsubmit="return confirm('Tem certeza que deseja deletar este modelo?');">
+                        <input type='hidden' name='marca_id' value='<?= $marca['marca_id'] ?>'>
+                        <input type='submit' value='Deletar Marca'>
+                    </form>
+                </td>
+                <td>
+                    <a href="src/routes/edits.php?marca_id=<?=$marca['marca_id'] ?>">Editar</a>
+                </td>
+            </tr>
+            <?php endforeach; ?>
+
+    </table>
+<br>
+<br>
+    <table border="1" cellpadding="8" cellspacing="0" style="border-collapse: collapse; width: 100%; text-align: left;">
+        <thead>
+            <tr>
+                <th>ID da cor</th>
+                <th>Nome da cor</th>
+                <th colspan="2">Ações</th>
+            <?php
+            $cor = new Cor("","", $conexao);
+            $corArray = $cor->listarCores();
+            foreach ($corArray as $cor): ?>
+            <tr>
+                <td><?=$cor['cor_id']?></td>
+                <td><?=$cor['cor_desc']?></td>
+                <td>
+                    <form method="post" action="src/php/global/global.php" onsubmit="return confirm('Tem certeza que deseja deletar este cor?');">
+                        <input type='hidden' name='cor_id' value='<?= $cor['cor'] ?>'>
+                        <input type='submit' value='Deletar cor'>
+                    </form>
+                </td>
+                <td>
+                    <a href="src/routes/edits.php?cor_id=<?=$cor['cor_id']?>">Editar</a>
+                </td>
+            </tr>
+            <?php endforeach; ?>
+    </table>
+
+    <br><br>
+    
+    <table border="1" cellpadding="8" cellspacing="0" style="border-collapse: collapse; width: 100%; text-align: left;">
+        <thead>
+            <tr>
+                <th>ID da carroceria</th>
+                <th>Nome da carroceria</th>
+                <th colspan="2">Ações</th>
+            <?php
+            $carroceria = new Chassi("","", $conexao);
+            $carroceriaArray = $carroceria->listarChassis();
+            foreach ($carroceriaArray as $chassi): ?>
+            <tr>
+                <td><?=$chassi['chassi_id']?></td>
+                <td><?=$chassi['chassi_desc']?></td>
+                <td>
+                    <form method="post" action="src/php/global/global.php" onsubmit="return confirm('Tem certeza que deseja deletar este modelo?');">
+                        <input type='hidden' name='chassi_id' value='<?= $chassi['chassi_id'] ?>'>
+                        <input type='submit' value='Deletar carroceria'>
+                    </form>
+                </td>
+                <td>
+                    <a href="src/routes/edits.php?marca_id=<?=$chassi['chassi_id'] ?>">Editar</a>
+                </td>
+            </tr>
+            <?php endforeach; ?>
+
+    </table>
+    <br><br>
+
+    <table border="1" cellpadding="8" cellspacing="0" style="border-collapse: collapse; width: 100%; text-align: left;">
+        <thead>
+            <tr>
+                <th>ID do combustivel</th>
+                <th>Nome do combustivel</th>
+                <th colspan="2">Ações</th>
+            <?php
+            $comb = new Combustivel("","", $conexao);
+            $combArray = $comb->listarCombustivel();
+            foreach ($combArray as $comb): ?>
+            <tr>
+                <td><?=$comb['comb_id']?></td>
+                <td><?=$comb['comb_desc']?></td>
+                <td>
+                    <form method="post" action="src/php/global/global.php" onsubmit="return confirm('Tem certeza que deseja deletar este modelo?');">
+                        <input type='hidden' name='comb_id' value='<?= $comb['comb_id'] ?>'>
+                        <input type='submit' value='Deletar combustivel'>
+                    </form>
+                </td>
+                <td>
+                    <a href="src/routes/edits.php?comb_id=<?=$comb['comb_id'] ?>">Editar</a>
+                </td>
+            </tr>
+            <?php endforeach; ?>
+
+    </table>
+
+
+
+    
+
+
+
+
 
     <script src="./src/JS/js-functions.js"></script>
 </body>

@@ -55,7 +55,7 @@
         }public function listarMarcas(){
             $sql = "
             SELECT 
-                marca.marca_desc
+                *
             FROM 
                 marca
             ";
