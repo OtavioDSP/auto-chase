@@ -25,6 +25,39 @@
          <br><br>
     </form>
 
+<form action="../php/global/global.php" method="POST">
+        
+        <h1>Cor - Adicionar Cor</h1>
+        <input type="text" placeholder="Cor" name="cor_desc">
+
+        <h1>Marca - Adicionar Marca</h1>
+        <input type="text" placeholder="Marca" name="marca_desc">
+        
+        <h1>Modelo - Adicionar Modelo</h1>
+        <input type="text" placeholder="Modelo" name="modelo_desc">
+        <input type="text" id="modelo_ano" name="modelo_ano" pattern="\d{4}" maxlength="4" required placeholder="Ano">
+        <input type="text" placeholder="FIPE" name="modelo_fipe">
+        
+        <h1>Chassi - Adicionar Chassi</h1>
+        <input type="text" placeholder="Chassi" name="chassi_desc">
+
+        <h1>Combustivel - Adicionar Combustivel</h1>
+        <input type="text" placeholder="Combustivel" name="comb_desc">
+      
+
+        <input type="submit" value="Enviar" name="enviar_informacoes">
+        
+    </form>
+
+    <br>
+    <br>
+
+
+
+
+
+
+
     <?php
     include('.\src\config\db\connect.php');
     include(".\src\php\classes\class-usuario.php");
@@ -132,11 +165,13 @@
             <?php
             $modelo = new Modelo("", "", "","", "", $conexao);
             $modelosArray = $modelo->listarModelo();
-            foreach ($modelosArray as $modelo): ?>
+            foreach ($modelosArray as $modelo): 
+            $valor_formatado = number_format($modelo['modelo_valor_fipe'], 2, ',', '.');?>
             <tr>
+                 
                 <td><?=$modelo['modelo_id']?></td>
                 <td><?=$modelo['modelo_desc']?></td>
-                <td><?=$modelo['modelo_valor_fipe']?></td>
+                <td>R$: <?=$valor_formatado?></td>
                 <td><?=$modelo['marca_desc']?></td>
                 <td><?=$modelo['modelo_ano']?></td>
                 <td>
