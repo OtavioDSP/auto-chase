@@ -83,8 +83,8 @@ Class Veiculo{
             usuario ON anuncio.fk_usuario_id = usuario.usuario_id  
         INNER JOIN
             modelo ON veiculo.fk_modelo_id = modelo.modelo_id
-        INNER JOIN 
-            marca ON modelo.fk_marca_id = marca.marca_id 
+        INNER JOIN
+            marca ON modelo.fk_marca_id = marca.marca_id
        
         ";
         $stmt = $this->conexao->prepare($sql);

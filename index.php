@@ -336,16 +336,16 @@
             <tr>
                 <td><?=$anuncio['anuncio_id']?></td>
                 <td><?=$anuncio['anuncio_desc']?></td>
-                <td><?=$anuncio['data_de_criacao']?></td>
+                <td><?=$anuncio['anuncio_data_de_criacao']?></td>
                 <td><?=number_format($anuncio['anuncio_valor'], 2, ',', '.')?></td> <!-- Valor formatado -->
                 
                 <!-- Informações do carro -->
-                <td><?=$anuncio['carro_desc']?></td>
+                <td><?=$anuncio['veiculo_desc']?></td>
                 <td><?=$anuncio['modelo_desc']?></td>
-                <td><?=$anuncio['carro_ano']?></td>
+                <td><?=$anuncio['modelo_ano']?></td>
                 <td><?=$anuncio['marca_desc']?></td>
                 <td><?=$anuncio['chassi_desc']?></td>
-                <td><?=$anuncio['combustivel_desc']?></td>
+                <td><?=$anuncio['comb_desc']?></td>
 
                 <!-- Ações -->
                 <td>

@@ -45,46 +45,72 @@ class Anuncio {
 
     // Lista todos os anúncios no banco de dados
     public function listarAnuncios() {
-        $sql = "
+    $sql = "
         SELECT 
+            -- Dados do anúncio
             anuncio.anuncio_id,
             anuncio.anuncio_desc,
             anuncio.anuncio_valor,
             anuncio.anuncio_data_de_criacao,
             anuncio.anuncio_data_de_alteracao,
+            combustivel.comb_desc,
+            
+            -- Usuário que criou o anúncio
             usuario.usuario_nome,
+            
+            -- Dados do veículo
             veiculo.veiculo_desc,
             
+            -- Modelo do veículo
             modelo.modelo_desc,
             modelo.modelo_ano,
+            modelo.modelo_valor_fipe,
+            
+            -- Marca do modelo
             marca.marca_desc,
+            
+            -- Chassi
             chassi.chassi_desc
-        FROM 
-            anuncio
-        INNER JOIN 
-            usuario ON usuario.usuario_id = anuncio.fk_usuario_id
-        INNER JOIN
-            veiculo ON veiculo.veiculo_id = anuncio.fk_veiculo_id
-        INNER JOIN 
-            modelo ON veiculo.fk_modelo_id = modelo.modelo_id
-        INNER JOIN 
-            marca ON veiculo.fk_marca_id = marca.marca_id
-        INNER JOIN
-            chassi ON veiculo.fk_chassi_id = chassi.chassi_id
-        ";
 
-        $stmt = $this->conexao->prepare($sql);
-        $stmt->execute();
-        $resultado = $stmt->get_result();
-        $anuncios = [];
+        FROM anuncio
 
-        // Preenche o array com os resultados
-        while ($anuncio = $resultado->fetch_assoc()) {
-            $anuncios[] = $anuncio;
-        }
+        -- Usuário do anúncio
+        INNER JOIN usuario 
+            ON usuario.usuario_id = anuncio.fk_usuario_id
 
-        return $anuncios;
+        -- Veículo do anúncio
+        INNER JOIN veiculo 
+            ON veiculo.fk_anuncio_id = anuncio.anuncio_id
+
+
+        -- Veículo -> Modelo
+        INNER JOIN modelo 
+            ON veiculo.fk_modelo_id = modelo.modelo_id
+
+        -- Modelo -> Marca
+        INNER JOIN marca 
+            ON modelo.fk_marca_id = marca.marca_id
+
+        -- Veículo -> Chassi
+        INNER JOIN chassi 
+            ON veiculo.fk_chassi_id = chassi.chassi_id
+        inner join combustivel
+            on veiculo.fk_combustivel_id = combustivel.comb_id
+    ";
+
+    // Preparação e execução
+    $stmt = $this->conexao->prepare($sql);
+    $stmt->execute();
+    $resultado = $stmt->get_result();
+
+    // Array que receberá os anúncios
+    $anuncios = [];
+    while ($anuncio = $resultado->fetch_assoc()) {
+        $anuncios[] = $anuncio;
     }
+
+    return $anuncios;
+}
 
     // Edita um anúncio
     public function editarAnuncio() {
