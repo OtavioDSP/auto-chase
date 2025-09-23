@@ -14,10 +14,9 @@ include_once '../php/classes/class-veiculo.php';
 if (isset($_GET['usuario_id'])) {
     // Converte o ID para inteiro
     $usuario_id = intval($_GET['usuario_id']);
-    $veiculo_id = intval($_GET['veiculo_id']);
-    $modelo_id = intval($_GET['modelo_id']);
+    
     $usu = new Usuario("", "", "", "", "", "", "", "", $conexao);
-    $vec = new Veiculo("","","",$conexao); 
+     
     
     $usuario = $usu->buscarUsuarioPorId($usuario_id);
 
@@ -56,7 +55,9 @@ if (isset($_GET['usuario_id'])) {
         echo "<p>Usuário não encontrado.</p>";
     }
 
-} elseif (isset($_GET['veiculo_id'])) {?>
+} elseif (isset($_GET['veiculo_id'])) {
+    $veiculo_id = intval($_GET['veiculo_id']);
+    $vec = new Veiculo("","","",$conexao);?>
 
     <form action="../php/global/global.php" method="post">
 
@@ -64,7 +65,7 @@ if (isset($_GET['usuario_id'])) {
     </form>
 
 
-<?php }elseif($modelo_id) {
+<?php }elseif(($_GET'modelo_id')) {
 
     $vec = new Veiculo("","","","","",$conexao);
     $modelo = $vec->buscarModeloPorId($modelo_id);
@@ -88,7 +89,20 @@ if (isset($_GET['usuario_id'])) {
         echo "<p>Modelo não encontrado.</p>";
     }
 
+}elseif($_GET('cor_id')){
+    $cor_id= intval($_GET['cor_id']);
+    $cor = new Cor("", "", $conexao);
+    $cor = $usu->buscarUsuarioPorId($usuario_id);
+    ?>
+    
+    <h1>Editar Cor</h1>
+       
+        <?php
+
+}else {
+    echo "<p>Modelo não encontrado.</p>";
 }
 ?>
+
 </body>
 </html>
