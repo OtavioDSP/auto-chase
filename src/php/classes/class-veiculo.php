@@ -111,7 +111,7 @@ Class Veiculo{
             echo "Erro ao editar veiculo". $stmt->error;
         }
     }public function buscarVeiculoPorId($veiculo_id) {
-            $sql = "SELECT * FROM usuario WHERE usuario_id = ?";
+            $sql = "SELECT * FROM veiculo WHERE veiculo_id = ?";
             
             $stmt = $this->conexao->prepare($sql);
             

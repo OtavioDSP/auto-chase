@@ -61,12 +61,31 @@ if (isset($_GET['usuario_id'])) {
 
     $veiculo_id = intval($_GET['veiculo_id']);
 
-    $vec = new Veiculo("","","",$conexao);?>
+    $vec = new Veiculo("","","",$conexao);
+    $veiculo = $vec->buscarVeiculoPorId($veiculo_id);
+    if ($veiculo_id) {
+        ?>
+        <h1>Editar Modelo</h1>
+        <form action="../php/global/global.php" method="POST">
+            <input type="hidden" name="veiculo_id" value="<?= $veiculo['veiculo_id'] ?>">
 
-    <form action="../php/global/global.php" method="post">
+            <label for="veiculo_desc">Nome do Modelo:</label>
+            <input type="text" id="veiculo_desc" name="veiculo_desc" value="<?= $veiculo['veiculo_desc'] ?>" required>
+            
+            <label for="marca_id">Marca:</label>
+            <input type="text" id="mar" name="marca_id" value="<?= $modelo['marca_id'] ?>" required>
+
+            <br>
+            <button type="submit" name="editar_modelo">Salvar Alterações</button>
+        </form>
+        <?php
+    } else {
+        echo "<p>Modelo não encontrado.</p>";
+    }?>
 
 
-    </form>
+
+
 
 
 <?php }elseif($_GET['modelo_id']) {
