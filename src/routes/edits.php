@@ -10,6 +10,8 @@
 include_once '../config/db/connect.php'; 
 include_once '../php/classes/class-usuario.php';
 include_once '../php/classes/class-veiculo.php';
+include_once '../php/classes/class-modelo.php';
+
 
 if (isset($_GET['usuario_id'])) {
     // Converte o ID para inteiro
@@ -56,7 +58,9 @@ if (isset($_GET['usuario_id'])) {
     }
 
 } elseif (isset($_GET['veiculo_id'])) {
+
     $veiculo_id = intval($_GET['veiculo_id']);
+
     $vec = new Veiculo("","","",$conexao);?>
 
     <form action="../php/global/global.php" method="post">
@@ -65,18 +69,20 @@ if (isset($_GET['usuario_id'])) {
     </form>
 
 
-<?php }elseif(($_GET'modelo_id')) {
+<?php }elseif($_GET['modelo_id']) {
+    $modelo_id = intval($_GET['modelo_id']);
+    $mod = new Modelo("","","","","",$conexao);
 
-    $vec = new Veiculo("","","","","",$conexao);
-    $modelo = $vec->buscarModeloPorId($modelo_id);
-    if ($modelo) {
+    $modelo = $mod->buscarModeloPorId($modelo_id);
+
+    if ($modelo_id) {
         ?>
         <h1>Editar Modelo</h1>
         <form action="../php/global/global.php" method="POST">
             <input type="hidden" name="modelo_id" value="<?= $modelo['modelo_id'] ?>">
 
             <label for="modelo_nome">Nome do Modelo:</label>
-            <input type="text" id="modelo_nome" name="modelo_nome" value="<?= $modelo['modelo_nome'] ?>" required>
+            <input type="text" id="modelo_nome" name="modelo_nome" value="<?= $modelo['modelo_desc'] ?>" required>
             
             <label for="marca_id">Marca:</label>
             <input type="text" id="marca_id" name="marca_id" value="<?= $modelo['marca_id'] ?>" required>

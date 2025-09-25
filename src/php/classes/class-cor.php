@@ -44,9 +44,9 @@
 
             
 
-        }
+            }
 
-        public function buscarCorPorId($cor_id) {
+        }public function buscarCorPorId($modelo_id) {
             $sql = "SELECT * FROM cor WHERE cor_id = ?";
             
             $stmt = $this->conexao->prepare($sql);
@@ -62,11 +62,7 @@
             // Retorna a primeira linha do resultado como um array associativo
             // Ou 'null' se nenhum usuário for encontrado
             return $result->fetch_assoc();
-        }
-
-
-
-        } public function listarCores(){
+        }public function listarCores(){
             $sql = "SELECT * FROM cor";
             $stmt = $this->conexao->prepare($sql);
             $stmt->execute();
