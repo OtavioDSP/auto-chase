@@ -73,7 +73,7 @@ if (isset($_GET['usuario_id'])) {
             <input type="text" id="veiculo_desc" name="veiculo_desc" value="<?= $veiculo['veiculo_desc'] ?>" required>
             
             <label for="marca_id">Marca:</label>
-            <input type="text" id="mar" name="marca_id" value="<?= $modelo['marca_id'] ?>" required>
+            <input type="text" id="mar" name="marca_id" value="<?= $veiculo['marca_desc'] ?>" required>
 
             <br>
             <button type="submit" name="editar_modelo">Salvar Alterações</button>

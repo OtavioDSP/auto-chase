@@ -114,13 +114,14 @@
         <thead>
             <tr>
                 <th>ID do Veículo</th>
-                <th>Descrição do Veículo</th>
                 <th>Quilometragem</th>
+                <th>Modelo</th>
+                <th>Marca</th>
                 <th>Carroceria</th>
                 <th>Cor</th>
-                <th>Marca</th>
+                
                 <th>Combustivel</th>
-                <th>Modelo</th>
+                
                 <th>Ano</th>
                 <th colspan="2">Ações</th>
             </tr>
@@ -132,13 +133,13 @@
             foreach ($veiculosArray as $veiculo): ?>
             <tr>
                 <td><?=$veiculo['veiculo_id']?></td>
-                <td><?=$veiculo['veiculo_desc']?></td>
                 <td><?=$veiculo['veiculo_quilometragem']?></td>
+                <td><?=$veiculo['modelo_desc']?></td>
+                <td><?=$veiculo['marca_desc']?></td>
+                <td><?=$veiculo['veiculo_versao']?></td>
                 <td><?=$veiculo['chassi_desc']?></td>
                 <td><?=$veiculo['cor_desc']?></td>
-                <td><?=$veiculo['marca_desc']?></td>
                 <td><?=$veiculo['comb_desc']?></td>
-                <td><?=$veiculo['modelo_desc']?></td>
                 <td><?=$veiculo['modelo_ano']?></td>
                 <td>
                     <form method="post" action="src/php/global/global.php" onsubmit="return confirm('Tem certeza que deseja deletar este veículo?');">
