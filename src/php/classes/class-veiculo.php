@@ -57,35 +57,26 @@ Class Veiculo{
 
         $sql = "
         SELECT 
-
-            veiculo.veiculo_id,
-            veiculo.veiculo_desc,
-            veiculo.veiculo_quilometragem,
-            marca.marca_desc,
-            cor.cor_desc,
-            chassi.chassi_desc,
-            combustivel.comb_desc,
-            usuario.usuario_nome,
-            modelo.modelo_desc,
+        veiculo.veiculo_id,
+        veiculo.veiculo_quilometragem,
+        marca.marca_desc,
+        cor.cor_desc,
+        chassi.chassi_desc,
+        combustivel.comb_desc,
+        modelo.modelo_desc,
             modelo.modelo_ano
-
         FROM 
             veiculo
         INNER JOIN 
-            cor ON veiculo.fk_cor_id = cor.cor_id
+            cor ON veiculo.fk_Cor_id = cor.cor_id
         INNER JOIN
-            chassi ON veiculo.fk_chassi_id = chassi.chassi_id
+            chassi ON veiculo.fk_Chassi_id = chassi.chassi_id
         INNER JOIN
             combustivel ON veiculo.fk_combustivel_id = combustivel.comb_id
         INNER JOIN
-            anuncio ON veiculo.fk_anuncio_id = anuncio.anuncio_id
+            modelo ON veiculo.fk_Modelo_id = modelo.modelo_id
         INNER JOIN
-            usuario ON anuncio.fk_usuario_id = usuario.usuario_id  
-        INNER JOIN
-            modelo ON veiculo.fk_modelo_id = modelo.modelo_id
-        INNER JOIN
-            marca ON modelo.fk_marca_id = marca.marca_id
-       
+            marca ON modelo.fk_Marca_id = marca.marca_id
         ";
         $stmt = $this->conexao->prepare($sql);
         $stmt->execute();
@@ -111,7 +102,7 @@ Class Veiculo{
             echo "Erro ao editar veiculo". $stmt->error;
         }
     }public function buscarVeiculoPorId($veiculo_id) {
-            $sql = "SELECT * FROM usuario WHERE usuario_id = ?";
+            $sql = "SELECT * FROM veiculo WHERE veiculo_id = ?";
             
             $stmt = $this->conexao->prepare($sql);
             

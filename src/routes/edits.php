@@ -10,15 +10,14 @@
 include_once '../config/db/connect.php'; 
 include_once '../php/classes/class-usuario.php';
 include_once '../php/classes/class-veiculo.php';
-include_once '../php/classes/class-modelo.php';
 
 if (isset($_GET['usuario_id'])) {
     
     $usuario_id = intval($_GET['usuario_id']);
-    
-    
+    $veiculo_id = intval($_GET['veiculo_id']);
+    $modelo_id = intval($_GET['modelo_id']);
     $usu = new Usuario("", "", "", "", "", "", "", "", $conexao);
-
+    $vec = new Veiculo("","","",$conexao); 
     
     $usuario = $usu->buscarUsuarioPorId($usuario_id);
 
@@ -65,11 +64,10 @@ if (isset($_GET['usuario_id'])) {
     </form>
 
 
-<?php }elseif(isset($_GET['modelo_id'])) {
-    $modelo_id = intval($_GET['modelo_id']);
-    $vec = new Modelo("", "", "", "", "", $conexao);
+<?php }elseif($modelo_id) {
+
+    $vec = new Veiculo("","","","","",$conexao);
     $modelo = $vec->buscarModeloPorId($modelo_id);
-    print_r($modelo);
     if ($modelo) {
         ?>
         <h1>Editar Modelo</h1>
@@ -77,14 +75,11 @@ if (isset($_GET['usuario_id'])) {
             <input type="hidden" name="modelo_id" value="<?= $modelo['modelo_id'] ?>">
 
             <label for="modelo_nome">Nome do Modelo:</label>
-            <input type="text" id="modelo_nome" name="modelo_desc" value="<?= $modelo['modelo_desc'] ?>" required>
-        
-            <label for="modelo_ano">Ano do Modelo:</label>
-            <input type="text" id="modelo_ano" name="modelo_ano" value="<?= $modelo['modelo_ano'] ?>" required>
-            <br>
-            <label for="modelo_valor_fipe">Valor Fipe:</label>
-            <input type="text" id="modelo_valor_fipe" name="modelo_valor_fipe" value="<?= $modelo['modelo_valor_fipe'] ?>" required>
+            <input type="text" id="modelo_nome" name="modelo_nome" value="<?= $modelo['modelo_nome'] ?>" required>
             
+            <label for="marca_id">Marca:</label>
+            <input type="text" id="marca_id" name="marca_id" value="<?= $modelo['marca_id'] ?>" required>
+
             <br>
             <button type="submit" name="editar">Salvar Alterações</button>
         </form>
@@ -93,7 +88,20 @@ if (isset($_GET['usuario_id'])) {
         echo "<p>Modelo não encontrado.</p>";
     }
 
+}elseif($_GET('cor_id')){
+    $cor_id= intval($_GET['cor_id']);
+    $cor = new Cor("", "", $conexao);
+    $cor = $usu->buscarUsuarioPorId($usuario_id);
+    ?>
+    
+    <h1>Editar Cor</h1>
+       
+        <?php
+
+}else {
+    echo "<p>Modelo não encontrado.</p>";
 }
 ?>
+
 </body>
 </html>

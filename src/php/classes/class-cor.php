@@ -44,11 +44,25 @@
 
             
 
-        }
+            }
 
-
-
-        } public function listarCores(){
+        }public function buscarCorPorId($modelo_id) {
+            $sql = "SELECT * FROM cor WHERE cor_id = ?";
+            
+            $stmt = $this->conexao->prepare($sql);
+            
+            // Vincula o ID do modelo ao placeholder da consulta
+            // 'i' indica que o parâmetro é um inteiro
+            $stmt->bind_param('i', $modelo_id);
+            
+            $stmt->execute();
+            
+            $result = $stmt->get_result();
+            
+            // Retorna a primeira linha do resultado como um array associativo
+            // Ou 'null' se nenhum usuário for encontrado
+            return $result->fetch_assoc();
+        }public function listarCores(){
             $sql = "SELECT * FROM cor";
             $stmt = $this->conexao->prepare($sql);
             $stmt->execute();
