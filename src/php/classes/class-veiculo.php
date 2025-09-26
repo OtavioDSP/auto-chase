@@ -58,6 +58,7 @@ Class Veiculo{
         $sql = "
         SELECT 
         veiculo.veiculo_id,
+        veiculo.veiculo_versao,
         veiculo.veiculo_quilometragem,
         marca.marca_desc,
         cor.cor_desc,

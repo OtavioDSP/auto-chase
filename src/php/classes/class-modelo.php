@@ -64,11 +64,16 @@ Class Modelo{
     }public function listarModelo(){
             $sql = "
             SELECT 
-                modelo.*, marca.marca_desc
+                modelo.modelo_desc,
+                modelo.modelo_ano,
+                modelo.modelo_valor_fipe,
+                modelo.modelo_id,
+                modelo.fk_marca_id,
+                marca.marca_desc
             FROM 
                 modelo
             INNER JOIN 
-                marca ON modelo.fk_Marca_id = marca.marca_id
+                marca ON modelo.fk_marca_id = marca.marca_id
             ";
             $stmt = $this->conexao->prepare($sql);
             $stmt->execute();
@@ -83,11 +88,11 @@ Class Modelo{
 
         }public function editarModelo(){
 
-            $sql = "UPDATE modelo SET modelo_desc = ?, modelo_ano = ?, modelo_valor_fipe = ? WHERE modelo_id = ?";
+            $sql = "UPDATE modelo SET modelo_desc = ?, modelo_ano = ?, modelo_valor_fipe = ?, fk_marca_id = ? WHERE modelo_id = ?";
 
             $stmt = $this->conexao->prepare($sql);
 
-            $stmt->bind_param('ssii', $this->modelo_desc, $this->modelo_ano, $this->modelo_fipe, $this->modelo_id);
+            $stmt->bind_param('ssii', $this->modelo_desc, $this->modelo_ano, $this->modelo_fipe, $this->modelo_id, $this->fk_marca_id);
 
             if($stmt->execute()){
                 echo "Modelo editado com sucesso";
@@ -97,7 +102,20 @@ Class Modelo{
 
 
         } public function buscarModeloPorId($modelo_id) {
-            $sql = "SELECT * FROM modelo WHERE modelo_id = ?";
+            $sql = "SELECT 
+                modelo.modelo_desc,
+                modelo.modelo_ano,
+                modelo.modelo_valor_fipe,
+                modelo.modelo_id,
+                modelo.fk_marca_id,
+                marca.marca_desc
+            FROM 
+                modelo
+            INNER JOIN 
+                marca ON modelo.fk_marca_id = marca.marca_id
+            WHERE 
+                modelo.modelo_id = ? 
+            ";
             
             $stmt = $this->conexao->prepare($sql);
             

@@ -59,7 +59,7 @@ class Anuncio {
             usuario.usuario_nome,
             
             -- Dados do veículo
-            veiculo.veiculo_desc,
+            veiculo.veiculo_versao,
             
             -- Modelo do veículo
             modelo.modelo_desc,

@@ -116,6 +116,7 @@
                 <th>ID do Veículo</th>
                 <th>Quilometragem</th>
                 <th>Modelo</th>
+                <th>Versão</th>
                 <th>Marca</th>
                 <th>Carroceria</th>
                 <th>Cor</th>
@@ -135,6 +136,7 @@
                 <td><?=$veiculo['veiculo_id']?></td>
                 <td><?=$veiculo['veiculo_quilometragem']?></td>
                 <td><?=$veiculo['modelo_desc']?></td>
+                <td><?=$veiculo['veiculo_versao']?></td>
                 <td><?=$veiculo['marca_desc']?></td>
                 <td><?=$veiculo['veiculo_versao']?></td>
                 <td><?=$veiculo['chassi_desc']?></td>
@@ -319,6 +321,7 @@
             <!-- do carro -->
             <th>Nome do Veículo</th>
             <th>Modelo</th>
+            <th>Versão</th>
             <th>Ano</th>
             <th>Marca</th>
             <th>Chassi</th>
@@ -343,9 +346,9 @@
                 <td><?=number_format($anuncio['anuncio_valor'], 2, ',', '.')?></td> <!-- Valor formatado -->
                 
                 <!-- Informações do carro -->
-                <td><?=$anuncio['veiculo_desc']?></td>
                 <td><?=$anuncio['modelo_desc']?></td>
                 <td><?=$anuncio['modelo_ano']?></td>
+                <td><?=$anuncio['veiculo_versao']?></td>
                 <td><?=$anuncio['marca_desc']?></td>
                 <td><?=$anuncio['chassi_desc']?></td>
                 <td><?=$anuncio['comb_desc']?></td>
