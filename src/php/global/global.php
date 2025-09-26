@@ -24,22 +24,9 @@ if(isset($_POST['criar_conta'])){
     $usu = new Usuario($usuario_id,"","","","","","","",$conexao);
     $usu->deletarUsuario();
 
-}if(isset($_POST['editar'])){
-    $usuario_id = $_POST['usuario_id'];
-    $usuario_nome = $_POST['usuario_nome'];
-    $usuario_email = $_POST['usuario_email'];
-    $usuario_telefone = $_POST['usuario_telefone'];
-    $usuario_senha = $_POST['usuario_senha'];
-    $usuario_endereco = $_POST['usuario_endereco']; 
-    $usuario_doc_cpf_cnpj = $_POST['usuario_doc_cpf_cnpj'];
-    $usuario_nivel_de_acesso = $_POST['usuario_nivel_de_acesso'];
-    echo $usuario_senha;
-    
-    $usu = new Usuario($usuario_id, $usuario_nome, $usuario_email, $usuario_senha, $usuario_telefone, $usuario_endereco, $usuario_doc_cpf_cnpj, $usuario_nivel_de_acesso, $conexao);
-
-    
-    $usu->editarUsuario();
 }if(isset($_POST['enviar_informacoes'])){
+    
+    
     $cor_desc = $_POST['cor_desc'];
     $marca_desc = $_POST['marca_desc'];
     $modelo_desc = $_POST['modelo_desc'];
@@ -74,5 +61,17 @@ if(isset($_POST['criar_conta'])){
    
 
     
+}
+if(isset($_POST['editar'])){
+    $modelo_id = $_POST['modelo_id'];
+    $modelo_desc = $_POST['modelo_desc'];
+    $modelo_ano = $_POST['modelo_ano'];
+    $modelo_valor_fipe = $_POST['modelo_valor_fipe'];
+   
+    
+    $model = new Modelo($modelo_id, $modelo_desc, $modelo_ano, $modelo_valor_fipe, "", $conexao);
+
+    
+    $model->editarModelo();
 }
 ?> 
