@@ -84,8 +84,16 @@ if (isset($_GET['usuario_id'])) {
             <label for="modelo_nome">Nome do Modelo:</label>
             <input type="text" id="modelo_nome" name="modelo_desc" value="<?= $modelo['modelo_desc'] ?>" required>
 
-             <label for="modelo_nome">Nome do Modelo:</label>
-            <input type="text" id="modelo_nome" name="modelo_ano" value="<?= $modelo['modelo_ano'] ?>" required>
+            <label for="modelo_nome">Ano do modelo:</label>
+            <input type="text" id="modelo_ano" name="modelo_ano" value="<?= $modelo['modelo_ano'] ?>" required>
+
+            <label for="valor_modelo">valor do veiculo:</label>
+
+            <input type="text" oninput="formatarMoeda(this)" id="valor_modelo" name="modelo_valor_fipe" 
+            
+            
+            
+            value="<?= number_format($modelo['modelo_valor_fipe']) ?> " required>
             
 
 
@@ -95,7 +103,7 @@ if (isset($_GET['usuario_id'])) {
                
                 foreach($mrc as $marca){
                 ?>
-                <option value="<?php $marca['marca_id']?>"><?php echo $marca['marca_desc'] ?></option>
+                <option name="fk_marca_id" value="<?php $marca['marca_id']?>"><?php echo $marca['marca_desc'] ?></option>
                 <?php
                 }
                 ?>
@@ -125,6 +133,8 @@ if (isset($_GET['usuario_id'])) {
     echo "<p>Modelo não encontrado.</p>";
 }
 ?>
+
+<script src="../JS/js-functions.js"></script>
 
 </body>
 </html>
