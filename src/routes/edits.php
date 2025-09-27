@@ -89,11 +89,9 @@ if (isset($_GET['usuario_id'])) {
 
             <label for="valor_modelo">valor do veiculo:</label>
 
-            <input type="text" oninput="formatarMoeda(this)" id="valor_modelo" name="modelo_valor_fipe" 
+            <input type="text" oninput="formatarMoeda(this)" id="valor_modelo_formatado" value="<?= number_format($modelo['modelo_valor_fipe'], 2, ',', '.') ?> " required>
+            <input type="hidden" name="modelo_valor_fipe" id="valorBanco" value="<?= $modelo['modelo_valor_fipe'] ?>">
             
-            
-            
-            value="<?= number_format($modelo['modelo_valor_fipe']) ?> " required>
             
 
 

@@ -67,9 +67,9 @@ if(isset($_POST['editar'])){
     $modelo_desc = $_POST['modelo_desc'];
     $modelo_ano = $_POST['modelo_ano'];
     $modelo_valor_fipe = $_POST['modelo_valor_fipe'];
-   
-    
-    $model = new Modelo($modelo_id, $modelo_desc, $modelo_ano, $modelo_valor_fipe, "", $conexao);
+    $fk_marca_id = $_POST['fk_marca_id'];
+
+    $model = new Modelo($modelo_id, $modelo_desc, $modelo_ano, $modelo_valor_fipe, $fk_marca_id, $conexao);
 
     
     $model->editarModelo();
