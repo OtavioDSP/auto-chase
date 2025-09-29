@@ -70,7 +70,7 @@
 
             return $marcas;
 
-        } public function editarMarcas(){
+        } public function editarMarca(){
             $sql = "UPDATE Marca SET marca_desc = ? WHERE marca_id = ?";
             $stmt = $this->conexao->prepare($sql);
             $stmt->bind_param('si', $this->marca_desc, $this->marca_id);

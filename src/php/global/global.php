@@ -62,16 +62,38 @@ if(isset($_POST['criar_conta'])){
 
     
 }
-if(isset($_POST['editar'])){
-    $modelo_id = $_POST['modelo_id'];
+if(isset($_POST['editar_modelo'])){
+    
+    $modelo_id = intval($_POST['modelo_id']);
     $modelo_desc = $_POST['modelo_desc'];
     $modelo_ano = $_POST['modelo_ano'];
-    $modelo_valor_fipe = $_POST['modelo_valor_fipe'];
-    $fk_marca_id = $_POST['fk_marca_id'];
-
-    $model = new Modelo($modelo_id, $modelo_desc, $modelo_ano, $modelo_valor_fipe, $fk_marca_id, $conexao);
-
+    $modelo_valor_fipe = floatval($_POST['modelo_valor_fipe']);
+    $fk_marca_id = intval($_POST['fk_marca_id']);
+    echo $modelo_valor_fipe;
+    $vMod = new Modelo($modelo_id, $modelo_desc, $modelo_ano, $modelo_valor_fipe, $fk_marca_id, $conexao);
+    $vMod->editarModelo();
     
-    $model->editarModelo();
+    
+    
+}if(isset($_POST['editar_cor'])){
+    
+    $cor_id = intval($_POST['cor_id']);
+    $cor_desc = $_POST['cor_desc'];
+    
+    $eCor = new cor($cor_id, $cor_desc, $conexao);
+    $eCor->editarCor();
+    
+    
+    
+}if(isset($_POST['editar_marca'])){
+    
+    $cor_id = intval($_POST['marca_id']);
+    $cor_desc = $_POST['marca_desc'];
+    
+    $eMarca = new marca($marca_id, $marca_desc, $conexao);
+    $eMarca->editarMarca();
+    
+    
+    
 }
 ?> 

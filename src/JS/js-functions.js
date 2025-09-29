@@ -1,6 +1,4 @@
 const inputValorVisivel = document.getElementById('valor-formatado');
-const inputValorOculto = document.getElementById('valor-banco');
-
 
 function toggleSenha() {
     const campo = document.getElementById("senha");
