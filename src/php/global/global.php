@@ -87,13 +87,32 @@ if(isset($_POST['editar_modelo'])){
     
 }if(isset($_POST['editar_marca'])){
     
-    $cor_id = intval($_POST['marca_id']);
-    $cor_desc = $_POST['marca_desc'];
+    $marca_id = intval($_POST['marca_id']);
+    $marca_desc = $_POST['marca_desc'];
     
     $eMarca = new marca($marca_id, $marca_desc, $conexao);
     $eMarca->editarMarca();
     
     
     
+}if(isset($_POST['editar_combustivel'])){
+    
+    $comb_id = intval($_POST['comb_id']);
+    $comb_desc = $_POST['comb_desc'];
+    
+    $eComb= new Combustivel($comb_id, $comb_desc, $conexao);
+    $eComb->editarCombustivel();
+
+}if(isset($_POST['editar_chassi'])){
+    
+    $chassi_id = intval($_POST['chassi_id']);
+    $chassi_desc = $_POST['chassi_desc'];
+    
+    $eChassi= new Chassi($chassi_id, $chassi_desc, $conexao);
+    $eChassi->editarChassi();
+
 }
+
+
+
 ?> 

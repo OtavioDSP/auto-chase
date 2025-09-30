@@ -83,10 +83,10 @@ if (isset($_GET['usuario_id'])) {
     <?php } else { echo "<p>Cor não encontrada.</p>"; }
 
 // --- ROTA DE EDIÇÃO PARA COMBUSTÍVEL ---
-} elseif (isset($_GET['combustivel_id'])) {
-    $id = intval($_GET['combustivel_id']);
-    $manager = new Combustivel(null, null, $conexao);
-    $item = $manager->buscarCombustivelPorId($id);
+} elseif (isset($_GET['comb_id'])) {
+    $comb_id = intval($_GET['comb_id']);
+    $manager = new Combustivel($comb_id, null, $conexao);
+    $item = $manager->buscarCombustivelPorId($comb_id);
     if ($item) { ?>
         <h1>Editar Combustível</h1>
         <form action="../php/global/global.php" method="POST">

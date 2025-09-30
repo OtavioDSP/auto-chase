@@ -272,7 +272,7 @@
                     </form>
                 </td>
                 <td>
-                    <a href="src/routes/edits.php?marca_id=<?=$chassi['chassi_id'] ?>">Editar</a>
+                    <a href="src/routes/edits.php?chassi_id=<?=$chassi['chassi_id'] ?>">Editar</a>
                 </td>
             </tr>
             <?php endforeach; ?>
@@ -370,6 +370,13 @@
 <br><br>
 
 
+<form action="/src/global/uploads.php" method="post" enctype="multipart/form-data">
+    nome: <input type="text" name="imagem_url">
+    Imagem <input type="file" name="img">
+    
+    <button type="submit">Enviar</button>
+
+</form>
     
 
 

@@ -1,23 +1,23 @@
 <?php
     class Fotos{
 
-        private $foto_id;
-        private $foto_caminho;
+        private $imagem_id;
+        private $imagem_url;
     
         private $conexao;
 
-        public function __construct($foto_id, $foto_caminho, $conexao){
+        public function __construct($imagem_id, $imagem_url, $conexao){
 
-            $this->foto_id = $foto_id;
-            $this->foto_caminho = $foto_caminho;
+            $this->imagem_id = $imagem_id;
+            $this->imagem_url = $imagem_url;
             $this->conexao = $conexao;
 
         }
-        public function insereFoto(){
-            $sql = "INSERT INTO Foto (foto) VALUES (?)";
+        public function insereImagem(){
+            $sql = "INSERT INTO imagem (imagem_url) VALUES (?)";
             $stmt = $this->conexao->prepare($sql);
             $stmt->bind_param('s',
-            $this->foto_caminho,
+            $this->imagem_url,
             );
              if($stmt->execute()){
                 echo "foto inserida";
@@ -30,11 +30,11 @@
 
 
 
-        }public function deletarFoto(){
+        }public function deletarImagem(){
 
-            $sql = "DELETE FROM Foto WHERE fotos_id = ?";
+            $sql = "DELETE FROM imagem WHERE imagem_id = ?";
             $stmt = $this->conexao->prepare($sql);
-            $stmt->bind_param('i',$this->foto_id);
+            $stmt->bind_param('i',$this->imagem_id);
         
             if($stmt->execute()){
 
@@ -51,11 +51,11 @@
 
 
 
-        }public function listarFoto(){
-            $sql = "SELECT foto.foto_caminho, foto.data_de_upload FROM fotos INNER JOIN usuario ON fotos.fk_usuario_id = usuario.usuario_id WHERE fotos_id = ?";
+        }public function listarImagem(){
+            $sql = "SELECT imagem_id, imagem_desc FROM imagem WHERE fotos_id = ?";
             $stmt = $this->conexao->prepare($sql);
 
-            $stmt->bind('ssi',$this->foto_caminho, $this->foto_id);
+            $stmt->bind('ssi',$this->imagem_url, $this->imagem_id);
 
             if($stmt->execute()){
                 echo "foto listar com sucesso";
@@ -64,13 +64,13 @@
             }
 
 
-        }public function editarFoto(){
+        }public function editarImagem(){
 
-            $sql = "UPDATE foto SET foto_caminho = ? WHERE foto_id = ?";
+            $sql = "UPDATE imagem SET imagem_url = ? WHERE imagem_id = ?";
 
             $stmt = $this->conexao->prepare($sql);
 
-            $stmt->bind_param('si', $this->foto_caminho, $this->foto_id);
+            $stmt->bind_param('si', $this->imagem_url, $this->imagem_id);
             
             if($stmt->execute()){
                 echo "foto editada com sucesso";

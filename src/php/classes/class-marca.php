@@ -81,6 +81,23 @@
             }
 
         }
+        public function buscarMarcaPorId($marca_id) {
+            $sql = "SELECT * FROM marca WHERE marca_id = ?";
+            
+            $stmt = $this->conexao->prepare($sql);
+            
+            // Vincula o ID do modelo ao placeholder da consulta
+            // 'i' indica que o parâmetro é um inteiro
+            $stmt->bind_param('i', $marca_id);
+            
+            $stmt->execute();
+            
+            $result = $stmt->get_result();
+            
+            // Retorna a primeira linha do resultado como um array associativo
+            // Ou 'null' se nenhum usuário for encontrado
+            return $result->fetch_assoc();
+        }
 
 
 
