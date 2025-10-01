@@ -62,7 +62,7 @@ if(isset($_POST['criar_conta'])){
 
     
 }if(isset($_POST['editar_usuario'])){
-    
+    $usuario_id = $_POST['usuario_id'];
     $usuario_nome = $_POST['usuario_nome'];
     $usuario_senha = $_POST['usuario_senha'];
     $usuario_email = $_POST['usuario_email'];
@@ -74,7 +74,7 @@ if(isset($_POST['criar_conta'])){
     
     echo $doc_formatado;
 
-    $usuario = new Usuario("", $usuario_nome, $usuario_email, $usuario_senha, $usuario_endereco, $usuario_telefone, $doc_formatado, "", $conexao);
+    $usuario = new Usuario($usuario_id, $usuario_nome, $usuario_email, $usuario_senha, $usuario_endereco, $usuario_telefone, $doc_formatado, "", $conexao);
     $usuario->editarUsuario();
 
     

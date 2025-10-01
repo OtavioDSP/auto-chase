@@ -370,7 +370,7 @@
 <br><br>
 
 
-<form action="/src/global/uploads.php" method="post" enctype="multipart/form-data">
+<form action="src/php/global/uploads.php" method="post" enctype="multipart/form-data">
     nome: <input type="text" name="imagem_url">
     Imagem <input type="file" name="img">
     

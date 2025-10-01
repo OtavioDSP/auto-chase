@@ -1,4 +1,11 @@
 <?php
+
+echo "<pre>";
+print_r($_FILES);
+print_r($_POST);
+echo "</pre>";
+//exit();
+
 if(isset($_FILES['img']) && $_FILES['img']['error'] == 0){
 
 
