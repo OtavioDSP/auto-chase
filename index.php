@@ -138,7 +138,6 @@
                 <td><?=$veiculo['modelo_desc']?></td>
                 <td><?=$veiculo['veiculo_versao']?></td>
                 <td><?=$veiculo['marca_desc']?></td>
-                <td><?=$veiculo['veiculo_versao']?></td>
                 <td><?=$veiculo['chassi_desc']?></td>
                 <td><?=$veiculo['cor_desc']?></td>
                 <td><?=$veiculo['comb_desc']?></td>
