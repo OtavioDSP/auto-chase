@@ -6,11 +6,11 @@ Class Usuario{
     private $usuario_senha;
     private $usuario_telefone;
     private $usuario_endereco;
-    private $doc_cpf_cnpj;
+    private $usuario_doc_cpf_cnpj;
     private $usuario_nivel_de_acesso;
     private $conexao;
 
-    public function __construct($usuario_id, $usuario_nome, $usuario_email, $usuario_senha, $usuario_telefone, $usuario_endereco, $doc_cpf_cnpj, $usuario_nivel_de_acesso, $conexao){
+    public function __construct($usuario_id, $usuario_nome, $usuario_email, $usuario_senha, $usuario_telefone, $usuario_endereco, $usuario_doc_cpf_cnpj, $usuario_nivel_de_acesso, $conexao){
 
         $this->usuario_id = $usuario_id;
         $this->usuario_nome = $usuario_nome;
@@ -18,7 +18,7 @@ Class Usuario{
         $this->usuario_senha = $usuario_senha;
         $this->usuario_telefone = $usuario_telefone;
         $this->usuario_endereco = $usuario_endereco;
-        $this->doc_cpf_cnpj = $doc_cpf_cnpj;
+        $this->usuario_doc_cpf_cnpj = $usuario_doc_cpf_cnpj;
         $this->usuario_nivel_de_acesso = $usuario_nivel_de_acesso;
         $this->conexao = $conexao;
         
@@ -57,7 +57,7 @@ Class Usuario{
             $this->usuario_senha,
             $this->usuario_endereco,
             $this->usuario_telefone,
-            $this->doc_cpf_cnpj,
+            $this->usuario_doc_cpf_cnpj,
     
         );
         
@@ -98,7 +98,7 @@ public function editarUsuario() {
             $senha_hashed, // Usa a nova senha criptografada
             $this->usuario_telefone,
             $this->usuario_endereco,
-            $this->doc_cpf_cnpj,
+            $this->usuario_doc_cpf_cnpj,
             $this->usuario_nivel_de_acesso,
             $this->usuario_id
         );
@@ -124,7 +124,7 @@ public function editarUsuario() {
             $this->usuario_email,
             $this->usuario_telefone,
             $this->usuario_endereco,
-            $this->doc_cpf_cnpj,
+            $this->usuario_doc_cpf_cnpj,
             $this->usuario_nivel_de_acesso,
             $this->usuario_id
         );

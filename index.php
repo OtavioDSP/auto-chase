@@ -138,7 +138,6 @@
                 <td><?=$veiculo['modelo_desc']?></td>
                 <td><?=$veiculo['veiculo_versao']?></td>
                 <td><?=$veiculo['marca_desc']?></td>
-                <td><?=$veiculo['veiculo_versao']?></td>
                 <td><?=$veiculo['chassi_desc']?></td>
                 <td><?=$veiculo['cor_desc']?></td>
                 <td><?=$veiculo['comb_desc']?></td>
@@ -272,7 +271,7 @@
                     </form>
                 </td>
                 <td>
-                    <a href="src/routes/edits.php?marca_id=<?=$chassi['chassi_id'] ?>">Editar</a>
+                    <a href="src/routes/edits.php?chassi_id=<?=$chassi['chassi_id'] ?>">Editar</a>
                 </td>
             </tr>
             <?php endforeach; ?>
@@ -370,6 +369,13 @@
 <br><br>
 
 
+<form action="src/php/global/uploads.php" method="post" enctype="multipart/form-data">
+    nome: <input type="text" name="imagem_url">
+    Imagem <input type="file" name="img">
+    
+    <button type="submit">Enviar</button>
+
+</form>
     
 
 

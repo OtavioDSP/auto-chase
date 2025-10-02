@@ -70,7 +70,7 @@
 
             return $marcas;
 
-        } public function editarMarcas(){
+        } public function editarMarca(){
             $sql = "UPDATE Marca SET marca_desc = ? WHERE marca_id = ?";
             $stmt = $this->conexao->prepare($sql);
             $stmt->bind_param('si', $this->marca_desc, $this->marca_id);
@@ -80,6 +80,23 @@
                 echo "Erro ao editar marca" .$stmt->error;
             }
 
+        }
+        public function buscarMarcaPorId($marca_id) {
+            $sql = "SELECT * FROM marca WHERE marca_id = ?";
+            
+            $stmt = $this->conexao->prepare($sql);
+            
+            // Vincula o ID do modelo ao placeholder da consulta
+            // 'i' indica que o parâmetro é um inteiro
+            $stmt->bind_param('i', $marca_id);
+            
+            $stmt->execute();
+            
+            $result = $stmt->get_result();
+            
+            // Retorna a primeira linha do resultado como um array associativo
+            // Ou 'null' se nenhum usuário for encontrado
+            return $result->fetch_assoc();
         }
 
 

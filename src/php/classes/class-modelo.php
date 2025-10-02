@@ -92,7 +92,13 @@ Class Modelo{
 
             $stmt = $this->conexao->prepare($sql);
 
-            $stmt->bind_param('ssii', $this->modelo_desc, $this->modelo_ano, $this->modelo_fipe, $this->modelo_id, $this->fk_marca_id);
+          $stmt->bind_param('ssidi',
+                $this->modelo_desc, 
+                $this->modelo_ano,    
+                $this->modelo_fipe,  
+                $this->fk_marca_id,   
+                $this->modelo_id      
+            );
 
             if($stmt->execute()){
                 echo "Modelo editado com sucesso";
