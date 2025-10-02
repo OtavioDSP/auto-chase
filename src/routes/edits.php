@@ -23,6 +23,17 @@ include_once '../php/classes/class-anuncio.php';
         input, select { width: 100%; padding: 8px; box-sizing: border-box; }
         button { padding: 10px 15px; background-color: #007bff; color: white; border: none; cursor: pointer; }
     </style>
+    <script>
+        // Função para formatar valor em reais
+        function formatarMoeda(input) {
+            let valor = input.value.replace(/\D/g, '');
+            valor = (valor/100).toFixed(2) + '';
+            valor = valor.replace('.', ',');
+            valor = valor.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+            input.value = valor;
+            document.getElementById('valorBanco').value = input.value.replace(/\./g,'').replace(',','.');
+        }
+    </script>
 </head>
 <body>
 
@@ -110,54 +121,6 @@ if (isset($_GET['usuario_id'])) {
         </form>
     <?php } else { echo "<p>Chassi não encontrado.</p>"; }
 
-<<<<<<< HEAD
-
-<?php }elseif($_GET['modelo_id']) {
-
-    $modelo_id = intval($_GET['modelo_id']);
-    $vMod= new Modelo("","","","","",$conexao);
-    $modelo = $vMod->buscarModeloPorId($modelo_id);
-
-    $marc = new Marca("","",$conexao);
-    $mrc = $marc->listarMarcas();
-    
-    print_r($modelo);
-    if ($modelo) {
-        ?>
-        <h1>Editar Modelo</h1>
-        <form action="../php/global/global.php" method="POST">
-            <input type="hidden" name="modelo_id" value="<?= $modelo['modelo_id'] ?>">
-
-            <label for="modelo_nome">Nome do Modelo:</label>
-            <input type="text" id="modelo_nome" name="modelo_desc" value="<?= $modelo['modelo_desc'] ?>" required>
-
-            <label for="modelo_nome">Ano do modelo:</label>
-            <input type="text" id="modelo_ano" name="modelo_ano" value="<?= $modelo['modelo_ano'] ?>" required>
-
-            <label for="valor_modelo">valor do veiculo:</label>
-
-            <input type="text" oninput="formatarMoeda(this)" id="valor_modelo_formatado" value="<?= number_format($modelo['modelo_valor_fipe'], 2, ',', '.') ?> " required>
-            <input type="hidden" name="modelo_valor_fipe" id="valorBanco" value="<?= $modelo['modelo_valor_fipe'] ?>">
-            
-            
-
-
-            
-            <select name="fk_marca_id">
-                <?php
-               
-                foreach($mrc as $marca){
-                ?>
-                <option value="<?php $marca['marca_id']?>"><?php echo $marca['marca_desc'] ?></option>
-                <?php
-                }
-                ?>
-            </select>
-
-            
-
-            <br>
-=======
 // --- ROTA DE EDIÇÃO PARA MODELO ---
 } elseif (isset($_GET['modelo_id'])) {
     $id = intval($_GET['modelo_id']);
@@ -172,24 +135,25 @@ if (isset($_GET['usuario_id'])) {
             <input type="hidden" name="modelo_id" value="<?= $item['modelo_id'] ?>">
             <div><label>Descrição do Modelo:</label><input type="text" name="modelo_desc" value="<?= htmlspecialchars($item['modelo_desc']) ?>" required></div>
             <div><label>Ano:</label><input type="number" name="modelo_ano" value="<?= htmlspecialchars($item['modelo_ano']) ?>" required></div>
-            <div><label>Valor FIPE:</label><input type="text" name="modelo_valor_fipe" value="<?= htmlspecialchars($item['modelo_valor_fipe']) ?>" required></div>
+            <div><label>Valor FIPE:</label>
+                <input type="text" oninput="formatarMoeda(this)" id="valor_modelo_formatado" value="<?= number_format($item['modelo_valor_fipe'], 2, ',', '.') ?>" required>
+                <input type="hidden" name="modelo_valor_fipe" id="valorBanco" value="<?= $item['modelo_valor_fipe'] ?>">
+            </div>
             <div>
                 <label>Marca:</label>
                 <select name="fk_Marca_id" required>
                     <?php foreach ($marcas as $marca): ?>
-                    <option value="<?= $marca['marca_id'] ?>" <?= ($marca['marca_id'] == $item['fk_Marca_id']) ? 'selected' : '' ?>>
-                        <?= htmlspecialchars($marca['marca_desc']) ?>
-                    </option>
+                        <option value="<?= $marca['marca_id'] ?>" <?= ($marca['marca_id'] == $item['fk_Marca_id']) ? 'selected' : '' ?>>
+                            <?= htmlspecialchars($marca['marca_desc']) ?>
+                        </option>
                     <?php endforeach; ?>
                 </select>
             </div>
->>>>>>> c0932710558bc5919aba569655f16a627ffa9121
             <button type="submit" name="editar_modelo">Salvar Alterações</button>
         </form>
     <?php } else { echo "<p>Modelo não encontrado.</p>"; }
 
-// ... Adicione aqui os `elseif` para as tabelas restantes (Anuncio, Veiculo) quando precisar ...
-
+// --- CASO NENHUM ITEM SEJA SELECIONADO ---
 } else {
     echo "<h1>Nenhum item selecionado</h1><p>Por favor, selecione um item para editar.</p>";
 }
