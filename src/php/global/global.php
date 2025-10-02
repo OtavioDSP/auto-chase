@@ -62,12 +62,15 @@ if(isset($_POST['criar_conta'])){
 
     
 }
-if(isset($_POST['editar'])){
+if(isset($_POST['editar_modelo'])){
     $modelo_id = $_POST['modelo_id'];
     $modelo_desc = $_POST['modelo_desc'];
     $modelo_ano = $_POST['modelo_ano'];
     $modelo_valor_fipe = $_POST['modelo_valor_fipe'];
     $fk_marca_id = $_POST['fk_marca_id'];
+
+
+    echo "ID: $modelo_id, DESC: $modelo_desc, ANO: $modelo_ano, FIPE: $modelo_valor_fipe, MARCA: $fk_marca_id";
 
     $model = new Modelo($modelo_id, $modelo_desc, $modelo_ano, $modelo_valor_fipe, $fk_marca_id, $conexao);
 

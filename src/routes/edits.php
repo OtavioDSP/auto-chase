@@ -74,6 +74,7 @@ if (isset($_GET['usuario_id'])) {
 
     $marc = new Marca("","",$conexao);
     $mrc = $marc->listarMarcas();
+    
     print_r($modelo);
     if ($modelo) {
         ?>
@@ -96,12 +97,12 @@ if (isset($_GET['usuario_id'])) {
 
 
             
-            <select>
+            <select name="fk_marca_id">
                 <?php
                
                 foreach($mrc as $marca){
                 ?>
-                <option name="fk_marca_id" value="<?php $marca['marca_id']?>"><?php echo $marca['marca_desc'] ?></option>
+                <option value="<?php $marca['marca_id']?>"><?php echo $marca['marca_desc'] ?></option>
                 <?php
                 }
                 ?>
@@ -110,7 +111,7 @@ if (isset($_GET['usuario_id'])) {
             
 
             <br>
-            <button type="submit" name="editar">Salvar Alterações</button>
+            <button type="submit" name="editar_modelo">Salvar Alterações</button>
         </form>
         <?php
     } else {
