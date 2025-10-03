@@ -62,7 +62,7 @@ if(isset($_POST['criar_conta'])){
 
     
 }
-if(isset($_POST['editar'])){
+if(isset($_POST['editar_modelo'])){
     $modelo_id = $_POST['modelo_id'];
     $modelo_desc = $_POST['modelo_desc'];
     $modelo_ano = $_POST['modelo_ano'];
@@ -73,5 +73,39 @@ if(isset($_POST['editar'])){
 
     
     $model->editarModelo();
+
+}if(isset($_POST['editar_usuario'])){
+
+
+    
+
+
+    $usuario_id = $_POST['usuario_id'];
+
+    $usuario_nome = $_POST['usuario_nome'];
+
+    $usuario_senha = $_POST['usuario_senha'];
+
+    $usuario_email = $_POST['usuario_email'];
+
+    $usuario_telefone = $_POST['usuario_telefone'];
+
+    $usuario_endereco = $_POST['usuario_endereco'];
+    
+    $usuario_doc_cpf_cnpj = $_POST['usuario_doc_cpf_cnpj'];
+
+    $usuario_nivel_de_acesso = $_POST['usuario_nivel_de_acesso'];
+
+
+    $doc_formatado = formatarDocumento($usuario_doc_cpf_cnpj);
+
+
+    echo $doc_formatado;
+
+
+
+    $usuario = new Usuario($usuario_id, $usuario_nome, $usuario_email, $usuario_senha, $usuario_endereco, $usuario_telefone, $doc_formatado, $usuario_nivel_de_acesso, $conexao);
+
+    $usuario->editarUsuario();
 }
 ?> 
