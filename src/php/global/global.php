@@ -108,4 +108,45 @@ if(isset($_POST['editar_modelo'])){
 
     $usuario->editarUsuario();
 }
+if(isset($_POST['editar_marca'])){
+    $marca_id = $_POST['marca_id'];
+    $marca_desc = $_POST['marca_desc'];
+    
+    $mrc = new Marca($marca_id, $marca_desc, $conexao);
+    $mrc->editarMarca();
+
+}if(isset($_POST['editar_marca'])){
+    $marca_id = $_POST['marca_id'];
+    $marca_desc = $_POST['marca_desc'];
+    
+    $mrc = new Marca($marca_id, $marca_desc, $conexao);
+    $mrc->editarMarca();
+
+}if(isset($_POST['editar_cor'])){
+    $cor_id = $_POST['cor_id'];
+    $cor_desc = $_POST['cor_desc'];
+
+    $cr = new Cor($cor_id,$cor_desc,$conexao);
+    $cr->editarCor();
+
+}if(isset($_POST['editar_combustivel'])){
+    $comb_id = $_POST['comb_id'];
+    $comb_desc = $_POST['comb_dec'];
+
+    $cb = new Combustivel($comb_id,$comb_desc,$conexao);
+    $cb->editarCombustivel();
+}if(isset($_POST['editar_combustivel'])){
+    $comb_id = $_POST['comb_id'];
+    $comb_desc = $_POST['comb_dec'];
+
+    $cb = new Combustivel($comb_id,$comb_desc,$conexao);
+    $cb->editarCombustivel();
+}if(isset($_POST['editar_chassi'])){
+    $chassi_id = $_POST['chassi_id'];
+    $chassi_desc = $_POST['chassi_dec'];
+
+    $ch = new Chassi($chassi_id,$chassi_id,$conexao);
+    $ch->editarChassi();
+}
+
 ?> 
