@@ -131,21 +131,15 @@ if(isset($_POST['editar_marca'])){
 
 }if(isset($_POST['editar_combustivel'])){
     $comb_id = $_POST['comb_id'];
-    $comb_desc = $_POST['comb_dec'];
-
-    $cb = new Combustivel($comb_id,$comb_desc,$conexao);
-    $cb->editarCombustivel();
-}if(isset($_POST['editar_combustivel'])){
-    $comb_id = $_POST['comb_id'];
-    $comb_desc = $_POST['comb_dec'];
+    $comb_desc = $_POST['comb_desc'];
 
     $cb = new Combustivel($comb_id,$comb_desc,$conexao);
     $cb->editarCombustivel();
 }if(isset($_POST['editar_chassi'])){
     $chassi_id = $_POST['chassi_id'];
-    $chassi_desc = $_POST['chassi_dec'];
+    $chassi_desc = $_POST['chassi_desc'];
 
-    $ch = new Chassi($chassi_id,$chassi_id,$conexao);
+    $ch = new Chassi($chassi_id,$chassi_desc,$conexao);
     $ch->editarChassi();
 }
 
