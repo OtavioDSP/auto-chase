@@ -118,8 +118,33 @@ Class Veiculo{
             // Retorna a primeira linha do resultado como um array associativo
             // Ou 'null' se nenhum usuário for encontrado
             return $result->fetch_assoc();
-        }
+            }public function listarVersoes() {
+            try {
+            $sql = "SELECT DISTINCT veiculo_versao FROM veiculo ORDER BY veiculo_versao ASC";
+            
+            // Prepara a consulta
+            $stmt = $this->conexao->prepare($sql);
+            
+            // Executa a consulta
+            $stmt->execute();
+            
+            // 1. Pega o objeto de resultado do statement
+            $resultado = $stmt->get_result();
+            
+            // 2. Usa o método fetch_all() DO RESULTADO (e não do statement)
+            $versoes = $resultado->fetch_all(MYSQLI_ASSOC);
+            
+            // Fecha o statement
+            $stmt->close();
+            
+            return $versoes;
 
+        } catch (Exception $e) {
+            // Em caso de erro, é melhor registrar em um log do que mostrar na tela
+            error_log("Erro ao listar versões: " . $e->getMessage());
+            return []; // Retorna um array vazio para não quebrar a página
+        }
+    }
 
 
 }

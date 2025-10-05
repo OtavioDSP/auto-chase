@@ -137,6 +137,7 @@ Class Modelo{
             // Ou 'null' se nenhum usuário for encontrado
             return $result->fetch_assoc();
         }
+    
 
 
 
