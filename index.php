@@ -129,7 +129,7 @@
         </thead>
         <tbody>
             <?php
-            $vcl = new Veiculo("", "", "", $conexao);
+            $vcl = new Veiculo("", "", "", "", "","","", $conexao);
             $veiculosArray = $vcl->listarVeiculo(); 
             foreach ($veiculosArray as $veiculo): ?>
             <tr>

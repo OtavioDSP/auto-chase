@@ -1,70 +1,125 @@
 <?php
 
-Class Veiculo{
+class Veiculo {
 
+    // Propriedades do Veículo, incluindo as chaves estrangeiras (FKs)
     private $veiculo_id;
-    private $veiculo_desc;
     private $veiculo_quilometragem;
+    private $veiculo_versao;
+    private $fk_chassi_id;
+    private $fk_combustivel_id;
+    private $fk_cor_id;
+    private $fk_modelo_id;
     
     private $conexao;
 
-    public function __construct($veiculo_id, $veiculo_desc,$veiculo_quilometragem, $conexao) {
+    // Construtor atualizado para receber todos os novos parâmetros
+    public function __construct(
+        $veiculo_id,
+        $veiculo_quilometragem,
+        $veiculo_versao,
+        $fk_chassi_id,
+        $fk_combustivel_id,
+        $fk_cor_id,
+        $fk_modelo_id,
+        $conexao
+    ) {
         $this->veiculo_id = $veiculo_id;
-        $this->veiculo_desc = $veiculo_desc;
         $this->veiculo_quilometragem = $veiculo_quilometragem;
-        
+        $this->veiculo_versao = $veiculo_versao;
+        $this->fk_chassi_id = $fk_chassi_id;
+        $this->fk_combustivel_id = $fk_combustivel_id;
+        $this->fk_cor_id = $fk_cor_id;
+        $this->fk_modelo_id = $fk_modelo_id;
         $this->conexao = $conexao;
     }
 
-    public function insereVeiculo(){
-        $sql = "INSERT INTO Veiculo (veiculo_id, veiculo_desc, veiculo_quilometragem) VALUES (?,?,?)";
+    /**
+     * Insere um novo veículo no banco de dados com todas as suas chaves estrangeiras.
+     * OBS: O campo veiculo_id não deve ser inserido se for AUTO_INCREMENT na sua tabela.
+     * Se for o caso, remova "veiculo_id" da query e o primeiro "?" e "$this->veiculo_id" do bind_param.
+     */
+    public function insereVeiculo() {
+        $sql = "INSERT INTO Veiculo (
+                    veiculo_id, veiculo_quilometragem, veiculo_versao, 
+                    fk_chassi_id, fk_combustivel_id, fk_cor_id, fk_modelo_id
+                ) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         $stmt = $this->conexao->prepare($sql);
-        $stmt->bind_param("ssss", 
-            $this->veiculo_id, 
-            $this->veiculo_desc, 
-            $this->veiculo_quilometragem, 
-            
-        
+        // Tipos: i=integer, s=string. Ajuste se necessário.
+        $stmt->bind_param("isiiiii", 
+            $this->veiculo_id,
+            $this->veiculo_quilometragem,
+            $this->veiculo_versao,
+            $this->fk_chassi_id,
+            $this->fk_combustivel_id,
+            $this->fk_cor_id,
+            $this->fk_modelo_id
         );
-        if($stmt->execute()){
-            echo "veiculo inserida";
-        }else{
-            echo "Erro ao inserir veiculo". $stmt->error;
+
+        if ($stmt->execute()) {
+            echo "Veículo inserido com sucesso!";
+        } else {
+            echo "Erro ao inserir veículo: " . $stmt->error;
         }
-        
-        
-    }public function deletarVeiculo(){
-
-        $sql = "DELETE FROM veiculo WHERE veiculo_id = ?";
-        $stmt = $this->conexao->prepare($sql);
-        $stmt->bind_param('i',$this->veiculo_id);
-
-        if($stmt->execute()){
-
-        echo "veiculo deletado com sucesso";
-
-
-    }else{
-
-        echo "erro ao deletar veiculo" .$stmt->error;
-
     }
 
+    /**
+     * Atualiza os dados de um veículo existente.
+     */
+    public function editarVeiculo() {
+        $sql = "UPDATE veiculo SET 
+                    veiculo_quilometragem = ?, 
+                    veiculo_versao = ?, 
+                    fk_chassi_id = ?, 
+                    fk_combustivel_id = ?, 
+                    fk_cor_id = ?, 
+                    fk_modelo_id = ? 
+                WHERE veiculo_id = ?";
+                
+        $stmt = $this->conexao->prepare($sql);
+        // Tipos: i=integer, s=string. Ajuste se necessário.
+        $stmt->bind_param("isiiiii",
+            $this->veiculo_quilometragem,
+            $this->veiculo_versao,
+            $this->fk_chassi_id,
+            $this->fk_combustivel_id,
+            $this->fk_cor_id,
+            $this->fk_modelo_id,
+            $this->veiculo_id
+        );
 
+        if ($stmt->execute()) {
+            echo "Veículo editado com sucesso!";
+        } else {
+            echo "Erro ao editar veículo: " . $stmt->error;
+        }
+    }
 
-    } public function listarVeiculo(){
+    public function deletarVeiculo() {
+        $sql = "DELETE FROM veiculo WHERE veiculo_id = ?";
+        $stmt = $this->conexao->prepare($sql);
+        $stmt->bind_param('i', $this->veiculo_id);
 
+        if ($stmt->execute()) {
+            echo "Veículo deletado com sucesso";
+        } else {
+            echo "Erro ao deletar veículo: " . $stmt->error;
+        }
+    }
+    
+    // O método listarVeiculo já estava correto, buscando os dados através dos JOINs.
+    public function listarVeiculo() {
         $sql = "
         SELECT 
-        veiculo.veiculo_id,
-        veiculo.veiculo_versao,
-        veiculo.veiculo_quilometragem,
-        marca.marca_desc,
-        cor.cor_desc,
-        chassi.chassi_desc,
-        combustivel.comb_desc,
-        modelo.modelo_desc,
+            veiculo.veiculo_id,
+            veiculo.veiculo_versao,
+            veiculo.veiculo_quilometragem,
+            marca.marca_desc,
+            cor.cor_desc,
+            chassi.chassi_desc,
+            combustivel.comb_desc,
+            modelo.modelo_desc,
             modelo.modelo_ano
         FROM 
             veiculo
@@ -89,74 +144,30 @@ Class Veiculo{
         }
 
         return $veiculos;
-    }  public function editarVeiculo(){
-        $sql = "UPDATE veiculo SET veiculo_desc = ?, veiculo_quilometragem = ?, veiculo_ano = ?,  WHERE veiculo_id = ?";
+    }
+    
+    public function buscarVeiculoPorId($veiculo_id) {
+        $sql = "SELECT * FROM veiculo WHERE veiculo_id = ?";
         $stmt = $this->conexao->prepare($sql);
-        $stmt->bind_param("ssi", 
-            $this->veiculo_desc, 
-            $this->veiculo_quilometragem, 
-            $this->veiculo_id  
-        );
-        if($stmt->execute()){
-            echo "veiculo editada";
-        }else{
-            echo "Erro ao editar veiculo". $stmt->error;
-        }
-    }public function buscarVeiculoPorId($veiculo_id) {
-            $sql = "SELECT * FROM veiculo WHERE veiculo_id = ?";
-            
-            $stmt = $this->conexao->prepare($sql);
-            
-            // Vincula o ID do usuário ao placeholder da consulta
-            // 'i' indica que o parâmetro é um inteiro
-            $stmt->bind_param('i', $veiculo_id);
-            
-            $stmt->execute();
-            
-            $result = $stmt->get_result();
-            
-            // Retorna a primeira linha do resultado como um array associativo
-            // Ou 'null' se nenhum usuário for encontrado
-            return $result->fetch_assoc();
-            }public function listarVersoes() {
-            try {
+        $stmt->bind_param('i', $veiculo_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_assoc();
+    }
+    
+    public function listarVersoes() {
+        try {
             $sql = "SELECT DISTINCT veiculo_versao FROM veiculo ORDER BY veiculo_versao ASC";
-            
-            // Prepara a consulta
             $stmt = $this->conexao->prepare($sql);
-            
-            // Executa a consulta
             $stmt->execute();
-            
-            // 1. Pega o objeto de resultado do statement
             $resultado = $stmt->get_result();
-            
-            // 2. Usa o método fetch_all() DO RESULTADO (e não do statement)
             $versoes = $resultado->fetch_all(MYSQLI_ASSOC);
-            
-            // Fecha o statement
             $stmt->close();
-            
             return $versoes;
-
         } catch (Exception $e) {
-            // Em caso de erro, é melhor registrar em um log do que mostrar na tela
             error_log("Erro ao listar versões: " . $e->getMessage());
-            return []; // Retorna um array vazio para não quebrar a página
+            return [];
         }
     }
-
-
 }
-
-
-
-
-
-
-
-
-
-
-
 ?>

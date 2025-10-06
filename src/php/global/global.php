@@ -141,6 +141,33 @@ if(isset($_POST['editar_marca'])){
 
     $ch = new Chassi($chassi_id,$chassi_desc,$conexao);
     $ch->editarChassi();
+}if(isset($_POST['editar_veiculo'])){
+    $veiculo_id = $_POST['veiculo_id'];
+    $fk_marca_id = $_POST['fk_Marca_id'];
+    $fk_modelo_id = $_POST['fk_Modelo_id']; 
+    $fk_cor_id = $_POST['fk_cor_id'];
+    $fk_chassi_id = $_POST['fk_chassi_id'];
+    $fk_combustivel_id = $_POST['fk_combustivel_id'];
+    $veiculo_versao = $_POST['veiculo_versao'];
+    $veiculo_quilometragem = $_POST['veiculo_quilometragem'];
+    $modelo_ano = $_POST['modelo_ano'];
+    $modelo_desc = $_POST['modelo_desc'];
+
+    echo "modelo: $modelo_desc";
+    echo $veiculo_id;
+    echo $fk_chassi_id;
+    echo $fk_combustivel_id;
+    echo $fk_cor_id;
+    echo $fk_marca_id;
+    echo $fk_modelo_id;
+    echo $veiculo_versao;
+
+
+    $vcl = new Veiculo($veiculo_id, $veiculo_quilometragem, $veiculo_versao, $fk_chassi_id, $fk_combustivel_id, $fk_cor_id, $fk_modelo_id, $conexao);
+
+    $vcl->editarVeiculo();
+    $mdlAno = new Modelo("", $modelo_desc, $modelo_ano, "", $fk_marca_id, $conexao);
+    $mdlAno->insereModelo();
 }
 
 ?> 

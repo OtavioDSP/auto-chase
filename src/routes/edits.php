@@ -158,7 +158,7 @@ if (isset($_GET['usuario_id'])) {
 } elseif (isset($_GET['veiculo_id'])) {
     $id = intval($_GET['veiculo_id']);
     // Instancia o gerenciador do veículo para buscar os dados principais
-    $veiculoManager = new Veiculo(null, null, null, $conexao);
+    $veiculoManager = new Veiculo(null, null, null,null,null, null, null, $conexao);
     $item = $veiculoManager->buscarVeiculoPorId($id);
     $versao = $veiculoManager->listarVersoes();
 
@@ -170,7 +170,7 @@ if (isset($_GET['usuario_id'])) {
         $mdl = $modeloManager->buscarModeloPorId($id);
 
             echo '<pre>';
-            print_r($modelos);
+            print_r($item);
             echo '</pre>';
 
 
@@ -198,10 +198,13 @@ if (isset($_GET['usuario_id'])) {
         <form action="../php/global/global.php" method="POST">
 
             <input type="hidden" name="veiculo_id" value="<?= $item['veiculo_id'] ?>">
-        
+            
                 <label for="fk_Modelo_id">Modelo:</label>
+                <input type="hidden" name="modelo_desc" value="<?php echo $mdl['modelo_desc']?>">
+
                 <select name="fk_Modelo_id" id="" >
                     <?php foreach ($modelos as $modelo):?>
+                        
                         <option value="<?php echo $modelo['modelo_id']; ?>" <?php echo ($modelo['modelo_id'] == $item['fk_Modelo_id'])? 'selected' : ''; ?>>
                             <?php echo $modelo['modelo_desc'] ?>
                         </option>
@@ -266,6 +269,8 @@ if (isset($_GET['usuario_id'])) {
                 
                 <label for="modelo_ano">Ano:</label>
                 <input type="text" name="modelo_ano" value="<?= $mdl['modelo_ano']?>" required>
+
+               <button type="submit" name="editar_veiculo">Salvar Alterações</button>
         </form>
     <?php } else { echo "<p>Veículo não encontrado.</p>"; }
 
