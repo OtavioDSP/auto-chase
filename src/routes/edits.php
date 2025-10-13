@@ -124,12 +124,15 @@ if (isset($_GET['usuario_id'])) {
 
 // --- ROTA DE EDIÇÃO PARA MODELO ---
 } elseif (isset($_GET['modelo_id'])) {
+
+       
     $id = intval($_GET['modelo_id']);
     $modeloManager = new Modelo(null,null,null,null,null, $conexao);
     $item = $modeloManager->buscarModeloPorId($id);
     if ($item) {
         $marcaManager = new Marca(null, null, $conexao);
         $marcas = $marcaManager->listarMarcas();
+
     ?>
         <h1>Editar Modelo</h1>
         <form action="../php/global/global.php" method="POST">
@@ -144,7 +147,7 @@ if (isset($_GET['usuario_id'])) {
                 <label>Marca:</label>
                 <select name="fk_Marca_id" required>
                     <?php foreach ($marcas as $marca): ?>
-                        <option value="<?= $marca['marca_id'] ?>" <?= ($marca['marca_id'] == $item['fk_Marca_id']) ? 'selected' : '' ?>>
+                        <option value="<?= $marca['marca_id'] ?>" <?= ($marca['marca_id'] == $item['fk_marca_id']) ? 'selected' : '' ?>>
                             <?= htmlspecialchars($marca['marca_desc']) ?>
                         </option>
                     <?php endforeach; ?>
