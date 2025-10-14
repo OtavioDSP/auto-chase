@@ -52,7 +52,7 @@
 
 
 
-        }public function listarMarcas(){
+        }public function listarMarca(){
             $sql = "
             SELECT 
                 *

@@ -131,7 +131,7 @@ if (isset($_GET['usuario_id'])) {
     $item = $modeloManager->buscarModeloPorId($id);
     if ($item) {
         $marcaManager = new Marca(null, null, $conexao);
-        $marcas = $marcaManager->listarMarcas();
+        $marcas = $marcaManager->listarMarca();
 
     ?>
         <h1>Editar Modelo</h1>
@@ -178,19 +178,19 @@ if (isset($_GET['usuario_id'])) {
 
 
         $corManager = new Cor(null, null, $conexao);
-        $cores = $corManager->listarCores();
+        $cores = $corManager->listarCor();
 
         $combustivelManager = new Combustivel(null, null, $conexao);
         $combustiveis = $combustivelManager->listarCombustivel();
 
         $chassiManager = new Chassi(null, null, $conexao);
-        $chassis = $chassiManager->listarChassis();
+        $chassis = $chassiManager->listarChassi();
 
         $usuarioManager = new Usuario(null, null, null, null, null, null, null, null, $conexao);
         $usuarios = $usuarioManager->listarUsuario();
         
         $marcaManager = new Marca(null, null, $conexao);
-        $marcas = $marcaManager->listarMarcas();
+        $marcas = $marcaManager->listarMarca();
        
         ?>;
     

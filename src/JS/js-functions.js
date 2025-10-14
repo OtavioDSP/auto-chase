@@ -53,3 +53,10 @@ function verificarDocumento() {
     // 4. Atualiza o valor do input com a string formatada.
     element.value = valorFormatado;
 }
+
+function atualizarMarca() {
+    const modeloSelect = document.querySelector('select[name="fk_modelo_id"]');
+    const marcaTexto = document.querySelector('#marca_nome');
+    const modeloSelecionado = modeloSelect.value;
+    marcaTexto.textContent = marcasPorModelo[modeloSelecionado] || '—';
+}

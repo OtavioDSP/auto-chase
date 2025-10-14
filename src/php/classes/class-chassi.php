@@ -46,7 +46,7 @@
             }
 
 
-        }public function listarChassis(){
+        }public function listarChassi(){
 
             $sql = "
             SELECT 

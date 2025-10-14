@@ -203,7 +203,7 @@
                 <th colspan="2">Ações</th>
             <?php
             $marca = new Marca("","", $conexao);
-            $marcaArray = $marca->listarMarcas();
+            $marcaArray = $marca->listarMarca();
             foreach ($marcaArray as $marca): ?>
             <tr>
                 <td><?=$marca['marca_id']?></td>
@@ -231,7 +231,7 @@
                 <th colspan="2">Ações</th>
             <?php
             $cor = new Cor("","", $conexao);
-            $corArray = $cor->listarCores();
+            $corArray = $cor->listarCor();
             foreach ($corArray as $cor): ?>
             <tr>
                 <td><?=$cor['cor_id']?></td>
@@ -259,7 +259,7 @@
                 <th colspan="2">Ações</th>
             <?php
             $carroceria = new Chassi("","", $conexao);
-            $carroceriaArray = $carroceria->listarChassis();
+            $carroceriaArray = $carroceria->listarChassi();
             foreach ($carroceriaArray as $chassi): ?>
             <tr>
                 <td><?=$chassi['chassi_id']?></td>
@@ -380,8 +380,9 @@
 
 
 
+<script>
 
-
-    <script src="./src/JS/js-functions.js"></script>
+    
+</script>
 </body>
 </html>
