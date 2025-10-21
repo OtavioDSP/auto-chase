@@ -34,34 +34,25 @@ Class Modelo{
             echo "fipe inserida";
         }else{
             echo "Erro ao inserir fipe". $stmt->error;
-        }
-
-
-
-
-
-    }public function deletarModelo(){
+        }    
+        
+    }
+    
+    public function deletarModelo(){
 
         $sql = "DELETE FROM modelo WHERE modelo_id = ?";
         $stmt = $this->conexao->prepare($sql);
         $stmt->bind_param('i',$this->modelo_id);
     
         if($stmt->execute()){
-
-        echo "modelo deletado com sucesso";
-
-
-    }else{
-
-        echo "erro ao deletar modelo" .$stmt->error;
-
-        
+            echo "modelo deletado com sucesso";
+        } else{
+            echo "erro ao deletar modelo" .$stmt->error;   
+        }
 
     }
-
-
-
-    }public function listarModelo(){
+    
+    public function listarModelo(){
             $sql = "
             SELECT 
                 modelo.modelo_desc,
@@ -85,8 +76,24 @@ Class Modelo{
             }
 
             return $modelos;
+    }
+    public function listarModeloPorMarca($marca){
+        $sql = "SELECT * FROM modelo WHERE fk_marca_id = ?";
+        $stmt = $this->conexao->prepare($sql);
+        $stmt->bind_param('i', $marca);
+        $stmt->execute();
+        $resultado = $stmt->get_result();
+        $modelos = [];
 
-        }public function editarModelo(){
+        while($modelo = $resultado->fetch_assoc()){
+            $modelos[] = $modelo;
+        }
+
+        return $modelos;
+    }
+
+    
+    public function editarModelo(){
 
             $sql = "UPDATE modelo SET modelo_desc = ?, modelo_ano = ?, modelo_valor_fipe = ?, fk_marca_id = ? WHERE modelo_id = ?";
 
@@ -138,8 +145,8 @@ Class Modelo{
             return $result->fetch_assoc();
         }
     
-
-
+        
+   
 
 }
 

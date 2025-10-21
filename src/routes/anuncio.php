@@ -34,7 +34,7 @@ $combustiveis = $combustivelManager->listarCombustivel();
 <form action="routes/salvar_anuncio.php" method="POST">
   
   <!-- Filtro Marca → Modelo -->
-  <?php include 'componentes/filtro-marca-modelo.php'; ?>
+  <?php include '../php/functions/filter-functions.php'; ?>
 
   <label>Chassi:</label>
   <select name="fk_chassi_id">
@@ -69,7 +69,7 @@ $combustiveis = $combustivelManager->listarCombustivel();
   <label>Título do Anúncio:</label>
   <input type="text" name="anuncio_titulo" required><br>
 
-  <label>Descrição:</label>
+  <label>Sobre Este Veiculo</label>
   <textarea name="anuncio_descricao" rows="4"></textarea><br>
 
   <label>Preço:</label>
@@ -79,4 +79,5 @@ $combustiveis = $combustivelManager->listarCombustivel();
 </form>
 
 </body>
+
 </html>

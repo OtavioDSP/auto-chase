@@ -53,3 +53,27 @@ function verificarDocumento() {
     // 4. Atualiza o valor do input com a string formatada.
     element.value = valorFormatado;
 }
+function carregarModelos() {
+    const marcaSelect = document.getElementById("marcaSelect");
+    const modeloSelect = document.getElementById("modeloSelect");
+    const marcaId = marcaSelect.value;
+
+    // Limpa os modelos anteriores
+    modeloSelect.innerHTML = '<option value="">Selecione um modelo</option>';
+
+    if (marcaId && modelosPorMarca[marcaId]) {
+        const modelos = modelosPorMarca[marcaId];
+        modelos.forEach(modelo => {
+            const option = document.createElement("option");
+            option.value = modelo.id;
+            option.textContent = `${modelo.desc} - ${modelo.ano}`;
+            modeloSelect.appendChild(option);
+        });
+    } else {
+        modeloSelect.innerHTML = '<option value="">Nenhum modelo encontrado</option>';
+    }
+}
+
+
+
+

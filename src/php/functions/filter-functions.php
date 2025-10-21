@@ -15,7 +15,7 @@ foreach ($modelos as $modelo) {
 
 <!-- Filtro de Marca -->
 <label>Marca:</label>
-<select name="fk_marca_id" id="marcaSelect" onchange="atualizarModelos()" required>
+<select name="fk_marca_id" id="marcaSelect"  required>
   <option value="">Selecione uma marca</option>
   <?php foreach ($marcas as $marca): ?>
     <option value="<?php echo $marca['marca_id']; ?>"><?php echo $marca['marca_desc']; ?></option>
@@ -29,3 +29,43 @@ foreach ($modelos as $modelo) {
   <option value="">Selecione a marca primeiro</option>
 </select>
 <br><br>
+
+
+<script>
+  document.getElementById('marcaSelect').addEventListener('change', function() {
+    const marca = this.value;
+    const modeloSelect = document.getElementById('modeloSelect');
+
+    // Limpa os modelos atuais
+    modeloSelect.innerHTML = '<option value="">Carregando...</option>';
+
+    if (!marca) {
+        modeloSelect.innerHTML = '<option value="">Selecione o modelo</option>';
+        return;
+    }
+
+    fetch(`../php/functions/modelo_json.php?marca=${encodeURIComponent(marca)}`)
+        .then(response => response.json())
+        .then(modelos => {
+            modeloSelect.innerHTML = '<option value="">Selecione o modelo</option>';
+
+            modelos.forEach(modelo => {
+                const option = document.createElement('option');
+                option.value = modelo;
+                option.textContent = modelo.modelo_desc;
+                modeloSelect.appendChild(option);
+            });
+        })
+        .catch(() => {
+            modeloSelect.innerHTML = '<option value="">Erro ao carregar modelos</option>';
+        });
+});
+</script>
+
+
+
+
+
+
+
+
