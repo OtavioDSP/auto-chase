@@ -4,30 +4,28 @@ Class Modelo{
 
     private $modelo_id;
     private $modelo_desc;
-    private $modelo_ano;
+
     private $modelo_fipe;
     private $fk_marca_id;
     private $conexao;
     
-    public function __construct($modelo_id, $modelo_desc, $modelo_ano, $modelo_fipe,
+    public function __construct($modelo_id, $modelo_desc, $modelo_fipe,
      $fk_marca_id, $conexao) {
         $this->modelo_id = $modelo_id;
         $this->modelo_desc = $modelo_desc;
-        $this->modelo_ano = $modelo_ano;
         $this->modelo_fipe = $modelo_fipe;
         $this->fk_marca_id = $fk_marca_id;
         $this->conexao = $conexao;
     }
 
     public function insereModelo(){
-        $sql = "INSERT INTO modelo (modelo_desc, modelo_valor_fipe, modelo_ano, fk_Marca_id) VALUES (?, ?, ?, ?)";
+        $sql = "INSERT INTO modelo (modelo_desc, modelo_valor_fipe, fk_Marca_id) VALUES (?, ?, ?, ?)";
 
         $stmt = $this->conexao->prepare($sql);
         
         $stmt->bind_param('sdsi', 
             $this->modelo_desc,
             $this->modelo_fipe,
-            $this->modelo_ano,
             $this->fk_marca_id
         );
         if($stmt->execute()){
@@ -56,7 +54,6 @@ Class Modelo{
             $sql = "
             SELECT 
                 modelo.modelo_desc,
-                modelo.modelo_ano,
                 modelo.modelo_valor_fipe,
                 modelo.modelo_id,
                 modelo.fk_marca_id,
@@ -95,13 +92,12 @@ Class Modelo{
     
     public function editarModelo(){
 
-            $sql = "UPDATE modelo SET modelo_desc = ?, modelo_ano = ?, modelo_valor_fipe = ?, fk_marca_id = ? WHERE modelo_id = ?";
+            $sql = "UPDATE modelo SET modelo_desc = ?, modelo_valor_fipe = ?, fk_marca_id = ? WHERE modelo_id = ?";
 
             $stmt = $this->conexao->prepare($sql);
 
           $stmt->bind_param('ssidi',
-                $this->modelo_desc, 
-                $this->modelo_ano,    
+                $this->modelo_desc,    
                 $this->modelo_fipe,  
                 $this->fk_marca_id,   
                 $this->modelo_id      
@@ -117,7 +113,6 @@ Class Modelo{
         } public function buscarModeloPorId($modelo_id) {
             $sql = "SELECT 
                 modelo.modelo_desc,
-                modelo.modelo_ano,
                 modelo.modelo_valor_fipe,
                 modelo.modelo_id,
                 modelo.fk_marca_id,

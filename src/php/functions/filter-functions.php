@@ -51,7 +51,7 @@ foreach ($modelos as $modelo) {
 
             modelos.forEach(modelo => {
                 const option = document.createElement('option');
-                option.value = modelo;
+                option.value = modelo.modelo_id;
                 option.textContent = modelo.modelo_desc;
                 modeloSelect.appendChild(option);
             });

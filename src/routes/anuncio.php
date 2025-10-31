@@ -9,11 +9,32 @@ include_once '../php/classes/class-cor.php';
 include_once '../php/classes/class-chassi.php';
 include_once '../php/classes/class-combustivel.php';
 
-$modeloManager = new Modelo(null, null, null, null, null, $conexao);
-$marcaManager = new Marca(null, null, $conexao);
-$corManager = new Cor(null, null, $conexao);
-$chassiManager = new Chassi(null, null, $conexao);
-$combustivelManager = new Combustivel(null, null, $conexao);
+$modeloManager = new Modelo(
+  null,
+  null,
+  null,
+  null,
+  null
+);
+$marcaManager = new Marca(null,
+  null,
+  $conexao
+);
+$corManager = new Cor(
+  null,
+  null,
+  $conexao
+);
+$chassiManager = new Chassi(
+  null,
+  null,
+  $conexao
+);
+$combustivelManager = new Combustivel(
+  null,
+  null,
+  $conexao
+);
 
 $modelos = $modeloManager->listarModelo();
 $marcas = $marcaManager->listarMarca();
@@ -31,8 +52,15 @@ $combustiveis = $combustivelManager->listarCombustivel();
 <body>
 <h2>Criar novo anúncio</h2>
 
-<form action="routes/salvar_anuncio.php" method="POST">
-  
+
+
+
+<form action="../php/global/global.php" method="POST"  enctype="multipart/form-data">
+  <p>Imagem:</p>
+  <input type="file" name="img">
+  <br>
+  <br>
+  <br>
   <!-- Filtro Marca → Modelo -->
   <?php include '../php/functions/filter-functions.php'; ?>
 
@@ -66,16 +94,15 @@ $combustiveis = $combustivelManager->listarCombustivel();
   <label>Versão:</label>
   <input type="text" name="veiculo_versao" required><br>
 
-  <label>Título do Anúncio:</label>
-  <input type="text" name="anuncio_titulo" required><br>
+  
 
   <label>Sobre Este Veiculo</label>
-  <textarea name="anuncio_descricao" rows="4"></textarea><br>
+  <textarea name="anuncio_desc" rows="4"></textarea><br>
 
   <label>Preço:</label>
-  <input type="number" name="anuncio_preco" step="0.01" required><br>
+  <input type="number" name="anuncio_valor" step="0.01" required><br>
 
-  <input type="submit" value="Publicar Anúncio">
+  <input type="submit" value="Publicar Anúncio" name="criar_anuncio">
 </form>
 
 </body>

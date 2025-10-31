@@ -10,6 +10,7 @@ class Veiculo {
     private $fk_combustivel_id;
     private $fk_cor_id;
     private $fk_modelo_id;
+
     
     private $conexao;
 
@@ -22,6 +23,7 @@ class Veiculo {
         $fk_combustivel_id,
         $fk_cor_id,
         $fk_modelo_id,
+        
         $conexao
     ) {
         $this->veiculo_id = $veiculo_id;
@@ -31,6 +33,7 @@ class Veiculo {
         $this->fk_combustivel_id = $fk_combustivel_id;
         $this->fk_cor_id = $fk_cor_id;
         $this->fk_modelo_id = $fk_modelo_id;
+    
         $this->conexao = $conexao;
     }
 
@@ -54,11 +57,12 @@ class Veiculo {
             $this->fk_chassi_id,
             $this->fk_combustivel_id,
             $this->fk_cor_id,
-            $this->fk_modelo_id
+            $this->fk_modelo_id,
+            
         );
 
         if ($stmt->execute()) {
-            echo "Veículo inserido com sucesso!";
+            return $this->conexao->insert_id;
         } else {
             echo "Erro ao inserir veículo: " . $stmt->error;
         }
@@ -119,8 +123,7 @@ class Veiculo {
             cor.cor_desc,
             chassi.chassi_desc,
             combustivel.comb_desc,
-            modelo.modelo_desc,
-            modelo.modelo_ano
+            modelo.modelo_desc
         FROM 
             veiculo
         INNER JOIN 

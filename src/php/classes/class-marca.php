@@ -20,7 +20,6 @@
             );
              if($stmt->execute()){
                 return $this->conexao->insert_id;
-                echo "marca inserida";
                 
             }else{
                 echo "Erro ao Inserir marca". $stmt->error;

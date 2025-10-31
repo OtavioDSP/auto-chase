@@ -3,11 +3,11 @@ class Anuncio {
 
     private $anuncio_id;
     private $anuncio_desc;
+
     private $fk_usuario_id;
     private $fk_veiculo_id;
     private $anuncio_valor;
     private $conexao;
-
     public function __construct($anuncio_id, $anuncio_desc, $fk_usuario_id, $fk_veiculo_id, $anuncio_valor, $conexao) {
         $this->anuncio_id = $anuncio_id;
         $this->anuncio_desc = $anuncio_desc;
@@ -63,7 +63,6 @@ class Anuncio {
             
             -- Modelo do veículo
             modelo.modelo_desc,
-            modelo.modelo_ano,
             modelo.modelo_valor_fipe,
             
             -- Marca do modelo
@@ -80,7 +79,7 @@ class Anuncio {
 
         -- Veículo do anúncio
         INNER JOIN veiculo 
-            ON veiculo.fk_anuncio_id = anuncio.anuncio_id
+            ON anuncio.fk_veiculo_id = veiculo.veiculo_id
 
 
         -- Veículo -> Modelo

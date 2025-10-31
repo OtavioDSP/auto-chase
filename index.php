@@ -129,7 +129,7 @@
         </thead>
         <tbody>
             <?php
-            $vcl = new Veiculo("", "", "", "", "","","", $conexao);
+            $vcl = new Veiculo("", "", "", "", "","","",  $conexao);
             $veiculosArray = $vcl->listarVeiculo(); 
             foreach ($veiculosArray as $veiculo): ?>
             <tr>
@@ -166,7 +166,7 @@
                 <th>Ano do modelo</th>
                 <th colspan="2">Ações</th>
             <?php
-            $modelo = new Modelo("", "", "","", "", $conexao);
+            $modelo = new Modelo("", "", "","", $conexao);
             $modelosArray = $modelo->listarModelo();
             foreach ($modelosArray as $modelo): 
             $valor_formatado = number_format($modelo['modelo_valor_fipe'], 2, ',', '.');?>
@@ -369,14 +369,6 @@
 <br><br>
 
 
-<form action="src/php/global/uploads.php" method="post" enctype="multipart/form-data">
-    nome: <input type="text" name="imagem_url">
-    Imagem <input type="file" name="img">
-    
-    <button type="submit">Enviar</button>
-
-</form>
-    
 
 
 
