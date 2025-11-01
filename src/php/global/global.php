@@ -35,12 +35,12 @@ if (isset($_POST['criar_conta'])) {
     $cor_desc = $_POST['cor_desc'];
     $marca_desc = $_POST['marca_desc'];
     $modelo_desc = $_POST['modelo_desc'];
-    $modelo_ano = $_POST['modelo_ano'];
+
     $modelo_fipe = $_POST['modelo_fipe'];
     $chassi_desc = $_POST['chassi_desc'];
     $comb_desc = $_POST['comb_desc'];
 
-    ECHO "ANO: $modelo_ano";
+
 
     // Insere a marca e pega o ID
     $marca = new Marca("", $marca_desc, $conexao);
@@ -77,7 +77,6 @@ if (isset($_POST['criar_conta'])) {
 } else if (isset($_POST['editar_modelo'])) {
     $modelo_id = $_POST['modelo_id'];
     $modelo_desc = $_POST['modelo_desc'];
-    $modelo_ano = $_POST['modelo_ano'];
     $modelo_valor_fipe = $_POST['modelo_valor_fipe'];
     $fk_marca_id = $_POST['fk_marca_id'];
 
@@ -151,7 +150,7 @@ if (isset($_POST['criar_conta'])) {
     $fk_combustivel_id = $_POST['fk_combustivel_id'];
     $veiculo_versao = $_POST['veiculo_versao'];
     $veiculo_quilometragem = $_POST['veiculo_quilometragem'];
-    $modelo_ano = $_POST['modelo_ano'];
+
     $modelo_desc = $_POST['modelo_desc'];
 
     $vcl = new Veiculo($veiculo_id, $veiculo_quilometragem, $veiculo_versao, $fk_chassi_id, $fk_combustivel_id, $fk_cor_id, $fk_modelo_id, $conexao);

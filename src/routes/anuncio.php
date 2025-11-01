@@ -14,7 +14,7 @@ $modeloManager = new Modelo(
   null,
   null,
   null,
-  null
+  $conexao
 );
 $marcaManager = new Marca(null,
   null,

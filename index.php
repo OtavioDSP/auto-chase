@@ -20,12 +20,12 @@
         <input type="text" name="usuario_endereco" placeholder="Endereço" required>
         <input type="text" id="documento" oninput="verificarDocumento()" name="doc_cpf_cnpj" placeholder="Digite CPF ou CNPJ" required >
         <p id="resultado">Digite um CPF ou CNPJ.</p>
-       
+        
         <input type="submit" value="Enviar" name="criar_conta">
          <br><br>
     </form>
 
-<form action="../php/global/global.php" method="POST">
+<form action="src/php/global/global.php" method="POST">
         
         <h1>Cor - Adicionar Cor</h1>
         <input type="text" placeholder="Cor" name="cor_desc">
@@ -35,7 +35,7 @@
         
         <h1>Modelo - Adicionar Modelo</h1>
         <input type="text" placeholder="Modelo" name="modelo_desc">
-        <input type="text" id="modelo_ano" name="modelo_ano" pattern="\d{4}" maxlength="4" required placeholder="Ano">
+       
         <input type="text" placeholder="FIPE" name="modelo_fipe">
         
         <h1>Chassi - Adicionar Chassi</h1>
@@ -43,7 +43,7 @@
 
         <h1>Combustivel - Adicionar Combustivel</h1>
         <input type="text" placeholder="Combustivel" name="comb_desc">
-      
+    
 
         <input type="submit" value="Enviar" name="enviar_informacoes">
         
@@ -51,12 +51,6 @@
 
     <br>
     <br>
-
-
-
-
-
-
 
     <?php
     include('.\src\config\db\connect.php');
@@ -79,8 +73,7 @@
                 <th>CPF/CNPJ</th>
                 <th>Senha (Hash)</th>
                 <th>Nível de Acesso</th>
-                <th>Ações</th>            
-            </tr>
+                <th colspan="2">Ações</th> </tr>
         </thead>
         <tbody>
             <?php
@@ -122,8 +115,6 @@
                 <th>Cor</th>
                 
                 <th>Combustivel</th>
-                
-                <th>Ano</th>
                 <th colspan="2">Ações</th>
             </tr>
         </thead>
@@ -141,7 +132,7 @@
                 <td><?=$veiculo['chassi_desc']?></td>
                 <td><?=$veiculo['cor_desc']?></td>
                 <td><?=$veiculo['comb_desc']?></td>
-                <td><?=$veiculo['modelo_ano']?></td>
+
                 <td>
                     <form method="post" action="src/php/global/global.php" onsubmit="return confirm('Tem certeza que deseja deletar este veículo?');">
                         <input type='hidden' name='veiculo_id' value='<?= $veiculo['veiculo_id'] ?>'>
@@ -163,22 +154,21 @@
                 <th>Nome do modelo</th>
                 <th>Modelo Fipe</th>
                 <th>Marca do modelo</th>
-                <th>Ano do modelo</th>
                 <th colspan="2">Ações</th>
+            </tr> </thead>
+        <tbody>
             <?php
             $modelo = new Modelo("", "", "","", $conexao);
             $modelosArray = $modelo->listarModelo();
             foreach ($modelosArray as $modelo): 
             $valor_formatado = number_format($modelo['modelo_valor_fipe'], 2, ',', '.');?>
             <tr>
-                 
+                
                 <td><?=$modelo['modelo_id']?></td>
                 <td><?=$modelo['modelo_desc']?></td>
                 <td>R$: <?=$valor_formatado?></td>
                 <td><?=$modelo['marca_desc']?></td>
-                <td><?=$modelo['modelo_ano']?></td>
-                <td>
-                    <form method="post" action="src/php/global/global.php" onsubmit="return confirm('Tem certeza que deseja deletar este modelo?');">
+                <td> <form method="post" action="src/php/global/global.php" onsubmit="return confirm('Tem certeza que deseja deletar este modelo?');">
                         <input type='hidden' name='modelo_id' value='<?= $modelo['modelo_id'] ?>'>
                         <input type='submit' value='Deletar Modelo'>
                     </form>
@@ -188,8 +178,7 @@
                 </td>
             </tr>
             <?php endforeach; ?>
-
-    </table>
+        </tbody> </table>
 
 
 
@@ -201,6 +190,8 @@
                 <th>ID da marca</th>
                 <th>Nome da marca</th>
                 <th colspan="2">Ações</th>
+            </tr> </thead>
+        <tbody>
             <?php
             $marca = new Marca("","", $conexao);
             $marcaArray = $marca->listarMarca();
@@ -209,7 +200,7 @@
                 <td><?=$marca['marca_id']?></td>
                 <td><?=$marca['marca_desc']?></td>
                 <td>
-                    <form method="post" action="src/php/global/global.php" onsubmit="return confirm('Tem certeza que deseja deletar este modelo?');">
+                    <form method="post" action="src.php/global/global.php" onsubmit="return confirm('Tem certeza que deseja deletar este modelo?');">
                         <input type='hidden' name='marca_id' value='<?= $marca['marca_id'] ?>'>
                         <input type='submit' value='Deletar Marca'>
                     </form>
@@ -219,8 +210,7 @@
                 </td>
             </tr>
             <?php endforeach; ?>
-
-    </table>
+        </tbody> </table>
 <br>
 <br>
     <table border="1" cellpadding="8" cellspacing="0" style="border-collapse: collapse; width: 100%; text-align: left;">
@@ -229,6 +219,8 @@
                 <th>ID da cor</th>
                 <th>Nome da cor</th>
                 <th colspan="2">Ações</th>
+            </tr> </thead>
+        <tbody>
             <?php
             $cor = new Cor("","", $conexao);
             $corArray = $cor->listarCor();
@@ -238,7 +230,7 @@
                 <td><?=$cor['cor_desc']?></td>
                 <td>
                     <form method="post" action="src/php/global/global.php" onsubmit="return confirm('Tem certeza que deseja deletar este cor?');">
-                        <input type='hidden' name='cor_id' value='<?= $cor['cor'] ?>'>
+                        <input type='hidden' name='cor_id' value='<?= $cor['cor_id'] ?>'>
                         <input type='submit' value='Deletar cor'>
                     </form>
                 </td>
@@ -247,7 +239,7 @@
                 </td>
             </tr>
             <?php endforeach; ?>
-    </table>
+        </tbody> </table>
 
     <br><br>
     
@@ -257,6 +249,8 @@
                 <th>ID da carroceria</th>
                 <th>Nome da carroceria</th>
                 <th colspan="2">Ações</th>
+            </tr> </thead>
+        <tbody>
             <?php
             $carroceria = new Chassi("","", $conexao);
             $carroceriaArray = $carroceria->listarChassi();
@@ -275,8 +269,7 @@
                 </td>
             </tr>
             <?php endforeach; ?>
-
-    </table>
+        </tbody> </table>
     <br><br>
 
     <table border="1" cellpadding="8" cellspacing="0" style="border-collapse: collapse; width: 100%; text-align: left;">
@@ -285,6 +278,8 @@
                 <th>ID do combustivel</th>
                 <th>Nome do combustivel</th>
                 <th colspan="2">Ações</th>
+            </tr> </thead>
+        <tbody>
             <?php
             $comb = new Combustivel("","", $conexao);
             $combArray = $comb->listarCombustivel();
@@ -303,30 +298,24 @@
                 </td>
             </tr>
             <?php endforeach; ?>
-
-    </table>
+        </tbody> </table>
 
     <br>
     <br>
  <table border="1" cellpadding="8" cellspacing="0" style="border-collapse: collapse; width: 100%; text-align: left;">
     <thead>
         <tr>
-            <!-- do anuncio -->
             <th>ID do Anúncio</th>
             <th>Descrição do Anúncio</th>
             <th>Data de Criação</th>
             <th>Valor</th>
 
-            <!-- do carro -->
-            <th>Nome do Veículo</th>
-            <th>Modelo</th>
-            <th>Versão</th>
-            <th>Ano</th>
+            <th>Modelo</th> <th>Versão</th>
+            
             <th>Marca</th>
             <th>Chassi</th>
             <th>Combustível</th>
 
-            <!-- Ações -->
             <th colspan="2">Ações</th>
         </tr>
     </thead>
@@ -342,17 +331,12 @@
                 <td><?=$anuncio['anuncio_id']?></td>
                 <td><?=$anuncio['anuncio_desc']?></td>
                 <td><?=$anuncio['anuncio_data_de_criacao']?></td>
-                <td><?=number_format($anuncio['anuncio_valor'], 2, ',', '.')?></td> <!-- Valor formatado -->
-                
-                <!-- Informações do carro -->
-                <td><?=$anuncio['modelo_desc']?></td>
-                <td><?=$anuncio['modelo_ano']?></td>
+                <td><?=number_format($anuncio['anuncio_valor'], 2, ',', '.')?></td> <td><?=$anuncio['modelo_desc']?></td>
                 <td><?=$anuncio['veiculo_versao']?></td>
                 <td><?=$anuncio['marca_desc']?></td>
                 <td><?=$anuncio['chassi_desc']?></td>
                 <td><?=$anuncio['comb_desc']?></td>
 
-                <!-- Ações -->
                 <td>
                     <form method="post" action="src/php/global/global.php" onsubmit="return confirm('Tem certeza que deseja deletar este anúncio?');">
                         <input type='hidden' name='anuncio_id' value='<?= $anuncio['anuncio_id'] ?>'>
@@ -367,11 +351,6 @@
     </tbody>
 </table>
 <br><br>
-
-
-
-
-
 
 </body>
 </html>

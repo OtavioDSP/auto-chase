@@ -8,7 +8,7 @@ foreach ($modelos as $modelo) {
     $agrupados[$marca_id][] = [
         'id' => $modelo['modelo_id'],
         'desc' => $modelo['modelo_desc'],
-        'ano' => $modelo['modelo_ano']
+        // 'ano' => $modelo['modelo_ano']
     ];
 }
 ?>
