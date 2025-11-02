@@ -11,6 +11,7 @@ class Veiculo {
     private $fk_cor_id;
     private $fk_modelo_id;
 
+    private $veiculo_ano;
     
     private $conexao;
 
@@ -23,7 +24,7 @@ class Veiculo {
         $fk_combustivel_id,
         $fk_cor_id,
         $fk_modelo_id,
-        
+        $veiculo_ano,
         $conexao
     ) {
         $this->veiculo_id = $veiculo_id;
@@ -33,7 +34,7 @@ class Veiculo {
         $this->fk_combustivel_id = $fk_combustivel_id;
         $this->fk_cor_id = $fk_cor_id;
         $this->fk_modelo_id = $fk_modelo_id;
-    
+        $this->veiculo_ano = $veiculo_ano;
         $this->conexao = $conexao;
     }
 
@@ -45,8 +46,8 @@ class Veiculo {
     public function insereVeiculo() {
         $sql = "INSERT INTO Veiculo (
                     veiculo_id, veiculo_quilometragem, veiculo_versao, 
-                    fk_chassi_id, fk_combustivel_id, fk_cor_id, fk_modelo_id
-                ) VALUES (?, ?, ?, ?, ?, ?, ?)";
+                    fk_chassi_id, fk_combustivel_id, fk_cor_id, fk_modelo_id, veiculo_ano
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
         $stmt = $this->conexao->prepare($sql);
         // Tipos: i=integer, s=string. Ajuste se necessário.
@@ -58,6 +59,7 @@ class Veiculo {
             $this->fk_combustivel_id,
             $this->fk_cor_id,
             $this->fk_modelo_id,
+            $this->veiculo_ano
             
         );
 
@@ -79,18 +81,21 @@ class Veiculo {
                     fk_combustivel_id = ?, 
                     fk_cor_id = ?, 
                     fk_modelo_id = ? 
+                    veiculo_ano = ?
                 WHERE veiculo_id = ?";
                 
         $stmt = $this->conexao->prepare($sql);
         // Tipos: i=integer, s=string. Ajuste se necessário.
-        $stmt->bind_param("isiiiii",
+        $stmt->bind_param("isiiiiis",
             $this->veiculo_quilometragem,
             $this->veiculo_versao,
             $this->fk_chassi_id,
             $this->fk_combustivel_id,
             $this->fk_cor_id,
             $this->fk_modelo_id,
+            $this->veiculo_ano,
             $this->veiculo_id
+            
         );
 
         if ($stmt->execute()) {
@@ -118,6 +123,7 @@ class Veiculo {
         SELECT 
             veiculo.veiculo_id,
             veiculo.veiculo_versao,
+            veiculo.veiculo_ano,
             veiculo.veiculo_quilometragem,
             marca.marca_desc,
             cor.cor_desc,

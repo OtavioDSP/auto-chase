@@ -77,8 +77,18 @@
         </thead>
         <tbody>
             <?php
-            $usu = new Usuario("", "", "", "", "", "", "", "", $conexao);
-            $usr = $usu->listarUsuario();         
+            $usu = new Usuario(
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                $conexao
+            );
+            $usr = $usu->listarUsuario();
             foreach ($usr as $usuario) { ?>
             <tr>
                 <td><?=$usuario['usuario_id']?></td>
@@ -115,13 +125,24 @@
                 <th>Cor</th>
                 
                 <th>Combustivel</th>
+                <th>Ano</th>
                 <th colspan="2">Ações</th>
             </tr>
         </thead>
         <tbody>
             <?php
-            $vcl = new Veiculo("", "", "", "", "","","",  $conexao);
-            $veiculosArray = $vcl->listarVeiculo(); 
+            $vcl = new Veiculo(
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                $conexao
+            );
+            $veiculosArray = $vcl->listarVeiculo();
             foreach ($veiculosArray as $veiculo): ?>
             <tr>
                 <td><?=$veiculo['veiculo_id']?></td>
@@ -132,6 +153,7 @@
                 <td><?=$veiculo['chassi_desc']?></td>
                 <td><?=$veiculo['cor_desc']?></td>
                 <td><?=$veiculo['comb_desc']?></td>
+                <td><?=$veiculo['veiculo_ano']?></td>
 
                 <td>
                     <form method="post" action="src/php/global/global.php" onsubmit="return confirm('Tem certeza que deseja deletar este veículo?');">
@@ -158,7 +180,13 @@
             </tr> </thead>
         <tbody>
             <?php
-            $modelo = new Modelo("", "", "","", $conexao);
+            $modelo = new Modelo(
+                null,
+                null,
+                null,
+                null,
+                $conexao
+            );
             $modelosArray = $modelo->listarModelo();
             foreach ($modelosArray as $modelo): 
             $valor_formatado = number_format($modelo['modelo_valor_fipe'], 2, ',', '.');?>
@@ -193,7 +221,11 @@
             </tr> </thead>
         <tbody>
             <?php
-            $marca = new Marca("","", $conexao);
+            $marca = new Marca(
+                null,
+            null,
+            $conexao
+        );
             $marcaArray = $marca->listarMarca();
             foreach ($marcaArray as $marca): ?>
             <tr>
@@ -252,7 +284,11 @@
             </tr> </thead>
         <tbody>
             <?php
-            $carroceria = new Chassi("","", $conexao);
+            $carroceria = new Chassi(
+                null,
+                null,
+                $conexao
+            );
             $carroceriaArray = $carroceria->listarChassi();
             foreach ($carroceriaArray as $chassi): ?>
             <tr>
@@ -281,7 +317,11 @@
             </tr> </thead>
         <tbody>
             <?php
-            $comb = new Combustivel("","", $conexao);
+            $comb = new Combustivel(
+                null,
+                null,
+                $conexao
+            );
             $combArray = $comb->listarCombustivel();
             foreach ($combArray as $comb): ?>
             <tr>
@@ -322,7 +362,14 @@
     <tbody>
         <?php
         // Crie uma instância da classe Anuncio e busque os anúncios
-        $anuncio = new Anuncio("", "", "", "", "", $conexao);
+        $anuncio = new Anuncio(
+            null,
+            null,
+            null,
+            null,
+            null,
+            $conexao
+        );
         $anuncioArray = $anuncio->listarAnuncios();
 
         // Itera sobre os anúncios e exibe os dados
