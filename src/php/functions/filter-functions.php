@@ -1,5 +1,5 @@
 <?php
-// Este arquivo espera que você já tenha os arrays $marcas e $modelos definidos
+
 
 // Agrupa os modelos por marca
 $agrupados = [];
@@ -8,7 +8,7 @@ foreach ($modelos as $modelo) {
     $agrupados[$marca_id][] = [
         'id' => $modelo['modelo_id'],
         'desc' => $modelo['modelo_desc'],
-        // 'ano' => $modelo['modelo_ano']
+        
     ];
 }
 ?>

@@ -9,6 +9,7 @@ include_once '../php/classes/class-cor.php';
 include_once '../php/classes/class-chassi.php';
 include_once '../php/classes/class-combustivel.php';
 include_once '../php/classes/class-anuncio.php';
+
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -210,42 +211,120 @@ if (isset($_GET['usuario_id'])) {
 
        
     $id = intval($_GET['anuncio_id']);
-    $modeloManager = new Modelo(
-        null,
-        null,
-        null,
-        null, 
-        $conexao
-    );
-    $item = $modeloManager->buscarModeloPorId(
-        $id
-    );
-    if ($item) {
-        $marcaManager = new Marca(
+     $anuncio = new Anuncio(
+            null,
+            null,
+            null,
             null,
             null,
             $conexao
         );
+    $item = $anuncio->buscarAnuncioPorId(
+        $id
+    );
+    if ($item) {
+        $anuncio = new Anuncio(
+            null,
+            null,
+            null,
+            null,
+            null,
+            $conexao
+        );
+        $modeloManager = new Modelo(
+            null,
+            null,
+            null,
+            null,
+            $conexao
+        );
+        $marcaManager = new Marca(null,
+            null,
+            $conexao
+        );
+        $corManager = new Cor(
+            null,
+            null,
+            $conexao
+        );
+        $chassiManager = new Chassi(
+            null,
+            null,
+            $conexao
+        );
+        $combustivelManager = new Combustivel(
+            null,
+            null,
+            $conexao
+        );
+        $anuncios = $anuncio->listarAnuncios();
+        $modelos = $modeloManager->listarModelo();
         $marcas = $marcaManager->listarMarca();
+        $cores = $corManager->listarCor();
+        $chassis = $chassiManager->listarChassi();
+        $combustiveis = $combustivelManager->listarCombustivel();
 
+
+        
     ?>
+
+    <pre><?php print_r($modelos); ?></pre>
         <h1>Editar ANUNCIO</h1>
-        <form action="../php/global/global.php" method="POST">
-            <input type="hidden" name="modelo_id" value="<?= $item['modelo_id'] ?>">
-            <div><label>Descrição do Modelo:</label><input type="text" name="modelo_desc" value="<?= htmlspecialchars($item['modelo_desc']) ?>" required></div>
-            <div><label>Valor FIPE:</label>
-                <input type="text" oninput="formatarMoeda(this)" value="<?= number_format($item['modelo_valor_fipe'], 2, ',', '.') ?>" required>
-                <input type="hidden" name="modelo_valor_fipe" id="valorBanco" value="<?= $item['modelo_valor_fipe'] ?>">
-            </div>
             <div>
-                <label>Marca:</label>
-                <select name="fk_Marca_id" required>
-                    <?php foreach ($marcas as $marca): ?>
-                        <option value="<?= $marca['marca_id'] ?>" <?= ($marca['marca_id'] == $item['fk_marca_id']) ? 'selected' : '' ?>>
-                            <?= htmlspecialchars($marca['marca_desc']) ?>
-                        </option>
-                    <?php endforeach; ?>
-                </select>
+               <form action="../php/global/global.php" method="POST"  enctype="multipart/form-data">
+                    <p>Imagem:</p>
+                    <input type="file" name="img[]" multiple>
+                    <br>
+                    <br>
+                    <br>
+                    <!-- Filtro Marca → Modelo -->
+                    <?php include_once '../php/functions/filter-functions.php'; ?>
+
+
+                    <label for="veiculo_ano">Ano:</label>
+                    <input type="text" id="veiculo_ano" name="veiculo_ano" pattern="\d{4}" maxlength="4" required placeholder="Ano">
+
+                    <label>Chassi:</label>
+                    <select name="fk_chassi_id">
+                        <?php foreach ($chassis as $chassi): ?>
+                        <option value="<?= $chassi['chassi_id'] ?>"><?= $chassi['chassi_desc'] ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                    <br>
+
+                    <label>Cor:</label>
+                    <select name="fk_cor_id">
+                        <?php foreach ($cores as $cor): ?>
+                        <option value="<?= $cor['cor_id'] ?>"><?= $cor['cor_desc'] ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                    <br>
+
+                    <label>Combustível:</label>
+                    <select name="fk_combustivel_id">
+                        <?php foreach ($combustiveis as $comb): ?>
+                        <option value="<?= $comb['comb_id'] ?>"><?= $comb['comb_desc'] ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                    <br>
+
+                    <label>Quilometragem:</label>
+                    <input type="number" name="veiculo_quilometragem" required><br>
+
+                    <label>Versão:</label>
+                    <input type="text" name="veiculo_versao" required><br>
+
+                    
+
+                    <label>Sobre Este Veiculo</label>
+                    <textarea name="anuncio_desc" rows="4"></textarea><br>
+
+                    <label>Preço:</label>
+                    <input type="number" name="anuncio_valor" step="0.01" required><br>
+
+                    <input type="submit" value="Publicar Anúncio" name="criar_anuncio">
+                    </form>
+
             </div>
             <button type="submit" name="editar_modelo">Salvar Alterações</button>
         </form>

@@ -126,5 +126,14 @@ class Anuncio {
             echo "Erro ao editar anúncio: " . $stmt->error;
         }
     }
+    public function buscarAnuncioPorId($anuncio_id) {
+        $sql = "SELECT * FROM anuncio WHERE anuncio_id = ?";
+        $stmt = $this->conexao->prepare($sql);
+        $stmt->bind_param('i', $anuncio_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_assoc();
+    }
 }
+
 ?>
