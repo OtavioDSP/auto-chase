@@ -25,29 +25,49 @@
          <br><br>
     </form>
 
+<!-- FORM COR -->
 <form action="src/php/global/global.php" method="POST">
-        
-        <h1>Cor - Adicionar Cor</h1>
-        <input type="text" placeholder="Cor" name="cor_desc">
+    <h1>Cor - Adicionar</h1>
+    <input type="text" placeholder="Cor" name="cor_desc" required>
+    <button type="submit" name="criar_cor">Adicionar Cor</button>
+</form>
 
-        <h1>Marca - Adicionar Marca</h1>
-        <input type="text" placeholder="Marca" name="marca_desc">
-        
-        <h1>Modelo - Adicionar Modelo</h1>
-        <input type="text" placeholder="Modelo" name="modelo_desc">
-       
-        <input type="text" placeholder="FIPE" name="modelo_fipe">
-        
-        <h1>Chassi - Adicionar Chassi</h1>
-        <input type="text" placeholder="Chassi" name="chassi_desc">
+<hr>
 
-        <h1>Combustivel - Adicionar Combustivel</h1>
-        <input type="text" placeholder="Combustivel" name="comb_desc">
-    
 
-        <input type="submit" value="Enviar" name="enviar_informacoes">
-        
-    </form>
+
+<hr>
+
+<!-- FORM MODELO -->
+<form action="src/php/global/global.php" method="POST">
+    <h1>Marca - Adicionar</h1>
+    <input type="text" placeholder="Marca" name="marca_desc" required>
+    <button type="submit" name="criar_marca">Adicionar Marca</button>
+    <h1>Modelo - Adicionar</h1>
+    <input type="text" placeholder="Modelo" name="modelo_desc" required>
+    <input type="number" step="0.01" placeholder="Valor FIPE" name="modelo_valor_fipe" required>
+        <button type="submit" name="criar_marca_modelo">Adicionar</button>
+      
+</form>
+
+<hr>
+
+<!-- FORM CHASSI -->
+<form action="src/php/global/global.php" method="POST">
+    <h1>Chassi - Adicionar</h1>
+    <input type="text" placeholder="Chassi" name="chassi_desc" required>
+    <button type="submit" name="criar_chassi">Adicionar Chassi</button>
+</form>
+
+<hr>
+
+<!-- FORM COMBUSTÍVEL -->
+<form action="src/php/global/global.php" method="POST">
+    <h1>Combustível - Adicionar</h1>
+    <input type="text" placeholder="Combustível" name="comb_desc" required>
+    <button type="submit" name="criar_combustivel">Adicionar Combustível</button>
+</form>
+
 
     <br>
     <br>
@@ -158,7 +178,7 @@
                 <td>
                     <form method="post" action="src/php/global/global.php" onsubmit="return confirm('Tem certeza que deseja deletar este veículo?');">
                         <input type='hidden' name='veiculo_id' value='<?= $veiculo['veiculo_id'] ?>'>
-                        <input type='submit' value='Deletar Veículo'>
+                        <input type='submit' value='Deletar Veículo' name="deletar_veiculo">
                     </form>
                 </td>
                 <td>
@@ -198,7 +218,7 @@
                 <td><?=$modelo['marca_desc']?></td>
                 <td> <form method="post" action="src/php/global/global.php" onsubmit="return confirm('Tem certeza que deseja deletar este modelo?');">
                         <input type='hidden' name='modelo_id' value='<?= $modelo['modelo_id'] ?>'>
-                        <input type='submit' value='Deletar Modelo'>
+                        <input type='submit' value='Deletar Modelo' name="deletar_modelo">
                     </form>
                 </td>
                 <td>
@@ -232,9 +252,9 @@
                 <td><?=$marca['marca_id']?></td>
                 <td><?=$marca['marca_desc']?></td>
                 <td>
-                    <form method="post" action="src.php/global/global.php" onsubmit="return confirm('Tem certeza que deseja deletar este modelo?');">
+                    <form method="post" action="src/php/global/global.php" onsubmit="return confirm('Tem certeza que deseja deletar este modelo?');">
                         <input type='hidden' name='marca_id' value='<?= $marca['marca_id'] ?>'>
-                        <input type='submit' value='Deletar Marca'>
+                        <input type='submit' value='Deletar Marca' name="deletar_marca">
                     </form>
                 </td>
                 <td>
@@ -263,7 +283,7 @@
                 <td>
                     <form method="post" action="src/php/global/global.php" onsubmit="return confirm('Tem certeza que deseja deletar este cor?');">
                         <input type='hidden' name='cor_id' value='<?= $cor['cor_id'] ?>'>
-                        <input type='submit' value='Deletar cor'>
+                        <input type='submit' value='Deletar cor' name="deletar_cor">
                     </form>
                 </td>
                 <td>
@@ -297,7 +317,7 @@
                 <td>
                     <form method="post" action="src/php/global/global.php" onsubmit="return confirm('Tem certeza que deseja deletar este modelo?');">
                         <input type='hidden' name='chassi_id' value='<?= $chassi['chassi_id'] ?>'>
-                        <input type='submit' value='Deletar carroceria'>
+                        <input type='submit' value='Deletar carroceria' name="deletar_chassi">
                     </form>
                 </td>
                 <td>
@@ -330,7 +350,7 @@
                 <td>
                     <form method="post" action="src/php/global/global.php" onsubmit="return confirm('Tem certeza que deseja deletar este modelo?');">
                         <input type='hidden' name='comb_id' value='<?= $comb['comb_id'] ?>'>
-                        <input type='submit' value='Deletar combustivel'>
+                        <input type='submit' value='Deletar combustivel' name="deletar_combustivel">
                     </form>
                 </td>
                 <td>
@@ -387,7 +407,7 @@
                 <td>
                     <form method="post" action="src/php/global/global.php" onsubmit="return confirm('Tem certeza que deseja deletar este anúncio?');">
                         <input type='hidden' name='anuncio_id' value='<?= $anuncio['anuncio_id'] ?>'>
-                        <input type='submit' value='Deletar Anúncio'>
+                        <input type='submit' value='Deletar Anúncio' name="deletar_anuncio">
                     </form>
                 </td>
                 <td>

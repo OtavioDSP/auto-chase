@@ -64,6 +64,10 @@ $combustiveis = $combustivelManager->listarCombustivel();
   <!-- Filtro Marca → Modelo -->
   <?php include '../php/functions/filter-functions.php'; ?>
 
+
+  <label for="veiculo_ano">Ano:</label>
+  <input type="text" id="veiculo_ano" name="veiculo_ano" pattern="\d{4}" maxlength="4" required placeholder="Ano">
+
   <label>Chassi:</label>
   <select name="fk_chassi_id">
     <?php foreach ($chassis as $chassi): ?>

@@ -54,7 +54,8 @@ class Anuncio {
             anuncio.anuncio_data_de_criacao,
             anuncio.anuncio_data_de_alteracao,
             combustivel.comb_desc,
-            
+            -- Foto do anúncio
+            imagem.imagem_url,
             -- Usuário que criou o anúncio
             usuario.usuario_nome,
             
@@ -95,6 +96,8 @@ class Anuncio {
             ON veiculo.fk_chassi_id = chassi.chassi_id
         inner join combustivel
             on veiculo.fk_combustivel_id = combustivel.comb_id
+        inner join imagem
+            on anuncio.anuncio_id = imagem.fk_anuncio_id
     ";
 
     // Preparação e execução

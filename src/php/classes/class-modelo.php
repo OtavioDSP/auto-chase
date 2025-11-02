@@ -19,11 +19,11 @@ Class Modelo{
     }
 
     public function insereModelo(){
-        $sql = "INSERT INTO modelo (modelo_desc, modelo_valor_fipe, fk_Marca_id) VALUES (?, ?, ?, ?)";
+        $sql = "INSERT INTO modelo (modelo_desc, modelo_valor_fipe, fk_Marca_id) VALUES (?, ?, ?)";
 
         $stmt = $this->conexao->prepare($sql);
         
-        $stmt->bind_param('sdsi', 
+        $stmt->bind_param('sds', 
             $this->modelo_desc,
             $this->modelo_fipe,
             $this->fk_marca_id

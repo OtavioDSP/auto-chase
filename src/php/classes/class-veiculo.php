@@ -51,7 +51,7 @@ class Veiculo {
 
         $stmt = $this->conexao->prepare($sql);
         // Tipos: i=integer, s=string. Ajuste se necessário.
-        $stmt->bind_param("isiiiii", 
+        $stmt->bind_param("issiiiis", 
             $this->veiculo_id,
             $this->veiculo_quilometragem,
             $this->veiculo_versao,

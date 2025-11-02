@@ -30,64 +30,110 @@ if (isset($_POST['criar_conta'])) {
     $usu->deletarUsuario();
 
 // --- Bloco enviar_informacoes ---
-} else if (isset($_POST['enviar_informacoes'])) {
-    
+} if (isset($_POST['criar_cor'])) {
     $cor_desc = $_POST['cor_desc'];
+    $cor = new Cor("", $cor_desc, $conexao);
+    $cor->insereCor();
+}else if (isset($_POST['deletar_cor'])) { 
+    
+    // ERRO CORRIGIDO: $usuario_id não estava definido.
+    // Você DEVE pegar o ID do formulário que enviou a requisição.
+    $cor_id = $_POST['cor_id']; // Supondo que o form envie 'cor_id'
+    $cr = new Cor(
+        $cor_id, 
+        "", 
+        $conexao
+    );
+    $cr->deletarCor();
+
+}else if (isset($_POST['criar_marca_modelo'])) {
     $marca_desc = $_POST['marca_desc'];
     $modelo_desc = $_POST['modelo_desc'];
-
-    $modelo_fipe = $_POST['modelo_fipe'];
-    $chassi_desc = $_POST['chassi_desc'];
-    $comb_desc = $_POST['comb_desc'];
-
-
-
-    // Insere a marca e pega o ID
-    $marca = new Marca("", $marca_desc, $conexao);
-    $marca->insereMarca(); // <-- Você tinha $marcaGerada = $marca->insereMarca();
-    $marcaGerada = $conexao->insert_id;
-
-    echo "MARCA GERADA:$marcaGerada";
-    
-    $cor = new Cor("",
-    $cor_desc,
-    $conexao);
-    $modelo = new Modelo("", 
-    $modelo_desc,
-    $modelo_fipe,
-    $marcaGerada,
-    $conexao
-    );
-    
-    $chassi = new Chassi("",
-    $chassi_desc,
-    $conexao);
-    $combustivel = new Combustivel("",
-    $comb_desc,
-    $conexao
-    );
-    
-    // Insere o restante
-    $cor->insereCor();
-    $modelo->insereModelo();
-    $chassi->insereChassi();
-    $combustivel->insereCombustivel();
-    
-// --- Bloco editar_modelo ---
-} else if (isset($_POST['editar_modelo'])) {
-    $modelo_id = $_POST['modelo_id'];
-    $modelo_desc = $_POST['modelo_desc'];
     $modelo_valor_fipe = $_POST['modelo_valor_fipe'];
-    $fk_marca_id = $_POST['fk_marca_id'];
 
-    $model = new Modelo($modelo_id,
-    $modelo_desc,
-    $modelo_valor_fipe,
-    $fk_marca_id,
-    $conexao);
-    $model->editarModelo();
+    // 1. Criar e inserir a Marca
+    $marca = new Marca("", $marca_desc, $conexao);
+    $marca->insereMarca();
+    $marca_id_gerado = $conexao->insert_id;  // Pega o ID gerado da marca
 
-// --- Bloco editar_usuario ---
+    // 2. Criar e inserir o Modelo com o fk da Marca gerada
+    $modelo = new Modelo(
+        "",
+        $modelo_desc,
+        $modelo_valor_fipe,
+        $marca_id_gerado,
+        $conexao
+    );
+    $modelo->insereModelo();
+
+    // Opcional: você pode retornar os IDs ou fazer eco se quiser
+    echo "Marca ID: $marca_id_gerado | Modelo inserido com sucesso.";
+}
+else if (isset($_POST['deletar_marca'])) { 
+    
+    // ERRO CORRIGIDO: $usuario_id não estava definido.
+    // Você DEVE pegar o ID do formulário que enviou a requisição.
+    $marca_id = $_POST['marca_id']; // Supondo que o form envie 'marca_id'
+    $mc = new Marca($marca_id, "", $conexao);
+    $mc->deletarMarca();
+
+
+}else if (isset($_POST['criar_modelo'])) {
+   
+}else if (isset($_POST['deletar_modelo'])) { 
+    
+    // ERRO CORRIGIDO: $usuario_id não estava definido.
+    // Você DEVE pegar o ID do formulário que enviou a requisição.
+    $modelo_id = $_POST['modelo_id']; // Supondo que o form envie 'modelo_id'
+    $mc = new Modelo(
+        $modelo_id,
+        "",
+        "",
+        "",
+        $conexao);
+    $mc->deletarModelo();
+
+
+}
+else if (isset($_POST['criar_chassi'])) {
+    $chassi_desc = $_POST['chassi_desc'];
+    $chassi = new Chassi(
+        "",
+        $chassi_desc,
+        $conexao);
+    $chassi->insereChassi();
+}else if (isset($_POST['deletar_chassi'])) { 
+    
+    // ERRO CORRIGIDO: $usuario_id não estava definido.
+    // Você DEVE pegar o ID do formulário que enviou a requisição.
+    $chassi_id = $_POST['chassi_id']; // Supondo que o form envie 'chassi_id'
+    $ch = new Chassi(
+        $chassi_id,
+        "",
+         $conexao
+    );
+    $ch->deletarChassi();
+
+}else if (isset($_POST['criar_combustivel'])) {
+    $comb_desc = $_POST['comb_desc'];
+    $combustivel = new Combustivel(
+        "",
+        $comb_desc,
+        $conexao
+    );
+    $combustivel->insereCombustivel();
+} else if (isset($_POST['deletar_combustivel'])) {
+    
+    // ERRO CORRIGIDO: $usuario_id não estava definido.
+    // Você DEVE pegar o ID do formulário que enviou a requisição.
+    $combustivel_id = $_POST['comb_id']; // Supondo que o form envie 'combustivel_id'
+    $cb = new Combustivel(
+        $combustivel_id,
+        "",
+        $conexao
+    );
+    $cb->deletarCombustivel();
+
 } else if (isset($_POST['editar_usuario'])) {
 
     $usuario_id = $_POST['usuario_id'];
@@ -150,10 +196,10 @@ if (isset($_POST['criar_conta'])) {
     $fk_combustivel_id = $_POST['fk_combustivel_id'];
     $veiculo_versao = $_POST['veiculo_versao'];
     $veiculo_quilometragem = $_POST['veiculo_quilometragem'];
-
+    $veiculo_ano = $_POST['veiculo_ano'];
     $modelo_desc = $_POST['modelo_desc'];
 
-    $vcl = new Veiculo($veiculo_id, $veiculo_quilometragem, $veiculo_versao, $fk_chassi_id, $fk_combustivel_id, $fk_cor_id, $fk_modelo_id, $conexao);
+    $vcl = new Veiculo($veiculo_id, $veiculo_quilometragem, $veiculo_versao, $veiculo_ano, $fk_chassi_id, $fk_combustivel_id, $fk_cor_id, $fk_modelo_id, $conexao);
     $vcl->editarVeiculo();
     
     // Isso está criando um NOVO modelo toda vez que você EDITA um veículo. 
@@ -166,109 +212,96 @@ if (isset($_POST['criar_conta'])) {
     $mdlAno->insereModelo();
 
 // --- Bloco criar_anuncio (O PRINCIPAL) ---
-} else if (isset($_POST['criar_anuncio'])) {
+}else if (isset($_POST['criar_anuncio'])) {
+    try {
+        echo "Chegou aqui<br>";
 
-    echo "Chegou aqui";
+        // 1. OBTER DADOS DO FORMULÁRIO E SESSÃO
+        $fk_usuario_id         = 1; // TODO: pegar usuário logado
+        $fk_modelo_id          = $_POST['fk_modelo_id'];
+        $fk_chassi_id          = $_POST['fk_chassi_id'];
+        $fk_cor_id             = $_POST['fk_cor_id'];
+        $fk_combustivel_id     = $_POST['fk_combustivel_id'];
+        $veiculo_quilometragem = $_POST['veiculo_quilometragem'];
+        $veiculo_versao        = $_POST['veiculo_versao'];
+        $anuncio_desc          = $_POST['anuncio_desc'];
+        $anuncio_valor         = $_POST['anuncio_valor'];
+        $veiculo_ano           = $_POST['veiculo_ano'] ?? null;
 
-    // 1. OBTER DADOS DO FORMULÁRIO E SESSÃO
-    $fk_usuario_id = 1; // Lembre-se de trocar por getUsuarioIdLogado()
-    $fk_modelo_id = $_POST['fk_modelo_id'];
-    $fk_chassi_id = $_POST['fk_chassi_id'];
-    $fk_cor_id = $_POST['fk_cor_id'];
-    $fk_combustivel_id = $_POST['fk_combustivel_id'];
-    $veiculo_quilometragem = $_POST['veiculo_quilometragem'];
-    $veiculo_versao = $_POST['veiculo_versao'];
-    $anuncio_desc = $_POST['anuncio_desc'];
-    $anuncio_valor = $_POST['anuncio_valor'];
+        // 2. PROCESSAR UPLOAD DA IMAGEM
+        $caminhoFinal = null;
+        if (isset($_FILES['img']) && $_FILES['img']['error'] === 0) {
+            $nomeOriginal = $_FILES['img']['name'];
+            $temporario   = $_FILES['img']['tmp_name'];
+            $pasta        = "../../uploads/";
+            $nomeUnico    = uniqid() . "_" . basename($nomeOriginal);
+            $caminhoFinal = $pasta . $nomeUnico;
 
-    
-    // 2. PROCESSAR UPLOAD DA IMAGEM (LÓGICA CORRIGIDA)
-    // A lógica do upload estava separada, o que causa erro se nenhum arquivo for enviado.
-    $caminhoFinal = null; // Inicia a variável
-
-    if (isset($_FILES['img']) && $_FILES['img']['error'] == 0) {
-
-        $nomeOriginal = $_FILES['img']['name'];
-        $temporario = $_FILES['img']['tmp_name'];
-        $pasta = "../../uploads/";
-        $nomeUnico = uniqid() . "_" . $nomeOriginal; // evita arquivos com o mesmo nome
-        $caminhoFinal = $pasta . $nomeUnico;
-
-        // move_uploaded_file DEVE estar DENTRO do if
-        if (move_uploaded_file($temporario, $caminhoFinal)) {
-            echo "Arquivo salvo em: " . $caminhoFinal;
-        } else {
-            echo "Erro ao salvar a imagem.";
-            $caminhoFinal = null; // Se falhar, não salva o caminho no banco
+            if (!move_uploaded_file($temporario, $caminhoFinal)) {
+                throw new Exception("Erro ao salvar a imagem.");
+            }
         }
-    } else {
-        echo "Nenhuma imagem foi enviada ou houve um erro.";
-        // $caminhoFinal permanece null
+
+        // 3. CRIAR E INSERIR O VEÍCULO
+        $veiculo = new Veiculo(
+            "", // veiculo_id (auto_increment)
+            $veiculo_quilometragem,
+            $veiculo_versao,
+            $fk_chassi_id,
+            $fk_combustivel_id,
+            $fk_cor_id,
+            $fk_modelo_id,
+            $veiculo_ano,
+            $conexao
+        );
+
+        $veiculo->insereVeiculo();
+
+        // 4. PEGAR O ID DO VEÍCULO INSERIDO
+        $veiculo_id_gerado = $conexao->insert_id;
+        if (!$veiculo_id_gerado) {
+            throw new Exception("Falha ao obter ID do veículo inserido.");
+        }
+
+        echo "ID do Veículo gerado: $veiculo_id_gerado<br>";
+
+        // 5. CRIAR E INSERIR O ANÚNCIO
+        $anun = new Anuncio(
+            "", // anuncio_id (auto_increment)
+            $anuncio_desc,
+            $fk_usuario_id,
+            $veiculo_id_gerado,
+            $anuncio_valor,
+            $conexao
+        );
+
+        $anun->insereAnuncio();
+
+        // 6. PEGAR O ID DO ANÚNCIO INSERIDO
+        $anuncio_id_gerado = $conexao->insert_id;
+        if (!$anuncio_id_gerado) {
+            throw new Exception("Falha ao obter ID do anúncio inserido.");
+        }
+
+        echo "Anúncio ID $anuncio_id_gerado criado com sucesso para o Veículo ID $veiculo_id_gerado!<br>";
+
+        // 7. SALVAR A IMAGEM (SE ENVIADA)
+        if ($caminhoFinal) {
+            $imagem = new Foto(
+                "",
+                $caminhoFinal,
+                $anuncio_id_gerado,
+                $conexao
+            );
+            $imagem->insereImagem();
+        }
+
+    } catch (Exception $e) {
+        // Em caso de erro, desfaz tudo
+        $conexao->rollback();
+        echo "Erro: " . $e->getMessage();
     }
-    
-    // 3. CRIAR E INSERIR O VEÍCULO (PRIMEIRO)
-    // O código estava tentando usar $veiculo e $anun ANTES de criá-los.
-    // O construtor do Veiculo também estava errado (tinha fk_anuncio_id, baseado no SQL anterior).
-    
-    // Confirme que os parâmetros do construtor batem com sua classe Veiculo.php
-    // Removi o $fk_anuncio_id que estava no seu código.
-
-
-    $modelo = new Modelo(
-    "",
-    $modelo_desc,
-    "",
-    $fk_marca_id,
-    $conexao
-);
-
-
-
-
-
-    $veiculo = new Veiculo(
-    "", // veiculo_id (autoincrement)
-    $veiculo_quilometragem,
-    $veiculo_versao,
-    $fk_chassi_id,
-    $fk_combustivel_id,
-    $fk_cor_id,
-    $fk_modelo_id,
-    $conexao
-    );
-    
-    // Insere o veículo no banco
-    $veiculo->insereVeiculo();
-    
-    // 4. PEGAR O ID DO VEÍCULO QUE ACABOU DE SER CRIADO
-    $veiculo_id_gerado = $conexao->insert_id;
-    
-    echo "ID do Veículo gerado: $veiculo_id_gerado";
-
-    // 5. CRIAR E INSERIR O ANÚNCIO (SEGUNDO)
-    // Agora usamos o $veiculo_id_gerado
-    
-    // O seu construtor de Anuncio estava usando $fk_veiculo_id, que não existia.
-    $anun = new Anuncio(
-        "", // anuncio_id (autoincrement)
-        $anuncio_desc,
-        $fk_usuario_id,
-        $veiculo_id_gerado, // <-- AQUI a correção de lógica
-        $anuncio_valor,
-        $conexao
-    );
-    
-    // Insere o anúncio no banco
-    $anun->insereAnuncio();
-    
-    // 6. PEGAR O ID DO ANÚNCIO (Opcional)
-    $anuncio_id_gerado = $conexao->insert_id;
-
-    // echo "Anúncio ID $anuncio_id_gerado criado com sucesso para o Veículo ID $veiculo_id_gerado!";
-
-    // IMPORTANTE: Você precisa salvar a imagem!
-    // O SQL que corrigimos tem uma tabela 'imagem' que espera o $anuncio_id_gerado e o $caminhoFinal
-   
 }
+
 
 ?>

@@ -1,23 +1,25 @@
 <?php
-    class Fotos{
+    class Foto{
 
         private $imagem_id;
         private $imagem_url;
-    
+        private $fk_anuncio_id;
         private $conexao;
 
-        public function __construct($imagem_id, $imagem_url, $conexao){
+        public function __construct($imagem_id, $imagem_url, $fk_anuncio_id, $conexao){
 
             $this->imagem_id = $imagem_id;
             $this->imagem_url = $imagem_url;
+            $this->fk_anuncio_id = $fk_anuncio_id;
             $this->conexao = $conexao;
 
         }
         public function insereImagem(){
-            $sql = "INSERT INTO imagem (imagem_url) VALUES (?)";
+            $sql = "INSERT INTO imagem (imagem_url, fk_anuncio_id) VALUES (?, ?)";
             $stmt = $this->conexao->prepare($sql);
-            $stmt->bind_param('s',
+            $stmt->bind_param('si',
             $this->imagem_url,
+            $this->fk_anuncio_id
             );
              if($stmt->execute()){
                 echo "foto inserida";
@@ -25,11 +27,6 @@
                 echo "Erro ao Inserir foto". $stmt->error;
             }
         
-
-
-
-
-
         }public function deletarImagem(){
 
             $sql = "DELETE FROM imagem WHERE imagem_id = ?";
