@@ -417,7 +417,8 @@
         <?php endforeach; ?>
     </tbody>
 </table>
-<br><br>
 
+
+<script src="/src/JS/js-functions.js"></script>
 </body>
 </html>

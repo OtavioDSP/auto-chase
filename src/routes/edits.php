@@ -43,8 +43,20 @@ include_once '../php/classes/class-anuncio.php';
 // --- ROTA DE EDIÇÃO PARA USUÁRIO ---
 if (isset($_GET['usuario_id'])) {
     $id = intval($_GET['usuario_id']);
-    $manager = new Usuario(null,null,null,null,null,null,null,null, $conexao);
-    $item = $manager->buscarUsuarioPorId($id);
+    $manager = new Usuario(
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        $conexao
+    );
+    $item = $manager->buscarUsuarioPorId(
+        $id
+    );
     if ($item) { ?>
         <h1>Editar Usuário</h1>
         <form action="../php/global/global.php" method="POST">
@@ -69,8 +81,14 @@ if (isset($_GET['usuario_id'])) {
 // --- ROTA DE EDIÇÃO PARA MARCA ---
 } elseif (isset($_GET['marca_id'])) {
     $id = intval($_GET['marca_id']);
-    $manager = new Marca(null, null, $conexao);
-    $item = $manager->buscarMarcaPorId($id);
+    $manager = new Marca(
+        null,
+        null,
+        $conexao
+);
+    $item = $manager->buscarMarcaPorId(
+        $id
+    );
     if ($item) { ?>
         <h1>Editar Marca</h1>
         <form action="../php/global/global.php" method="POST">
@@ -83,8 +101,14 @@ if (isset($_GET['usuario_id'])) {
 // --- ROTA DE EDIÇÃO PARA COR ---
 } elseif (isset($_GET['cor_id'])) {
     $id = intval($_GET['cor_id']);
-    $manager = new Cor(null, null, $conexao);
-    $item = $manager->buscarCorPorId($id);
+    $manager = new Cor(
+        null,
+        null,
+        $conexao
+);
+    $item = $manager->buscarCorPorId(
+        $id
+    );
     if ($item) { ?>
         <h1>Editar Cor</h1>
         <form action="../php/global/global.php" method="POST">
@@ -97,8 +121,14 @@ if (isset($_GET['usuario_id'])) {
 // --- ROTA DE EDIÇÃO PARA COMBUSTÍVEL ---
 } elseif (isset($_GET['comb_id'])) {
     $comb_id = intval($_GET['comb_id']);
-    $manager = new Combustivel($comb_id, null, $conexao);
-    $item = $manager->buscarCombustivelPorId($comb_id);
+    $manager = new Combustivel(
+        $comb_id,
+        null,
+        $conexao
+    );
+    $item = $manager->buscarCombustivelPorId(
+        $comb_id
+    );
     if ($item) { ?>
         <h1>Editar Combustível</h1>
         <form action="../php/global/global.php" method="POST">
@@ -111,8 +141,15 @@ if (isset($_GET['usuario_id'])) {
 // --- ROTA DE EDIÇÃO PARA CHASSI ---
 } elseif (isset($_GET['chassi_id'])) {
     $id = intval($_GET['chassi_id']);
-    $manager = new Chassi(null, null, $conexao);
-    $item = $manager->buscarChassiPorId($id);
+    $manager = new Chassi(
+        null,
+        null,
+        $conexao
+    );
+
+    $item = $manager->buscarChassiPorId(
+        $id
+    );
     if ($item) { ?>
         <h1>Editar Chassi</h1>
         <form action="../php/global/global.php" method="POST">
@@ -127,10 +164,22 @@ if (isset($_GET['usuario_id'])) {
 
        
     $id = intval($_GET['modelo_id']);
-    $modeloManager = new Modelo(null,null,null,null,null, $conexao);
-    $item = $modeloManager->buscarModeloPorId($id);
+    $modeloManager = new Modelo(
+        null,
+        null,
+        null,
+        null, 
+        $conexao
+    );
+    $item = $modeloManager->buscarModeloPorId(
+        $id
+    );
     if ($item) {
-        $marcaManager = new Marca(null, null, $conexao);
+        $marcaManager = new Marca(
+            null,
+            null,
+            $conexao
+        );
         $marcas = $marcaManager->listarMarca();
 
     ?>
@@ -138,7 +187,6 @@ if (isset($_GET['usuario_id'])) {
         <form action="../php/global/global.php" method="POST">
             <input type="hidden" name="modelo_id" value="<?= $item['modelo_id'] ?>">
             <div><label>Descrição do Modelo:</label><input type="text" name="modelo_desc" value="<?= htmlspecialchars($item['modelo_desc']) ?>" required></div>
-            <div><label>Ano:</label><input type="number" name="modelo_ano" value="<?= htmlspecialchars($item['modelo_ano']) ?>" required></div>
             <div><label>Valor FIPE:</label>
                 <input type="text" oninput="formatarMoeda(this)" value="<?= number_format($item['modelo_valor_fipe'], 2, ',', '.') ?>" required>
                 <input type="hidden" name="modelo_valor_fipe" id="valorBanco" value="<?= $item['modelo_valor_fipe'] ?>">
@@ -158,124 +206,51 @@ if (isset($_GET['usuario_id'])) {
     <?php } else { echo "<p>Modelo não encontrado.</p>"; }
 
 // --- ROTA DE EDIÇÃO PARA VEÍCULO (NOVO BLOCO) ---
-} elseif (isset($_GET['veiculo_id'])) {
-    $id = intval($_GET['veiculo_id']);
-    // Instancia o gerenciador do veículo para buscar os dados principais
-    $veiculoManager = new Veiculo(null, null, null,null,null, null, null, $conexao);
-    $item = $veiculoManager->buscarVeiculoPorId($id);
-    $versao = $veiculoManager->listarVersoes();
+    }elseif (isset($_GET['anuncio_id'])) {
 
-
-    if ($item) {
-        // Instancia todos os outros gerenciadores necessários para os menus <select>
-        $modeloManager = new Modelo(null,null,null,null,null, $conexao);
-        $modelos = $modeloManager->listarModelo(); // Método hipotético para listar modelos com marca
-        $mdl = $modeloManager->buscarModeloPorId($id);
-
-            echo '<pre>';
-            print_r($item);
-            echo '</pre>';
-
-
-        $corManager = new Cor(null, null, $conexao);
-        $cores = $corManager->listarCor();
-
-        $combustivelManager = new Combustivel(null, null, $conexao);
-        $combustiveis = $combustivelManager->listarCombustivel();
-
-        $chassiManager = new Chassi(null, null, $conexao);
-        $chassis = $chassiManager->listarChassi();
-
-        $usuarioManager = new Usuario(null, null, null, null, null, null, null, null, $conexao);
-        $usuarios = $usuarioManager->listarUsuario();
-        
-        $marcaManager = new Marca(null, null, $conexao);
-        $marcas = $marcaManager->listarMarca();
        
-        ?>;
-    
-        
+    $id = intval($_GET['anuncio_id']);
+    $modeloManager = new Modelo(
+        null,
+        null,
+        null,
+        null, 
+        $conexao
+    );
+    $item = $modeloManager->buscarModeloPorId(
+        $id
+    );
+    if ($item) {
+        $marcaManager = new Marca(
+            null,
+            null,
+            $conexao
+        );
+        $marcas = $marcaManager->listarMarca();
 
-
-        <h1>Editar Veículo</h1>
+    ?>
+        <h1>Editar ANUNCIO</h1>
         <form action="../php/global/global.php" method="POST">
-
-            <input type="hidden" name="veiculo_id" value="<?= $item['veiculo_id'] ?>">
-            
-                <label for="fk_Modelo_id">Modelo:</label>
-                <input type="hidden" name="modelo_desc" value="<?php echo $mdl['modelo_desc']?>">
-
-                <select name="fk_Modelo_id" id="" >
-                    <?php foreach ($modelos as $modelo):?>
-                        
-                        <option value="<?php echo $modelo['modelo_id']; ?>" <?php echo ($modelo['modelo_id'] == $item['fk_Modelo_id'])? 'selected' : ''; ?>>
-                            <?php echo $modelo['modelo_desc'] ?>
-                        </option>
-                    <?php  endforeach; ?>
-                </select>
-                
-                
-                <label for="fk_marca_id">Marca:</label>
-                <select name="fk_Marca_id" id="">
-                    <?php $counter = 0; 
-                    foreach ($marcas as $marca): 
-                       
-                        $counter++;
-                       ?>
-
-
-                        <option value="<?php echo $marca['marca_id']; ?>" <?php echo ($marca['marca_id'] == $mdl['fk_marca_id']) ? 'selected' : ''; ?>>
-                            <?php echo $marca['marca_desc']; ?>
+            <input type="hidden" name="modelo_id" value="<?= $item['modelo_id'] ?>">
+            <div><label>Descrição do Modelo:</label><input type="text" name="modelo_desc" value="<?= htmlspecialchars($item['modelo_desc']) ?>" required></div>
+            <div><label>Valor FIPE:</label>
+                <input type="text" oninput="formatarMoeda(this)" value="<?= number_format($item['modelo_valor_fipe'], 2, ',', '.') ?>" required>
+                <input type="hidden" name="modelo_valor_fipe" id="valorBanco" value="<?= $item['modelo_valor_fipe'] ?>">
+            </div>
+            <div>
+                <label>Marca:</label>
+                <select name="fk_Marca_id" required>
+                    <?php foreach ($marcas as $marca): ?>
+                        <option value="<?= $marca['marca_id'] ?>" <?= ($marca['marca_id'] == $item['fk_marca_id']) ? 'selected' : '' ?>>
+                            <?= htmlspecialchars($marca['marca_desc']) ?>
                         </option>
                     <?php endforeach; ?>
                 </select>
-                 <label for="fk_cor_id">Cor:</label>
-                <select name="fk_cor_id" id="">
-                    <?php $counter = 0; 
-                    foreach ($cores as $cor): ?>
-                        <option value="<?php echo $cor['cor_id']; ?>" <?php echo ($cor['cor_id'] == $item['fk_Cor_id']) ? 'selected' : ''; ?>>
-                            <?php echo $cor['cor_desc']; ?>
-                        </option>
-                    <?php endforeach; ?>
-                </select>
-                <label for="fk_chassi_id">Chassi:</label>
-                <select name="fk_chassi_id" id="">
-                    <?php foreach ($chassis as $chassi): ?>
-                        <option value="<?php echo $chassi['chassi_id']; ?>" <?php echo ($chassi['chassi_id'] == $item['fk_Chassi_id']) ? 'selected' : ''; ?>>
-                            <?php echo $chassi['chassi_desc']; ?>
-                        </option>
-                    <?php endforeach; ?>
-                </select>
-                <label for="fk_combustivel_id">Combustível:</label>
-                <select name="fk_combustivel_id" id="">
-                    <?php foreach ($combustiveis as $combustivel): ?>
-                        <option value="<?php echo $combustivel['comb_id']; ?>" <?php echo ($combustivel['comb_id'] == $item['fk_combustivel_id']) ? 'selected' : ''; ?>>
-                            <?php echo $combustivel['comb_desc']; ?>
-                        </option>
-                    <?php endforeach; ?>
-                </select>
-
-                <label for="veiculo_versao">Versão:</label>
-                <select name="veiculo_versao" id="veiculo_versao">
-
-                <?php foreach ($versao as $vers): ?>
-                    <option value="<?php echo $vers['veiculo_versao']; ?>"
-                        <?php echo ($vers['veiculo_versao'] == $item['veiculo_versao']) ? 'selected' : ''; ?>>
-                        <?php echo $vers['veiculo_versao']; ?>
-                    </option>
-                <?php endforeach; ?>
-                </select>
-
-
-                <label for="veiculo_quilometragem">Quilometragem:</label>
-                <input type="number" name="veiculo_quilometragem" value="<?= htmlspecialchars($item['veiculo_quilometragem']) ?>" required>
-                
-                <label for="modelo_ano">Ano:</label>
-                <input type="text" name="modelo_ano" value="<?= $mdl['modelo_ano']?>" required>
-
-               <button type="submit" name="editar_veiculo">Salvar Alterações</button>
+            </div>
+            <button type="submit" name="editar_modelo">Salvar Alterações</button>
         </form>
-    <?php } else { echo "<p>Veículo não encontrado.</p>"; }
+    <?php } else { echo "<p>Anúncio não encontrado.</p>"; }
+
 
 // --- CASO NENHUM ITEM SEJA SELECIONADO ---
 } else {

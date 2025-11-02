@@ -213,35 +213,6 @@ else if (isset($_POST['criar_chassi'])) {
 
 // --- Bloco criar_anuncio (O PRINCIPAL) ---
 }else if (isset($_POST['criar_anuncio'])) {
-    try {
-        echo "Chegou aqui<br>";
-
-        // 1. OBTER DADOS DO FORMULÁRIO E SESSÃO
-        $fk_usuario_id         = 1; // TODO: pegar usuário logado
-        $fk_modelo_id          = $_POST['fk_modelo_id'];
-        $fk_chassi_id          = $_POST['fk_chassi_id'];
-        $fk_cor_id             = $_POST['fk_cor_id'];
-        $fk_combustivel_id     = $_POST['fk_combustivel_id'];
-        $veiculo_quilometragem = $_POST['veiculo_quilometragem'];
-        $veiculo_versao        = $_POST['veiculo_versao'];
-        $anuncio_desc          = $_POST['anuncio_desc'];
-        $anuncio_valor         = $_POST['anuncio_valor'];
-        $veiculo_ano           = $_POST['veiculo_ano'] ?? null;
-
-        // 2. PROCESSAR UPLOAD DA IMAGEM
-        $caminhoFinal = null;
-        if (isset($_FILES['img']) && $_FILES['img']['error'] === 0) {
-            $nomeOriginal = $_FILES['img']['name'];
-            $temporario   = $_FILES['img']['tmp_name'];
-            $pasta        = "../../uploads/";
-            $nomeUnico    = uniqid() . "_" . basename($nomeOriginal);
-            $caminhoFinal = $pasta . $nomeUnico;
-
-            if (!move_uploaded_file($temporario, $caminhoFinal)) {
-                throw new Exception("Erro ao salvar a imagem.");
-            }
-        }
-
         // 3. CRIAR E INSERIR O VEÍCULO
         $veiculo = new Veiculo(
             "", // veiculo_id (auto_increment)
@@ -286,21 +257,51 @@ else if (isset($_POST['criar_chassi'])) {
         echo "Anúncio ID $anuncio_id_gerado criado com sucesso para o Veículo ID $veiculo_id_gerado!<br>";
 
         // 7. SALVAR A IMAGEM (SE ENVIADA)
-        if ($caminhoFinal) {
-            $imagem = new Foto(
-                "",
-                $caminhoFinal,
-                $anuncio_id_gerado,
-                $conexao
-            );
-            $imagem->insereImagem();
-        }
+        $fk_usuario_id         = 1; // TODO: pegar usuário logado
+        $fk_modelo_id          = $_POST['fk_modelo_id'];
+        $fk_chassi_id          = $_POST['fk_chassi_id'];
+        $fk_cor_id             = $_POST['fk_cor_id'];
+        $fk_combustivel_id     = $_POST['fk_combustivel_id'];
+        $veiculo_quilometragem = $_POST['veiculo_quilometragem'];
+        $veiculo_versao        = $_POST['veiculo_versao'];
+        $anuncio_desc          = $_POST['anuncio_desc'];
+        $anuncio_valor         = $_POST['anuncio_valor'];
+        $veiculo_ano           = $_POST['veiculo_ano'] ?? null;
 
-    } catch (Exception $e) {
-        // Em caso de erro, desfaz tudo
-        $conexao->rollback();
-        echo "Erro: " . $e->getMessage();
-    }
+        // 2. PROCESSAR UPLOAD DA IMAGEM
+        $caminhoFinal = null;
+        $arquivos = $_FILES['img'];
+         for ($i = 0; $i < count($arquivos['name']); $i++) {
+            
+            $nomeArquivo = $arquivos['name'][$i];
+            $tipo = $arquivos['type'][$i];
+            $pasta        = "../../uploads/";
+            $tmpName = $arquivos['tmp_name'][$i];
+            $erro = $arquivos['error'][$i];
+            $tamanho = $arquivos['size'][$i];
+
+            if ($erro === UPLOAD_ERR_OK) {
+                // Defina o caminho final onde quer salvar o arquivo
+                $caminhoFinal = $pasta . basename($nomeArquivo);
+
+                if ($caminhoFinal) {
+                        $imagem = new Foto(
+                            "",
+                            $caminhoFinal,
+                            $anuncio_id_gerado,
+                            $conexao
+                        );
+                        $imagem->insereImagem();
+                }
+
+                // Mova o arquivo temporário para o caminho final
+                if (!move_uploaded_file($tmpName, $caminhoFinal)) {
+                    throw new Exception("Erro ao salvar a imagem: $nomeArquivo");
+                }
+            } else {
+                throw new Exception("Erro no upload do arquivo: $nomeArquivo");
+            }
+        } 
 }
 
 

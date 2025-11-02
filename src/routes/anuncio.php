@@ -57,7 +57,7 @@ $combustiveis = $combustivelManager->listarCombustivel();
 
 <form action="../php/global/global.php" method="POST"  enctype="multipart/form-data">
   <p>Imagem:</p>
-  <input type="file" name="img">
+  <input type="file" name="img[]" multiple>
   <br>
   <br>
   <br>
