@@ -49,10 +49,10 @@
 
 
         }public function listarImagem(){
-            $sql = "SELECT imagem_id, imagem_desc FROM imagem WHERE fotos_id = ?";
+            $sql = "SELECT imagem_id, imagem_url FROM imagem WHERE fk_anuncio_id = ?";
             $stmt = $this->conexao->prepare($sql);
 
-            $stmt->bind('ssi',$this->imagem_url, $this->imagem_id);
+            $stmt->bind_param('i', $this->fk_anuncio_id);
 
             if($stmt->execute()){
                 echo "foto listar com sucesso";

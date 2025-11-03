@@ -223,14 +223,6 @@ if (isset($_GET['usuario_id'])) {
         $id
     );
     if ($item) {
-        $anuncio = new Anuncio(
-            null,
-            null,
-            null,
-            null,
-            null,
-            $conexao
-        );
         $modeloManager = new Modelo(
             null,
             null,
@@ -257,7 +249,6 @@ if (isset($_GET['usuario_id'])) {
             null,
             $conexao
         );
-        $anuncios = $anuncio->listarAnuncios();
         $modelos = $modeloManager->listarModelo();
         $marcas = $marcaManager->listarMarca();
         $cores = $corManager->listarCor();
@@ -268,10 +259,11 @@ if (isset($_GET['usuario_id'])) {
         
     ?>
 
-    <pre><?php print_r($modelos); ?></pre>
-        <h1>Editar ANUNCIO</h1>
+        <h1>Editar Anúncio</h1>
             <div>
                <form action="../php/global/global.php" method="POST"  enctype="multipart/form-data">
+                    <input type="hidden" name="anuncio_id" value="<?= $item['anuncio_id'] ?>">
+                    <input type="hidden" name="veiculo_id" value="<?= $item['fk_veiculo_id'] ?>">
                     <p>Imagem:</p>
                     <input type="file" name="img[]" multiple>
                     <br>
@@ -282,12 +274,12 @@ if (isset($_GET['usuario_id'])) {
 
 
                     <label for="veiculo_ano">Ano:</label>
-                    <input type="text" id="veiculo_ano" name="veiculo_ano" pattern="\d{4}" maxlength="4" required placeholder="Ano">
+                    <input type="text" id="veiculo_ano" name="veiculo_ano" pattern="\d{4}" maxlength="4" required placeholder="Ano" value="<?= $item['veiculo_ano'] ?>">
 
                     <label>Chassi:</label>
                     <select name="fk_chassi_id">
                         <?php foreach ($chassis as $chassi): ?>
-                        <option value="<?= $chassi['chassi_id'] ?>"><?= $chassi['chassi_desc'] ?></option>
+                        <option value="<?= $chassi['chassi_id'] ?>" <?= ($chassi['chassi_id'] == $item['fk_chassi_id']) ? 'selected' : '' ?>><?= $chassi['chassi_desc'] ?></option>
                         <?php endforeach; ?>
                     </select>
                     <br>
@@ -295,7 +287,7 @@ if (isset($_GET['usuario_id'])) {
                     <label>Cor:</label>
                     <select name="fk_cor_id">
                         <?php foreach ($cores as $cor): ?>
-                        <option value="<?= $cor['cor_id'] ?>"><?= $cor['cor_desc'] ?></option>
+                        <option value="<?= $cor['cor_id'] ?>" <?= ($cor['cor_id'] == $item['fk_cor_id']) ? 'selected' : '' ?>><?= $cor['cor_desc'] ?></option>
                         <?php endforeach; ?>
                     </select>
                     <br>
@@ -303,31 +295,29 @@ if (isset($_GET['usuario_id'])) {
                     <label>Combustível:</label>
                     <select name="fk_combustivel_id">
                         <?php foreach ($combustiveis as $comb): ?>
-                        <option value="<?= $comb['comb_id'] ?>"><?= $comb['comb_desc'] ?></option>
+                        <option value="<?= $comb['comb_id'] ?>" <?= ($comb['comb_id'] == $item['fk_combustivel_id']) ? 'selected' : '' ?>><?= $comb['comb_desc'] ?></option>
                         <?php endforeach; ?>
                     </select>
                     <br>
 
                     <label>Quilometragem:</label>
-                    <input type="number" name="veiculo_quilometragem" required><br>
+                    <input type="number" name="veiculo_quilometragem" required value="<?= $item['veiculo_quilometragem'] ?>"><br>
 
                     <label>Versão:</label>
-                    <input type="text" name="veiculo_versao" required><br>
+                    <input type="text" name="veiculo_versao" required value="<?= $item['veiculo_versao'] ?>"><br>
 
                     
 
                     <label>Sobre Este Veiculo</label>
-                    <textarea name="anuncio_desc" rows="4"></textarea><br>
+                    <textarea name="anuncio_desc" rows="4"><?= $item['anuncio_desc'] ?></textarea><br>
 
                     <label>Preço:</label>
-                    <input type="number" name="anuncio_valor" step="0.01" required><br>
+                    <input type="number" name="anuncio_valor" step="0.01" required value="<?= $item['anuncio_valor'] ?>"><br>
 
-                    <input type="submit" value="Publicar Anúncio" name="criar_anuncio">
+                    <input type="submit" value="Salvar Alterações" name="editar_anuncio">
                     </form>
 
             </div>
-            <button type="submit" name="editar_modelo">Salvar Alterações</button>
-        </form>
     <?php } else { echo "<p>Anúncio não encontrado.</p>"; }
 
 

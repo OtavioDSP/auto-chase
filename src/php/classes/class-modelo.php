@@ -96,7 +96,7 @@ Class Modelo{
 
             $stmt = $this->conexao->prepare($sql);
 
-          $stmt->bind_param('ssidi',
+          $stmt->bind_param('sdi',
                 $this->modelo_desc,    
                 $this->modelo_fipe,  
                 $this->fk_marca_id,   

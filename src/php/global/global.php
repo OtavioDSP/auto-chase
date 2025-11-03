@@ -51,12 +51,22 @@ if (isset($_POST['criar_conta'])) {
     $modelo_desc = $_POST['modelo_desc'];
     $modelo_valor_fipe = $_POST['modelo_valor_fipe'];
 
-    // 1. Criar e inserir a Marca
-    $marca = new Marca("", $marca_desc, $conexao);
-    $marca->insereMarca();
-    $marca_id_gerado = $conexao->insert_id;  // Pega o ID gerado da marca
+    // 1. Verificar se a marca já existe
+    $marca = new Marca(
+        "",
+        $marca_desc,
+        $conexao
+    );
+    $marca_existente = $marca->buscarMarcaPorDesc($marca_desc);
 
-    // 2. Criar e inserir o Modelo com o fk da Marca gerada
+    if ($marca_existente) {
+        $marca_id_gerado = $marca_existente['marca_id'];
+    } else {
+        // 2. Criar e inserir a Marca
+        $marca_id_gerado = $marca->insereMarca();
+    }
+
+    // 3. Criar e inserir o Modelo com o fk da Marca gerada
     $modelo = new Modelo(
         "",
         $modelo_desc,
@@ -138,7 +148,7 @@ else if (isset($_POST['criar_chassi'])) {
 
     $usuario_id = $_POST['usuario_id'];
     $usuario_nome = $_POST['usuario_nome'];
-    $usuario_senha = $_POST['usuario_senha']; // Cuidado: Salvar senha em texto puro é inseguro. Use password_hash()
+    $usuario_senha = $_POST['usuario_senha'];
     $usuario_email = $_POST['usuario_email'];
     $usuario_telefone = $_POST['usuario_telefone'];
     $usuario_endereco = $_POST['usuario_endereco'];
@@ -213,6 +223,17 @@ else if (isset($_POST['criar_chassi'])) {
 
 // --- Bloco criar_anuncio (O PRINCIPAL) ---
 }else if (isset($_POST['criar_anuncio'])) {
+        $fk_usuario_id         = 1;
+        $fk_modelo_id          = $_POST['fk_modelo_id'];
+        $fk_chassi_id          = $_POST['fk_chassi_id'];
+        $fk_cor_id             = $_POST['fk_cor_id'];
+        $fk_combustivel_id     = $_POST['fk_combustivel_id'];
+        $veiculo_quilometragem = $_POST['veiculo_quilometragem'];
+        $veiculo_versao        = $_POST['veiculo_versao'];
+        $anuncio_desc          = $_POST['anuncio_desc'];
+        $anuncio_valor         = $_POST['anuncio_valor'];
+        $veiculo_ano           = $_POST['veiculo_ano'];
+
         // 3. CRIAR E INSERIR O VEÍCULO
         $veiculo = new Veiculo(
             "", // veiculo_id (auto_increment)
@@ -257,16 +278,6 @@ else if (isset($_POST['criar_chassi'])) {
         echo "Anúncio ID $anuncio_id_gerado criado com sucesso para o Veículo ID $veiculo_id_gerado!<br>";
 
         // 7. SALVAR A IMAGEM (SE ENVIADA)
-        $fk_usuario_id         = 1; // TODO: pegar usuário logado
-        $fk_modelo_id          = $_POST['fk_modelo_id'];
-        $fk_chassi_id          = $_POST['fk_chassi_id'];
-        $fk_cor_id             = $_POST['fk_cor_id'];
-        $fk_combustivel_id     = $_POST['fk_combustivel_id'];
-        $veiculo_quilometragem = $_POST['veiculo_quilometragem'];
-        $veiculo_versao        = $_POST['veiculo_versao'];
-        $anuncio_desc          = $_POST['anuncio_desc'];
-        $anuncio_valor         = $_POST['anuncio_valor'];
-        $veiculo_ano           = $_POST['veiculo_ano'] ?? null;
 
         // 2. PROCESSAR UPLOAD DA IMAGEM
         $caminhoFinal = null;
