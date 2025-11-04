@@ -16,7 +16,8 @@ $modeloManager = new Modelo(
   null,
   $conexao
 );
-$marcaManager = new Marca(null,
+$marcaManager = new Marca(
+  null,
   null,
   $conexao
 );

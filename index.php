@@ -82,6 +82,7 @@
     include(".\src\php\classes\class-chassi.php");
     include(".\src\php\classes\class-combustivel.php");
     include(".\src\php\classes\class-anuncio.php");
+    include(".\src\php\classes\class-imagem.php.php");
     ?>
 
     <table border="1" cellpadding="8" cellspacing="0" style="border-collapse: collapse; width: 100%; text-align: left;">
@@ -417,6 +418,24 @@
         <?php endforeach; ?>
     </tbody>
 </table>
+
+
+    <?php 
+    $img = new Foto(
+        null,
+        null,
+        null,
+        $conexao
+
+    );
+    $imgArray = $img->listarImagem();
+
+        foreach($imagns as $imagem){
+            
+
+
+        }
+    ?>
 
 
 <script src="/src/JS/js-functions.js"></script>
