@@ -46,14 +46,14 @@
 
             }
 
-        }public function buscarCorPorId($modelo_id) {
+        }public function buscarCorPorId($veiculo_id) {
             $sql = "SELECT * FROM cor WHERE cor_id = ?";
             
             $stmt = $this->conexao->prepare($sql);
             
             // Vincula o ID do modelo ao placeholder da consulta
             // 'i' indica que o parâmetro é um inteiro
-            $stmt->bind_param('i', $modelo_id);
+            $stmt->bind_param('i', $veiculo_id);
             
             $stmt->execute();
             

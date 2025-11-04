@@ -223,6 +223,17 @@ if (isset($_GET['usuario_id'])) {
         $id
     );
     if ($item) {
+        $veiculoManager = new Veiculo(
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            $conexao
+        );
         $modeloManager = new Modelo(
             null,
             null,
@@ -249,6 +260,7 @@ if (isset($_GET['usuario_id'])) {
             null,
             $conexao
         );
+        $veiculos = $veiculoManager->buscarVeiculoPorId($id);
         $modelos = $modeloManager->listarModelo();
         $marcas = $marcaManager->listarMarca();
         $cores = $corManager->listarCor();
@@ -272,39 +284,51 @@ if (isset($_GET['usuario_id'])) {
                     <!-- Filtro Marca → Modelo -->
                     <?php include_once '../php/functions/filter-functions.php'; ?>
 
+                    <pre>
+                    <?php  print_r($cores); ?>
 
+                    </pre>
                     <label for="veiculo_ano">Ano:</label>
-                    <input type="text" id="veiculo_ano" name="veiculo_ano" pattern="\d{4}" maxlength="4" required placeholder="Ano" value="<?= $item['veiculo_ano'] ?>">
+                    <input type="text" id="veiculo_ano" name="veiculo_ano" pattern="\d{4}" maxlength="4" required placeholder="Ano" value="<?= $veiculos['veiculo_ano'] ?>">
 
                     <label>Chassi:</label>
                     <select name="fk_chassi_id">
                         <?php foreach ($chassis as $chassi): ?>
-                        <option value="<?= $chassi['chassi_id'] ?>" <?= ($chassi['chassi_id'] == $item['fk_chassi_id']) ? 'selected' : '' ?>><?= $chassi['chassi_desc'] ?></option>
+                            <option value="<?= $chassi['chassi_id'] ?>" <?= ($chassi['chassi_id'] == $veiculos['fk_chassi_id']) ? 'selected' : '' ?>>
+                            <?= htmlspecialchars($chassi['chassi_desc']) ?>
+                        </option>
                         <?php endforeach; ?>
                     </select>
                     <br>
 
                     <label>Cor:</label>
                     <select name="fk_cor_id">
-                        <?php foreach ($cores as $cor): ?>
-                        <option value="<?= $cor['cor_id'] ?>" <?= ($cor['cor_id'] == $item['fk_cor_id']) ? 'selected' : '' ?>><?= $cor['cor_desc'] ?></option>
-                        <?php endforeach; ?>
+                    <?php print_r($cores);?>
+                    <?php foreach ($cores as $cor): ?>
+                        
+                        <option value="<?= $cor['cor_id'] ?>"
+                        
+                        
+                            <?= isset($veiculos) && $cor['cor_id'] == $veiculos['fk_cor_id'] ? 'selected' : '' ?>>
+                            <?= htmlspecialchars($cor['cor_desc']) ?>
+                        </option>
+                    <?php endforeach; ?>
                     </select>
                     <br>
 
                     <label>Combustível:</label>
                     <select name="fk_combustivel_id">
-                        <?php foreach ($combustiveis as $comb): ?>
-                        <option value="<?= $comb['comb_id'] ?>" <?= ($comb['comb_id'] == $item['fk_combustivel_id']) ? 'selected' : '' ?>><?= $comb['comb_desc'] ?></option>
-                        <?php endforeach; ?>
+                    <?php foreach ($combustiveis as $comb): ?>
+                       <option value="<?= $comb['comb_id'] ?>" <?= ($comb['comb_id'] == $veiculos['fk_combustivel_id']) ? 'selected' : '' ?>><?= $comb['comb_desc'] ?></option>
+                    <?php endforeach; ?>
                     </select>
                     <br>
 
                     <label>Quilometragem:</label>
-                    <input type="number" name="veiculo_quilometragem" required value="<?= $item['veiculo_quilometragem'] ?>"><br>
+                    <input type="number" name="veiculo_quilometragem" required value="<?= $veiculos['veiculo_quilometragem'] ?>"><br>
 
                     <label>Versão:</label>
-                    <input type="text" name="veiculo_versao" required value="<?= $item['veiculo_versao'] ?>"><br>
+                    <input type="text" name="veiculo_versao" required value="<?= $veiculos['veiculo_versao'] ?>"><br>
 
                     
 
@@ -327,4 +351,5 @@ if (isset($_GET['usuario_id'])) {
 }
 ?>
 </body>
+
 </html>
