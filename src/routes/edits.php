@@ -265,7 +265,12 @@ if (isset($_GET['usuario_id'])) {
         $marcas = $marcaManager->listarMarca();
         $cores = $corManager->listarCor();
         $chassis = $chassiManager->listarChassi();
-        $combustiveis = $combustivelManager->listarCombustivel();
+        // ...
+
+
+        $veiculos = $veiculoManager->buscarVeiculoPorId($item['fk_veiculo_id']); 
+        $modelos = $modeloManager->listarModelo();
+// ...
 
 
         
@@ -285,7 +290,8 @@ if (isset($_GET['usuario_id'])) {
                     <?php include_once '../php/functions/filter-functions.php'; ?>
 
                     <pre>
-                    <?php  print_r($cores); ?>
+                    <?php  print_r($veiculos); ?>
+                    >
 
                     </pre>
                     <label for="veiculo_ano">Ano:</label>
@@ -294,7 +300,7 @@ if (isset($_GET['usuario_id'])) {
                     <label>Chassi:</label>
                     <select name="fk_chassi_id">
                         <?php foreach ($chassis as $chassi): ?>
-                            <option value="<?= $chassi['chassi_id'] ?>" <?= ($chassi['chassi_id'] == $veiculos['fk_chassi_id']) ? 'selected' : '' ?>>
+                            <option value="<?= $chassi['chassi_id'] ?>" <?= ($chassi['chassi_id'] == $veiculos['fk_Chassi_id']) ? 'selected' : '' ?>>
                             <?= htmlspecialchars($chassi['chassi_desc']) ?>
                         </option>
                         <?php endforeach; ?>
@@ -309,7 +315,7 @@ if (isset($_GET['usuario_id'])) {
                         <option value="<?= $cor['cor_id'] ?>"
                         
                         
-                            <?= isset($veiculos) && $cor['cor_id'] == $veiculos['fk_cor_id'] ? 'selected' : '' ?>>
+                        <?= isset($veiculos) && $cor['cor_id'] == $veiculos['fk_cor_id'] ? 'selected' : '' ?>
                             <?= htmlspecialchars($cor['cor_desc']) ?>
                         </option>
                     <?php endforeach; ?>
