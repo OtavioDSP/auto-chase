@@ -286,7 +286,7 @@ else if (isset($_POST['criar_chassi'])) {
             
             $nomeArquivo = $arquivos['name'][$i];
             $tipo = $arquivos['type'][$i];
-            $pasta        = "../../uploads/";
+            $pasta        = "uploads/";
             $tmpName = $arquivos['tmp_name'][$i];
             $erro = $arquivos['error'][$i];
             $tamanho = $arquivos['size'][$i];

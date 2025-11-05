@@ -49,22 +49,25 @@
 
 
         }public function listarImagem(){
-            $sql = "SELECT imagem_id, imagem_url FROM imagem WHERE fk_anuncio_id = ?";
+            $sql = "SELECT imagem_id, imagem_url FROM imagem ";
+          //  echo  "SELECT imagem_id, imagem_url FROM imagem WHERE fk_anuncio_id = $this->fk_anuncio_id";
+            
             $stmt = $this->conexao->prepare($sql);
 
-            $stmt->bind_param('i', $this->fk_anuncio_id);
-
+            // $stmt->bind_param('i', $this->fk_anuncio_id);
+            $fotos = [];
             if($stmt->execute()){
                 $resultado = $stmt->get_result();
-                $fotos = [];
+               
 
-            while($foto = $resultado->fetch_assoc()){
-                $fotos[] = $foto;
-            }
+                while($foto = $resultado->fetch_assoc()){
+                    //echo $foto;
+                    $fotos[] = $foto;
+                }
 
             
 
-                echo "foto listar com sucesso";
+                // echo "foto listar com sucesso";
             }else{
                 echo "Erro ao listar fotos" .$stmt->error;
             }

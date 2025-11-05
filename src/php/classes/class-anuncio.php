@@ -1,7 +1,7 @@
 <?php
 class Anuncio {
 
-    private $anuncio_id;
+    public $anuncio_id;
     private $anuncio_desc;
 
     private $fk_usuario_id;
@@ -17,6 +17,9 @@ class Anuncio {
         $this->conexao = $conexao;
     }
 
+    // public getAnuncio_id(){
+    //     return $this->anuncio_id;
+    // }
     // Insere um novo anúncio no banco de dados
     public function insereAnuncio() {
         $sql = "INSERT INTO anuncio (anuncio_valor, anuncio_desc, fk_usuario_id, fk_veiculo_id) VALUES (?,?,?,?)";

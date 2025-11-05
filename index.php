@@ -429,13 +429,13 @@
 
     );
     $imgArray = $img->listarImagem();
-    print_r($imgArray);
-        foreach($imgArray as $foto){
-            echo "<img src='".$foto['imagem_url']."' alt='Imagem do Anúncio' width='200px' height='150px' />";
+        foreach($imgArray as $foto):?>
+                
+          <img src="<?php $fotos['imagem_url']?>" alt="imagem">
 
 
-        }
-    ?>
+        <?php endforeach;?>
+    
 
 
 <script src="/src/JS/js-functions.js"></script>
