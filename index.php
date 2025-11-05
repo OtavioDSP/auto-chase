@@ -82,7 +82,7 @@
     include(".\src\php\classes\class-chassi.php");
     include(".\src\php\classes\class-combustivel.php");
     include(".\src\php\classes\class-anuncio.php");
-    include(".\src\php\classes\class-imagem.php.php");
+    include(".\src\php\classes\class-imagem.php");
     ?>
 
     <table border="1" cellpadding="8" cellspacing="0" style="border-collapse: collapse; width: 100%; text-align: left;">
@@ -429,9 +429,9 @@
 
     );
     $imgArray = $img->listarImagem();
-
-        foreach($imagns as $imagem){
-            
+    print_r($imgArray);
+        foreach($imgArray as $foto){
+            echo "<img src='".$foto['imagem_url']."' alt='Imagem do Anúncio' width='200px' height='150px' />";
 
 
         }

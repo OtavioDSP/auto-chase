@@ -26,7 +26,7 @@
             }else{
                 echo "Erro ao Inserir foto". $stmt->error;
             }
-        
+            
         }public function deletarImagem(){
 
             $sql = "DELETE FROM imagem WHERE imagem_id = ?";
@@ -55,11 +55,21 @@
             $stmt->bind_param('i', $this->fk_anuncio_id);
 
             if($stmt->execute()){
+                $resultado = $stmt->get_result();
+                $fotos = [];
+
+            while($foto = $resultado->fetch_assoc()){
+                $fotos[] = $foto;
+            }
+
+            
+
                 echo "foto listar com sucesso";
             }else{
                 echo "Erro ao listar fotos" .$stmt->error;
             }
-
+            return $fotos;
+            
 
         }public function editarImagem(){
 
