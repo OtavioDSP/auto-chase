@@ -313,7 +313,92 @@ else if (isset($_POST['criar_chassi'])) {
                 throw new Exception("Erro no upload do arquivo: $nomeArquivo");
             }
         } 
+}else if(isset($_POST['deletar_anuncio'])) { 
+
+    $anuncio_id = $_POST['anuncio_id'];
+    
+    $im = new Foto(
+        "",
+        "",
+        $anuncio_id,
+        $conexao
+    );
+
+    $an = new Anuncio(
+        $anuncio_id, 
+        "", 
+        "", 
+            "", 
+        "",
+        $conexao
+    );
+    $vc = new Veiculo(
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        $conexao
+    ); 
+
+    $im->deletarImagem();
+    $an->deletarAnuncio();
+    $vc->deletarVeiculo();
+
+}else if(isset($_POST['editar_anuncio'])) { 
+    //imagem 
+    
+    // anuncio
+    $anuncio_id = $_POST['anuncio_id'];
+    $anuncio_desc = $_POST['anuncio_desc'];
+    $anuncio_valor = $_POST['anuncio_valor'];
+    
+    
+    // veiculo
+    $veiculo_id = $_POST['veiculo_id'];
+    $veiculo_quilometragem = $_POST['veiculo_quilometragem'];
+    $fk_chassi_id = $_POST['fk_chassi_id'];
+    $fk_cor_id = $_POST['fk_cor_id'];
+    $fk_combustivel_id = $_POST['fk_combustivel_id'];
+    $fk_modelo_id = $_POST['fk_modelo_id'];
+    $fk_usuario_id = $_POST['fk_usuario_id'];
+    $veiculo_ano = $_POST['veiculo_ano'];
+    $veiculo_versao = $_POST['veiculo_versao'];
+
+    
+
+
+    $an = new Anuncio(
+        $anuncio_id, 
+        $anuncio_desc, 
+        $fk_usuario_id, 
+        $veiculo_id, 
+        $anuncio_valor,
+        $conexao
+    );
+    $vc = new Veiculo(
+        $veiculo_id,
+        $veiculo_quilometragem,
+        $veiculo_versao,
+        $fk_chassi_id,
+        $fk_combustivel_id,
+        $cor_id,
+        $fk_modelo_id,
+        $veiculo_ano,
+        $conexao
+    );
+
+
+
+    // $an->editarAnuncio();
+   
+
 }
+
+
 
 
 ?>

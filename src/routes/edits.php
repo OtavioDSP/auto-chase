@@ -280,8 +280,11 @@ if (isset($_GET['usuario_id'])) {
         <h1>Editar Anúncio</h1>
             <div>
                <form action="../php/global/global.php" method="POST"  enctype="multipart/form-data">
+            
+
                     <input type="hidden" name="anuncio_id" value="<?= $item['anuncio_id'] ?>">
                     <input type="hidden" name="veiculo_id" value="<?= $item['fk_veiculo_id'] ?>">
+                    <input type="hidden" name="veiculo_id" value="<?= $item['fk_usuario_id'] ?>">
                     <p>Imagem:</p>
                     <input type="file" name="img[]" multiple>
                     <br>
