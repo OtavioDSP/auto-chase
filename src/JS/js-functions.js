@@ -1,3 +1,5 @@
+const inputValorVisivel = document.getElementById('valor-formatado');
+
 function toggleSenha() {
     const campo = document.getElementById("senha");
     campo.type = (campo.type === "password") ? "text" : "password";
@@ -25,3 +27,53 @@ function verificarDocumento() {
         resultado.style.color = "red";
     }
 }
+
+
+ function formatarMoeda(element) {
+    // 1. Pega o valor atual do input e remove tudo que não for dígito.
+    let valor = element.value.replace(/\D/g, '');
+
+    // Se não houver nada, o valor será uma string vazia.
+    if (valor === "") {
+        element.value = "";
+        return;
+    }
+
+    // 2. Converte o valor para número, tratando como centavos.
+    // Ex: '12345' vira 123.45
+    let valorNumerico = parseInt(valor) / 100;
+
+    // 3. Usa a API Intl.NumberFormat para formatar no padrão brasileiro.
+    // Ela adiciona o ponto de milhar e a vírgula decimal automaticamente.
+    let valorFormatado = new Intl.NumberFormat('pt-BR', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+    }).format(valorNumerico);
+    
+    // 4. Atualiza o valor do input com a string formatada.
+    element.value = valorFormatado;
+}
+function carregarModelos() {
+    const marcaSelect = document.getElementById("marcaSelect");
+    const modeloSelect = document.getElementById("modeloSelect");
+    const marcaId = marcaSelect.value;
+
+    // Limpa os modelos anteriores
+    modeloSelect.innerHTML = '<option value="">Selecione um modelo</option>';
+
+    if (marcaId && modelosPorMarca[marcaId]) {
+        const modelos = modelosPorMarca[marcaId];
+        modelos.forEach(modelo => {
+            const option = document.createElement("option");
+            option.value = modelo.id;
+            option.textContent = `${modelo.desc} - ${modelo.ano}`;
+            modeloSelect.appendChild(option);
+        });
+    } else {
+        modeloSelect.innerHTML = '<option value="">Nenhum modelo encontrado</option>';
+    }
+}
+
+
+
+

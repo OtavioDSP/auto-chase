@@ -13,7 +13,7 @@
 
         }
         public function insereCor(){
-            $sql = "INSERT INTO Cor (cor_desc) VALUES ?";
+            $sql = "INSERT INTO Cor (cor_desc) VALUES (?)";
             $stmt = $this->conexao->prepare($sql);
             $stmt->bind_param('s',
             $this->cor_desc,
@@ -44,12 +44,26 @@
 
             
 
-        }
+            }
 
-
-
-        } public function listarCor(){
-            $sql = "SELECT cor.cor_desc FROM cor";
+        }public function buscarCorPorId($veiculo_id) {
+            $sql = "SELECT * FROM cor WHERE cor_id = ?";
+            
+            $stmt = $this->conexao->prepare($sql);
+            
+            // Vincula o ID do modelo ao placeholder da consulta
+            // 'i' indica que o parâmetro é um inteiro
+            $stmt->bind_param('i', $veiculo_id);
+            
+            $stmt->execute();
+            
+            $result = $stmt->get_result();
+            
+            // Retorna a primeira linha do resultado como um array associativo
+            // Ou 'null' se nenhum usuário for encontrado
+            return $result->fetch_assoc();
+        }public function listarCor(){
+            $sql = "SELECT * FROM cor";
             $stmt = $this->conexao->prepare($sql);
             $stmt->execute();
             $resultado = $stmt->get_result();

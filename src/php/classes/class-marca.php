@@ -12,14 +12,15 @@
             $this->conexao = $conexao;
 
         }
-        public function criaMarca(){
-            $sql = "INSERT INTO Marca (marca_desc) VALUES ?";
+        public function insereMarca(){
+            $sql = "INSERT INTO Marca (marca_desc) VALUES (?)";
             $stmt = $this->conexao->prepare($sql);
             $stmt->bind_param('s',
-            $this->marca_desc,
+            $this->marca_desc
             );
              if($stmt->execute()){
-                echo "marca inserida";
+                return $this->conexao->insert_id;
+                
             }else{
                 echo "Erro ao Inserir marca". $stmt->error;
             }
@@ -50,10 +51,10 @@
 
 
 
-        }public function listarMarcas(){
+        }public function listarMarca(){
             $sql = "
             SELECT 
-                marca.marca_desc
+                *
             FROM 
                 marca
             ";
@@ -68,7 +69,7 @@
 
             return $marcas;
 
-        } public function editarMarcas(){
+        } public function editarMarca(){
             $sql = "UPDATE Marca SET marca_desc = ? WHERE marca_id = ?";
             $stmt = $this->conexao->prepare($sql);
             $stmt->bind_param('si', $this->marca_desc, $this->marca_id);
@@ -78,6 +79,36 @@
                 echo "Erro ao editar marca" .$stmt->error;
             }
 
+        }
+        public function buscarMarcaPorId($marca_id) {
+            $sql = "SELECT * FROM marca WHERE marca_id = ?";
+            
+            $stmt = $this->conexao->prepare($sql);
+            
+            // Vincula o ID do modelo ao placeholder da consulta
+            // 'i' indica que o parâmetro é um inteiro
+            $stmt->bind_param('i', $marca_id);
+            
+            $stmt->execute();
+            
+            $result = $stmt->get_result();
+            
+            // Retorna a primeira linha do resultado como um array associativo
+            // Ou 'null' se nenhum usuário for encontrado
+            return $result->fetch_assoc();
+        }
+        public function buscarMarcaPorDesc($marca_desc) {
+            $sql = "SELECT * FROM marca WHERE marca_desc = ?";
+            
+            $stmt = $this->conexao->prepare($sql);
+            
+            $stmt->bind_param('s', $marca_desc);
+            
+            $stmt->execute();
+            
+            $result = $stmt->get_result();
+            
+            return $result->fetch_assoc();
         }
 
 

@@ -14,13 +14,13 @@
         }
         public function insereChassi(){
             
-            $sql = "INSERT INTO Chassi (chassi_desc) VALUES ?";
+            $sql = "INSERT INTO Chassi (chassi_desc) VALUES (?)";
             $stmt = $this->conexao->prepare($sql);
             $stmt->bind_param('s',
             $this->chassi_desc,
             );
              if($stmt->execute()){
-                echo " combustivel inserido";
+                echo " chassi inserido";
             }else{
                 echo "Erro ao Inserir combustivel". $stmt->error;
             }
@@ -76,6 +76,22 @@
                 echo "Erro ao editar chassi" .$stmt->error;
             }
 
+        }public function buscarChassiPorId($chassi_id) {
+            $sql = "SELECT * FROM chassi WHERE chassi_id = ?";
+            
+            $stmt = $this->conexao->prepare($sql);
+            
+            // Vincula o ID do modelo ao placeholder da consulta
+            // 'i' indica que o parâmetro é um inteiro
+            $stmt->bind_param('i', $chassi_id);
+            
+            $stmt->execute();
+            
+            $result = $stmt->get_result();
+            
+            // Retorna a primeira linha do resultado como um array associativo
+            // Ou 'null' se nenhum usuário for encontrado
+            return $result->fetch_assoc();
         }
 
     }
