@@ -310,15 +310,11 @@ if (isset($_GET['usuario_id'])) {
 
                     <label>Cor:</label>
                     <select name="fk_cor_id">
-
                     <?php foreach ($cores as $cor): ?>
                         
-                        <option value="<?= $cor['cor_id'] ?>">
-                        
-                        
-                        <?= isset($veiculos) && $cor['cor_id'] == $veiculos['fk_Cor_id'] ? 'selected' : '' ?>
-                            <?= htmlspecialchars($cor['cor_desc']) ?>
+                        <option value="<?= $cor['cor_id'] ?>" <?= isset($veiculos) && $cor['cor_id'] == $veiculos['fk_Cor_id'] ? 'selected' : '' ?>><?= htmlspecialchars($cor['cor_desc']) ?>
                         </option>
+                        
                     <?php endforeach; ?>
                     </select>
                     <br>
@@ -326,7 +322,12 @@ if (isset($_GET['usuario_id'])) {
                     <label>Combustível:</label>
                     <select name="fk_combustivel_id">
                     <?php foreach ($combustiveis as $comb): ?>
-                       <option value="<?= $comb['comb_id'] ?>" <?= ($comb['comb_id'] == $veiculos['fk_combustivel_id']) ? 'selected' : '' ?>><?= $comb['comb_desc'] ?></option>
+                        <option 
+                        value="<?= $cor['cor_id'] ?>" 
+                        <?= isset($veiculos) && $cor['cor_id'] == $veiculos['fk_Cor_id'] ? 'selected' : '' ?>
+                    >
+                        <?= htmlspecialchars($cor['cor_desc']) ?>
+                    </option>
                     <?php endforeach; ?>
                     </select>
                     <br>
