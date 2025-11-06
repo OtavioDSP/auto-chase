@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
+<<<<<<< HEAD
     <link rel="stylesheet" href="src/css/index.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -39,6 +40,35 @@
         <input type="text" id="documento" oninput="verificarDocumento()" placeholder="Digite CPF ou CNPJ" required>
         <p id="resultado">Digite um CPF ou CNPJ.</p>
     </div>
+=======
+<link rel="stylesheet" href="src/css/index.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro Usuário</title>
+
+</head>
+<body>
+
+<form action="src/php/global/global.php" method="post">
+<div class="login-container">
+    <img src="src/img/r8ph.png" alt="logo" class="logo">
+    <h2>Operações de usuário</h2>
+    <p>criar conta</p>
+    <input type="text" name="usuario_nome" placeholder="Nome de usuário" required>
+
+    <div class="senha-container">
+        <input type="password" id="senha" name="usuario_senha" placeholder="Senha" required>
+        <button type="button" onclick="toggleSenha()">👁</button>
+    </div>
+
+    <input type="email" name="usuario_email" placeholder="Email" required>
+    <input type="text" name="usuario_telefone" placeholder="Telefone" required>
+    <input type="text" name="usuario_endereco" placeholder="Endereço" required>
+    
+    <input type="text" id="documento" oninput="verificarDocumento()" placeholder="Digite CPF ou CNPJ" required>
+    <p id="resultado">Digite um CPF ou CNPJ.</p>
+
+>>>>>>> a344e1aad781c935362c8b03d234a6f8669764b6
     <br><br>
     <input type="submit" value="Enviar" name="criar_conta">
 </div>
