@@ -9,6 +9,7 @@ include_once '../php/classes/class-cor.php';
 include_once '../php/classes/class-chassi.php';
 include_once '../php/classes/class-combustivel.php';
 include_once '../php/classes/class-anuncio.php';
+include_once '../php/classes/class-imagem.php';
 
 ?>
 <!DOCTYPE html>
@@ -260,6 +261,13 @@ if (isset($_GET['usuario_id'])) {
             null,
             $conexao
         );
+        $imagemManager = new Foto(
+            null,
+            null,
+            null,
+            $conexao
+        );
+        $fotos = $imagemManager->listarImagemPorIdDeAnuncio($item['anuncio_id']);
         $veiculos = $veiculoManager->buscarVeiculoPorId($id);
         $modelos = $modeloManager->listarModelo();
         $marcas = $marcaManager->listarMarca();
@@ -284,7 +292,7 @@ if (isset($_GET['usuario_id'])) {
 
                     <input type="hidden" name="anuncio_id" value="<?= $item['anuncio_id'] ?>">
                     <input type="hidden" name="veiculo_id" value="<?= $item['fk_veiculo_id'] ?>">
-                    <input type="hidden" name="veiculo_id" value="<?= $item['fk_usuario_id'] ?>">
+                    <input type="hidden" name="usuario_id" value="<?= $item['fk_usuario_id'] ?>">
                     <p>Imagem:</p>
                     <input type="file" name="img[]" multiple>
                     <br>
@@ -351,8 +359,7 @@ if (isset($_GET['usuario_id'])) {
 
                     <input type="submit" value="Salvar Alterações" name="editar_anuncio">
                     </form>
-
-            </div>
+                    
     <?php } else { echo "<p>Anúncio não encontrado.</p>"; }
 
 

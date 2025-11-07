@@ -282,37 +282,13 @@ else if (isset($_POST['criar_chassi'])) {
         // 2. PROCESSAR UPLOAD DA IMAGEM
         $caminhoFinal = null;
         $arquivos = $_FILES['img'];
-         for ($i = 0; $i < count($arquivos['name']); $i++) {
-            
-            $nomeArquivo = $arquivos['name'][$i];
-            $tipo = $arquivos['type'][$i];
-            $pasta        = "uploads/";
-            $tmpName = $arquivos['tmp_name'][$i];
-            $erro = $arquivos['error'][$i];
-            $tamanho = $arquivos['size'][$i];
 
-            if ($erro === UPLOAD_ERR_OK) {
-                // Defina o caminho final onde quer salvar o arquivo
-                $caminhoFinal = $pasta . basename($nomeArquivo);
-
-                if ($caminhoFinal) {
-                        $imagem = new Foto(
-                            "",
-                            $caminhoFinal,
-                            $anuncio_id_gerado,
-                            $conexao
-                        );
-                        $imagem->insereImagem();
-                }
-
-                // Mova o arquivo temporário para o caminho final
-                if (!move_uploaded_file($tmpName, $caminhoFinal)) {
-                    throw new Exception("Erro ao salvar a imagem: $nomeArquivo");
-                }
-            } else {
-                throw new Exception("Erro no upload do arquivo: $nomeArquivo");
-            }
-        } 
+        salvarImagens(
+            $anuncio_id_gerado,
+            $arquivos,
+            $conexao,
+        );
+     
 }else if(isset($_POST['deletar_anuncio'])) { 
 
     $anuncio_id = $_POST['anuncio_id'];
@@ -349,9 +325,10 @@ else if (isset($_POST['criar_chassi'])) {
     $vc->deletarVeiculo();
 
 }else if(isset($_POST['editar_anuncio'])) { 
-    //imagem 
-    
-    // anuncio
+
+   
+
+
     $anuncio_id = $_POST['anuncio_id'];
     $anuncio_desc = $_POST['anuncio_desc'];
     $anuncio_valor = $_POST['anuncio_valor'];
@@ -367,9 +344,17 @@ else if (isset($_POST['criar_chassi'])) {
     $fk_usuario_id = $_POST['fk_usuario_id'];
     $veiculo_ano = $_POST['veiculo_ano'];
     $veiculo_versao = $_POST['veiculo_versao'];
+   
+   echo $anuncio_id;
 
-    
+    $fts = new Foto(
+        null, 
+        null, 
+        $anuncio_id, 
+        $conexao
+    );
 
+    $listafotos = $fts->listarImagemPorIdDeAnuncio($anuncio_id);
 
     $an = new Anuncio(
         $anuncio_id, 
@@ -389,16 +374,18 @@ else if (isset($_POST['criar_chassi'])) {
         $fk_modelo_id,
         $veiculo_ano,
         $conexao
-    );
-
-
-
+    );?>
+    <pre>
+        <?php print_r($listafotos); ?>
+    </pre>            
+    
+<?php
     // $an->editarAnuncio();
    
 
 }
-
-
-
-
 ?>
+
+
+
+

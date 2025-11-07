@@ -89,6 +89,31 @@
             }
 
 
+        }public function listarImagemPorIdDeAnuncio($fk_anuncio_id){
+            $sql = "SELECT imagem_id, imagem_url FROM imagem WHERE fk_anuncio_id = ?";
+            
+            $stmt = $this->conexao->prepare($sql);
+
+            $stmt->bind_param('i', $fk_anuncio_id);
+            $fotos = [];
+            if($stmt->execute()){
+                $resultado = $stmt->get_result();
+               
+
+                while($foto = $resultado->fetch_assoc()){
+                    //echo $foto;
+                    $fotos[] = $foto;
+                }
+
+            
+
+                // echo "foto listar com sucesso";
+            }else{
+                echo "Erro ao listar fotos" .$stmt->error;
+            }
+            return $fotos;
+            
+
         }
 
 
