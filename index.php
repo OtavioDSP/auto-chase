@@ -1,13 +1,36 @@
+<?php
+// Inclui o gerenciador de sessão no início de tudo.
+// Isso permite usar as funções de sessão como estaLogado() em toda a página.
+require_once 'src/config/env/logout.php';
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro Usuário</title>
+    <title>Autochase - Seu Marketplace de Veículos</title>
 </head>
 <body>
+    <header>
+        <nav>
+            <?php if (estaLogado()): ?>
+                <p>Olá, <?= htmlspecialchars($_SESSION['user_name']) ?>!</p>
+                <form action="src/php/global/global.php" method="post" style="display:inline;">
+                    <button type="submit" name="logout_usuario">Sair</button>
+                </form>
+                <!-- Link para o usuário editar a própria conta -->
+                <a href="src/routes/edits.php?usuario_id=<?= htmlspecialchars($_SESSION['user_id']) ?>">Minha Conta</a>
+            <?php else: ?>
+                <a href="login.php">Acessar sua conta</a>
+            <?php endif; ?>
+        </nav>
+    </header>
+    <hr>
     <a href="src/routes/anuncio.php">Adicionar Anúncio</a>
-    <form action="src/php/global/global.php" method="post">
+
+    <?php if (eAdmin()): // Conteúdo exclusivo para administradores ?>
+    
+    <form action="src/php/global/global.php" method="post" style="background-color: #f0f0f0; padding: 15px; margin-top: 15px;">
         <h2>Operações de usuário</h2>
         <p>criar conta</p>
         <input type="text" name="usuario_nome" placeholder="Nome de usuário" required>
@@ -72,7 +95,7 @@
     <br>
     <br>
 
-    <?php
+    <?php endif; // Fim do conteúdo de admin
     include('.\src\config\db\connect.php');
     include(".\src\php\classes\class-usuario.php");
     include(".\src\php\classes\class-veiculo.php");
@@ -83,7 +106,9 @@
     include(".\src\php\classes\class-combustivel.php");
     include(".\src\php\classes\class-anuncio.php");
     include(".\src\php\classes\class-imagem.php");
-    ?>
+    
+    // Apenas administradores podem ver as tabelas de gerenciamento
+    if (eAdmin()): ?>
 
     <table border="1" cellpadding="8" cellspacing="0" style="border-collapse: collapse; width: 100%; text-align: left;">
         <thead>
@@ -432,11 +457,66 @@
     $imgArray = $img->listarImagem();
         foreach($imgArray as $foto):?>
                 
-          <img src="<?php $fotos['imagem_url']?>" alt="imagem">
+          <img src="<?= htmlspecialchars($foto['imagem_url']) ?>" alt="imagem" style="max-width: 150px; height: auto; margin: 5px;">
 
 
         <?php endforeach;?>
-    
+    <?php endif; // Fim do conteúdo de admin ?>
+
+
+ <hr style="margin: 40px 0;">
+ <h2>Anúncios Recentes</h2>
+
+ <table border="1" cellpadding="8" cellspacing="0" style="border-collapse: collapse; width: 100%; text-align: left;">
+    <thead>
+        <tr>
+            <th>Anúncio</th>
+            <th>Valor</th>
+            <th>Proprietário</th>
+            <?php if(estaLogado()): ?>
+                <th colspan="2">Ações</th>
+            <?php endif; ?>
+        </tr>
+    </thead>
+    <tbody>
+        <?php
+        // Crie uma instância da classe Anuncio e busque os anúncios
+        $anuncioManager = new Anuncio(null, null, null, null, null, null, $conexao);
+        $anuncioArray = $anuncioManager->listarAnuncios();
+
+        // Itera sobre os anúncios e exibe os dados
+        foreach ($anuncioArray as $anuncio): ?>
+            <tr>
+                <td>
+                    <b><?= htmlspecialchars($anuncio['marca_desc'] . ' ' . $anuncio['modelo_desc']) ?></b><br>
+                    <small><?= htmlspecialchars($anuncio['veiculo_versao']) ?></small>
+                </td>
+                <td>R$ <?=number_format($anuncio['anuncio_valor'], 2, ',', '.')?></td>
+                <td><?=htmlspecialchars($anuncio['usuario_nome'])?></td>
+
+                <?php
+                // Ações só aparecem para usuários logados
+                if (estaLogado()):
+                    // Verifica se o usuário logado é o dono do anúncio ou um admin
+                    $id_usuario_logado = getUsuarioIdLogado();
+                    if (eAdmin() || $id_usuario_logado == $anuncio['fk_usuario_id']):
+                ?>
+                        <td>
+                            <form method="post" action="src/php/global/global.php" onsubmit="return confirm('Tem certeza que deseja deletar este anúncio?');">
+                                <input type='hidden' name='anuncio_id' value='<?= $anuncio['anuncio_id'] ?>'>
+                                <input type='submit' value='Deletar' name="deletar_anuncio">
+                            </form>
+                        </td>
+                        <td>
+                            <a href="src/routes/edits.php?anuncio_id=<?=$anuncio['anuncio_id'] ?>">Editar</a>
+                        </td>
+                <?php else: // Se não tem permissão, exibe colunas vazias para manter o layout ?>
+                        <td colspan="2"></td>
+                <?php endif; endif; ?>
+            </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>
 
 
 <script src="/src/JS/js-functions.js"></script>

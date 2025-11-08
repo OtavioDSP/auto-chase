@@ -21,6 +21,16 @@ function estaLogado(): bool {
 }
 
 /**
+ * Verifica se o usuário logado é um administrador.
+ * Assume que o nível de acesso de admin é 1.
+ *
+ * @return bool Verdadeiro se for admin, Falso se não.
+ */
+function eAdmin(): bool {
+    return isset($_SESSION['user_level']) && $_SESSION['user_level'] === 'ADMIN';
+}
+
+/**
  * Obtém o ID do usuário logado.
  *
  * @return int|null O ID do usuário, ou null se não estiver logado.
@@ -50,6 +60,26 @@ function loginFalso(int $id, string $nome = 'Usuário Teste'): void {
     $_SESSION['user_name'] = $nome; // Bônus: guardar o nome
     
     // Regenera o ID da sessão para segurança (boa prática)
+    session_regenerate_id(true);
+}
+
+/**
+ * Inicia a sessão para um usuário autenticado.
+ *
+ * @param array $usuario Array com os dados do usuário vindo do banco (ex: id, nome, email).
+ */
+function login(array $usuario): void {
+    // Limpa qualquer sessão antiga antes de logar
+    if (session_status() == PHP_SESSION_ACTIVE) {
+        session_unset();
+        session_destroy();
+    }
+    
+    session_start();
+    $_SESSION['user_id'] = (int)$usuario['usuario_id'];
+    $_SESSION['user_name'] = $usuario['usuario_nome'];
+    $_SESSION['user_level'] = $usuario['usuario_nivel_de_acesso'];
+    // Regenera o ID da sessão para segurança
     session_regenerate_id(true);
 }
 

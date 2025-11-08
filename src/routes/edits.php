@@ -1,5 +1,6 @@
 <?php
 // Includes de conexão e de todas as classes
+include_once '../config/env/logout.php'; // Inclui para usar eAdmin() e getUsuarioIdLogado()
 include_once '../config/db/connect.php'; 
 include_once '../php/classes/class-usuario.php';
 include_once '../php/classes/class-veiculo.php';
@@ -44,6 +45,14 @@ include_once '../php/classes/class-imagem.php';
 
 // --- ROTA DE EDIÇÃO PARA USUÁRIO ---
 if (isset($_GET['usuario_id'])) {
+    // Proteção: usuário só pode editar a si mesmo, a menos que seja admin.
+    $id_logado = getUsuarioIdLogado();
+    $id_alvo = intval($_GET['usuario_id']);
+    if (!eAdmin() && $id_logado !== $id_alvo) {
+        echo "<h1>Acesso Negado</h1><p>Você não tem permissão para editar este usuário.</p>";
+        exit();
+    }
+
     $id = intval($_GET['usuario_id']);
     $manager = new Usuario(
         null,
@@ -69,13 +78,15 @@ if (isset($_GET['usuario_id'])) {
             <div><label>Telefone:</label><input type="text" name="usuario_telefone" value="<?= htmlspecialchars($item['usuario_telefone']) ?>"></div>
             <div><label>CPF/CNPJ:</label><input type="text" name="usuario_doc_cpf_cnpj" value="<?= htmlspecialchars($item['usuario_doc_cpf_cnpj']) ?>"></div>
             <div><label>Nova Senha:</label><input type="password" name="usuario_senha" placeholder="Deixe em branco para não alterar"></div>
-            <div>
-                <label>Nível de Acesso:</label>
-                <select name="usuario_nivel_de_acesso">
-                    <option value="USUARIO" <?= ($item['usuario_nivel_de_acesso'] == 'USUARIO') ? 'selected' : '' ?>>Usuário</option>
-                    <option value="ADMIN" <?= ($item['usuario_nivel_de_acesso'] == 'ADMIN') ? 'selected' : '' ?>>Admin</option>
-                </select>
-            </div>
+            <?php if (eAdmin()): // Apenas admins podem ver e alterar o nível de acesso ?>
+                <div>
+                    <label>Nível de Acesso:</label>
+                    <select name="usuario_nivel_de_acesso">
+                        <option value="USUARIO" <?= ($item['usuario_nivel_de_acesso'] == 'USUARIO') ? 'selected' : '' ?>>Usuário</option>
+                        <option value="ADMIN" <?= ($item['usuario_nivel_de_acesso'] == 'ADMIN') ? 'selected' : '' ?>>Admin</option>
+                    </select>
+                </div>
+            <?php endif; ?>
             <button type="submit" name="editar_usuario">Salvar Alterações</button>
         </form>
     <?php } else { echo "<p>Usuário não encontrado.</p>"; }
@@ -224,6 +235,17 @@ if (isset($_GET['usuario_id'])) {
     $item = $anuncioManager->buscarAnuncioPorId(
         $id
     );
+
+    // Proteção: Apenas o dono do anúncio ou um admin pode editar.
+    if ($item) {
+        $id_logado = getUsuarioIdLogado();
+        // Se não for admin E o ID logado for diferente do ID do dono do anúncio
+        if (!eAdmin() && $id_logado !== $item['fk_usuario_id']) {
+            echo "<h1>Acesso Negado</h1><p>Você não tem permissão para editar este anúncio.</p>";
+            exit();
+        }
+    }
+
     if ($item) {
         $veiculoManager = new Veiculo(
             null,

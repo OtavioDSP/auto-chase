@@ -28,24 +28,29 @@
             }
             
         }public function deletarImagem(){
-
+            // Garante que estamos deletando uma imagem específica.
+            if (empty($this->imagem_id)) {
+                // Não faz nada se o ID da imagem não for fornecido.
+                // Você pode adicionar um log de erro aqui se preferir.
+                return;
+            }
             $sql = "DELETE FROM imagem WHERE imagem_id = ?";
             $stmt = $this->conexao->prepare($sql);
             $stmt->bind_param('i',$this->imagem_id);
         
             if($stmt->execute()){
-
-            echo "Foto deletada com sucesso";
-
-
-        }else{
-
-            echo "erro ao deletar foto" .$stmt->error;
-
-            
-
+                // Silencioso em caso de sucesso para não poluir a saída.
+            } else {
+                // Em um ambiente de produção, o ideal seria logar este erro.
+                echo "Erro ao deletar foto: " . $stmt->error;
+            }
         }
-
+        
+        public function deletarImagensPorAnuncioId(){
+            $sql = "DELETE FROM imagem WHERE fk_anuncio_id = ?";
+            $stmt = $this->conexao->prepare($sql);
+            $stmt->bind_param('i', $this->fk_anuncio_id);
+            $stmt->execute();
 
 
         }public function listarImagem(){
@@ -75,20 +80,18 @@
             
 
         }public function editarImagem(){
-
-            $sql = "UPDATE imagem SET imagem_url = ? WHERE fk_anuncio_id = ?";
-
+            // ATENÇÃO: Este método é problemático se um anúncio tiver várias imagens
+            // e a coluna imagem_url for UNIQUE.
+            // A melhor abordagem é deletar as antigas e inserir as novas.
+            // Mantendo o método, mas corrigindo para usar o ID da imagem.
+            $sql = "UPDATE imagem SET imagem_url = ? WHERE imagem_id = ?";
             $stmt = $this->conexao->prepare($sql);
-
-            $stmt->bind_param('si', $this->imagem_url, $this->fk_anuncio_id);
-
+            $stmt->bind_param('si', $this->imagem_url, $this->imagem_id);
             if($stmt->execute()){
                 echo "foto editada com sucesso";
             }else{
                 echo "Erro ao editar foto" .$stmt->error;
             }
-
-
         }public function listarImagemPorIdDeAnuncio($fk_anuncio_id){
             $sql = "SELECT imagem_id, imagem_url FROM imagem WHERE fk_anuncio_id = ?";
             

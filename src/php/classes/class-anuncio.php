@@ -33,6 +33,7 @@ class Anuncio {
         } else {
             echo "Erro ao criar anúncio: " . $stmt->error;
         }
+        return $this->conexao->insert_id;
     }
 
     // Deleta um anúncio do banco de dados
@@ -59,6 +60,7 @@ class Anuncio {
             anuncio.anuncio_status,
             anuncio.anuncio_data_de_criacao,
             anuncio.anuncio_data_de_alteracao,
+            anuncio.fk_usuario_id, -- Adicionado para verificação de permissão
             combustivel.comb_desc,
             -- Foto do anúncio
             imagem.imagem_url,
@@ -122,9 +124,14 @@ class Anuncio {
 
     // Edita um anúncio
     public function editarAnuncio() {
-        $sql = "UPDATE anuncio SET anuncio_desc = ?, anuncio_valor = ?, , anuncio_status = ? WHERE anuncio_id = ?";
+        // CORREÇÃO: Removida a vírgula extra antes de "anuncio_status".
+        $sql = "UPDATE anuncio SET anuncio_desc = ?, anuncio_valor = ?, anuncio_status = ? WHERE anuncio_id = ?";
         $stmt = $this->conexao->prepare($sql);
-        $stmt->bind_param('ssii', $this->anuncio_desc, $this->anuncio_valor, $this->anuncio_status, $this->anuncio_id);
+
+        // CORREÇÃO: Ajustado o bind_param para os tipos corretos.
+        // anuncio_desc (string), anuncio_valor (double/decimal), anuncio_status (string), anuncio_id (integer)
+        // Tipos: s = string, d = double, i = integer
+        $stmt->bind_param('sdsi', $this->anuncio_desc, $this->anuncio_valor, $this->anuncio_status, $this->anuncio_id);
 
         if ($stmt->execute()) {
             echo "Anúncio editado com sucesso!";
