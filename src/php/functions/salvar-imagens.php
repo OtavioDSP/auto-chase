@@ -15,7 +15,7 @@ function salvarImagens($anuncio_id, $arquivos, $conexao): void{
                 // Defina o caminho final onde quer salvar o arquivo
                 $caminhoFinal = $pasta . basename($nomeArquivo);
 
-                if ($caminhoFinal) {
+                if ($caminhoFinal && isset($_POST['criar_anuncio'])) {
                         $imagem = new Foto(
                             "",
                             $caminhoFinal,
@@ -23,6 +23,14 @@ function salvarImagens($anuncio_id, $arquivos, $conexao): void{
                             $conexao
                         );
                         $imagem->insereImagem();
+                }else if($caminhoFinal && isset($_POST['editar_anuncio'])) {
+                   $imagem = new Foto(
+                            "",
+                            $caminhoFinal,
+                            $anuncio_id,
+                            $conexao
+                        );
+                        $imagem->editarImagem();
                 }
 
                 // Mova o arquivo temporário para o caminho final

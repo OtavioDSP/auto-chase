@@ -80,7 +80,7 @@ class Veiculo {
                     fk_chassi_id = ?, 
                     fk_combustivel_id = ?, 
                     fk_cor_id = ?, 
-                    fk_modelo_id = ? 
+                    fk_modelo_id = ?,
                     veiculo_ano = ?
                 WHERE veiculo_id = ?";
                 
@@ -178,5 +178,6 @@ class Veiculo {
             return [];
         }
     }
+    
 }
 ?>

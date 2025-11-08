@@ -389,6 +389,7 @@
             null,
             null,
             null,
+            null,
             $conexao
         );
         $anuncioArray = $anuncio->listarAnuncios();

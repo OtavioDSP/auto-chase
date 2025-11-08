@@ -264,6 +264,7 @@ else if (isset($_POST['criar_chassi'])) {
             $fk_usuario_id,
             $veiculo_id_gerado,
             $anuncio_valor,
+            "",
             $conexao
         );
 
@@ -280,7 +281,6 @@ else if (isset($_POST['criar_chassi'])) {
         // 7. SALVAR A IMAGEM (SE ENVIADA)
 
         // 2. PROCESSAR UPLOAD DA IMAGEM
-        $caminhoFinal = null;
         $arquivos = $_FILES['img'];
 
         salvarImagens(
@@ -306,6 +306,7 @@ else if (isset($_POST['criar_chassi'])) {
         "", 
             "", 
         "",
+        "",
         $conexao
     );
     $vc = new Veiculo(
@@ -327,11 +328,12 @@ else if (isset($_POST['criar_chassi'])) {
 }else if(isset($_POST['editar_anuncio'])) { 
 
    
-
+    $imgs = $_FILES['img'];
 
     $anuncio_id = $_POST['anuncio_id'];
     $anuncio_desc = $_POST['anuncio_desc'];
     $anuncio_valor = $_POST['anuncio_valor'];
+    $anuncio_status = $_POST['anuncio_status'];
     
     
     // veiculo
@@ -341,11 +343,13 @@ else if (isset($_POST['criar_chassi'])) {
     $fk_cor_id = $_POST['fk_cor_id'];
     $fk_combustivel_id = $_POST['fk_combustivel_id'];
     $fk_modelo_id = $_POST['fk_modelo_id'];
-    $fk_usuario_id = $_POST['fk_usuario_id'];
+    $fk_usuario_id = $_POST['usuario_id'];
     $veiculo_ano = $_POST['veiculo_ano'];
     $veiculo_versao = $_POST['veiculo_versao'];
    
    echo $anuncio_id;
+
+   
 
     $fts = new Foto(
         null, 
@@ -354,7 +358,14 @@ else if (isset($_POST['criar_chassi'])) {
         $conexao
     );
 
-    $listafotos = $fts->listarImagemPorIdDeAnuncio($anuncio_id);
+    $listafotos = $fts->listarImagemPorIdDeAnuncio(
+        $anuncio_id
+    );
+    salvarImagens(
+        $anuncio_id, 
+        $imgs, 
+        $conexao
+);
 
     $an = new Anuncio(
         $anuncio_id, 
@@ -362,6 +373,7 @@ else if (isset($_POST['criar_chassi'])) {
         $fk_usuario_id, 
         $veiculo_id, 
         $anuncio_valor,
+        $anuncio_status,
         $conexao
     );
     $vc = new Veiculo(
@@ -370,17 +382,23 @@ else if (isset($_POST['criar_chassi'])) {
         $veiculo_versao,
         $fk_chassi_id,
         $fk_combustivel_id,
-        $cor_id,
+        $fk_cor_id,
         $fk_modelo_id,
         $veiculo_ano,
         $conexao
-    );?>
+    );
+    $an->editarAnuncio();
+    $vc->editarVeiculo();
+    
+    
+    ?>
     <pre>
         <?php print_r($listafotos); ?>
-    </pre>            
+    </pre>    
+            
     
 <?php
-    // $an->editarAnuncio();
+    
    
 
 }

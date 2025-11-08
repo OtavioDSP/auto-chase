@@ -212,7 +212,8 @@ if (isset($_GET['usuario_id'])) {
 
        
     $id = intval($_GET['anuncio_id']);
-     $anuncio = new Anuncio(
+     $anuncioManager = new Anuncio(
+            null,
             null,
             null,
             null,
@@ -220,7 +221,7 @@ if (isset($_GET['usuario_id'])) {
             null,
             $conexao
         );
-    $item = $anuncio->buscarAnuncioPorId(
+    $item = $anuncioManager->buscarAnuncioPorId(
         $id
     );
     if ($item) {
@@ -274,6 +275,7 @@ if (isset($_GET['usuario_id'])) {
         $cores = $corManager->listarCor();
         $chassis = $chassiManager->listarChassi();
         $combustiveis = $combustivelManager->listarCombustivel();
+        $opcoes_status = $anuncioManager->buscarOpcoesEnum($conexao, 'anuncio_status');
         // ...
 
 
@@ -334,14 +336,28 @@ if (isset($_GET['usuario_id'])) {
                     <select name="fk_combustivel_id">
                     <?php foreach ($combustiveis as $comb): ?>
                         <option 
-                        value="<?= $cor['cor_id'] ?>" 
-                        <?= isset($veiculos) && $cor['cor_id'] == $veiculos['fk_Cor_id'] ? 'selected' : '' ?>
+                        value="<?= $comb['comb_id'] ?>" 
+                        <?= isset($veiculos) && $comb['comb_id'] == $veiculos['fk_combustivel_id'] ? 'selected' : '' ?>
                     >
-                        <?= htmlspecialchars($cor['cor_desc']) ?>
+                        <?= htmlspecialchars($comb['comb_desc']) ?>
                     </option>
                     <?php endforeach; ?>
                     </select>
                     <br>
+
+                    <label>Status:</label>
+                    <select name="anuncio_status" required> <option value="">-- Selecione um status --</option>
+                        
+                        <?php foreach ($opcoes_status as $status): ?>
+                        
+                        <option value="<?= htmlspecialchars($status) ?>">
+                            <?= htmlspecialchars(ucfirst($status)) // ucfirst() deixa a 1ª letra maiúscula ?>
+                        </option>
+
+                        <?php endforeach; ?>
+                        
+                    </select>
+                <br>
 
                     <label>Quilometragem:</label>
                     <input type="number" name="veiculo_quilometragem" required value="<?= $veiculos['veiculo_quilometragem'] ?>"><br>

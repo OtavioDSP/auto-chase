@@ -7,13 +7,15 @@ class Anuncio {
     private $fk_usuario_id;
     private $fk_veiculo_id;
     private $anuncio_valor;
+    private $anuncio_status;
     private $conexao;
-    public function __construct($anuncio_id, $anuncio_desc, $fk_usuario_id, $fk_veiculo_id, $anuncio_valor, $conexao) {
+    public function __construct($anuncio_id, $anuncio_desc, $fk_usuario_id, $fk_veiculo_id, $anuncio_valor, $anuncio_status, $conexao) {
         $this->anuncio_id = $anuncio_id;
         $this->anuncio_desc = $anuncio_desc;
         $this->fk_usuario_id = $fk_usuario_id;
         $this->fk_veiculo_id = $fk_veiculo_id;
         $this->anuncio_valor = $anuncio_valor;
+        $this->anuncio_status = $anuncio_status;
         $this->conexao = $conexao;
     }
 
@@ -54,6 +56,7 @@ class Anuncio {
             anuncio.anuncio_id,
             anuncio.anuncio_desc,
             anuncio.anuncio_valor,
+            anuncio.anuncio_status,
             anuncio.anuncio_data_de_criacao,
             anuncio.anuncio_data_de_alteracao,
             combustivel.comb_desc,
@@ -119,9 +122,9 @@ class Anuncio {
 
     // Edita um anúncio
     public function editarAnuncio() {
-        $sql = "UPDATE anuncio SET anuncio_desc = ?, anuncio_valor = ? WHERE anuncio_id = ?";
+        $sql = "UPDATE anuncio SET anuncio_desc = ?, anuncio_valor = ?, , anuncio_status = ? WHERE anuncio_id = ?";
         $stmt = $this->conexao->prepare($sql);
-        $stmt->bind_param('ssi', $this->anuncio_desc, $this->anuncio_valor, $this->anuncio_id);
+        $stmt->bind_param('ssii', $this->anuncio_desc, $this->anuncio_valor, $this->anuncio_status, $this->anuncio_id);
 
         if ($stmt->execute()) {
             echo "Anúncio editado com sucesso!";
@@ -137,6 +140,43 @@ class Anuncio {
         $result = $stmt->get_result();
         return $result->fetch_assoc();
     }
+    // Em: class-anuncio.php
+
+public static function buscarOpcoesEnum($conexao, $coluna) {
+    
+    $tabela = "anuncio"; 
+
+    // =======================================================
+    // CORREÇÃO:
+    // O comando SHOW COLUMNS não aceita '?' (placeholders) no LIKE.
+    // Como a variável $coluna é controlada pelo desenvolvedor (ex: 'anuncio_status')
+    // e não vem do usuário, é seguro concatenar diretamente.
+    // =======================================================
+    $sql = "SHOW COLUMNS FROM {$tabela} LIKE '{$coluna}'";
+
+    // Usar query() é mais simples e direto, já que não há parâmetros
+    $resultado = $conexao->query($sql); // <-- Linha 145 (MODIFICADA)
+    
+    // Tratamento de erro para query()
+    if ($resultado === false) {
+        throw new Exception("Falha ao preparar/executar (SHOW COLUMNS): " . $conexao->error);
+    }
+
+    // O resto do seu código continua igual...
+    if ($resultado->num_rows == 0) {
+        throw new Exception("Coluna '{$coluna}' não encontrada na tabela '{$tabela}'.");
+    }
+
+    $coluna_info = $resultado->fetch_assoc();
+
+    preg_match_all("/'([^']+)'/", $coluna_info['Type'], $matches);
+
+    if (isset($matches[1]) && !empty($matches[1])) {
+        return $matches[1];
+    } else {
+        throw new Exception("A coluna '{$coluna}' não parece ser do tipo ENUM.");
+    }
+}
 }
 
 ?>

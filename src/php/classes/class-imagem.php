@@ -76,12 +76,12 @@
 
         }public function editarImagem(){
 
-            $sql = "UPDATE imagem SET imagem_url = ? WHERE imagem_id = ?";
+            $sql = "UPDATE imagem SET imagem_url = ? WHERE fk_anuncio_id = ?";
 
             $stmt = $this->conexao->prepare($sql);
 
-            $stmt->bind_param('si', $this->imagem_url, $this->imagem_id);
-            
+            $stmt->bind_param('si', $this->imagem_url, $this->fk_anuncio_id);
+
             if($stmt->execute()){
                 echo "foto editada com sucesso";
             }else{
