@@ -12,7 +12,6 @@ header
 <!-- background: #6bbddb; -->
     border-radius: 9px;
 
-
 https://github.com/kush0904/car-dealership-website?tab=readme-ov-file
 
 https://github.com/lucasgomesdacruz/webCarros ⚠️⚠️⚠️🔥🔥🔥🔥

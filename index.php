@@ -36,12 +36,12 @@
                     <input type="password" id="senha" name="usuario_senha" placeholder="Senha" required>
                     <button type="button" onclick="toggleSenha()">👁</button>
                 </div>
-                <input type="email" name="usuario_email" placeholder="Email" required>
+                <input type="email" name="usuario_email" placeholder="E-mail" required>
                 <input type="text" name="usuario_telefone" placeholder="Telefone" required>
                 <input type="text" name="usuario_endereco" placeholder="Endereço" required>
                 <br>
                 <!-- troquei tbm o P id resultado pra h3 resultado -->
-                <h3 id="resultado">Digite um CPF ou CNPJ.</h3>
+                <h3 id="resultado">Seu número de cadastro:</h3>
                 <input type="text" id="documento" oninput="verificarDocumento()" name="doc_cpf_cnpj" placeholder="Digite CPF ou CNPJ" required >
                 <!-- vou trocar o nome do value="Enviar" para Criar conta, caso de bug volte pro nome anterior -->
                 <input type="submit" placeholder="Criar conta" class="submit" value="Criar conta"  name="criar_conta">

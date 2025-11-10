@@ -78,7 +78,7 @@ header {
 }
 
 .login-container:hover {
-    min-width: 250px;
+    min-width: 250px; 
     max-width: 550px;
     transition: 0.5s ease;
 }
@@ -102,7 +102,6 @@ header {
        pois o 'align-items: center' no pai já centraliza o bloco. */
     
     border-radius: 14px;
-    box-shadow: 0 0 8px rgba(255, 255, 255, 0.1);
 }
 
 .form:hover {
@@ -115,7 +114,8 @@ header {
     text-align: center;
     /* CORRIGIDO: 'size-adjust' não existe. 
        Você provavelmente queria 'font-size'. */
-    font-size: 1.2rem; 
+    font-size: 1.2rem;
+    padding-left: 11%;
 }
 
 /* --- Inputs Gerais & Senha --- */
@@ -132,24 +132,30 @@ header {
     border: 1px solid #444;
     color: #2e2e2e;
     border-radius: 8px;
-    transition: border 0.3s ease, background 0.3s ease;
+    transition: border 0.3s ease, background 0.3s ease, transform 0.3s ease;
+  
+    
     font-size: 14px;
     font-family: 'Creato Display';
 }
-
+.form input[name="usuario_nome"]:hover,
+.form input[type="text"]:hover,
+.form input[type="email"]:hover,
+.form select:hover,
+.senha-container:hover {
+    transform: scale(1.025);
+}
 .senha-container {
     position: relative;
     /* display: inline-block; (Desnecessário no flex column) */
     width: 100%; /* Garante que ocupe o espaço */
     max-width: 190px;
 }
-
 /* O input de senha dentro do container precisa de ajustes
    para o botão não ficar por cima de um input "menor" */
 .senha-container input {
     width: 100%; /* Ocupa 100% do container */
 }
-
 .senha-container button {
     position: absolute;
     right: 5px;
