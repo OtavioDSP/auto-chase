@@ -6,6 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro Usuário</title>
 </head>
+<!-- inicio das anotacoes do que fazer:
+ futuramente vamos separar essa index da parte de login pra um botao no HEADER,
+ onde vai levar pra uma nova pagina que é somente do login e provavelmente,
+ vamos localizar isso no /src/routes, criar um arquivo ''login.php'' e lá vamo deixar essa parte,
+ depois vamos separando tudo, tudo em 'rotas' diferentes pra ficar bem organizado e nao bagunçar tudo. -->
 <body>
     <header>
         <div class="header-left">
@@ -19,11 +24,11 @@
         <div class="header-right">
         </div>
     </header>
-    <a href="src/routes/anuncio.php">Adicionar Anúncio</a>
+    <!-- inicio do LOGIN -->
     <form action="src/php/global/global.php" method="post">
         <div class="login-container">
             <h5><img src="src/img/autochase logo 911 branco auto preto chase branco sc.png" alt="logo" class="logo"></h5>
-            <h1>Criar sua Conta</h1>
+            <h1>Crie sua Conta</h1>
 
             <div class="form">
                 <input type="text" name="usuario_nome" placeholder="Nome de usuário" required>
@@ -34,15 +39,18 @@
                 <input type="email" name="usuario_email" placeholder="Email" required>
                 <input type="text" name="usuario_telefone" placeholder="Telefone" required>
                 <input type="text" name="usuario_endereco" placeholder="Endereço" required>
+                <br>
+                <!-- troquei tbm o P id resultado pra h3 resultado -->
+                <h3 id="resultado">Digite um CPF ou CNPJ.</h3>
                 <input type="text" id="documento" oninput="verificarDocumento()" name="doc_cpf_cnpj" placeholder="Digite CPF ou CNPJ" required >
-                <p id="resultado">Digite um CPF ou CNPJ.</p>
-                
-                <input type="submit" value="Enviar" name="criar_conta">
+                <!-- vou trocar o nome do value="Enviar" para Criar conta, caso de bug volte pro nome anterior -->
+                <input type="submit" placeholder="Criar conta" class="submit" value="Criar conta"  name="criar_conta">
             </div>
             <br><br>
         </div>
     </form>
-
+<!-- fim do LOGIN -->
+ <a href="src/routes/anuncio.php">Adicionar Anúncio</a>
     <form action="src/php/global/global.php" method="POST">
         <h1>Cor - Adicionar</h1>
         <input type="text" placeholder="Cor" name="cor_desc" required>

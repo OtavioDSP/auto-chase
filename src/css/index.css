@@ -1,46 +1,155 @@
-body{
+/* ==============================================
+   1. Importações e Declarações de Fonte
+   ============================================== */
 
+/* @font-face DEVE sempre vir no TOPO do arquivo */
+@font-face {
+    font-family: 'Creato Display';
+    /* Caminho corrigido para 'voltar' da pasta css */
+    src: url('../font/CreatoDisplay-Light.otf') format('opentype');
+    /* É melhor usar números (300 = Light) */
+    font-weight: 300; 
+}
+
+/* ==============================================
+   2. Estilos Gerais (Body, Globais)
+   ============================================== */
+
+body {
     margin: 0;
     padding: 0;
     width: 100%;
-    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-family: 'Creato Display', sans-serif;
     background-color: #E6F8FF;
 }
-.logo{
+
+.logo {
     height: 48px;
 }
-.login-container{
-    margin: 0 auto;
 
-    margin-top: 5%;
-    background: #5fc2e6;
-    border-radius: 9px;
+/* ==============================================
+   3. Header (Cabeçalho)
+   ============================================== */
 
-    margin-top: 11%;
+header {
     background: #00AFF0;
-    border-radius: 9px;
-    /* background: linear-gradient(to bottom, rgba(255, 255, 150, 0.05), #000);
-    border-radius: 14px; */
-
-    padding: 24px;
-    box-shadow: 0 0 8px rgba(255, 255, 255, 0.1);
-    min-width: 300px;
+    color: #222;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
     width: 100%;
-    max-width: 400px;
+    padding: 5px 0px;
+    position: relative;
+    z-index: 100;
 }
 
-.login-container h5{
-        text-align: center;
+.header-left {
+    padding-left: 18px;
 }
 
-#resultado {
-    font-weight: bold;
-    margin-top: 5px;
+.logo-img {
+    width: 100%;
+    height: auto;
+    max-width: 150px;
+    min-width: 50px;
+    display: block;
 }
+
+/* ==============================================
+   4. Componente: Formulário de Login
+   ============================================== */
+
+/* --- O Container Principal --- */
+.login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centraliza os itens (logo, H1, .form) */
+
+    margin: 3% auto 0 auto; /* Simplificado */
+    padding: 18px;
+
+    width: 100%;
+    min-width: 200px;
+    max-width: 350px;
+
+    background: #6bbddb;
+    border-radius: 9px;
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.1);
+}
+
+.login-container:hover {
+    min-width: 250px;
+    max-width: 550px;
+    transition: 0.5s ease;
+}
+
+.login-container h5 {
+    text-align: center;
+}
+
+/* --- O Bloco do Formulário (.form) --- */
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 0px; /* 'margin' nos inputs vai controlar o espaço */
+
+    width: 100%;
+    max-width: 190px; /* CORRIGIDO: Ajustei para 190px (igual aos inputs) */
+    min-width: 10px; /* (Isto não é realmente necessário) */
+    position: relative;
+    right: 20px;
+    /* REMOVIDO: O 'position: relative' e 'right: 20px' 
+       pois o 'align-items: center' no pai já centraliza o bloco. */
+    
+    border-radius: 14px;
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.1);
+}
+
+.form:hover {
+    max-width: 190px; /* Mantido igual, pois já é o padrão */
+    transition: 0.5s ease;
+    border-radius: 8px;
+}
+
+.form h3 {
+    text-align: center;
+    /* CORRIGIDO: 'size-adjust' não existe. 
+       Você provavelmente queria 'font-size'. */
+    font-size: 1.2rem; 
+}
+
+/* --- Inputs Gerais & Senha --- */
+.form input, .form select {
+    width: 100%;
+    max-width: 190px;
+    padding: 14px;
+    margin: 8px 0px; /* Controla o espaço entre os inputs */
+    
+    /* REMOVIDO: 'max-height: 13px' conflitava com 'padding: 14px'. */
+
+    
+    background-color: #ffffff;
+    border: 1px solid #444;
+    color: #2e2e2e;
+    border-radius: 8px;
+    transition: border 0.3s ease, background 0.3s ease;
+    font-size: 14px;
+    font-family: 'Creato Display';
+}
+
 .senha-container {
     position: relative;
-    display: inline-block;
+    /* display: inline-block; (Desnecessário no flex column) */
+    width: 100%; /* Garante que ocupe o espaço */
+    max-width: 190px;
 }
+
+/* O input de senha dentro do container precisa de ajustes
+   para o botão não ficar por cima de um input "menor" */
+.senha-container input {
+    width: 100%; /* Ocupa 100% do container */
+}
+
 .senha-container button {
     position: absolute;
     right: 5px;
@@ -51,55 +160,34 @@ body{
     cursor: pointer;
 }
 
-/*####################################################################*/
-header {
-    background: #00AFF0;
-    color: #222;
-    display: flex;
-    justify-content: flex-start;
+#resultado {
     align-items: center;
-    width: 100%;
-    padding: 10px 0px;
-    position:relative;
-    z-index: 100;
+    font-weight: bold;
+    margin-top: 5px;
+    text-align: center; /* Adicionado para centralizar */
+    font-size: 0.9rem;  /* Adicionado para consistência */
 }
-.header-left{
-    padding-left: 12px;
-}
-.logo-img {
-    width: 100%;
-    height: auto;
-    max-width: 150px;
-    min-width: 50px;
-    display: block;
-}
-/* header h1 {
-    font-size: 24px;
-    margin: 0;
-} */
-.form {
-    border-radius: 14px;
-    box-shadow: 0 0 8px rgba(255, 255, 255, 0.1);
-    min-width: 10px;
-    width: 100%;
-    max-width: 190px;
-    align-items: center;
-    gap: 10px;
-    
 
-}
-.form h3 {
-    margin-bottom: 16px;
-    color: #ffe600;
-}
-.form input, .form select {
+/* --- Botão Submit --- */
+.form input[type="submit"] {
     width: 100%;
-    max-width: 190px;
-    padding: 14px;
+    max-width: 190px; /* Mantido igual aos outros */
+    display:flex;
+    position: relative;
+    padding: 10px;
     margin: 8px 0px;
+    left:7%;
+    border-radius: 14px;
+    background-color: #fff2f2;
+    color: #000000;
+    font-weight: bold;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.form input[type="submit"]:hover {
     background-color: #ffffff;
-    border: 1px solid #444;
-    color: #2e2e2e;
-    border-radius: 8px;
-    transition: border 0.3s ease, background 0.3s ease;
+    color: #6bdcff;
+    transform: scale(1.02);
 }
