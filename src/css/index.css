@@ -32,27 +32,78 @@ body {
    ============================================== */
 
 header {
-    background: #00AFF0;
+    background: #6bbddb;
     color: #222;
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-between; /* <-- Isso separa esquerda, meio e direita */
     align-items: center;
     width: 100%;
-    padding: 5px 0px;
+    padding: 10px 20px; /* Adiciona um espaço nas laterais */
     position: relative;
     z-index: 100;
+    box-sizing: border-box; /* Garante que o padding não quebre o layout */
 }
 
-.header-left {
-    padding-left: 18px;
+/* --- Esquerda (Logo) --- */
+.header-left .logo {
+    height: 30px;
+    display: block; /* Remove espaço extra de imagem */
 }
 
-.logo-img {
-    width: 100%;
-    height: auto;
-    max-width: 150px;
-    min-width: 50px;
-    display: block;
+/* --- Meio (Comprar / Anunciar) --- */
+.nav-links {
+    display: flex;
+    gap: 40px; /* <-- AUMENTADO (era 24px) */
+}
+.header-center {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #ffffff; /* Cor do texto (branco) */
+    font-weight: bold;
+    font-size: 16px;
+}
+
+/* --- Direita (Salvos / Login) --- */
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 20px; /* Espaço entre "Salvos" e "Login" */
+}
+
+/* Link "Salvos" (ícone + texto) */
+.nav-link-icon {
+    display: flex;
+    align-items: center;
+    gap: 6px; /* Espaço entre o ícone e o texto "Salvos" */
+    text-decoration: none;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+/* O ícone em si */
+.nav-link-icon i {
+    font-size: 18px; /* Tamanho do ícone */
+}
+
+/* Botão de Login */
+.btn-login {
+    text-decoration: none;
+    color: #00AFF0; /* Cor do texto (azul do header) */
+    background-color: #ffffff; /* Fundo branco */
+    padding: 8px 16px; /* Tamanho do botão */
+    border-radius: 6px;
+    font-weight: bold;
+    transition: background-color 0.2s ease;
+}
+
+.btn-login:hover {
+    background-color: #f0f0f0; /* Um cinza claro no hover */
 }
 
 /* ==============================================

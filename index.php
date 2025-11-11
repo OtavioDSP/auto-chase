@@ -2,9 +2,11 @@
 <html lang="pt-br">
 <head>
     <link rel="stylesheet" href="src/css/index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="icon" type="image/png" href="src/img/ac icon.png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro Usuário</title>
+    <title>Autochase | Compre e venda veículos novos e usados com segurança</title>
 </head>
 <!-- inicio das anotacoes do que fazer:
  futuramente vamos separar essa index da parte de login pra um botao no HEADER,
@@ -12,22 +14,29 @@
  vamos localizar isso no /src/routes, criar um arquivo ''login.php'' e lá vamo deixar essa parte,
  depois vamos separando tudo, tudo em 'rotas' diferentes pra ficar bem organizado e nao bagunçar tudo. -->
 <body>
-    <header>
-        <div class="header-left">
-            <img src="src/img/autochase logo 911 branco auto preto chase branco sc.png" alt="Logo" class="logo">
-            
-        </div>
-        <div class="header-center">
-            <nav class="nav-links">
-            </nav>
-        </div>
-        <div class="header-right">
-        </div>
-    </header>
+<header>
+    <div class="header-left">
+        <img src="src/img/autochase logo 911 branco auto preto chase branco sc.png" alt="Logo" class="logo">
+    </div>
+    <div class="header-center">
+        <nav class="nav-links">
+            <a href="comprar.php">Comprar</a>
+            <a href="anunciar.php">Anunciar</a>
+        </nav>
+    </div>
+    <div class="header-right">
+        
+        <a href="salvos.php" class="nav-link-icon">
+            <i class="fas fa-bookmark"></i> 
+            <span>Salvos</span>
+        </a>
+        <a href="src/routes/login.php" class="btn-login">Login</a>
+    </div>
+</header>
     <!-- inicio do LOGIN -->
     <form action="src/php/global/global.php" method="post">
         <div class="login-container">
-            <h5><img src="src/img/autochase logo 911 branco auto preto chase branco sc.png" alt="logo" class="logo"></h5>
+            <h5><img src="src/img/autochase logo 911 branco sc.png" alt="logo" class="logo"></h5>
             <h1>Crie sua Conta</h1>
 
             <div class="form">
@@ -50,6 +59,7 @@
         </div>
     </form>
 <!-- fim do LOGIN -->
+ <br><br><br><br>
  <a href="src/routes/anuncio.php">Adicionar Anúncio</a>
     <form action="src/php/global/global.php" method="POST">
         <h1>Cor - Adicionar</h1>
