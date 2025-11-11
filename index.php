@@ -16,12 +16,14 @@
 <body>
 <header>
     <div class="header-left">
-        <img src="src/img/autochase logo 911 branco auto preto chase branco sc.png" alt="Logo" class="logo">
+        <a href="index.php">
+            <img src="src/img/ac wb 911 white sc.png" alt="Logo" class="logo">
+        </a>
     </div>
     <div class="header-center">
         <nav class="nav-links">
             <a href="comprar.php">Comprar</a>
-            <a href="anunciar.php">Anunciar</a>
+            <a href="src/routes/anuncio.php">Anunciar</a>
         </nav>
     </div>
     <div class="header-right">
@@ -36,7 +38,7 @@
     <!-- inicio do LOGIN -->
     <form action="src/php/global/global.php" method="post">
         <div class="login-container">
-            <h5><img src="src/img/autochase logo 911 branco sc.png" alt="logo" class="logo"></h5>
+            <h5><img src="src/img/ac 911 white sc.png" alt="logo" class="logo"></h5>
             <h1>Crie sua Conta</h1>
 
             <div class="form">

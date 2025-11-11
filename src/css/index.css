@@ -201,6 +201,7 @@ header {
     /* display: inline-block; (Desnecessário no flex column) */
     width: 100%; /* Garante que ocupe o espaço */
     max-width: 190px;
+    
 }
 /* O input de senha dentro do container precisa de ajustes
    para o botão não ficar por cima de um input "menor" */
