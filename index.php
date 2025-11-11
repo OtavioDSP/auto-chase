@@ -48,12 +48,14 @@
                     <button type="button" onclick="toggleSenha()">👁</button>
                 </div>
                 <input type="email" name="usuario_email" placeholder="E-mail" required>
-                <input type="text" name="usuario_telefone" placeholder="Telefone" required>
+                <!-- <input type="text" name="usuario_telefone" placeholder="Telefone" required> -->
+                <input type="text" name="usuario_telefone" placeholder="Telefone (xx) Xxxxx-xxxx" required oninput="maskTelefone(this)" maxlength="15" inputmode="numeric">
                 <input type="text" name="usuario_endereco" placeholder="Endereço" required>
                 <br>
                 <!-- troquei tbm o P id resultado pra h3 resultado -->
                 <h3 id="resultado">Seu número de cadastro:</h3>
-                <input type="text" id="documento" oninput="verificarDocumento()" name="doc_cpf_cnpj" placeholder="Digite CPF ou CNPJ" required >
+                <!-- <input type="text" id="documento" oninput="verificarDocumento()" name="doc_cpf_cnpj" placeholder="Digite CPF ou CNPJ" required > -->
+                <input type="text" id="documento" oninput="maskAndVerifyDocumento(this)" name="doc_cpf_cnpj" placeholder="Digite CPF ou CNPJ" required maxlength="18" inputmode="numeric">
                 <!-- vou trocar o nome do value="Enviar" para Criar conta, caso de bug volte pro nome anterior -->
                 <input type="submit" placeholder="Criar conta" class="submit" value="Criar conta"  name="criar_conta">
             </div>
@@ -62,21 +64,21 @@
     </form>
 <!-- fim do LOGIN -->
  <br><br><br><br>
- <a href="src/routes/anuncio.php">Adicionar Anúncio</a>
+ <!-- <a href="src/routes/anuncio.php">Adicionar Anúncio</a>
     <form action="src/php/global/global.php" method="POST">
         <h1>Cor - Adicionar</h1>
         <input type="text" placeholder="Cor" name="cor_desc" required>
         <button type="submit" name="criar_cor">Adicionar Cor</button>
-    </form>
+    </form> --> 
 
     <hr>
 
-    <hr>
+
 
     <form action="src/php/global/global.php" method="POST">
         <h1>Marca - Adicionar</h1>
         <input type="text" placeholder="Marca" name="marca_desc" required>
-        <button type="submit" name="criar_marca">Adicionar Marca</button>
+        <button type="submit" name="criar_marca">Adicionar Marca</button>   
         <h1>Modelo - Adicionar</h1>
         <input type="text" placeholder="Modelo" name="modelo_desc" required>
         <input type="number" step="0.01" placeholder="Valor FIPE" name="modelo_valor_fipe" required>
@@ -463,7 +465,6 @@
         <img src="<?php $fotos['imagem_url']?>" alt="imagem">
 
     <?php endforeach;?>
-        
-    <script src="/src/JS/js-functions.js"></script>
+    <script src="src/JS/js-functions.js"></script>
 </body>
 </html>

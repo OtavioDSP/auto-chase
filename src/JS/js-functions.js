@@ -73,7 +73,71 @@ function carregarModelos() {
         modeloSelect.innerHTML = '<option value="">Nenhum modelo encontrado</option>';
     }
 }
+/* ==============================================
+   FUNÇÃO DE MÁSCARA DE TELEFONE
+   ============================================== */
+   function maskTelefone(input) {
+    // 1. Pega o valor, remove tudo que não for número
+    let v = input.value.replace(/\D/g, '');
+    
+    // 2. Limita o total de números a 11
+    v = v.substring(0, 11);
 
+    // 3. Aplica a máscara (XX) XXXXX-XXXX
+    // Adiciona (XX)
+    v = v.replace(/^(\d{2})/, '($1) ');
+    
+    // Adiciona o hífen
+    // O regex (\d{5}) pega os 5 primeiros dígitos após o ") "
+    // e o (\d{1,4}) pega os últimos 4 dígitos
+    v = v.replace(/(\d{5})(\d{1,4})$/, '$1-$2');
+    
+    // 4. Devolve o valor formatado para o input
+    input.value = v;
+}
+/* ==============================================
+   FUNÇÃO DE MÁSCARA E VERIFICAÇÃO DE DOCUMENTO
+   (Substitui a antiga 'verificarDocumento')
+   ============================================== */
+   function maskAndVerifyDocumento(input) {
+    // 1. Pega o elemento de resultado (que você já usa)
+    const resultado = document.getElementById('resultado');
 
+    // 2. Remove tudo que não for número
+    let v = input.value.replace(/\D/g, '');
+    let resultFormatado = "";
 
+    // 3. Aplica a máscara (CPF ou CNPJ)
+    if (v.length > 11) {
+        // --- É um CNPJ (14 dígitos) ---
+        v = v.substring(0, 14); // Limita em 14
+        
+        // Formato: XX.XXX.XXX/XXXX-XX
+        resultFormatado = v.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/, "$1.$2.$3/$4-$5");
+    } else {
+        // --- É um CPF (11 dígitos) ---
+        v = v.substring(0, 11); // Limita em 11
+        
+        // Formato: XXX.XXX.XXX-XX
+        resultFormatado = v.replace(/^(\d{3})(\d{3})(\d{3})(\d{2})$/, "$1.$2.$3-$4");
+    }
+    
+    // 4. Devolve o valor formatado para o input
+    input.value = resultFormatado;
 
+    // 5. Atualiza o texto de feedback (a lógica que você já tinha)
+    // (Note que 'somenteNumeros' agora é 'v')
+    if (v.length === 11) {
+        resultado.textContent = "CPF válido em tamanho.";
+        resultado.style.color = "green";
+    } else if (v.length === 14) {
+        resultado.textContent = "CNPJ válido em tamanho.";
+        resultado.style.color = "green";
+    } else if (v.length === 0) {
+        resultado.textContent = "Seu número de cadastro:"; // Seu texto original
+        resultado.style.color = "orange"; // (Ou a cor que estava antes)
+    } else {
+        resultado.textContent = "Documento inválido! (Faltando dígitos).";
+        resultado.style.color = "red";
+    }
+}
