@@ -350,6 +350,7 @@ else if (isset($_POST['criar_chassi'])) {
 
 }else if(isset($_POST['editar_anuncio'])) { 
     //imagem 
+
     
     // anuncio
     $anuncio_id = $_POST['anuncio_id'];
