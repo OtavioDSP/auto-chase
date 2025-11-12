@@ -461,7 +461,143 @@ require_once 'src/config/env/logout.php';
 
 
         <?php endforeach;?>
-    <?php endif; // Fim do conteúdo de admin ?>
+    <?php endif; // Fim do conteúdo de admin
+    
+    // Instancia os managers uma vez para usar nos filtros e na listagem
+    $marcaManager = new Marca(null, null, $conexao);
+    $marcas = $marcaManager->listarMarca();
+
+    
+    ?>
+
+<?php
+    // Prepara o array de modelos para o JavaScript
+    $modeloManager = new Modelo(
+        null,
+        null,
+        null,
+        null,
+        $conexao
+    );
+    $cor = new Cor(
+        "",
+        "",
+        $conexao
+    );
+    $chassi = new Chassi(
+        "",
+        "",
+        $conexao
+    );
+    $comb = new Combustivel(
+        "",
+        "",
+        $conexao
+    );
+    
+    
+
+?>
+
+ <hr style="margin: 40px 0;">
+ <h2>Encontre seu próximo veículo</h2>
+
+<form action="index.php" method="GET" style="border: 1px solid #ccc; padding: 20px; margin-bottom: 20px;">
+    <?php
+    $todosModelos = $modeloManager->listarModelo();
+    $corArray = $cor->listarCor();
+    $chassiArray = $chassi->listarChassi();
+    $combArray = $comb->listarCombustivel();
+    
+    // 1. Isto imprime os selects de Marca/Modelo E define a variável PHP $modelosAgrupados
+    include 'src/php/functions/filter-functions.php'; 
+
+    // 2. Pega os valores do filtro do URL
+    $filtro_marca = $_GET['fk_marca_id'] ?? null;
+    $filtro_modelo = $_GET['fk_modelo_id'] ?? null;
+    $filtro_cor = $_GET['fk_cor_id'] ?? null;
+    $filtro_chassi = $_GET['fk_chassi_id'] ?? null;
+    $filtro_comb = $_GET['fk_comb_id'] ?? null;
+    $filtro_ano_min = $_GET['ano_min'] ?? '';
+    $filtro_ano_max = $_GET['ano_max'] ?? '';
+    $filtro_preco_min = $_GET['preco_min'] ?? '';
+    $filtro_preco_max = $_GET['preco_max'] ?? '';
+    ?>
+    
+        <select name="fk_cor_id">
+        <option value="">Qualquer Cor</option> <?php foreach ($corArray as $cor): ?>
+            <option value="<?= $cor['cor_id'] ?>" <?= ($cor['cor_id'] == $filtro_cor) ? 'selected' : '' ?>>
+                <?= htmlspecialchars($cor['cor_desc']) ?>
+            </option>
+        <?php endforeach; ?>
+        </select>
+        <select name="fk_chassi_id">
+        <option value="">Qualquer Chassi</option> <?php foreach ($chassiArray as $chassi): ?>
+            <option value="<?= $chassi['chassi_id'] ?>" <?= ($chassi['chassi_id'] == $filtro_chassi) ? 'selected' : '' ?>    <?= ($chassi['chassi_id'] == $filtro_chassi) ? 'selected' : '' ?>>
+                <?= htmlspecialchars($chassi['chassi_desc']) ?>
+            </option>
+        <?php endforeach; ?>
+        </select>
+        <select name="fk_comb_id">
+        <option value="">Qualquer Combustivel</option> <?php foreach ($combArray as $comb): ?>
+            <option value="<?= $comb['comb_id'] ?>" <?= ($comb['comb_id'] == $filtro_comb) ? 'selected' : '' ?>    <?= ($comb['comb_id'] == $filtro_comb) ? 'selected' : '' ?>>
+                <?= htmlspecialchars($comb['comb_desc']) ?>
+            </option>
+        <?php endforeach; ?>
+        </select>
+        <div style="flex: 1;">
+        <label>Ano:</label>
+        <div style="display: flex; gap: 5px;">
+            <input type="number" name="ano_min" placeholder="De" min="1900" max="<?= date('Y') + 1 ?>" value="<?= htmlspecialchars($filtro_ano_min) ?>" style="width: 100%;">
+            <input type="number" name="ano_max" placeholder="Até" min="1900" max="<?= date('Y') + 1 ?>" value="<?= htmlspecialchars($filtro_ano_max) ?>" style="width: 100%;">
+        </div>
+    </div>
+         
+        <div style="flex: 1;">
+        <label>Preço:</label>
+        <div style="display: flex; gap: 5px;">
+            <input type="number" name="preco_min" placeholder="Mínimo" step="1000" value="<?= htmlspecialchars($filtro_preco_min) ?>" style="width: 100%;">
+            <input type="number" name="preco_max" placeholder="Máximo" step="1000" value="<?= htmlspecialchars($filtro_preco_max) ?>" style="width: 100%;">
+        </div>
+    </div>
+
+        
+    <button type="submit" style="margin-top: 15px;">Buscar</button>
+    <a href="index.php" style="margin-left: 10px;">Limpar Filtros</a>
+
+
+    <script>
+        const modelosPorMarca = <?= json_encode($modelosAgrupados) ?>;
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Pega os valores do filtro do PHP
+            const marcaFiltrada = <?= json_encode($filtro_marca) ?>;
+            const modeloFiltrado = <?= json_encode($filtro_modelo) ?>;
+
+            if (marcaFiltrada) {
+                const marcaSelect = document.getElementById('marcaSelect');
+                if (marcaSelect) {
+                    marcaSelect.value = marcaFiltrada;
+                    // Força o 'js-functions.js' a carregar os modelos
+                    marcaSelect.dispatchEvent(new Event('change')); 
+                }
+            }
+
+            // Adiciona um pequeno delay para dar tempo do 'js-functions.js'
+            // preencher os modelos ANTES de tentar selecionar um
+            setTimeout(function() {
+                if (modeloFiltrado) {
+                    const modeloSelect = document.getElementById('modeloSelect');
+                    if (modeloSelect) {
+                        modeloSelect.value = modeloFiltrado;
+                    }
+                }
+            }, 150); 
+        });
+    </script>
+</form>
 
 
  <hr style="margin: 40px 0;">
@@ -470,9 +606,16 @@ require_once 'src/config/env/logout.php';
  <table border="1" cellpadding="8" cellspacing="0" style="border-collapse: collapse; width: 100%; text-align: left;">
     <thead>
         <tr>
+            <th>Foto</th>
             <th>Anúncio</th>
             <th>Valor</th>
             <th>Proprietário</th>
+            <th>Cor</th>
+            <th>Chassi</th>
+            <th>Marca</th>
+            <th>Quilometragem</th>
+            <th>Ano</th>
+            <th>Combustível</th>
             <?php if(estaLogado()): ?>
                 <th colspan="2">Ações</th>
             <?php endif; ?>
@@ -480,19 +623,40 @@ require_once 'src/config/env/logout.php';
     </thead>
     <tbody>
         <?php
-        // Crie uma instância da classe Anuncio e busque os anúncios
+        // Monta o array de filtros com base nos parâmetros GET
+        $filtros = [
+            'marca' => $filtro_marca,
+            'modelo' => $filtro_modelo,
+            'cor' => $filtro_cor,
+            'chassi' => $filtro_chassi,
+            'comb' => $filtro_comb,
+            'ano_min' => $filtro_ano_min,
+            'ano_max' => $filtro_ano_max,
+            'preco_min' => $filtro_preco_min,
+            'preco_max' => $filtro_preco_max,
+        ];
+
         $anuncioManager = new Anuncio(null, null, null, null, null, null, $conexao);
-        $anuncioArray = $anuncioManager->listarAnuncios();
+        $anuncioArray = $anuncioManager->listarAnuncios($filtros);
 
         // Itera sobre os anúncios e exibe os dados
         foreach ($anuncioArray as $anuncio): ?>
             <tr>
                 <td>
+                    <img src="<?= htmlspecialchars($anuncio['imagem_url']) ?>" alt="Foto do veículo" style="max-width: 100px; max-height: 60px;">
+                </td>
+                </td>
                     <b><?= htmlspecialchars($anuncio['marca_desc'] . ' ' . $anuncio['modelo_desc']) ?></b><br>
                     <small><?= htmlspecialchars($anuncio['veiculo_versao']) ?></small>
                 </td>
                 <td>R$ <?=number_format($anuncio['anuncio_valor'], 2, ',', '.')?></td>
                 <td><?=htmlspecialchars($anuncio['usuario_nome'])?></td>
+                <td><?=htmlspecialchars($anuncio['cor_desc'])?></td>
+                <td><?=htmlspecialchars($anuncio['chassi_desc'])?></td>
+                <td><?=htmlspecialchars($anuncio['marca_desc'])?></td>
+                <td><?=htmlspecialchars($anuncio['veiculo_quilometragem'])?></td>
+                <td><?=htmlspecialchars($anuncio['veiculo_ano'])?></td>
+                <td><?=htmlspecialchars($anuncio['comb_desc'])?></td>
 
                 <?php
                 // Ações só aparecem para usuários logados
@@ -519,6 +683,6 @@ require_once 'src/config/env/logout.php';
 </table>
 
 
-<script src="/src/JS/js-functions.js"></script>
+<script src="src/JS/js-functions.js"></script>
 </body>
 </html>

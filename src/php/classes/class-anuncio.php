@@ -50,7 +50,7 @@ class Anuncio {
     }
 
     // Lista todos os anúncios no banco de dados
-    public function listarAnuncios() {
+    public function listarAnuncios($filtros = []) {
     $sql = "
         SELECT 
             -- Dados do anúncio
@@ -60,8 +60,11 @@ class Anuncio {
             anuncio.anuncio_status,
             anuncio.anuncio_data_de_criacao,
             anuncio.anuncio_data_de_alteracao,
-            anuncio.fk_usuario_id, -- Adicionado para verificação de permissão
+            anuncio.fk_usuario_id, 
             combustivel.comb_desc,
+            
+            cor.cor_desc, -- ADICIONADO (DESCRIÇÃO DA COR)
+
             -- Foto do anúncio
             imagem.imagem_url,
             -- Usuário que criou o anúncio
@@ -69,6 +72,8 @@ class Anuncio {
             
             -- Dados do veículo
             veiculo.veiculo_versao,
+            veiculo.veiculo_quilometragem, -- ADICIONADO
+            veiculo.veiculo_ano, -- ADICIONADO
             
             -- Modelo do veículo
             modelo.modelo_desc,
@@ -90,7 +95,6 @@ class Anuncio {
         INNER JOIN veiculo 
             ON anuncio.fk_veiculo_id = veiculo.veiculo_id
 
-
         -- Veículo -> Modelo
         INNER JOIN modelo 
             ON veiculo.fk_modelo_id = modelo.modelo_id
@@ -104,12 +108,71 @@ class Anuncio {
             ON veiculo.fk_chassi_id = chassi.chassi_id
         inner join combustivel
             on veiculo.fk_combustivel_id = combustivel.comb_id
+
+        -- ADICIONADO JOIN DA COR
+        INNER JOIN cor
+            ON veiculo.fk_cor_id = cor.cor_id 
+
         inner join imagem
             on anuncio.anuncio_id = imagem.fk_anuncio_id
     ";
+    
+    // --- LÓGICA DE FILTROS DINÂMICOS ---
+    $where = [];
+    $params = [];
+    $types = '';
+
+    if (!empty($filtros['marca'])) {
+        $where[] = 'marca.marca_id = ?';
+        $params[] = $filtros['marca'];
+        $types .= 'i';
+    }
+    if (!empty($filtros['modelo'])) {
+        $where[] = 'modelo.modelo_id = ?';
+        $params[] = $filtros['modelo'];
+        $types .= 'i';
+    }
+    if (!empty($filtros['preco_min'])) {
+        $where[] = 'anuncio.anuncio_valor >= ?';
+        $params[] = $filtros['preco_min'];
+        $types .= 'd';
+    }
+    if (!empty($filtros['preco_max'])) {
+        $where[] = 'anuncio.anuncio_valor <= ?';
+        $params[] = $filtros['preco_max'];
+        $types .= 'd';
+    }
+    if (!empty($filtros['ano_min'])) {
+        $where[] = 'veiculo.veiculo_ano >= ?';
+        $params[] = $filtros['ano_min'];
+        $types .= 'i';
+    }
+    if (!empty($filtros['ano_max'])) {
+        $where[] = 'veiculo.veiculo_ano <= ?';
+        $params[] = $filtros['ano_max'];
+        $types .= 'i';
+    }
+    if (!empty($filtros['chassi'])) {
+        $where[] = 'veiculo.fk_chassi_id = ?';
+        $params[] = $filtros['chassi'];
+        $types .= 'i';
+    }
+
+    if (!empty($filtros['comb'])) {
+        $where[] = 'veiculo.fk_combustivel_id = ?'; // Cuidado: Verifique se o nome da coluna é este
+        $params[] = $filtros['comb'];
+        $types .= 'i';
+    }
+
+    if (!empty($where)) {
+        $sql .= " WHERE " . implode(' AND ', $where);
+    }
 
     // Preparação e execução
     $stmt = $this->conexao->prepare($sql);
+    if (!empty($params)) {
+        $stmt->bind_param($types, ...$params);
+    }
     $stmt->execute();
     $resultado = $stmt->get_result();
 

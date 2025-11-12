@@ -145,7 +145,7 @@ if (isset($_POST['login_usuario'])) {
         $_POST['fk_chassi_id'],
         $_POST['fk_combustivel_id'],
         $_POST['fk_cor_id'],
-        $_POST['fk_modelo_id'],
+        $_POST['fk_modelo_id'], // Corrigido para usar o nome do campo do formulário de edição
         $_POST['veiculo_ano'],
         $conexao
     );

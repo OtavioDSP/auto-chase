@@ -37,7 +37,7 @@ $combustivelManager = new Combustivel(
   $conexao
 );
 
-$modelos = $modeloManager->listarModelo();
+$todosModelos = $modeloManager->listarModelo(); // Renomeado para corresponder ao filter-functions.php
 $marcas = $marcaManager->listarMarca();
 $cores = $corManager->listarCor();
 $chassis = $chassiManager->listarChassi();
@@ -114,4 +114,5 @@ $combustiveis = $combustivelManager->listarCombustivel();
 
 </body>
 
+<script src="../JS/js-functions.js"></script>
 </html>

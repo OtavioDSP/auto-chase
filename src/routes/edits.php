@@ -300,6 +300,24 @@ if (isset($_GET['usuario_id'])) {
         $opcoes_status = $anuncioManager->buscarOpcoesEnum($conexao, 'anuncio_status');
         // ...
 
+        // Prepara o array de modelos para o JavaScript, que é crucial para o filtro funcionar.
+        $todosModelos = $modeloManager->listarModelo();
+        $modelosAgrupados = [];
+        foreach ($todosModelos as $modelo) {
+            $modelosAgrupados[$modelo['fk_marca_id']][] = [
+                'id' => $modelo['modelo_id'],
+                'desc' => $modelo['modelo_desc']
+            ];
+        }
+?>
+
+<!-- Injeta os modelos agrupados em uma variável JavaScript global para ser usada pelo js-functions.js -->
+<script>
+    const modelosPorMarca = <?= json_encode($modelosAgrupados) ?>;
+</script>
+
+<?php
+
 
         $veiculos = $veiculoManager->buscarVeiculoPorId($item['fk_veiculo_id']); 
         $modelos = $modeloManager->listarModelo();
@@ -323,10 +341,7 @@ if (isset($_GET['usuario_id'])) {
                     <br>
                     <br>
                     <!-- Filtro Marca → Modelo -->
-                    <?php include_once '../php/functions/filter-functions.php'; ?>
-
-                    <pre>
-                    <?php  print_r($combustiveis);?> 
+                    <?php include '../php/functions/filter-functions.php'; ?>
             
 
                     </pre>
@@ -406,6 +421,7 @@ if (isset($_GET['usuario_id'])) {
     echo "<h1>Nenhum item selecionado</h1><p>Por favor, selecione um item para editar.</p>";
 }
 ?>
+<script src="../../src/JS/js-functions.js"></script>
 </body>
 
 </html>
