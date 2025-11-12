@@ -1,43 +1,44 @@
 <?php
 include_once '../php/classes/class-veiculo.php';
-include_once '../php/classes/class-anuncio.php';
-include_once '../config/db/connect.php';
-include_once '../php/classes/class-usuario.php';
-include_once '../php/classes/class-modelo.php';
+include_once '../php/classes/class-anuncio.php'; 
+include_once '../config/db/connect.php'; 
+include_once '../php/classes/class-usuario.php'; 
+include_once '../php/classes/class-modelo.php'; 
 include_once '../php/classes/class-marca.php';
 include_once '../php/classes/class-cor.php';
 include_once '../php/classes/class-chassi.php';
 include_once '../php/classes/class-combustivel.php';
 
 $modeloManager = new Modelo(
-    null,
-    null,
-    null,
-    null,
-    $conexao
+  null,
+  null,
+  null,
+  null,
+  $conexao
 );
 $marcaManager = new Marca(
-    null,
-    null,
-    $conexao
+  null,
+  null,
+  $conexao
 );
 $corManager = new Cor(
-    null,
-    null,
-    $conexao
+  null,
+  null,
+  $conexao
 );
 $chassiManager = new Chassi(
-    null,
-    null,
-    $conexao
+  null,
+  null,
+  $conexao
 );
 $combustivelManager = new Combustivel(
-    null,
-    null,
-    $conexao
+  null,
+  null,
+  $conexao
 );
 
-$modelos = $modeloManager->listarModelo();
+// Nome da variável corrigido para funcionar com filter-functions.php
+$todosModelos = $modeloManager->listarModelo(); 
 $marcas = $marcaManager->listarMarca();
 $cores = $corManager->listarCor();
 $chassis = $chassiManager->listarChassi();
@@ -77,13 +78,13 @@ $combustiveis = $combustivelManager->listarCombustivel();
 
     <h2>Criar novo anúncio</h2>
 
-    <form action="../php/global/global.php" method="POST" enctype="multipart/form-data">
+    <form action="../php/global/global.php" method="POST"  enctype="multipart/form-data">
         <p>Imagem:</p>
         <input type="file" name="img[]" multiple>
         <br>
         <br>
         <br>
-
+        
         <?php include '../php/functions/filter-functions.php'; ?>
 
         <label for="veiculo_ano">Ano:</label>
@@ -91,24 +92,24 @@ $combustiveis = $combustivelManager->listarCombustivel();
 
         <label>Chassi:</label>
         <select name="fk_chassi_id">
-            <?php foreach ($chassis as $chassi) : ?>
-                <option value="<?= $chassi['chassi_id'] ?>"><?= $chassi['chassi_desc'] ?></option>
+            <?php foreach ($chassis as $chassi): ?>
+            <option value="<?= $chassi['chassi_id'] ?>"><?= $chassi['chassi_desc'] ?></option>
             <?php endforeach; ?>
         </select>
         <br>
 
         <label>Cor:</label>
         <select name="fk_cor_id">
-            <?php foreach ($cores as $cor) : ?>
-                <option value="<?= $cor['cor_id'] ?>"><?= $cor['cor_desc'] ?></option>
+            <?php foreach ($cores as $cor): ?>
+            <option value="<?= $cor['cor_id'] ?>"><?= $cor['cor_desc'] ?></option>
             <?php endforeach; ?>
         </select>
         <br>
 
         <label>Combustível:</label>
         <select name="fk_combustivel_id">
-            <?php foreach ($combustiveis as $comb) : ?>
-                <option value="<?= $comb['comb_id'] ?>"><?= $comb['comb_desc'] ?></option>
+            <?php foreach ($combustiveis as $comb): ?>
+            <option value="<?= $comb['comb_id'] ?>"><?= $comb['comb_desc'] ?></option>
             <?php endforeach; ?>
         </select>
         <br>
@@ -128,5 +129,6 @@ $combustiveis = $combustivelManager->listarCombustivel();
         <input type="submit" value="Publicar Anúncio" name="criar_anuncio">
     </form>
 
+    <script src="../JS/js-functions.js"></script>
 </body>
 </html>

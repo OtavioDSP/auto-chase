@@ -10,12 +10,10 @@ class Veiculo {
     private $fk_combustivel_id;
     private $fk_cor_id;
     private $fk_modelo_id;
-
     private $veiculo_ano;
-    
     private $conexao;
 
-    // Construtor atualizado para receber todos os novos parâmetros
+    // Construtor
     public function __construct(
         $veiculo_id,
         $veiculo_quilometragem,
@@ -39,20 +37,18 @@ class Veiculo {
     }
 
     /**
-     * Insere um novo veículo no banco de dados com todas as suas chaves estrangeiras.
-     * OBS: O campo veiculo_id não deve ser inserido se for AUTO_INCREMENT na sua tabela.
-     * Se for o caso, remova "veiculo_id" da query e o primeiro "?" e "$this->veiculo_id" do bind_param.
+     * Insere um novo veículo no banco de dados.
+     * O veiculo_id é auto-increment, então foi removido da query.
      */
     public function insereVeiculo() {
         $sql = "INSERT INTO Veiculo (
-                    veiculo_id, veiculo_quilometragem, veiculo_versao, 
+                    veiculo_quilometragem, veiculo_versao, 
                     fk_chassi_id, fk_combustivel_id, fk_cor_id, fk_modelo_id, veiculo_ano
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+                ) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         $stmt = $this->conexao->prepare($sql);
-        // Tipos: i=integer, s=string. Ajuste se necessário.
-        $stmt->bind_param("issiiiis", 
-            $this->veiculo_id,
+        // Tipos: d=decimal, s=string, i=integer
+        $stmt->bind_param("dsiiiii", 
             $this->veiculo_quilometragem,
             $this->veiculo_versao,
             $this->fk_chassi_id,
@@ -60,13 +56,13 @@ class Veiculo {
             $this->fk_cor_id,
             $this->fk_modelo_id,
             $this->veiculo_ano
-            
         );
 
         if ($stmt->execute()) {
             return $this->conexao->insert_id;
         } else {
             echo "Erro ao inserir veículo: " . $stmt->error;
+            return false;
         }
     }
 
@@ -74,19 +70,20 @@ class Veiculo {
      * Atualiza os dados de um veículo existente.
      */
     public function editarVeiculo() {
+        // CORREÇÃO: Adicionada vírgula faltante antes de veiculo_ano
         $sql = "UPDATE veiculo SET 
                     veiculo_quilometragem = ?, 
                     veiculo_versao = ?, 
                     fk_chassi_id = ?, 
                     fk_combustivel_id = ?, 
                     fk_cor_id = ?, 
-                    fk_modelo_id = ? 
-                    veiculo_ano = ?
+                    fk_modelo_id = ?, 
+                    veiculo_ano = ? 
                 WHERE veiculo_id = ?";
                 
         $stmt = $this->conexao->prepare($sql);
-        // Tipos: i=integer, s=string. Ajuste se necessário.
-        $stmt->bind_param("isiiiiis",
+        // Tipos: d=decimal, s=string, i=integer
+        $stmt->bind_param("dsiiiiii",
             $this->veiculo_quilometragem,
             $this->veiculo_versao,
             $this->fk_chassi_id,
@@ -95,7 +92,6 @@ class Veiculo {
             $this->fk_modelo_id,
             $this->veiculo_ano,
             $this->veiculo_id
-            
         );
 
         if ($stmt->execute()) {
@@ -117,7 +113,10 @@ class Veiculo {
         }
     }
     
-    // O método listarVeiculo já estava correto, buscando os dados através dos JOINs.
+    /**
+     * Lista veículos com seus dados de tabelas relacionadas.
+     * CORRIGIDO: Removida vírgula extra e adicionado JOIN com 'anuncio'.
+     */
     public function listarVeiculo() {
         $sql = "
         SELECT 
@@ -129,7 +128,9 @@ class Veiculo {
             cor.cor_desc,
             chassi.chassi_desc,
             combustivel.comb_desc,
-            modelo.modelo_desc
+            modelo.modelo_desc,
+            imagem.imagem_url 
+            /* === CORREÇÃO 1: Removida a vírgula extra daqui === */
         FROM 
             veiculo
         INNER JOIN 
@@ -142,6 +143,14 @@ class Veiculo {
             modelo ON veiculo.fk_Modelo_id = modelo.modelo_id
         INNER JOIN
             marca ON modelo.fk_Marca_id = marca.marca_id
+        
+        /* === CORREÇÃO 2: Adicionada a tabela 'anuncio' === */
+        /* Ela é necessária para ligar 'veiculo' a 'imagem' */
+        INNER JOIN
+            anuncio ON veiculo.veiculo_id = anuncio.fk_veiculo_id
+        
+        INNER JOIN
+            imagem ON imagem.fk_anuncio_id = anuncio.anuncio_id
         ";
         $stmt = $this->conexao->prepare($sql);
         $stmt->execute();
@@ -156,7 +165,12 @@ class Veiculo {
     }
     
     public function buscarVeiculoPorId($veiculo_id) {
-        $sql = "SELECT * FROM veiculo WHERE veiculo_id = ?";
+        // Adicionado JOIN com modelo para buscar o fk_marca_id
+        $sql = "SELECT v.*, m.fk_marca_id 
+                FROM veiculo v
+                JOIN modelo m ON v.fk_modelo_id = m.modelo_id
+                WHERE v.veiculo_id = ?";
+
         $stmt = $this->conexao->prepare($sql);
         $stmt->bind_param('i', $veiculo_id);
         $stmt->execute();

@@ -13,6 +13,7 @@ include_once './../classes/class-anuncio.php';
 include_once './../classes/class-veiculo.php';
 include_once './../classes/class-imagem.php';
 include_once './../functions/main-functions.php';
+include_once './../functions/salvar-imagens.php';
 
 
 

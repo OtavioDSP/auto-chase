@@ -1,5 +1,6 @@
 <?php
 // Includes de conexão e de todas as classes
+include_once '../config/env/logout.php'; // Inclui para usar eAdmin() e getUsuarioIdLogado()
 include_once '../config/db/connect.php'; 
 include_once '../php/classes/class-usuario.php';
 include_once '../php/classes/class-veiculo.php';
@@ -9,7 +10,7 @@ include_once '../php/classes/class-cor.php';
 include_once '../php/classes/class-chassi.php';
 include_once '../php/classes/class-combustivel.php';
 include_once '../php/classes/class-anuncio.php';
-
+include_once '../php/classes/class-imagem.php';
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -43,21 +44,17 @@ include_once '../php/classes/class-anuncio.php';
 
 // --- ROTA DE EDIÇÃO PARA USUÁRIO ---
 if (isset($_GET['usuario_id'])) {
+    // Proteção: usuário só pode editar a si mesmo, a menos que seja admin.
+    $id_logado = getUsuarioIdLogado();
+    $id_alvo = intval($_GET['usuario_id']);
+    if (!eAdmin() && $id_logado !== $id_alvo) {
+        echo "<h1>Acesso Negado</h1><p>Você não tem permissão para editar este usuário.</p>";
+        exit();
+    }
+
     $id = intval($_GET['usuario_id']);
-    $manager = new Usuario(
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        $conexao
-    );
-    $item = $manager->buscarUsuarioPorId(
-        $id
-    );
+    $manager = new Usuario(null, null, null, null, null, null, null, null, $conexao);
+    $item = $manager->buscarUsuarioPorId($id);
     if ($item) { ?>
         <h1>Editar Usuário</h1>
         <form action="../php/global/global.php" method="POST">
@@ -68,13 +65,15 @@ if (isset($_GET['usuario_id'])) {
             <div><label>Telefone:</label><input type="text" name="usuario_telefone" value="<?= htmlspecialchars($item['usuario_telefone']) ?>"></div>
             <div><label>CPF/CNPJ:</label><input type="text" name="usuario_doc_cpf_cnpj" value="<?= htmlspecialchars($item['usuario_doc_cpf_cnpj']) ?>"></div>
             <div><label>Nova Senha:</label><input type="password" name="usuario_senha" placeholder="Deixe em branco para não alterar"></div>
-            <div>
-                <label>Nível de Acesso:</label>
-                <select name="usuario_nivel_de_acesso">
-                    <option value="USUARIO" <?= ($item['usuario_nivel_de_acesso'] == 'USUARIO') ? 'selected' : '' ?>>Usuário</option>
-                    <option value="ADMIN" <?= ($item['usuario_nivel_de_acesso'] == 'ADMIN') ? 'selected' : '' ?>>Admin</option>
-                </select>
-            </div>
+            <?php if (eAdmin()): // Apenas admins podem ver e alterar o nível de acesso ?>
+                <div>
+                    <label>Nível de Acesso:</label>
+                    <select name="usuario_nivel_de_acesso">
+                        <option value="USUARIO" <?= ($item['usuario_nivel_de_acesso'] == 'USUARIO') ? 'selected' : '' ?>>Usuário</option>
+                        <option value="ADMIN" <?= ($item['usuario_nivel_de_acesso'] == 'ADMIN') ? 'selected' : '' ?>>Admin</option>
+                    </select>
+                </div>
+            <?php endif; ?>
             <button type="submit" name="editar_usuario">Salvar Alterações</button>
         </form>
     <?php } else { echo "<p>Usuário não encontrado.</p>"; }
@@ -82,14 +81,8 @@ if (isset($_GET['usuario_id'])) {
 // --- ROTA DE EDIÇÃO PARA MARCA ---
 } elseif (isset($_GET['marca_id'])) {
     $id = intval($_GET['marca_id']);
-    $manager = new Marca(
-        null,
-        null,
-        $conexao
-);
-    $item = $manager->buscarMarcaPorId(
-        $id
-    );
+    $manager = new Marca(null, null, $conexao);
+    $item = $manager->buscarMarcaPorId($id);
     if ($item) { ?>
         <h1>Editar Marca</h1>
         <form action="../php/global/global.php" method="POST">
@@ -102,14 +95,8 @@ if (isset($_GET['usuario_id'])) {
 // --- ROTA DE EDIÇÃO PARA COR ---
 } elseif (isset($_GET['cor_id'])) {
     $id = intval($_GET['cor_id']);
-    $manager = new Cor(
-        null,
-        null,
-        $conexao
-);
-    $item = $manager->buscarCorPorId(
-        $id
-    );
+    $manager = new Cor(null, null, $conexao);
+    $item = $manager->buscarCorPorId($id);
     if ($item) { ?>
         <h1>Editar Cor</h1>
         <form action="../php/global/global.php" method="POST">
@@ -122,14 +109,8 @@ if (isset($_GET['usuario_id'])) {
 // --- ROTA DE EDIÇÃO PARA COMBUSTÍVEL ---
 } elseif (isset($_GET['comb_id'])) {
     $comb_id = intval($_GET['comb_id']);
-    $manager = new Combustivel(
-        $comb_id,
-        null,
-        $conexao
-    );
-    $item = $manager->buscarCombustivelPorId(
-        $comb_id
-    );
+    $manager = new Combustivel($comb_id, null, $conexao);
+    $item = $manager->buscarCombustivelPorId($comb_id);
     if ($item) { ?>
         <h1>Editar Combustível</h1>
         <form action="../php/global/global.php" method="POST">
@@ -142,15 +123,8 @@ if (isset($_GET['usuario_id'])) {
 // --- ROTA DE EDIÇÃO PARA CHASSI ---
 } elseif (isset($_GET['chassi_id'])) {
     $id = intval($_GET['chassi_id']);
-    $manager = new Chassi(
-        null,
-        null,
-        $conexao
-    );
-
-    $item = $manager->buscarChassiPorId(
-        $id
-    );
+    $manager = new Chassi(null, null, $conexao);
+    $item = $manager->buscarChassiPorId($id);
     if ($item) { ?>
         <h1>Editar Chassi</h1>
         <form action="../php/global/global.php" method="POST">
@@ -162,25 +136,12 @@ if (isset($_GET['usuario_id'])) {
 
 // --- ROTA DE EDIÇÃO PARA MODELO ---
 } elseif (isset($_GET['modelo_id'])) {
-
        
     $id = intval($_GET['modelo_id']);
-    $modeloManager = new Modelo(
-        null,
-        null,
-        null,
-        null, 
-        $conexao
-    );
-    $item = $modeloManager->buscarModeloPorId(
-        $id
-    );
+    $modeloManager = new Modelo(null, null, null, null, $conexao);
+    $item = $modeloManager->buscarModeloPorId($id);
     if ($item) {
-        $marcaManager = new Marca(
-            null,
-            null,
-            $conexao
-        );
+        $marcaManager = new Marca(null, null, $conexao);
         $marcas = $marcaManager->listarMarca();
 
     ?>
@@ -206,149 +167,163 @@ if (isset($_GET['usuario_id'])) {
         </form>
     <?php } else { echo "<p>Modelo não encontrado.</p>"; }
 
-// --- ROTA DE EDIÇÃO PARA VEÍCULO (NOVO BLOCO) ---
-    }elseif (isset($_GET['anuncio_id'])) {
-
+// --- ROTA DE EDIÇÃO PARA ANÚNCIO ---
+    } elseif (isset($_GET['anuncio_id'])) {
        
     $id = intval($_GET['anuncio_id']);
-     $anuncio = new Anuncio(
-            null,
-            null,
-            null,
-            null,
-            null,
-            $conexao
-        );
-    $item = $anuncio->buscarAnuncioPorId(
-        $id
-    );
+    $anuncioManager = new Anuncio(null, null, null, null, null, null, $conexao);
+    $item = $anuncioManager->buscarAnuncioPorId($id);
+
+    // Proteção: Apenas o dono do anúncio ou um admin pode editar.
     if ($item) {
-        $veiculoManager = new Veiculo(
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            $conexao
-        );
-        $modeloManager = new Modelo(
-            null,
-            null,
-            null,
-            null,
-            $conexao
-        );
-        $marcaManager = new Marca(null,
-            null,
-            $conexao
-        );
-        $corManager = new Cor(
-            null,
-            null,
-            $conexao
-        );
-        $chassiManager = new Chassi(
-            null,
-            null,
-            $conexao
-        );
-        $combustivelManager = new Combustivel(
-            null,
-            null,
-            $conexao
-        );
-        $veiculos = $veiculoManager->buscarVeiculoPorId($id);
+        $id_logado = getUsuarioIdLogado();
+        if (!eAdmin() && $id_logado !== $item['fk_usuario_id']) {
+            echo "<h1>Acesso Negado</h1><p>Você não tem permissão para editar este anúncio.</p>";
+            exit();
+        }
+    }
+
+    if ($item) {
+        // Instancia todos os managers
+        $veiculoManager = new Veiculo(null, null, null, null, null, null, null, null, $conexao);
+        $modeloManager = new Modelo(null, null, null, null, $conexao);
+        $marcaManager = new Marca(null, null, $conexao);
+        $corManager = new Cor(null, null, $conexao);
+        $chassiManager = new Chassi(null, null, $conexao);
+        $combustivelManager = new Combustivel(null, null, $conexao);
+        $imagemManager = new Foto(null, null, null, $conexao);
+        
+        // Busca os dados
+        $fotos = $imagemManager->listarImagemPorIdDeAnuncio($item['anuncio_id']);
+        
+        // CORREÇÃO: Estava buscando veículo pelo ID do anúncio
+        $veiculos = $veiculoManager->buscarVeiculoPorId($item['fk_veiculo_id']); 
+        
         $modelos = $modeloManager->listarModelo();
         $marcas = $marcaManager->listarMarca();
         $cores = $corManager->listarCor();
         $chassis = $chassiManager->listarChassi();
         $combustiveis = $combustivelManager->listarCombustivel();
-        // ...
+        $opcoes_status = $anuncioManager->buscarOpcoesEnum($conexao, 'anuncio_status');
 
+        // Prepara o array de modelos para o JavaScript (para o filter-functions.php)
+        $todosModelos = $modeloManager->listarModelo();
+        $modelosAgrupados = [];
+        foreach ($todosModelos as $modelo) {
+            $modelosAgrupados[$modelo['fk_marca_id']][] = [
+                'id' => $modelo['modelo_id'],
+                'desc' => $modelo['modelo_desc']
+                // 'ano' foi removido do JS, então não é necessário aqui
+            ];
+        }
+?>
 
-        $veiculos = $veiculoManager->buscarVeiculoPorId($item['fk_veiculo_id']); 
-        $modelos = $modeloManager->listarModelo();
-// ...
-
-
+<script>
+    const modelosPorMarca = <?= json_encode($modelosAgrupados) ?>;
+</script>
         
-    ?>
-
         <h1>Editar Anúncio</h1>
-            <div>
-               <form action="../php/global/global.php" method="POST"  enctype="multipart/form-data">
-                    <input type="hidden" name="anuncio_id" value="<?= $item['anuncio_id'] ?>">
-                    <input type="hidden" name="veiculo_id" value="<?= $item['fk_veiculo_id'] ?>">
-                    <p>Imagem:</p>
-                    <input type="file" name="img[]" multiple>
-                    <br>
-                    <br>
-                    <br>
-                    <!-- Filtro Marca → Modelo -->
-                    <?php include_once '../php/functions/filter-functions.php'; ?>
+        <div>
+            <form action="../php/global/global.php" method="POST"  enctype="multipart/form-data">
+        
+                <input type="hidden" name="anuncio_id" value="<?= $item['anuncio_id'] ?>">
+                <input type="hidden" name="veiculo_id" value="<?= $item['fk_veiculo_id'] ?>">
+                <input type="hidden" name="usuario_id" value="<?= $item['fk_usuario_id'] ?>">
+                
+                <p>Imagens Atuais:</p>
+                <div>
+                    <?php foreach ($fotos as $foto): ?>
+                        <img src="<?= htmlspecialchars($foto['imagem_url']) ?>" alt="Foto" style="width: 100px; height: auto; margin-right: 10px;">
+                    <?php endforeach; ?>
+                </div>
 
-                    <pre>
-                    <?php  print_r($combustiveis);?> 
+                <p>Substituir/Adicionar Imagens (Novas imagens irão apagar as antigas):</p>
+                <input type="file" name="img[]" multiple>
+                <br><br><br>
+                
+                <?php include '../php/functions/filter-functions.php'; ?>
+                
+                <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        const marcaFiltrada = <?= json_encode($veiculos['fk_marca_id']) ?>;
+                        const modeloFiltrado = <?= json_encode($veiculos['fk_modelo_id']) ?>;
+
+                        if (marcaFiltrada) {
+                            const marcaSelect = document.getElementById('marcaSelect');
+                            if (marcaSelect) {
+                                marcaSelect.value = marcaFiltrada;
+                                marcaSelect.dispatchEvent(new Event('change')); 
+                            }
+                        }
+                        setTimeout(function() {
+                            if (modeloFiltrado) {
+                                const modeloSelect = document.getElementById('modeloSelect');
+                                if (modeloSelect) {
+                                    modeloSelect.value = modeloFiltrado;
+                                }
+                            }
+                        }, 150); 
+                    });
+                </script>
+
+                <label for="veiculo_ano">Ano:</label>
+                <input type="text" id="veiculo_ano" name="veiculo_ano" pattern="\d{4}" maxlength="4" required placeholder="Ano" value="<?= $veiculos['veiculo_ano'] ?>">
+
+                <label>Chassi:</label>
+                <select name="fk_chassi_id">
+                    <?php foreach ($chassis as $chassi): ?>
+                        <option value="<?= $chassi['chassi_id'] ?>" <?= ($chassi['chassi_id'] == $veiculos['fk_Chassi_id']) ? 'selected' : '' ?>>
+                        <?= htmlspecialchars($chassi['chassi_desc']) ?>
+                    </option>
+                    <?php endforeach; ?>
+                </select>
+                <br>
+
+                <label>Cor:</label>
+                <select name="fk_cor_id">
+                <?php foreach ($cores as $cor): ?>
+                    <option value="<?= $cor['cor_id'] ?>" <?= isset($veiculos) && $cor['cor_id'] == $veiculos['fk_Cor_id'] ? 'selected' : '' ?>><?= htmlspecialchars($cor['cor_desc']) ?>
+                    </option>
+                <?php endforeach; ?>
+                </select>
+                <br>
+
+                <label>Combustível:</label>
+                <select name="fk_combustivel_id">
+                <?php foreach ($combustiveis as $comb): ?>
+                    <option value="<?= $comb['comb_id'] ?>" <?= isset($veiculos) && $comb['comb_id'] == $veiculos['fk_combustivel_id'] ? 'selected' : '' ?>>
+                        <?= htmlspecialchars($comb['comb_desc']) ?>
+                </option>
+                <?php endforeach; ?>
+                </select>
+                <br>
+
+                <label>Status:</label>
+                <select name="anuncio_status" required>
+                    <?php foreach ($opcoes_status as $status): ?>
+                    <option value="<?= htmlspecialchars($status) ?>" <?= ($status == $item['anuncio_status']) ? 'selected' : '' ?>>
+                        <?= htmlspecialchars(ucfirst($status)) ?>
+                    </option>
+                    <?php endforeach; ?>
+                </select>
+                <br>
+
+                <label>Quilometragem:</label>
+                <input type="number" name="veiculo_quilometragem" required value="<?= $veiculos['veiculo_quilometragem'] ?>"><br>
+
+                <label>Versão:</label>
+                <input type="text" name="veiculo_versao" required value="<?= $veiculos['veiculo_versao'] ?>"><br>
+
+                <label>Sobre Este Veiculo</label>
+                <textarea name="anuncio_desc" rows="4"><?= $item['anuncio_desc'] ?></textarea><br>
+
+                <label>Preço:</label>
+                <input type="number" name="anuncio_valor" step="0.01" required value="<?= $item['anuncio_valor'] ?>"><br>
+
+                <input type="submit" value="Salvar Alterações" name="editar_anuncio">
+            </form>
+        </div>
             
-
-                    </pre>
-                    <label for="veiculo_ano">Ano:</label>
-                    <input type="text" id="veiculo_ano" name="veiculo_ano" pattern="\d{4}" maxlength="4" required placeholder="Ano" value="<?= $veiculos['veiculo_ano'] ?>">
-
-                    <label>Chassi:</label>
-                    <select name="fk_chassi_id">
-                        <?php foreach ($chassis as $chassi): ?>
-                            <option value="<?= $chassi['chassi_id'] ?>" <?= ($chassi['chassi_id'] == $veiculos['fk_Chassi_id']) ? 'selected' : '' ?>>
-                            <?= htmlspecialchars($chassi['chassi_desc']) ?>
-                        </option>
-                        <?php endforeach; ?>
-                    </select>
-                    <br>
-
-                    <label>Cor:</label>
-                    <select name="fk_cor_id">
-
-                    <?php foreach ($cores as $cor): ?>
-                        
-                        <option value="<?= $cor['cor_id'] ?>">
-                        
-                        
-                        <?= isset($veiculos) && $cor['cor_id'] == $veiculos['fk_Cor_id'] ? 'selected' : '' ?>
-                            <?= htmlspecialchars($cor['cor_desc']) ?>
-                        </option>
-                    <?php endforeach; ?>
-                    </select>
-                    <br>
-
-                    <label>Combustível:</label>
-                    <select name="fk_combustivel_id">
-                    <?php foreach ($combustiveis as $comb): ?>
-                       <option value="<?= $comb['comb_id'] ?>" <?= ($comb['comb_id'] == $veiculos['fk_combustivel_id']) ? 'selected' : '' ?>><?= $comb['comb_desc'] ?></option>
-                    <?php endforeach; ?>
-                    </select>
-                    <br>
-
-                    <label>Quilometragem:</label>
-                    <input type="number" name="veiculo_quilometragem" required value="<?= $veiculos['veiculo_quilometragem'] ?>"><br>
-
-                    <label>Versão:</label>
-                    <input type="text" name="veiculo_versao" required value="<?= $veiculos['veiculo_versao'] ?>"><br>
-
-                    
-
-                    <label>Sobre Este Veiculo</label>
-                    <textarea name="anuncio_desc" rows="4"><?= $item['anuncio_desc'] ?></textarea><br>
-
-                    <label>Preço:</label>
-                    <input type="number" name="anuncio_valor" step="0.01" required value="<?= $item['anuncio_valor'] ?>"><br>
-
-                    <input type="submit" value="Salvar Alterações" name="editar_anuncio">
-                    </form>
-
-            </div>
     <?php } else { echo "<p>Anúncio não encontrado.</p>"; }
 
 
@@ -357,6 +332,7 @@ if (isset($_GET['usuario_id'])) {
     echo "<h1>Nenhum item selecionado</h1><p>Por favor, selecione um item para editar.</p>";
 }
 ?>
-</body>
 
+<script src="../JS/js-functions.js"></script>
+</body>
 </html>
