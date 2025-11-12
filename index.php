@@ -526,14 +526,14 @@ require_once 'src/config/env/logout.php';
     
         <select name="fk_cor_id">
         <option value="">Qualquer Cor</option> <?php foreach ($corArray as $cor): ?>
-            <option value="<?= $cor['cor_id'] ?>" <?= ($cor['cor_id'] == $filtro_cor) ? 'selected' : '' ?>>
+            <option value="<?= $cor['cor_id'] ?>" <?= ($cor['cor_id'] == $filtro_cor)  ?>>
                 <?= htmlspecialchars($cor['cor_desc']) ?>
             </option>
         <?php endforeach; ?>
         </select>
         <select name="fk_chassi_id">
         <option value="">Qualquer Chassi</option> <?php foreach ($chassiArray as $chassi): ?>
-            <option value="<?= $chassi['chassi_id'] ?>" <?= ($chassi['chassi_id'] == $filtro_chassi) ? 'selected' : '' ?>    <?= ($chassi['chassi_id'] == $filtro_chassi) ? 'selected' : '' ?>>
+            <option value="<?= $chassi['chassi_id'] ?>" <?= ($chassi['chassi_id'] == $filtro_chassi) ?>    <?= ($chassi['chassi_id'] == $filtro_chassi) ? 'selected' : '' ?>>
                 <?= htmlspecialchars($chassi['chassi_desc']) ?>
             </option>
         <?php endforeach; ?>
@@ -566,37 +566,7 @@ require_once 'src/config/env/logout.php';
     <a href="index.php" style="margin-left: 10px;">Limpar Filtros</a>
 
 
-    <script>
-        const modelosPorMarca = <?= json_encode($modelosAgrupados) ?>;
-    </script>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Pega os valores do filtro do PHP
-            const marcaFiltrada = <?= json_encode($filtro_marca) ?>;
-            const modeloFiltrado = <?= json_encode($filtro_modelo) ?>;
-
-            if (marcaFiltrada) {
-                const marcaSelect = document.getElementById('marcaSelect');
-                if (marcaSelect) {
-                    marcaSelect.value = marcaFiltrada;
-                    // Força o 'js-functions.js' a carregar os modelos
-                    marcaSelect.dispatchEvent(new Event('change')); 
-                }
-            }
-
-            // Adiciona um pequeno delay para dar tempo do 'js-functions.js'
-            // preencher os modelos ANTES de tentar selecionar um
-            setTimeout(function() {
-                if (modeloFiltrado) {
-                    const modeloSelect = document.getElementById('modeloSelect');
-                    if (modeloSelect) {
-                        modeloSelect.value = modeloFiltrado;
-                    }
-                }
-            }, 150); 
-        });
-    </script>
+    
 </form>
 
 
@@ -684,5 +654,32 @@ require_once 'src/config/env/logout.php';
 
 
 <script src="src/JS/js-functions.js"></script>
+<script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Pega os valores do filtro do PHP
+            const marcaFiltrada = <?= json_encode($filtro_marca) ?>;
+            const modeloFiltrado = <?= json_encode($filtro_modelo) ?>;
+
+            if (marcaFiltrada) {
+                const marcaSelect = document.getElementById('marcaSelect');
+                if (marcaSelect) {
+                    marcaSelect.value = marcaFiltrada;
+                    // Força o 'js-functions.js' a carregar os modelos
+                    marcaSelect.dispatchEvent(new Event('change')); 
+                }
+            }
+
+            // Adiciona um pequeno delay para dar tempo do 'js-functions.js'
+            // preencher os modelos ANTES de tentar selecionar um
+            setTimeout(function() {
+                if (modeloFiltrado) {
+                    const modeloSelect = document.getElementById('modeloSelect');
+                    if (modeloSelect) {
+                        modeloSelect.value = modeloFiltrado;
+                    }
+                }
+            }, 150); 
+        });
+    </script>
 </body>
 </html>
