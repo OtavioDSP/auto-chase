@@ -51,12 +51,15 @@ Class Usuario{
 
         $stmt = $this->conexao->prepare($sql);
 
+        // CRIPTOGRAFA A SENHA ANTES DE INSERIR
+        $senha_hashed = password_hash($this->usuario_senha, PASSWORD_DEFAULT);
+
         $stmt->bind_param('ssssss', 
             $this->usuario_nome,
             $this->usuario_email,
-            $this->usuario_senha,
-            $this->usuario_endereco,
+            $senha_hashed, // Usa a senha criptografada
             $this->usuario_telefone,
+            $this->usuario_endereco,
             $this->usuario_doc_cpf_cnpj,
     
         );
@@ -70,6 +73,9 @@ Class Usuario{
 
 public function editarUsuario() {
     
+    // Inclui o gerenciador de sessão para usar a função eAdmin()
+    include_once __DIR__ . '/../../config/env/logout.php';
+
     // VERIFICA SE UMA NOVA SENHA FOI FORNECIDA
     // A função empty() retorna true para "", null, 0, etc.
     if (!empty($this->usuario_senha)) {
@@ -77,63 +83,69 @@ public function editarUsuario() {
         // CENÁRIO 1: SENHA FOI PREENCHIDA - Atualiza todos os campos, incluindo a senha
         
         $sql = "UPDATE usuario 
-                SET usuario_nome = ?, 
-                    usuario_email = ?, 
-                    usuario_senha = ?, 
-                    usuario_telefone = ?, 
-                    usuario_endereco = ?, 
-                    usuario_doc_cpf_cnpj = ?, 
-                    usuario_nivel_de_acesso = ? 
-                WHERE usuario_id = ?";
-                
+            SET usuario_nome = ?, 
+                usuario_email = ?, 
+                usuario_senha = ?, 
+                usuario_telefone = ?, 
+                usuario_endereco = ?, 
+                usuario_doc_cpf_cnpj = ?
+                " . (eAdmin() ? ", usuario_nivel_de_acesso = ? " : "") . "
+            WHERE usuario_id = ?";
+
         $stmt = $this->conexao->prepare($sql);
         
         // Criptografa a NOVA senha antes de salvar
         $senha_hashed = password_hash($this->usuario_senha, PASSWORD_DEFAULT);
         
         // bind_param com 8 parâmetros (7 strings, 1 int)
-        $stmt->bind_param('sssssssi',
-            $this->usuario_nome,
-            $this->usuario_email,
-            $senha_hashed, // Usa a nova senha criptografada
-            $this->usuario_telefone,
-            $this->usuario_endereco,
-            $this->usuario_doc_cpf_cnpj,
-            $this->usuario_nivel_de_acesso,
-            $this->usuario_id
-        );
-
+        if (eAdmin()) {
+            $stmt->bind_param('sssssssi',
+                $this->usuario_nome, $this->usuario_email, $senha_hashed,
+                $this->usuario_telefone, $this->usuario_endereco, $this->usuario_doc_cpf_cnpj,
+                $this->usuario_nivel_de_acesso, $this->usuario_id
+            );
+        } else {
+            $stmt->bind_param('ssssssi',
+                $this->usuario_nome, $this->usuario_email, $senha_hashed,
+                $this->usuario_telefone, $this->usuario_endereco, $this->usuario_doc_cpf_cnpj,
+                $this->usuario_id
+            );
+        }
     } else {
         
         // CENÁRIO 2: SENHA EM BRANCO - Atualiza tudo, EXCETO a senha
         
         $sql = "UPDATE usuario 
-                SET usuario_nome = ?, 
-                    usuario_email = ?, 
-                    usuario_telefone = ?, 
-                    usuario_endereco = ?, 
-                    usuario_doc_cpf_cnpj = ?, 
-                    usuario_nivel_de_acesso = ? 
-                WHERE usuario_id = ?";
-                
+            SET usuario_nome = ?, 
+                usuario_email = ?, 
+                usuario_telefone = ?, 
+                usuario_endereco = ?, 
+                usuario_doc_cpf_cnpj = ?
+                " . (eAdmin() ? ", usuario_nivel_de_acesso = ? " : "") . "
+            WHERE usuario_id = ?";
+
         $stmt = $this->conexao->prepare($sql);
         
         // bind_param com 7 parâmetros (6 strings, 1 int) - SEM a senha
-        $stmt->bind_param('ssssssi',
-            $this->usuario_nome,
-            $this->usuario_email,
-            $this->usuario_telefone,
-            $this->usuario_endereco,
-            $this->usuario_doc_cpf_cnpj,
-            $this->usuario_nivel_de_acesso,
-            $this->usuario_id
-        );
+        if (eAdmin()) {
+            $stmt->bind_param('ssssssi',
+                $this->usuario_nome, $this->usuario_email,
+                $this->usuario_telefone, $this->usuario_endereco, $this->usuario_doc_cpf_cnpj,
+                $this->usuario_nivel_de_acesso, $this->usuario_id
+            );
+        } else {
+            $stmt->bind_param('sssssi',
+                $this->usuario_nome, $this->usuario_email,
+                $this->usuario_telefone, $this->usuario_endereco, $this->usuario_doc_cpf_cnpj,
+                $this->usuario_id
+            );
+        }
     }
 
     // A execução é a mesma para os dois cenários
     if ($stmt->execute()) {
         // Redireciona para a lista de usuários com uma mensagem de sucesso
-       echo "usuario inserido";
+       echo "Usuário editado com sucesso!";
         exit();
     } else {
         echo "Erro ao editar usuário: " . $stmt->error;
@@ -165,6 +177,21 @@ public function editarUsuario() {
             // Vincula o ID do usuário ao placeholder da consulta
             // 'i' indica que o parâmetro é um inteiro
             $stmt->bind_param('i', $usuario_id);
+            
+            $stmt->execute();
+            
+            $result = $stmt->get_result();
+            
+            // Retorna a primeira linha do resultado como um array associativo
+            // Ou 'null' se nenhum usuário for encontrado
+            return $result->fetch_assoc();
+        }
+        public function buscarUsuarioPorEmail($usuario_email) {
+            $sql = "SELECT * FROM usuario WHERE usuario_email = ?";
+            
+            $stmt = $this->conexao->prepare($sql);
+            
+            $stmt->bind_param('s', $usuario_email);
             
             $stmt->execute();
             

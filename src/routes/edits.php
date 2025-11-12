@@ -1,5 +1,6 @@
 <?php
 // Includes de conexão e de todas as classes
+include_once '../config/env/logout.php'; // Inclui para usar eAdmin() e getUsuarioIdLogado()
 include_once '../config/db/connect.php'; 
 include_once '../php/classes/class-usuario.php';
 include_once '../php/classes/class-veiculo.php';
@@ -9,6 +10,7 @@ include_once '../php/classes/class-cor.php';
 include_once '../php/classes/class-chassi.php';
 include_once '../php/classes/class-combustivel.php';
 include_once '../php/classes/class-anuncio.php';
+include_once '../php/classes/class-imagem.php';
 
 ?>
 <!DOCTYPE html>
@@ -43,6 +45,14 @@ include_once '../php/classes/class-anuncio.php';
 
 // --- ROTA DE EDIÇÃO PARA USUÁRIO ---
 if (isset($_GET['usuario_id'])) {
+    // Proteção: usuário só pode editar a si mesmo, a menos que seja admin.
+    $id_logado = getUsuarioIdLogado();
+    $id_alvo = intval($_GET['usuario_id']);
+    if (!eAdmin() && $id_logado !== $id_alvo) {
+        echo "<h1>Acesso Negado</h1><p>Você não tem permissão para editar este usuário.</p>";
+        exit();
+    }
+
     $id = intval($_GET['usuario_id']);
     $manager = new Usuario(
         null,
@@ -68,13 +78,15 @@ if (isset($_GET['usuario_id'])) {
             <div><label>Telefone:</label><input type="text" name="usuario_telefone" value="<?= htmlspecialchars($item['usuario_telefone']) ?>"></div>
             <div><label>CPF/CNPJ:</label><input type="text" name="usuario_doc_cpf_cnpj" value="<?= htmlspecialchars($item['usuario_doc_cpf_cnpj']) ?>"></div>
             <div><label>Nova Senha:</label><input type="password" name="usuario_senha" placeholder="Deixe em branco para não alterar"></div>
-            <div>
-                <label>Nível de Acesso:</label>
-                <select name="usuario_nivel_de_acesso">
-                    <option value="USUARIO" <?= ($item['usuario_nivel_de_acesso'] == 'USUARIO') ? 'selected' : '' ?>>Usuário</option>
-                    <option value="ADMIN" <?= ($item['usuario_nivel_de_acesso'] == 'ADMIN') ? 'selected' : '' ?>>Admin</option>
-                </select>
-            </div>
+            <?php if (eAdmin()): // Apenas admins podem ver e alterar o nível de acesso ?>
+                <div>
+                    <label>Nível de Acesso:</label>
+                    <select name="usuario_nivel_de_acesso">
+                        <option value="USUARIO" <?= ($item['usuario_nivel_de_acesso'] == 'USUARIO') ? 'selected' : '' ?>>Usuário</option>
+                        <option value="ADMIN" <?= ($item['usuario_nivel_de_acesso'] == 'ADMIN') ? 'selected' : '' ?>>Admin</option>
+                    </select>
+                </div>
+            <?php endif; ?>
             <button type="submit" name="editar_usuario">Salvar Alterações</button>
         </form>
     <?php } else { echo "<p>Usuário não encontrado.</p>"; }
@@ -211,7 +223,8 @@ if (isset($_GET['usuario_id'])) {
 
        
     $id = intval($_GET['anuncio_id']);
-     $anuncio = new Anuncio(
+     $anuncioManager = new Anuncio(
+            null,
             null,
             null,
             null,
@@ -219,9 +232,20 @@ if (isset($_GET['usuario_id'])) {
             null,
             $conexao
         );
-    $item = $anuncio->buscarAnuncioPorId(
+    $item = $anuncioManager->buscarAnuncioPorId(
         $id
     );
+
+    // Proteção: Apenas o dono do anúncio ou um admin pode editar.
+    if ($item) {
+        $id_logado = getUsuarioIdLogado();
+        // Se não for admin E o ID logado for diferente do ID do dono do anúncio
+        if (!eAdmin() && $id_logado !== $item['fk_usuario_id']) {
+            echo "<h1>Acesso Negado</h1><p>Você não tem permissão para editar este anúncio.</p>";
+            exit();
+        }
+    }
+
     if ($item) {
         $veiculoManager = new Veiculo(
             null,
@@ -260,13 +284,39 @@ if (isset($_GET['usuario_id'])) {
             null,
             $conexao
         );
+        $imagemManager = new Foto(
+            null,
+            null,
+            null,
+            $conexao
+        );
+        $fotos = $imagemManager->listarImagemPorIdDeAnuncio($item['anuncio_id']);
         $veiculos = $veiculoManager->buscarVeiculoPorId($id);
         $modelos = $modeloManager->listarModelo();
         $marcas = $marcaManager->listarMarca();
         $cores = $corManager->listarCor();
         $chassis = $chassiManager->listarChassi();
         $combustiveis = $combustivelManager->listarCombustivel();
+        $opcoes_status = $anuncioManager->buscarOpcoesEnum($conexao, 'anuncio_status');
         // ...
+
+        // Prepara o array de modelos para o JavaScript, que é crucial para o filtro funcionar.
+        $todosModelos = $modeloManager->listarModelo();
+        $modelosAgrupados = [];
+        foreach ($todosModelos as $modelo) {
+            $modelosAgrupados[$modelo['fk_marca_id']][] = [
+                'id' => $modelo['modelo_id'],
+                'desc' => $modelo['modelo_desc']
+            ];
+        }
+?>
+
+<!-- Injeta os modelos agrupados em uma variável JavaScript global para ser usada pelo js-functions.js -->
+<script>
+    const modelosPorMarca = <?= json_encode($modelosAgrupados) ?>;
+</script>
+
+<?php
 
 
         $veiculos = $veiculoManager->buscarVeiculoPorId($item['fk_veiculo_id']); 
@@ -284,17 +334,14 @@ if (isset($_GET['usuario_id'])) {
 
                     <input type="hidden" name="anuncio_id" value="<?= $item['anuncio_id'] ?>">
                     <input type="hidden" name="veiculo_id" value="<?= $item['fk_veiculo_id'] ?>">
-                    <input type="hidden" name="veiculo_id" value="<?= $item['fk_usuario_id'] ?>">
+                    <input type="hidden" name="usuario_id" value="<?= $item['fk_usuario_id'] ?>">
                     <p>Imagem:</p>
                     <input type="file" name="img[]" multiple>
                     <br>
                     <br>
                     <br>
                     <!-- Filtro Marca → Modelo -->
-                    <?php include_once '../php/functions/filter-functions.php'; ?>
-
-                    <pre>
-                    <?php  print_r($combustiveis);?> 
+                    <?php include '../php/functions/filter-functions.php'; ?>
             
 
                     </pre>
@@ -326,14 +373,28 @@ if (isset($_GET['usuario_id'])) {
                     <select name="fk_combustivel_id">
                     <?php foreach ($combustiveis as $comb): ?>
                         <option 
-                        value="<?= $cor['cor_id'] ?>" 
-                        <?= isset($veiculos) && $cor['cor_id'] == $veiculos['fk_Cor_id'] ? 'selected' : '' ?>
+                        value="<?= $comb['comb_id'] ?>" 
+                        <?= isset($veiculos) && $comb['comb_id'] == $veiculos['fk_combustivel_id'] ? 'selected' : '' ?>
                     >
-                        <?= htmlspecialchars($cor['cor_desc']) ?>
+                        <?= htmlspecialchars($comb['comb_desc']) ?>
                     </option>
                     <?php endforeach; ?>
                     </select>
                     <br>
+
+                    <label>Status:</label>
+                    <select name="anuncio_status" required> <option value="">-- Selecione um status --</option>
+                        
+                        <?php foreach ($opcoes_status as $status): ?>
+                        
+                        <option value="<?= htmlspecialchars($status) ?>">
+                            <?= htmlspecialchars(ucfirst($status)) // ucfirst() deixa a 1ª letra maiúscula ?>
+                        </option>
+
+                        <?php endforeach; ?>
+                        
+                    </select>
+                <br>
 
                     <label>Quilometragem:</label>
                     <input type="number" name="veiculo_quilometragem" required value="<?= $veiculos['veiculo_quilometragem'] ?>"><br>
@@ -351,8 +412,7 @@ if (isset($_GET['usuario_id'])) {
 
                     <input type="submit" value="Salvar Alterações" name="editar_anuncio">
                     </form>
-
-            </div>
+                    
     <?php } else { echo "<p>Anúncio não encontrado.</p>"; }
 
 
@@ -361,6 +421,7 @@ if (isset($_GET['usuario_id'])) {
     echo "<h1>Nenhum item selecionado</h1><p>Por favor, selecione um item para editar.</p>";
 }
 ?>
+<script src="../../src/JS/js-functions.js"></script>
 </body>
 
 </html>

@@ -8,7 +8,7 @@ include_once '../php/classes/class-marca.php';
 include_once '../php/classes/class-cor.php';
 include_once '../php/classes/class-chassi.php';
 include_once '../php/classes/class-combustivel.php';
-
+;
 $modeloManager = new Modelo(
   null,
   null,
@@ -37,11 +37,12 @@ $combustivelManager = new Combustivel(
   $conexao
 );
 
-$modelos = $modeloManager->listarModelo();
+$todosModelos = $modeloManager->listarModelo(); // Renomeado para corresponder ao filter-functions.php
 $marcas = $marcaManager->listarMarca();
 $cores = $corManager->listarCor();
 $chassis = $chassiManager->listarChassi();
 $combustiveis = $combustivelManager->listarCombustivel();
+
 ?>
 
 <!DOCTYPE html>
@@ -92,6 +93,7 @@ $combustiveis = $combustivelManager->listarCombustivel();
     <?php endforeach; ?>
   </select>
   <br>
+  
 
   <label>Quilometragem:</label>
   <input type="number" name="veiculo_quilometragem" required><br>
@@ -112,4 +114,5 @@ $combustiveis = $combustivelManager->listarCombustivel();
 
 </body>
 
+<script src="../JS/js-functions.js"></script>
 </html>

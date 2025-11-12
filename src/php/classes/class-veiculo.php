@@ -80,7 +80,7 @@ class Veiculo {
                     fk_chassi_id = ?, 
                     fk_combustivel_id = ?, 
                     fk_cor_id = ?, 
-                    fk_modelo_id = ? 
+                    fk_modelo_id = ?,
                     veiculo_ano = ?
                 WHERE veiculo_id = ?";
                 
@@ -129,7 +129,8 @@ class Veiculo {
             cor.cor_desc,
             chassi.chassi_desc,
             combustivel.comb_desc,
-            modelo.modelo_desc
+            modelo.modelo_desc,
+            imagem.imagem_url,
         FROM 
             veiculo
         INNER JOIN 
@@ -142,6 +143,8 @@ class Veiculo {
             modelo ON veiculo.fk_Modelo_id = modelo.modelo_id
         INNER JOIN
             marca ON modelo.fk_Marca_id = marca.marca_id
+        INNER JOIN
+            imagem ON imagem.fk_anuncio_id = anuncio.anuncio_id
         ";
         $stmt = $this->conexao->prepare($sql);
         $stmt->execute();
@@ -156,7 +159,12 @@ class Veiculo {
     }
     
     public function buscarVeiculoPorId($veiculo_id) {
-        $sql = "SELECT * FROM veiculo WHERE veiculo_id = ?";
+        // Adicionado JOIN com modelo para buscar o fk_marca_id
+        $sql = "SELECT v.*, m.fk_marca_id 
+                FROM veiculo v
+                JOIN modelo m ON v.fk_modelo_id = m.modelo_id
+                WHERE v.veiculo_id = ?";
+
         $stmt = $this->conexao->prepare($sql);
         $stmt->bind_param('i', $veiculo_id);
         $stmt->execute();
@@ -178,5 +186,6 @@ class Veiculo {
             return [];
         }
     }
+    
 }
 ?>
