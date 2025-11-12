@@ -20,7 +20,7 @@
             $this->chassi_desc,
             );
              if($stmt->execute()){
-                echo " combustivel inserido";
+                echo " chassi inserido";
             }else{
                 echo "Erro ao Inserir combustivel". $stmt->error;
             }

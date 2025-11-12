@@ -1,0 +1,236 @@
+/* ==============================================
+   1. Importações e Declarações de Fonte
+   ============================================== */
+
+/* @font-face DEVE sempre vir no TOPO do arquivo */
+@font-face {
+    font-family: 'Creato Display';
+    /* Caminho corrigido para 'voltar' da pasta css */
+    src: url('../font/CreatoDisplay-Light.otf') format('opentype');
+    /* É melhor usar números (300 = Light) */
+    font-weight: 300; 
+}
+
+/* ==============================================
+   2. Estilos Gerais (Body, Globais)
+   ============================================== */
+
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    font-family: 'Creato Display', sans-serif;
+    background-color: #E6F8FF;
+}
+
+.logo {
+    height: 48px;
+}
+
+/* ==============================================
+   3. Header (Cabeçalho)
+   (Mantido do seu index.css para consistência)
+   ============================================== */
+
+header {
+    background: #6bbddb;
+    color: #222;
+    display: flex;
+    justify-content: space-between; /* <-- Isso separa esquerda, meio e direita */
+    align-items: center;
+    width: 100%;
+    padding: 10px 20px; /* Adiciona um espaço nas laterais */
+    position: relative;
+    z-index: 100;
+    box-sizing: border-box; /* Garante que o padding não quebre o layout */
+}
+
+/* --- Esquerda (Logo) --- */
+.header-left .logo {
+    height: 30px;
+    display: block; /* Remove espaço extra de imagem */
+}
+
+/* --- Meio (Comprar / Anunciar) --- */
+.nav-links {
+    display: flex;
+    gap: 40px; 
+}
+.header-center {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #ffffff; /* Cor do texto (branco) */
+    font-weight: bold;
+    font-size: 16px;
+}
+
+/* --- Direita (Salvos / Login) --- */
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 20px; /* Espaço entre "Salvos" e "Login" */
+}
+
+.nav-link-icon {
+    display: flex;
+    align-items: center;
+    gap: 6px; 
+    text-decoration: none;
+    color: #ffffff;
+    font-weight: bold;
+}
+.nav-link-icon i {
+    font-size: 18px; 
+}
+
+/* Botão de Login */
+.btn-login {
+    text-decoration: none;
+    color: #00AFF0; 
+    background-color: #ffffff; 
+    padding: 8px 16px; 
+    border-radius: 6px;
+    font-weight: bold;
+    transition: background-color 0.2s ease;
+}
+
+.btn-login:hover {
+    background-color: #f0f0f0; 
+}
+
+
+/* ==============================================
+   4. Componente: Formulário de Anúncio
+   (Nova seção inspirada no seu login)
+   ============================================== */
+
+h2 {
+    text-align: center;
+    color: #333;
+    margin-top: 20px;
+}
+
+/* * Este é o "card" que vai segurar seu formulário.
+ * É inspirado no .login-container, mas mais largo.
+*/
+form[action="../php/global/global.php"] {
+    max-width: 800px; /* Largura boa para um form grande */
+    margin: 2% auto; /* Centraliza na tela */
+    padding: 30px;
+    background: #ffffff; /* Fundo branco */
+    border-radius: 9px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+}
+
+/* * Transforma as <label>s em blocos.
+ * Isso força o input a ir para a linha de baixo, criando um layout limpo.
+*/
+form label {
+    display: block;
+    font-weight: bold;
+    color: #444;
+    margin-top: 18px; /* Espaço ACIMA de cada label */
+    margin-bottom: 8px; /* Espaço entre a label e o input */
+}
+
+/* * Estilo GERAL para todos os campos do formulário
+ * (Inspirado no .form input do seu index)
+*/
+form input[type="text"],
+form input[type="number"],
+form input[type="file"],
+form select,
+form textarea {
+    width: 100%;
+    padding: 14px;
+    margin: 0; /* A label já cuida da margem */
+    
+    background-color: #ffffff;
+    border: 1px solid #444;
+    color: #2e2e2e;
+    border-radius: 8px;
+    
+    font-size: 14px;
+    font-family: 'Creato Display', sans-serif;
+    box-sizing: border-box; /* Importante para o width 100% */
+    
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Efeito de foco (quando clica no campo) */
+form input[type="text"]:focus,
+form input[type="number"]:focus,
+form input[type="file"]:focus,
+form select:focus,
+form textarea:focus {
+    outline: none;
+    border-color: #00AFF0; /* Cor do seu header */
+    box-shadow: 0 0 5px rgba(0, 175, 240, 0.5);
+}
+
+/* * Esconde os <br> que você tem no HTML,
+ * pois o 'display: block' na label já quebra a linha.
+*/
+form input + br,
+form select + br,
+form textarea + br {
+    display: none; 
+}
+
+/* --- Estilos Específicos --- */
+
+form textarea {
+    resize: vertical; /* Permite ao usuário aumentar a altura */
+    min-height: 120px;
+}
+
+/* Estilizando o botão de "Escolher arquivo" */
+form input[type="file"] {
+    padding: 10px;
+    border-style: dashed;
+}
+
+form input[type="file"]::file-selector-button {
+    font-family: 'Creato Display', sans-serif;
+    font-weight: bold;
+    color: #00AFF0;
+    background-color: #ffffff;
+    border: 1px solid #00AFF0;
+    border-radius: 6px;
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+form input[type="file"]::file-selector-button:hover {
+    background-color: #f0f8ff;
+}
+
+/* Botão de "Publicar Anúncio" */
+form input[type="submit"] {
+    width: 100%;
+    padding: 14px;
+    margin-top: 25px; /* Espaço extra antes do botão final */
+    
+    background-color: #6bbddb; /* Cor do container do seu login */
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 16px;
+    
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+form input[type="submit"]:hover {
+    background-color: #5aa8c6; /* Tom mais escuro */
+    transform: scale(1.01);
+}

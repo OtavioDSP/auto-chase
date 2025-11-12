@@ -62,13 +62,14 @@ if (isset($_POST['login_usuario'])) {
         exit();
     }
 
+    // CORREÇÃO: $usuario_telefone e $usuario_endereco estavam na ordem errada
     $usuario = new Usuario(
         $_POST['usuario_id'],
         $_POST['usuario_nome'],
         $_POST['usuario_email'],
         $_POST['usuario_senha'], // A classe trata se a senha está vazia
-        $_POST['usuario_endereco'],
-        $_POST['usuario_telefone'],
+        $_POST['usuario_telefone'], // 5. Telefone
+        $_POST['usuario_endereco'], // 6. Endereço
         $doc_formatado,
         $_POST['usuario_nivel_de_acesso'],
         $conexao
@@ -265,3 +266,6 @@ if (isset($_POST['login_usuario'])) {
 // Você pode comentar esta linha se preferir ver as mensagens de 'echo' das classes.
 header('Location: ../../../index.php');
 exit();
+
+// CORREÇÃO: Havia um '}' extra aqui no final do arquivo
+?>

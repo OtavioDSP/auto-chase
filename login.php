@@ -11,24 +11,124 @@ if (estaLogado()) {
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
+    <!-- Head copiado do seu index.php para manter os estilos -->
+    <link rel="stylesheet" href="src/css/index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="icon" type="image/png" href="src/img/ac icon.png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Autochase</title>
-    <!-- Adapte o caminho para seu CSS, se necessário -->
-    <link rel="stylesheet" href="src/css/style.css"> 
+    <title>Login ou Cadastro - Autochase</title>
+
+    <!-- Estilo extra para esta página -->
+    <style>
+        .login-page-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 40px; /* Espaço entre os dois formulários */
+            padding: 40px 0;
+        }
+    </style>
 </head>
 <body>
-    <h1>Acessar sua conta</h1>
 
-    <?php if (isset($_GET['status']) && $_GET['status'] === 'loginfailed'): ?>
-        <p style="color: red;">E-mail ou senha incorretos. Tente novamente.</p>
-    <?php endif; ?>
+<!-- Header completo do seu index.php -->
+<header>
+    <div class="header-left">
+        <a href="index.php">
+            <img src="src/img/ac wb 911 white sc.png" alt="Logo" class="logo">
+        </a>
+    </div>
+    <div class="header-center">
+        <nav class="nav-links">
+            <a href="comprar.php">Comprar</a>
+            <a href="src/routes/anuncio.php">Anunciar</a>
+        </nav>
+    </div>
+    <div class="header-right">
+        <?php if (estaLogado()): ?>
+            <!-- (Esta parte não deve aparecer aqui, mas mantendo a lógica do seu header) -->
+            <a href="salvos.php" class="nav-link-icon">
+                <i class="fas fa-bookmark"></i> 
+                <span>Salvos</span>
+            </a>
+            <a href="src/routes/edits.php?usuario_id=<?= htmlspecialchars($_SESSION['user_id']) ?>" class="nav-link-icon">
+                Minha Conta
+            </a>
+            <form action="src/php/global/global.php" method="post" style="display:inline; margin:0;">
+                <button type="submit" name="logout_usuario" class="btn-login" style="border:none;">
+                    Sair
+                </button>
+            </form>
+        <?php else: ?>
+            <!-- O link de login agora aponta para esta própria página -->
+            <a href="login.php" class="btn-login">Login</a>
+        <?php endif; ?>
+    </div>
+</header>
 
+<div class="login-page-wrapper">
+
+    <!-- 
+      ============================================
+      FORMULÁRIO DE LOGIN (Estilizado)
+      ============================================
+    -->
     <form action="src/php/global/global.php" method="POST">
-        <input type="email" name="usuario_email" placeholder="Seu e-mail" required>
-        <input type="password" name="usuario_senha" placeholder="Sua senha" required>
-        <button type="submit" name="login_usuario">Entrar</button>
+        <div class="login-container">
+            <h5><img src="src/img/ac 911 white sc.png" alt="logo" class="logo"></h5>
+            <h1>Acessar sua conta</h1>
+            
+            <?php if (isset($_GET['status']) && $_GET['status'] === 'loginfailed'): ?>
+                <!-- Mensagem de erro estilizada -->
+                <h3 id="resultado" style="color: red; text-align:center;">E-mail ou senha incorretos.</h3>
+            <?php endif; ?>
+
+            <div class="form">
+                <input type="email" name="usuario_email" placeholder="Seu e-mail" required>
+                <div class="senha-container">
+                    <!-- ID único para a senha de login (caso precise do "olho" aqui também) -->
+                    <input type="password" id="senha_login" name="usuario_senha" placeholder="Sua senha" required>
+                </div>
+                <!-- Botão de submit estilizado -->
+                <input type="submit" value="Entrar" name="login_usuario" class="submit">
+            </div>
+        </div>
     </form>
-    <p>Não tem uma conta? <a href="register.php">Cadastre-se</a></p>
+
+    <!-- 
+      ============================================
+      FORMULÁRIO DE CADASTRO (Copiado do index.php)
+      ============================================
+    -->
+    <form action="src/php/global/global.php" method="post">
+        <div class="login-container">
+            <h5><img src="src/img/ac 911 white sc.png" alt="logo" class="logo"></h5>
+            <h1>Crie sua Conta</h1>
+
+            <div class="form">
+                <input type="text" name="usuario_nome" placeholder="Nome de usuário" required>
+                <div class="senha-container">
+                    <input type="password" id="senha" name="usuario_senha" placeholder="Senha" required>
+                    <button type="button" onclick="toggleSenha()">👁</button>
+                </div>
+                <input type="email" name="usuario_email" placeholder="E-mail" required>
+                <input type="text" name="usuario_telefone" placeholder="Telefone (xx) Xxxxx-xxxx" required oninput="maskTelefone(this)" maxlength="15" inputmode="numeric">
+                <input type="text" name="usuario_endereco" placeholder="Endereço" required>
+                <br>
+                <h3 id="resultado">Seu número de cadastro:</h3>
+                <input type="text" id="documento" oninput="maskAndVerifyDocumento(this)" name="doc_cpf_cnpj" placeholder="Digite CPF ou CNPJ" required maxlength="18" inputmode="numeric">
+                <input type="submit" placeholder="Criar conta" class="submit" value="Criar conta"  name="criar_conta">
+            </div>
+            <br><br>
+        </div>
+    </form>
+
+</div><!-- Fim do .login-page-wrapper -->
+
+<!-- Script necessário para as máscaras do formulário de cadastro -->
+<script src="src/JS/js-functions.js"></script>
+
 </body>
 </html>
