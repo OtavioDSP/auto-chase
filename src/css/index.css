@@ -1,0 +1,251 @@
+/* ==============================================
+   1. Importações e Declarações de Fonte
+   ============================================== */
+
+/* @font-face DEVE sempre vir no TOPO do arquivo */
+@font-face {
+    font-family: 'Creato Display';
+    /* Caminho corrigido para 'voltar' da pasta css */
+    src: url('../font/CreatoDisplay-Light.otf') format('opentype');
+    /* É melhor usar números (300 = Light) */
+    font-weight: 300; 
+}
+
+/* ==============================================
+   2. Estilos Gerais (Body, Globais)
+   ============================================== */
+
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    font-family: 'Creato Display', sans-serif;
+    background-color: #E6F8FF;
+}
+
+.logo {
+    height: 48px;
+}
+
+/* ==============================================
+   3. Header (Cabeçalho)
+   ============================================== */
+
+header {
+    background: #6bbddb;
+    color: #222;
+    display: flex;
+    justify-content: space-between; /* <-- Isso separa esquerda, meio e direita */
+    align-items: center;
+    width: 100%;
+    padding: 10px 20px; /* Adiciona um espaço nas laterais */
+    position: relative;
+    z-index: 100;
+    box-sizing: border-box; /* Garante que o padding não quebre o layout */
+}
+
+/* --- Esquerda (Logo) --- */
+.header-left .logo {
+    height: 30px;
+    display: block; /* Remove espaço extra de imagem */
+}
+
+/* --- Meio (Comprar / Anunciar) --- */
+.nav-links {
+    display: flex;
+    gap: 40px; /* <-- AUMENTADO (era 24px) */
+}
+.header-center {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #ffffff; /* Cor do texto (branco) */
+    font-weight: bold;
+    font-size: 16px;
+}
+
+/* --- Direita (Salvos / Login) --- */
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 20px; /* Espaço entre "Salvos" e "Login" */
+}
+
+/* Link "Salvos" (ícone + texto) */
+.nav-link-icon {
+    display: flex;
+    align-items: center;
+    gap: 6px; /* Espaço entre o ícone e o texto "Salvos" */
+    text-decoration: none;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+/* O ícone em si */
+.nav-link-icon i {
+    font-size: 18px; /* Tamanho do ícone */
+}
+
+/* Botão de Login */
+.btn-login {
+    text-decoration: none;
+    color: #00AFF0; /* Cor do texto (azul do header) */
+    background-color: #ffffff; /* Fundo branco */
+    padding: 8px 16px; /* Tamanho do botão */
+    border-radius: 6px;
+    font-weight: bold;
+    transition: background-color 0.2s ease;
+}
+
+.btn-login:hover {
+    background-color: #f0f0f0; /* Um cinza claro no hover */
+}
+
+/* ==============================================
+   4. Componente: Formulário de Login
+   ============================================== */
+
+/* --- O Container Principal --- */
+.login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centraliza os itens (logo, H1, .form) */
+
+    margin: 3% auto 0 auto; /* Simplificado */
+    padding: 18px;
+
+    width: 100%;
+    min-width: 200px;
+    max-width: 350px;
+
+    background: #6bbddb;
+    border-radius: 9px;
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.1);
+}
+
+.login-container:hover {
+    min-width: 250px; 
+    max-width: 550px;
+    transition: 0.5s ease;
+}
+
+.login-container h5 {
+    text-align: center;
+}
+
+/* --- O Bloco do Formulário (.form) --- */
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 0px; /* 'margin' nos inputs vai controlar o espaço */
+
+    width: 100%;
+    max-width: 190px; /* CORRIGIDO: Ajustei para 190px (igual aos inputs) */
+    min-width: 10px; /* (Isto não é realmente necessário) */
+    position: relative;
+    right: 20px;
+    /* REMOVIDO: O 'position: relative' e 'right: 20px' 
+       pois o 'align-items: center' no pai já centraliza o bloco. */
+    
+    border-radius: 14px;
+}
+
+.form:hover {
+    max-width: 190px; /* Mantido igual, pois já é o padrão */
+    transition: 0.5s ease;
+    border-radius: 8px;
+}
+
+.form h3 {
+    text-align: center;
+    /* CORRIGIDO: 'size-adjust' não existe. 
+       Você provavelmente queria 'font-size'. */
+    font-size: 1.2rem;
+    padding-left: 11%;
+}
+
+/* --- Inputs Gerais & Senha --- */
+.form input, .form select {
+    width: 100%;
+    max-width: 190px;
+    padding: 14px;
+    margin: 8px 0px; /* Controla o espaço entre os inputs */
+    
+    /* REMOVIDO: 'max-height: 13px' conflitava com 'padding: 14px'. */
+
+    
+    background-color: #ffffff;
+    border: 1px solid #444;
+    color: #2e2e2e;
+    border-radius: 8px;
+    transition: border 0.3s ease, background 0.3s ease, transform 0.3s ease;
+  
+    
+    font-size: 14px;
+    font-family: 'Creato Display';
+}
+.form input[name="usuario_nome"]:hover,
+.form input[type="text"]:hover,
+.form input[type="email"]:hover,
+.form select:hover,
+.senha-container:hover {
+    transform: scale(1.025);
+}
+.senha-container {
+    position: relative;
+    /* display: inline-block; (Desnecessário no flex column) */
+    width: 100%; /* Garante que ocupe o espaço */
+    max-width: 190px;
+    
+}
+/* O input de senha dentro do container precisa de ajustes
+   para o botão não ficar por cima de um input "menor" */
+.senha-container input {
+    width: 100%; /* Ocupa 100% do container */
+}
+.senha-container button {
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+#resultado {
+    align-items: center;
+    font-weight: bold;
+    margin-top: 5px;
+    text-align: center; /* Adicionado para centralizar */
+    font-size: 0.9rem;  /* Adicionado para consistência */
+}
+
+/* --- Botão Submit --- */
+.form input[type="submit"] {
+    width: 100%;
+    max-width: 190px; /* Mantido igual aos outros */
+    display:flex;
+    position: relative;
+    padding: 10px;
+    margin: 8px 0px;
+    left:7%;
+    border-radius: 14px;
+    background-color: #fff2f2;
+    color: #000000;
+    font-weight: bold;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.form input[type="submit"]:hover {
+    background-color: #ffffff;
+    color: #6bdcff;
+    transform: scale(1.02);
+}

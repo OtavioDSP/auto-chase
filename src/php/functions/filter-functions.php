@@ -1,5 +1,5 @@
 <?php
-    // 1. Prepara o array de modelos para o JavaScript
+// 1. Prepara o array de modelos para o JavaScript
     $modelosAgrupados = [];
     foreach ($todosModelos as $modelo) {
         $modelosAgrupados[$modelo['fk_marca_id']][] = [
@@ -8,6 +8,11 @@
         ];
     }
 ?> 
+
+<script>
+    const modelosPorMarca = <?= json_encode($modelosAgrupados) ?>;
+</script>
+
 
 <label>Marca:</label>
 <select name="fk_marca_id" id="marcaSelect"  required>
@@ -18,8 +23,14 @@
 </select>
 <br>
 
+
+<!-- Filtro de Modelo -->
+
 <label>Modelo:</label>
 <select name="fk_modelo_id" id="modeloSelect" required>
   <option value="">Selecione a marca primeiro</option>
 </select>
+
 <br><br>
+<br><br>
+
