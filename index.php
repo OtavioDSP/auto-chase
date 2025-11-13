@@ -14,6 +14,22 @@ require_once 'src/config/env/logout.php';
     <title>Autochase | Compre e venda veículos novos e usados com segurança</title>
 </head>
 <body>
+<?php
+// Inclui o gerenciador de sessão no início de tudo.
+// Isso permite usar as funções de sessão como estaLogado() em toda a página.
+require_once 'src/config/env/logout.php';
+?>
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <link rel="stylesheet" href="src/css/index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="icon" type="image/png" href="src/img/ac icon.png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autochase | Compre e venda veículos novos e usados com segurança</title>
+</head>
+<body>
 <header>
     <div class="header-left">
         <a href="index.php">
@@ -48,38 +64,30 @@ require_once 'src/config/env/logout.php';
 
         <?php else: ?>
         
-            <a href="src/routes/login.php" class="btn-login">Login</a>
+            <!-- 
+                MUDANÇA IMPORTANTE: 
+                Corrigido o link para apontar para 'login.php' na raiz.
+            -->
+            <a href="login.php" class="btn-login">Login</a>
 
         <?php endif; ?>
         
     </div>
 </header>
 
-    <form action="src/php/global/global.php" method="post">
-        <div class="login-container">
-            <h5><img src="src/img/ac 911 white sc.png" alt="logo" class="logo"></h5>
-            <h1>Crie sua Conta</h1>
+<!-- 
+    O formulário de "Crie sua Conta" foi removido daqui 
+    e movido para o novo 'login.php'.
+-->
 
-            <div class="form">
-                <input type="text" name="usuario_nome" placeholder="Nome de usuário" required>
-                <div class="senha-container">
-                    <input type="password" id="senha" name="usuario_senha" placeholder="Senha" required>
-                    <button type="button" onclick="toggleSenha()">👁</button>
-                </div>
-                <input type="email" name="usuario_email" placeholder="E-mail" required>
-                <input type="text" name="usuario_telefone" placeholder="Telefone (xx) Xxxxx-xxxx" required oninput="maskTelefone(this)" maxlength="15" inputmode="numeric">
-                <input type="text" name="usuario_endereco" placeholder="Endereço" required>
-                <br>
-                <h3 id="resultado">Seu número de cadastro:</h3>
-                <input type="text" id="documento" oninput="maskAndVerifyDocumento(this)" name="doc_cpf_cnpj" placeholder="Digite CPF ou CNPJ" required maxlength="18" inputmode="numeric">
-                <input type="submit" placeholder="Criar conta" class="submit" value="Criar conta"  name="criar_conta">
-            </div>
-            <br><br>
-        </div>
-    </form>
 <br><br><br><br>
 
-    <hr>
+<!-- (O restante do seu conteúdo da index, como filtros e anúncios, viria aqui) -->
+
+<!-- (O script JS pode ser necessário aqui se você tiver filtros na index) -->
+<!-- <script src="src/JS/js-functions.js"></script> -->
+
+
     
     <?php
     // Includes das classes movidos para cima,
@@ -437,7 +445,7 @@ require_once 'src/config/env/logout.php';
 <?php endif; // Fim do conteúdo de admin ?>
 
 
-    <hr style="margin: 40px 0;">
+    <hr style="margin: 5px 0;">
     <h2>Encontre seu próximo veículo</h2>
 
 <form action="index.php" method="GET" style="border: 1px solid #ccc; padding: 20px; margin-bottom: 20px;">
