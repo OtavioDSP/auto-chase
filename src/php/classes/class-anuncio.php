@@ -158,6 +158,12 @@ class Anuncio {
         $types .= 'i';
     }
 
+    if (!empty($filtros['cor'])) {
+        $where[] = 'veiculo.fk_cor_id = ?';
+        $params[] = $filtros['cor'];
+        $types .= 'i';
+    }
+
     if (!empty($filtros['comb'])) {
         $where[] = 'veiculo.fk_combustivel_id = ?'; // Cuidado: Verifique se o nome da coluna é este
         $params[] = $filtros['comb'];
