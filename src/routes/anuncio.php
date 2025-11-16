@@ -42,6 +42,15 @@ $marcas = $marcaManager->listarMarca();
 $cores = $corManager->listarCor();
 $chassis = $chassiManager->listarChassi();
 $combustiveis = $combustivelManager->listarCombustivel();
+
+// Inclui o gerenciador de sessão para verificar se o usuário já está logado
+require_once '../config/env/logout.php';
+
+// Se o usuário já estiver logado, redireciona para a página principal
+if (estaLogado()) {
+    header('Location: index.php');
+    exit();
+}
 ?>
 
 <!DOCTYPE html>
@@ -71,7 +80,32 @@ $combustiveis = $combustivelManager->listarCombustivel();
                 <i class="fas fa-bookmark"></i>
                 <span>Salvos</span>
             </a>
-            <a href="src/routes/login.php" class="btn-login">Login</a>
+              <div class="header-right">
+        <?php if (estaLogado()): ?>
+            <!-- (Esta parte não deve aparecer aqui, mas mantendo a lógica do seu header) -->
+            <a href="salvos.php" class="nav-link-icon">
+                <i class="fas fa-bookmark"></i> 
+                <span>Salvos</span>
+            </a>
+            <a href="src/routes/edits.php?usuario_id=<?= htmlspecialchars($_SESSION['user_id']) ?>" class="nav-link-icon">
+                Minha Conta
+            </a>
+            <form action="src/php/global/global.php" method="post" style="display:inline; margin:0;">
+                <button type="submit" name="logout_usuario" class="btn-login" style="border:none;">
+                    Sair
+                </button>
+            </form>
+        <?php else: ?>
+            <!-- O link de login agora aponta para esta própria página -->
+            <a href="login.php" class="btn-login">Login</a>
+        <?php endif; ?>
+    </div>
+            
+
+
+
+
+
         </div>
     </header>
 
