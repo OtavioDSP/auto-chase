@@ -47,9 +47,8 @@ require_once 'src/config/env/logout.php';
         
         <?php if (estaLogado()): ?>
             
-            <a href="salvos.php" class="nav-link-icon">
-                <i class="fas fa-bookmark"></i> 
-                <span>Salvos</span>
+            <a href="chat.php" class="nav-link-icon">
+                <i class="fas fa-comment"></i> 
             </a>
 
             <a href="src/routes/edits.php?usuario_id=<?= htmlspecialchars($_SESSION['user_id']) ?>" class="nav-link-icon">

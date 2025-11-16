@@ -21,3 +21,5 @@ https://github.com/bottles9/Car-Dealer
 https://github.com/congtaiho/Dealer-Toyota?tab=readme-ov-file
 
 https://github.com/TheTechology/Car-Website?tab=readme-ov-file
+
+13/11/2025 00:48 - TA BUGADO OS MODELOS DE CARROS, N DA PRA APAGAR NEM EDITAR PELO SITE, SO PELO BANCO DÁ PRA MUDAR, O SITE O CODIGO TA BUGADO

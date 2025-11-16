@@ -46,6 +46,7 @@ header {
 }
 
 /* --- Esquerda (Logo) --- */
+/* CORREÇÃO: Adicionada a regra para a logo ter o tamanho correto dentro do header */
 .header-left .logo {
     height: 30px;
     display: block; /* Remove espaço extra de imagem */
@@ -100,6 +101,16 @@ header {
     transition: background-color 0.2s ease;
 }
 
+/*
+ * CORREÇÃO: Garante que o botão "Sair" (que é um <button>)
+ * tenha o mesmo tamanho e estilo do link "Login" (que é um <a>).
+*/
+button.btn-login {
+    padding: 8px 16px;
+    font-size: 16px; /* Mesma fonte dos links de navegação */
+    font-family: 'Creato Display', sans-serif;
+}
+
 .btn-login:hover {
     background-color: #f0f0f0; 
 }
@@ -116,20 +127,34 @@ h2 {
     margin-top: 20px;
 }
 
-/* * Este é o "card" que vai segurar seu formulário.
- * É inspirado no .login-container, mas mais largo.
+/* 
+ * Este é o container principal, inspirado no .login-container do seu index.css.
+ * Ele cria o fundo colorido e centraliza o formulário na página.
 */
-form[action="../php/global/global.php"] {
-    max-width: 800px; /* Largura boa para um form grande */
-    margin: 2% auto; /* Centraliza na tela */
-    padding: 30px;
-    background: #ffffff; /* Fundo branco */
+.anuncio-container {
+    max-width: 850px; /* Um pouco mais largo que o form para criar uma borda */
+    margin: 2% auto;
+    padding: 25px;
+    background: #6bbddb; /* Cor de fundo do header, para consistência */
     border-radius: 9px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     box-sizing: border-box;
 }
 
-/* * Transforma as <label>s em blocos.
+/* 
+ * Este é o "card" branco interno onde os campos do formulário ficam.
+*/
+form {
+    max-width: 800px; /* Largura boa para um form grande */
+    margin: 0 auto; /* Centraliza dentro do .anuncio-container */
+    padding: 30px;
+    background: #ffffff; /* Fundo branco */
+    border-radius: 9px;
+    box-sizing: border-box;
+}
+
+/* 
+ * Transforma as <label>s em blocos.
  * Isso força o input a ir para a linha de baixo, criando um layout limpo.
 */
 form label {
@@ -140,8 +165,9 @@ form label {
     margin-bottom: 8px; /* Espaço entre a label e o input */
 }
 
-/* * Estilo GERAL para todos os campos do formulário
- * (Inspirado no .form input do seu index)
+/* 
+ * Estilo GERAL para todos os campos do formulário
+ * (Inspirado no .form input do seu index.css)
 */
 form input[type="text"],
 form input[type="number"],
@@ -175,8 +201,9 @@ form textarea:focus {
     box-shadow: 0 0 5px rgba(0, 175, 240, 0.5);
 }
 
-/* * Esconde os <br> que você tem no HTML,
- * pois o 'display: block' na label já quebra a linha.
+/* 
+ * Esconde os <br> que você pode ter no HTML,
+ * pois o 'display: block' na label e o margin-top já cuidam do espaçamento.
 */
 form input + br,
 form select + br,
@@ -219,18 +246,18 @@ form input[type="submit"] {
     padding: 14px;
     margin-top: 25px; /* Espaço extra antes do botão final */
     
-    background-color: #6bbddb; /* Cor do container do seu login */
+    background-color: #00AFF0; /* Cor azul do botão de login, para consistência */
     color: #ffffff;
     font-weight: bold;
     font-size: 16px;
     
     border: none;
     border-radius: 8px;
+    text-decoration: none; /* Caso use <a> como botão */
     cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
+    transition: background-color 0.2s ease;
 }
 
 form input[type="submit"]:hover {
-    background-color: #5aa8c6; /* Tom mais escuro */
-    transform: scale(1.01);
+    background-color: #0095d1; /* Tom mais escuro no hover */
 }

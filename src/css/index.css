@@ -45,7 +45,9 @@ header {
 }
 
 /* --- Esquerda (Logo) --- */
-.header-left .logo {
+/* CORREÇÃO: Seletor ajustado para ser mais específico e consistente com anuncio.css */
+/* Isso garante que a logo DENTRO do header tenha 30px, e não afete outras logos. */
+.header-left a .logo {
     height: 30px;
     display: block; /* Remove espaço extra de imagem */
 }
@@ -100,6 +102,16 @@ header {
     border-radius: 6px;
     font-weight: bold;
     transition: background-color 0.2s ease;
+}
+
+/*
+ * CORREÇÃO: Garante que o botão "Sair" (que é um <button>)
+ * tenha o mesmo tamanho e estilo do link "Login" (que é um <a>).
+*/
+button.btn-login {
+    padding: 8px 16px;
+    font-size: 16px; /* Mesma fonte dos links de navegação */
+    font-family: 'Creato Display', sans-serif;
 }
 
 .btn-login:hover {

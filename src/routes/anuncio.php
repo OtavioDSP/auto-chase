@@ -8,7 +8,7 @@ include_once '../php/classes/class-marca.php';
 include_once '../php/classes/class-cor.php';
 include_once '../php/classes/class-chassi.php';
 include_once '../php/classes/class-combustivel.php';
-
+// essa porra de pagina n ta pouxando o login wtf e ainda quebra o css vai tomanocu
 $modeloManager = new Modelo(
   null,
   null,
@@ -63,16 +63,17 @@ $combustiveis = $combustivelManager->listarCombustivel();
         </div>
         <div class="header-center">
             <nav class="nav-links">
-                <a href="comprar.php">Comprar</a>
-                <a href="anuncio.php">Anunciar</a>
+                <a href="../../index.php">Comprar</a>
+                <!-- <a href="anuncio.php">Anunciar</a> -->
             </nav>
         </div>
         <div class="header-right">
-            <a href="salvos.php" class="nav-link-icon">
-                <i class="fas fa-bookmark"></i>
-                <span>Salvos</span>
+            <a href="chat.php" class="nav-link-icon">
+                <i class="fas fa-comment"></i> 
             </a>
-            <a href="src/routes/login.php" class="btn-login">Login</a>
+            <a href="src/routes/login.php" class="btn-login">
+                Login
+            </a>
         </div>
     </header>
 
