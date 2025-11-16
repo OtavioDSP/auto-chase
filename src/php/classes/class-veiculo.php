@@ -11,6 +11,7 @@ class Veiculo {
     private $fk_cor_id;
     private $fk_modelo_id;
     private $veiculo_ano;
+    
     private $conexao;
 
     // Construtor

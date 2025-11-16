@@ -260,6 +260,17 @@ if (isset($_POST['login_usuario'])) {
     if (!eAdmin()) { exit("Acesso negado."); }
     $cb = new Combustivel($_POST['comb_id'], $_POST['comb_desc'], $conexao);
     $cb->editarCombustivel();
+
+} else if (isset($_POST['editar_modelo'])) {
+    if (!eAdmin()) { exit("Acesso negado."); }
+    $modelo = new Modelo(
+        $_POST['modelo_id'],
+        $_POST['modelo_desc'],
+        $_POST['modelo_valor_fipe'],
+        $_POST['fk_Marca_id'],
+        $conexao
+    );
+    $modelo->editarModelo();
 }
 
 // Após a execução da ação, redireciona para a página inicial para evitar reenvio do formulário.
