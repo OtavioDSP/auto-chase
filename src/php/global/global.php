@@ -228,10 +228,24 @@ if (isset($_POST['login_usuario'])) {
     $cr = new Cor($_POST['cor_id'], $_POST['cor_desc'], $conexao);
     $cr->editarCor();
 
-} else if (isset($_POST['criar_marca'])) {
+} else if (isset($_POST['criar_marca_modelo'])) {
     if (!eAdmin()) { exit("Acesso negado."); }
-    $marca = new Marca(null, $_POST['marca_desc'], $conexao);
+    $marca = new Marca(
+        null,
+        $_POST['marca_desc'],
+        $conexao
+    );
     $marca->insereMarca();
+    $idRetornado = $marca->insereMarca();
+    $modelo = new Modelo(
+        null,
+        $_POST['modelo_desc'],
+        $_POST['modelo_valor_fipe'],
+        $idRetornado, // fk_Marca_id será definido após inserir a marca
+        $conexao
+    );
+    $modelo->insereModelo();
+    
 
 } else if (isset($_POST['deletar_marca'])) {
     if (!eAdmin()) { exit("Acesso negado."); }

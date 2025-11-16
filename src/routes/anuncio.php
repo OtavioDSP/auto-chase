@@ -46,6 +46,15 @@ $marcas = $marcaManager->listarMarca();
 $cores = $corManager->listarCor();
 $chassis = $chassiManager->listarChassi();
 $combustiveis = $combustivelManager->listarCombustivel();
+
+// Inclui o gerenciador de sessão para verificar se o usuário já está logado
+require_once '../config/env/logout.php';
+
+// Se o usuário já estiver logado, redireciona para a página principal
+if (estaLogado()) {
+    header('Location: index.php');
+    exit();
+}
 ?>
 
 <!DOCTYPE html>

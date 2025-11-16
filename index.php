@@ -123,7 +123,7 @@ require_once 'src/config/env/logout.php';
     <form action="src/php/global/global.php" method="POST">
         <h1>Marca - Adicionar</h1>
         <input type="text" placeholder="Marca" name="marca_desc" required>
-        <button type="submit" name="criar_marca">Adicionar Marca</button>   
+        
         <h1>Modelo - Adicionar</h1>
         <input type="text" placeholder="Modelo" name="modelo_desc" required>
         <input type="number" step="0.01" placeholder="Valor FIPE" name="modelo_valor_fipe" required>
