@@ -24,8 +24,7 @@ if (estaLogado()) {
         .login-page-wrapper {
             display: flex;
             flex-direction: column;
-            align-items: center;
-            justify-content: center;
+            align-items: center; /* Centraliza o container de login */
             gap: 40px; /* Espaço entre os dois formulários */
             padding: 40px 0;
         }
@@ -93,34 +92,10 @@ if (estaLogado()) {
                 <!-- Botão de submit estilizado -->
                 <input type="submit" value="Entrar" name="login_usuario" class="submit">
             </div>
-        </div>
-    </form>
 
-    <!-- 
-      ============================================
-      FORMULÁRIO DE CADASTRO (Copiado do index.php)
-      ============================================
-    -->
-    <form action="src/php/global/global.php" method="post">
-        <div class="login-container">
-            <h5><img src="src/img/ac 911 white sc.png" alt="logo" class="logo"></h5>
-            <h1>Crie sua Conta</h1>
-
-            <div class="form">
-                <input type="text" name="usuario_nome" placeholder="Nome de usuário" required>
-                <div class="senha-container">
-                    <input type="password" id="senha" name="usuario_senha" placeholder="Senha" required>
-                    <button type="button" onclick="toggleSenha()">👁</button>
-                </div>
-                <input type="email" name="usuario_email" placeholder="E-mail" required>
-                <input type="text" name="usuario_telefone" placeholder="Telefone (xx) Xxxxx-xxxx" required oninput="maskTelefone(this)" maxlength="15" inputmode="numeric">
-                <input type="text" name="usuario_endereco" placeholder="Endereço" required>
-                <br>
-                <h3 id="resultado">Seu número de cadastro:</h3>
-                <input type="text" id="documento" oninput="maskAndVerifyDocumento(this)" name="doc_cpf_cnpj" placeholder="Digite CPF ou CNPJ" required maxlength="18" inputmode="numeric">
-                <input type="submit" placeholder="Criar conta" class="submit" value="Criar conta"  name="criar_conta">
-            </div>
-            <br><br>
+            <p style="text-align: center; margin-top: 20px; color: #fff;">
+                Ainda não tem uma conta? <a href="register.php" style="color: #ffffff; font-weight: bold;">Crie sua conta</a>
+            </p>
         </div>
     </form>
 

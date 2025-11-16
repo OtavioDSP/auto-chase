@@ -29,6 +29,7 @@ if (isset($_POST['login_usuario'])) {
 
 } else if (isset($_POST['criar_conta'])) {
     $doc_formatado = formatarDocumento($_POST['doc_cpf_cnpj']);
+    $email_novo_usuario = $_POST['usuario_email'];
     
     $usuario = new Usuario(
         null,
@@ -41,7 +42,18 @@ if (isset($_POST['login_usuario'])) {
         null, // Nível de acesso usará o padrão do banco
         $conexao
     );
-    $usuario->insereUsuario();
+    $id_gerado = $usuario->insereUsuario();
+
+    // Se o usuário foi criado com sucesso, faz o login automaticamente
+    if ($id_gerado) {
+        $usuarioManager = new Usuario(null, null, null, null, null, null, null, null, $conexao);
+        $novo_usuario_info = $usuarioManager->buscarUsuarioPorEmail($email_novo_usuario);
+        if ($novo_usuario_info) {
+            login($novo_usuario_info); // Função de 'logout.php' para iniciar a sessão
+            header('Location: ../../../index.php?status=registersuccess');
+            exit();
+        }
+    }
 
 } else if (isset($_POST['deletar_usuario'])) { 
     if (!eAdmin()) {

@@ -144,7 +144,8 @@ h2 {
 /* 
  * Este é o "card" branco interno onde os campos do formulário ficam.
 */
-form {
+/* CORREÇÃO: O seletor foi alterado de 'form' para '.form-anuncio' para não afetar outros formulários (como o botão de logout no header). */
+.form-anuncio {
     max-width: 800px; /* Largura boa para um form grande */
     margin: 0 auto; /* Centraliza dentro do .anuncio-container */
     padding: 30px;
@@ -157,7 +158,7 @@ form {
  * Transforma as <label>s em blocos.
  * Isso força o input a ir para a linha de baixo, criando um layout limpo.
 */
-form label {
+.form-anuncio label {
     display: block;
     font-weight: bold;
     color: #444;
@@ -169,11 +170,11 @@ form label {
  * Estilo GERAL para todos os campos do formulário
  * (Inspirado no .form input do seu index.css)
 */
-form input[type="text"],
-form input[type="number"],
-form input[type="file"],
-form select,
-form textarea {
+.form-anuncio input[type="text"],
+.form-anuncio input[type="number"],
+.form-anuncio input[type="file"],
+.form-anuncio select,
+.form-anuncio textarea {
     width: 100%;
     padding: 14px;
     margin: 0; /* A label já cuida da margem */
@@ -191,11 +192,11 @@ form textarea {
 }
 
 /* Efeito de foco (quando clica no campo) */
-form input[type="text"]:focus,
-form input[type="number"]:focus,
-form input[type="file"]:focus,
-form select:focus,
-form textarea:focus {
+.form-anuncio input[type="text"]:focus,
+.form-anuncio input[type="number"]:focus,
+.form-anuncio input[type="file"]:focus,
+.form-anuncio select:focus,
+.form-anuncio textarea:focus {
     outline: none;
     border-color: #00AFF0; /* Cor do seu header */
     box-shadow: 0 0 5px rgba(0, 175, 240, 0.5);
@@ -205,26 +206,26 @@ form textarea:focus {
  * Esconde os <br> que você pode ter no HTML,
  * pois o 'display: block' na label e o margin-top já cuidam do espaçamento.
 */
-form input + br,
-form select + br,
-form textarea + br {
+.form-anuncio input + br,
+.form-anuncio select + br,
+.form-anuncio textarea + br {
     display: none; 
 }
 
 /* --- Estilos Específicos --- */
 
-form textarea {
+.form-anuncio textarea {
     resize: vertical; /* Permite ao usuário aumentar a altura */
     min-height: 120px;
 }
 
 /* Estilizando o botão de "Escolher arquivo" */
-form input[type="file"] {
+.form-anuncio input[type="file"] {
     padding: 10px;
     border-style: dashed;
 }
 
-form input[type="file"]::file-selector-button {
+.form-anuncio input[type="file"]::file-selector-button {
     font-family: 'Creato Display', sans-serif;
     font-weight: bold;
     color: #00AFF0;
@@ -236,12 +237,12 @@ form input[type="file"]::file-selector-button {
     transition: background-color 0.3s ease;
 }
 
-form input[type="file"]::file-selector-button:hover {
+.form-anuncio input[type="file"]::file-selector-button:hover {
     background-color: #f0f8ff;
 }
 
 /* Botão de "Publicar Anúncio" */
-form input[type="submit"] {
+.form-anuncio input[type="submit"] {
     width: 100%;
     padding: 14px;
     margin-top: 25px; /* Espaço extra antes do botão final */
@@ -258,6 +259,6 @@ form input[type="submit"] {
     transition: background-color 0.2s ease;
 }
 
-form input[type="submit"]:hover {
+.form-anuncio input[type="submit"]:hover {
     background-color: #0095d1; /* Tom mais escuro no hover */
 }

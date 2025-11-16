@@ -1,4 +1,7 @@
 <?php
+// 1. CORREÇÃO: Inicia o gerenciador de sessão.
+// Isso é essencial para a página saber se o usuário está logado ou não.
+require_once '../config/env/logout.php';
 include_once '../php/classes/class-veiculo.php';
 include_once '../php/classes/class-anuncio.php'; 
 include_once '../config/db/connect.php'; 
@@ -63,23 +66,37 @@ $combustiveis = $combustivelManager->listarCombustivel();
         </div>
         <div class="header-center">
             <nav class="nav-links">
-                <a href="../../index.php">Comprar</a>
-                <!-- <a href="anuncio.php">Anunciar</a> -->
+                <!-- 2. CORREÇÃO: Caminho do link "Comprar" ajustado -->
+                <a href="../../comprar.php">Comprar</a>
+                <a href="anuncio.php">Anunciar</a>
             </nav>
         </div>
         <div class="header-right">
-            <a href="chat.php" class="nav-link-icon">
-                <i class="fas fa-comment"></i> 
-            </a>
-            <a href="src/routes/login.php" class="btn-login">
-                Login
-            </a>
+            <?php if (estaLogado()): ?>
+                <!-- Mostra as opções do usuário logado -->
+                <a href="../../chat.php" class="nav-link-icon">
+                    <i class="fas fa-comment"></i> 
+                </a>
+                <!-- 3. CORREÇÃO: Caminho do link "Minha Conta" ajustado -->
+                <a href="edits.php?usuario_id=<?= htmlspecialchars($_SESSION['user_id']) ?>" class="nav-link-icon">
+                    Minha Conta
+                </a>
+                <form action="../php/global/global.php" method="post" style="display:inline; margin:0;">
+                    <button type="submit" name="logout_usuario" class="btn-login" style="border:none;">
+                        Sair
+                    </button>
+                </form>
+            <?php else: ?>
+                <!-- 4. CORREÇÃO: Caminho do botão "Login" ajustado -->
+                <a href="../../login.php" class="btn-login">Login</a>
+            <?php endif; ?>
         </div>
     </header>
 
     <h2>Criar novo anúncio</h2>
 
-    <form action="../php/global/global.php" method="POST"  enctype="multipart/form-data">
+    <!-- CORREÇÃO: Adicionada a classe "form-anuncio" para que o CSS aplique o estilo de card apenas a este formulário. -->
+    <form action="../php/global/global.php" method="POST" enctype="multipart/form-data" class="form-anuncio">
         <p>Imagem:</p>
         <input type="file" name="img[]" multiple>
         <br>
