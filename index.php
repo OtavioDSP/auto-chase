@@ -7,22 +7,7 @@ require_once 'src/config/env/logout.php';
 <html lang="pt-br">
 <head>
     <link rel="stylesheet" href="src/css/index.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link rel="icon" type="image/png" href="src/img/ac icon.png">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Autochase | Compre e venda veículos novos e usados com segurança</title>
-</head>
-<body>
-<?php
-// Inclui o gerenciador de sessão no início de tudo.
-// Isso permite usar as funções de sessão como estaLogado() em toda a página.
-require_once 'src/config/env/logout.php';
-?>
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <link rel="stylesheet" href="src/css/index.css">
+    <link rel="stylesheet" href="src/css/adminpanel.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="icon" type="image/png" href="src/img/ac icon.png">
     <meta charset="UTF-8">
@@ -38,7 +23,7 @@ require_once 'src/config/env/logout.php';
     </div>
     <div class="header-center">
         <nav class="nav-links">
-            <a href="comprar.php">Comprar</a>
+            <a href="src/routes/compra.php">Comprar</a>
             <a href="src/routes/anuncio.php">Anunciar</a>
         </nav>
     </div>
@@ -112,47 +97,47 @@ require_once 'src/config/env/logout.php';
     ?>
 
     <?php if (eAdmin()): // Conteúdo exclusivo para administradores (lógica do DEVELOP) ?>
-    
-    <form action="src/php/global/global.php" method="POST">
-        <h1>Cor - Adicionar</h1>
-        <input type="text" placeholder="Cor" name="cor_desc" required>
-        <button type="submit" name="criar_cor">Adicionar Cor</button>
-    </form>
+    <div class="admin-panel">
+        <div class="admin-card">
+            <form action="src/php/global/global.php" method="POST">
+                <div class="form-group"><label>Cor</label><input type="text" placeholder="Ex: Preto" name="cor_desc" required></div>
+                <button type="submit" name="criar_cor">Adicionar Cor</button>
+            </form>
+        </div>
+
+        <div class="admin-card">
+            <form action="src/php/global/global.php" method="POST">
+                <div class="form-group"><label>Marca</label><input type="text" placeholder="Ex: Volkswagen" name="marca_desc" required></div>
+                <div class="form-group"><label>Modelo</label><input type="text" placeholder="Ex: Gol" name="modelo_desc" required></div>
+                <div class="form-group"><label>Valor FIPE</label><input type="number" step="0.01" placeholder="Ex: 45000.00" name="modelo_valor_fipe" required></div>
+                <button type="submit" name="criar_marca_modelo">Adicionar Marca/Modelo</button>
+            </form>
+        </div>
+
+        <div class="admin-card">
+            <form action="src/php/global/global.php" method="POST">
+                <div class="form-group"><label>Chassi</label><input type="text" placeholder="Ex: Sedan" name="chassi_desc" required></div>
+                <button type="submit" name="criar_chassi">Adicionar Chassi</button>
+            </form>
+        </div>
+
+        <div class="admin-card">
+            <form action="src/php/global/global.php" method="POST">
+                <div class="form-group"><label>Combustível</label><input type="text" placeholder="Ex: Flex" name="comb_desc" required></div>
+                <button type="submit" name="criar_combustivel">Adicionar Combustível</button>
+            </form>
+        </div>
+
     <hr>
 
-    <form action="src/php/global/global.php" method="POST">
-        <h1>Marca - Adicionar</h1>
-        <input type="text" placeholder="Marca" name="marca_desc" required>
-        
-        <h1>Modelo - Adicionar</h1>
-        <input type="text" placeholder="Modelo" name="modelo_desc" required>
-        <input type="number" step="0.01" placeholder="Valor FIPE" name="modelo_valor_fipe" required>
-        <button type="submit" name="criar_marca_modelo">Adicionar</button>
-    </form>
-    <hr>
-
-    <form action="src/php/global/global.php" method="POST">
-        <h1>Chassi - Adicionar</h1>
-        <input type="text" placeholder="Chassi" name="chassi_desc" required>
-        <button type="submit" name="criar_chassi">Adicionar Chassi</button>
-    </form>
-    <hr>
-
-    <form action="src/php/global/global.php" method="POST">
-        <h1>Combustível - Adicionar</h1>
-        <input type="text" placeholder="Combustível" name="comb_desc" required>
-        <button type="submit" name="criar_combustivel">Adicionar Combustível</button>
-    </form>
-    <br><br>
-
-    <table border="1" cellpadding="8" cellspacing="0" style="border-collapse: collapse; width: 100%; text-align: left;">
+    <h2>Gerenciamento de Usuários</h2>
+    <table class="admin-table">
         <thead>
             <tr>
                 <th>ID</th>
                 <th>Nome</th>
                 <th>Email</th>
                 <th>CPF/CNPJ</th>
-                <th>Senha (Hash)</th>
                 <th>Nível de Acesso</th>
                 <th colspan="2">Ações</th> </tr>
         </thead>
@@ -166,24 +151,23 @@ require_once 'src/config/env/logout.php';
                 <td><?=$usuario['usuario_nome']?></td>
                 <td><?=$usuario['usuario_email']?></td>
                 <td><?=$usuario['usuario_doc_cpf_cnpj']?></td>
-                <td><?=$usuario['usuario_senha']?></td>
                 <td><?=$usuario['usuario_nivel_de_acesso']?></td>
                 <td>
                     <form method="post" action="src/php/global/global.php" onsubmit="return confirm('Tem certeza que deseja deletar este usuário?');">
                         <input type='hidden' name='usuario_id' value='<?=$usuario['usuario_id']?>'>
-                        <input type='submit' name='deletar_usuario' value='Deletar'>
+                        <input type='submit' name='deletar_usuario' value='Deletar' class="action-delete">
                     </form>
                 </td>
                 <td>
-                    <a href="src/routes/edits.php?usuario_id=<?=$usuario['usuario_id'] ?>">Editar</a>
+                    <a href="src/routes/edits.php?usuario_id=<?=$usuario['usuario_id'] ?>" class="action-edit">Editar</a>
                 </td>
             </tr>
             <?php } ?>
         </tbody>
     </table>
-    <br><br><br>
 
-    <table border="1" cellpadding="8" cellspacing="0" style="border-collapse: collapse; width: 100%; text-align: left;">
+    <h2>Gerenciamento de Veículos</h2>
+    <table class="admin-table">
         <thead>
             <tr>
                 <th>ID do Veículo</th>
@@ -216,19 +200,19 @@ require_once 'src/config/env/logout.php';
                 <td>
                     <form method="post" action="src/php/global/global.php" onsubmit="return confirm('Tem certeza que deseja deletar este veículo?');">
                         <input type='hidden' name='veiculo_id' value='<?= $veiculo['veiculo_id'] ?>'>
-                        <input type='submit' value='Deletar Veículo' name="deletar_veiculo">
+                        <input type='submit' value='Deletar' name="deletar_veiculo" class="action-delete">
                     </form>
                 </td>
                 <td>
-                    <a href="src/routes/edits.php?veiculo_id=<?=$veiculo['veiculo_id'] ?>">Editar</a>
+                    <a href="src/routes/edits.php?veiculo_id=<?=$veiculo['veiculo_id'] ?>" class="action-edit">Editar</a>
                 </td>
             </tr>
             <?php endforeach; ?>
         </tbody>
     </table>
-    <br><br>
 
-    <table border="1" cellpadding="8" cellspacing="0" style="border-collapse: collapse; width: 100%; text-align: left;">
+    <h2>Gerenciamento de Modelos</h2>
+    <table class="admin-table">
         <thead>
             <tr>
                 <th>ID do modelo</th>
@@ -251,19 +235,19 @@ require_once 'src/config/env/logout.php';
                 <td><?=$modelo['marca_desc']?></td>
                 <td> <form method="post" action="src/php/global/global.php" onsubmit="return confirm('Tem certeza que deseja deletar este modelo?');">
                         <input type='hidden' name='modelo_id' value='<?= $modelo['modelo_id'] ?>'>
-                        <input type='submit' value='Deletar Modelo' name="deletar_modelo">
+                        <input type='submit' value='Deletar' name="deletar_modelo" class="action-delete">
                     </form>
                 </td>
                 <td>
-                    <a href="src/routes/edits.php?modelo_id=<?=$modelo['modelo_id'] ?>">Editar</a>
+                    <a href="src/routes/edits.php?modelo_id=<?=$modelo['modelo_id'] ?>" class="action-edit">Editar</a>
                 </td>
             </tr>
             <?php endforeach; ?>
         </tbody> 
     </table>
-    <br><br>
 
-    <table border="1" cellpadding="8" cellspacing="0" style="border-collapse: collapse; width: 100%; text-align: left;">
+    <h2>Gerenciamento de Marcas</h2>
+    <table class="admin-table">
         <thead>
             <tr>
                 <th>ID da marca</th>
@@ -282,19 +266,19 @@ require_once 'src/config/env/logout.php';
                 <td>
                     <form method="post" action="src/php/global/global.php" onsubmit="return confirm('Tem certeza que deseja deletar este modelo?');">
                         <input type='hidden' name='marca_id' value='<?= $marca['marca_id'] ?>'>
-                        <input type='submit' value='Deletar Marca' name="deletar_marca">
+                        <input type='submit' value='Deletar' name="deletar_marca" class="action-delete">
                     </form>
                 </td>
                 <td>
-                    <a href="src/routes/edits.php?marca_id=<?=$marca['marca_id'] ?>">Editar</a>
+                    <a href="src/routes/edits.php?marca_id=<?=$marca['marca_id'] ?>" class="action-edit">Editar</a>
                 </td>
             </tr>
             <?php endforeach; ?>
         </tbody> 
     </table>
-    <br><br>
 
-    <table border="1" cellpadding="8" cellspacing="0" style="border-collapse: collapse; width: 100%; text-align: left;">
+    <h2>Gerenciamento de Cores</h2>
+    <table class="admin-table">
         <thead>
             <tr>
                 <th>ID da cor</th>
@@ -313,19 +297,19 @@ require_once 'src/config/env/logout.php';
                 <td>
                     <form method="post" action="src/php/global/global.php" onsubmit="return confirm('Tem certeza que deseja deletar este cor?');">
                         <input type='hidden' name='cor_id' value='<?= $cor_item['cor_id'] ?>'>
-                        <input type='submit' value='Deletar cor' name="deletar_cor">
+                        <input type='submit' value='Deletar' name="deletar_cor" class="action-delete">
                     </form>
                 </td>
                 <td>
-                    <a href="src/routes/edits.php?cor_id=<?=$cor_item['cor_id']?>">Editar</a>
+                    <a href="src/routes/edits.php?cor_id=<?=$cor_item['cor_id']?>" class="action-edit">Editar</a>
                 </td>
             </tr>
             <?php endforeach; ?>
         </tbody> 
     </table>
-    <br><br>
     
-    <table border="1" cellpadding="8" cellspacing="0" style="border-collapse: collapse; width: 100%; text-align: left;">
+    <h2>Gerenciamento de Chassis</h2>
+    <table class="admin-table">
         <thead>
             <tr>
                 <th>ID da carroceria</th>
@@ -344,19 +328,19 @@ require_once 'src/config/env/logout.php';
                 <td>
                     <form method="post" action="src/php/global/global.php" onsubmit="return confirm('Tem certeza que deseja deletar este modelo?');">
                         <input type='hidden' name='chassi_id' value='<?= $chassi_item['chassi_id'] ?>'>
-                        <input type='submit' value='Deletar carroceria' name="deletar_chassi">
+                        <input type='submit' value='Deletar' name="deletar_chassi" class="action-delete">
                     </form>
                 </td>
                 <td>
-                    <a href="src/routes/edits.php?chassi_id=<?=$chassi_item['chassi_id'] ?>">Editar</a>
+                    <a href="src/routes/edits.php?chassi_id=<?=$chassi_item['chassi_id'] ?>" class="action-edit">Editar</a>
                 </td>
             </tr>
             <?php endforeach; ?>
         </tbody> 
     </table>
-    <br><br>
 
-    <table border="1" cellpadding="8" cellspacing="0" style="border-collapse: collapse; width: 100%; text-align: left;">
+    <h2>Gerenciamento de Combustíveis</h2>
+    <table class="admin-table">
         <thead>
             <tr>
                 <th>ID do combustivel</th>
@@ -375,19 +359,19 @@ require_once 'src/config/env/logout.php';
                 <td>
                     <form method="post" action="src/php/global/global.php" onsubmit="return confirm('Tem certeza que deseja deletar este modelo?');">
                         <input type='hidden' name='comb_id' value='<?= $comb_item['comb_id'] ?>'>
-                        <input type='submit' value='Deletar combustivel' name="deletar_combustivel">
+                        <input type='submit' value='Deletar' name="deletar_combustivel" class="action-delete">
                     </form>
                 </td>
                 <td>
-                    <a href="src/routes/edits.php?comb_id=<?=$comb_item['comb_id'] ?>">Editar</a>
+                    <a href="src/routes/edits.php?comb_id=<?=$comb_item['comb_id'] ?>" class="action-edit">Editar</a>
                 </td>
             </tr>
             <?php endforeach; ?>
         </tbody> 
     </table>
-    <br><br>
 
-    <table border="1" cellpadding="8" cellspacing="0" style="border-collapse: collapse; width: 100%; text-align: left;">
+    <h2>Gerenciamento de Anúncios</h2>
+    <table class="admin-table">
         <thead>
             <tr>
                 <th>ID do Anúncio</th>
@@ -420,209 +404,163 @@ require_once 'src/config/env/logout.php';
                     <td>
                         <form method="post" action="src/php/global/global.php" onsubmit="return confirm('Tem certeza que deseja deletar este anúncio?');">
                             <input type='hidden' name='anuncio_id' value='<?= $anuncio['anuncio_id'] ?>'>
-                            <input type='submit' value='Deletar Anúncio' name="deletar_anuncio">
+                            <input type='submit' value='Deletar' name="deletar_anuncio" class="action-delete">
                         </form>
                     </td>
                     <td>
-                        <a href="src/routes/edits.php?anuncio_id=<?=$anuncio['anuncio_id'] ?>">Editar</a>
+                        <a href="src/routes/edits.php?anuncio_id=<?=$anuncio['anuncio_id'] ?>" class="action-edit">Editar</a>
                     </td>
                 </tr>
             <?php endforeach; ?>
         </tbody>
     </table>
-    <br><br>
 
     <?php 
     $img = new Foto(null, null, null, $conexao);
     $imgArray = $img->listarImagem();
-        foreach($imgArray as $foto):?>
-            
-        <img src="<?= htmlspecialchars($foto['imagem_url']) ?>" alt="imagem" style="max-width: 150px; height: auto; margin: 5px;">
-
-    <?php endforeach;?>
+    ?>
+    <h2>Galeria de Imagens</h2>
+    <div class="admin-card">
+        <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+            <?php foreach($imgArray as $foto):?>
+                <img src="<?= htmlspecialchars($foto['imagem_url']) ?>" alt="imagem" style="max-width: 150px; height: auto; border-radius: 4px;">
+            <?php endforeach;?>
+        </div>
+    </div>
 
 <?php endif; // Fim do conteúdo de admin ?>
 
 
-    <hr style="margin: 5px 0;">
+<div class="search-filter-panel">
     <h2>Encontre seu próximo veículo</h2>
+    <form action="index.php" method="GET">
+        <?php
+        // Pega os valores do filtro do URL para manter a seleção
+        $filtro_marca = $_GET['fk_marca_id'] ?? null;
+        $filtro_modelo = $_GET['fk_modelo_id'] ?? null;
+        $filtro_cor = $_GET['fk_cor_id'] ?? null;
+        $filtro_chassi = $_GET['fk_chassi_id'] ?? null;
+        $filtro_comb = $_GET['fk_comb_id'] ?? null;
+        $filtro_ano_min = $_GET['ano_min'] ?? '';
+        $filtro_ano_max = $_GET['ano_max'] ?? '';
+        $filtro_preco_min = $_GET['preco_min'] ?? '';
+        $filtro_preco_max = $_GET['preco_max'] ?? '';
+        
+        // CORREÇÃO: Define a variável $todosModelos antes de incluir o filtro.
+        $todosModelos = $modeloManager->listarModelo();
 
-<form action="index.php" method="GET" style="border: 1px solid #ccc; padding: 20px; margin-bottom: 20px;">
-    <?php
-    // $todosModelos, $corArray, $chassiArray, $combArray já foram definidos
-    $todosModelos = $modeloManager->listarModelo();
-    $corArray = $cor->listarCor();
-    $chassiArray = $chassi->listarChassi();
-    $combArray = $comb->listarCombustivel();
-    
-    // 1. Isto imprime os selects de Marca/Modelo E define a variável PHP $modelosAgrupados
-    include 'src/php/functions/filter-functions.php'; 
+        // Inclui os selects de Marca/Modelo e define $modelosAgrupados
+        include 'src/php/functions/filter-functions.php'; 
+        ?>
 
-    // 2. Pega os valores do filtro do URL
-    $filtro_marca = $_GET['fk_marca_id'] ?? null;
-    $filtro_modelo = $_GET['fk_modelo_id'] ?? null;
-    $filtro_cor = $_GET['fk_cor_id'] ?? null;
-    $filtro_chassi = $_GET['fk_chassi_id'] ?? null;
-    $filtro_comb = $_GET['fk_comb_id'] ?? null;
-    $filtro_ano_min = $_GET['ano_min'] ?? '';
-    $filtro_ano_max = $_GET['ano_max'] ?? '';
-    $filtro_preco_min = $_GET['preco_min'] ?? '';
-    $filtro_preco_max = $_GET['preco_max'] ?? '';
-    ?>
-    
-        <select name="fk_cor_id">
-        <option value="">Qualquer Cor</option> <?php foreach ($corArray as $cor_item): ?>
-            <option value="<?= $cor_item['cor_id'] ?>" <?= ($cor_item['cor_id'] == $filtro_cor) ? 'selected' : '' ?>>
-                <?= htmlspecialchars($cor_item['cor_desc']) ?>
-            </option>
-        <?php endforeach; ?>
-        </select>
-        <select name="fk_chassi_id">
-        <option value="">Qualquer Chassi</option> <?php foreach ($chassiArray as $chassi_item): ?>
-            <option value="<?= $chassi_item['chassi_id'] ?>" <?= ($chassi_item['chassi_id'] == $filtro_chassi) ? 'selected' : '' ?>>
-                <?= htmlspecialchars($chassi_item['chassi_desc']) ?>
-            </option>
-        <?php endforeach; ?>
-        </select>
-        <select name="fk_comb_id">
-        <option value="">Qualquer Combustivel</option> <?php foreach ($combArray as $comb_item): ?>
-            <option value="<?= $comb_item['comb_id'] ?>" <?= ($comb_item['comb_id'] == $filtro_comb) ? 'selected' : '' ?>>
-                <?= htmlspecialchars($comb_item['comb_desc']) ?>
-            </option>
-        <?php endforeach; ?>
-        </select>
-        <div style="flex: 1;">
-        <label>Ano:</label>
-        <div style="display: flex; gap: 5px;">
-            <input type="number" name="ano_min" placeholder="De" min="1900" max="<?= date('Y') + 1 ?>" value="<?= htmlspecialchars($filtro_ano_min) ?>" style="width: 100%;">
-            <input type="number" name="ano_max" placeholder="Até" min="1900" max="<?= date('Y') + 1 ?>" value="<?= htmlspecialchars($filtro_ano_max) ?>" style="width: 100%;">
+        <div class="filter-group">
+            <label for="corSelect">Cor</label>
+            <select name="fk_cor_id" id="corSelect">
+                <option value="">Qualquer Cor</option>
+                <?php foreach ($cor->listarCor() as $cor_item): ?>
+                    <option value="<?= $cor_item['cor_id'] ?>" <?= ($cor_item['cor_id'] == $filtro_cor) ? 'selected' : '' ?>>
+                        <?= htmlspecialchars($cor_item['cor_desc']) ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
         </div>
-    </div>
-         
-        <div style="flex: 1;">
-        <label>Preço:</label>
-        <div style="display: flex; gap: 5px;">
-            <input type="number" name="preco_min" placeholder="Mínimo" step="1000" value="<?= htmlspecialchars($filtro_preco_min) ?>" style="width: 100%;">
-            <input type="number" name="preco_max" placeholder="Máximo" step="1000" value="<?= htmlspecialchars($filtro_preco_max) ?>" style="width: 100%;">
+
+        <div class="filter-group filter-group--wide">
+            <label>Ano</label>
+            <div style="display: flex; gap: 5px;">
+                <input type="number" name="ano_min" placeholder="De" value="<?= htmlspecialchars($filtro_ano_min) ?>">
+                <input type="number" name="ano_max" placeholder="Até" value="<?= htmlspecialchars($filtro_ano_max) ?>">
+            </div>
         </div>
-    </div>
 
-    <button type="submit" style="margin-top: 15px;">Buscar</button>
-    <a href="index.php" style="margin-left: 10px;">Limpar Filtros</a>
+        <div class="filter-group filter-group--wide">
+            <label>Preço</label>
+            <div style="display: flex; gap: 5px;">
+                <input type="number" name="preco_min" placeholder="Mínimo" value="<?= htmlspecialchars($filtro_preco_min) ?>">
+                <input type="number" name="preco_max" placeholder="Máximo" value="<?= htmlspecialchars($filtro_preco_max) ?>">
+            </div>
+        </div>
 
+        <div class="filter-buttons">
+            <button type="submit">Buscar</button>
+            <a href="index.php">Limpar</a>
+        </div>
+    </form>
+</div>
 
-    <script>
-        // Define a variável JS para o filtro dinâmico
-        const modelosPorMarca = <?= json_encode($modelosAgrupados) ?>;
-    </script>
-
-    <script>
-        // Lógica para manter os filtros selecionados após o submit
-        document.addEventListener('DOMContentLoaded', function() {
-            const marcaFiltrada = <?= json_encode($filtro_marca) ?>;
-            const modeloFiltrado = <?= json_encode($filtro_modelo) ?>;
-
-            if (marcaFiltrada) {
-                const marcaSelect = document.getElementById('marcaSelect');
-                if (marcaSelect) {
-                    marcaSelect.value = marcaFiltrada;
-                    marcaSelect.dispatchEvent(new Event('change')); 
-                }
-            }
-
-            setTimeout(function() {
-                if (modeloFiltrado) {
-                    const modeloSelect = document.getElementById('modeloSelect');
-                    if (modeloSelect) {
-                        modeloSelect.value = modeloFiltrado;
-                    }
-                }
-            }, 150); 
-        });
-    </script>
-</form>
-
-
-    <hr style="margin: 40px 0;">
+<div class="ad-grid-container">
     <h2>Anúncios Recentes</h2>
-
- <table border="1" cellpadding="8" cellspacing="0" style="border-collapse: collapse; width: 100%; text-align: left;">
-    <thead>
-        <tr>
-            <th>Foto</th>
-            <th>Anúncio</th>
-            <th>Valor</th>
-            <th>Proprietário</th>
-            <th>Cor</th>
-            <th>Chassi</th>
-            <th>Marca</th>
-            <th>Quilometragem</th>
-            <th>Ano</th>
-            <th>Combustível</th>
-            <?php if(estaLogado()): ?>
-                <th colspan="2">Ações</th>
-            <?php endif; ?>
-        </tr>
-    </thead>
-    <tbody>
+    <div class="ad-grid">
         <?php
         // Monta o array de filtros com base nos parâmetros GET
         $filtros = [
-            'marca' => $filtro_marca,
-            'modelo' => $filtro_modelo,
-            'cor' => $filtro_cor,
-            'chassi' => $filtro_chassi,
-            'comb' => $filtro_comb,
-            'ano_min' => $filtro_ano_min,
-            'ano_max' => $filtro_ano_max,
-            'preco_min' => $filtro_preco_min,
-            'preco_max' => $filtro_preco_max,
+            'marca' => $filtro_marca, 'modelo' => $filtro_modelo, 'cor' => $filtro_cor,
+            'chassi' => $filtro_chassi, 'comb' => $filtro_comb, 'ano_min' => $filtro_ano_min,
+            'ano_max' => $filtro_ano_max, 'preco_min' => $filtro_preco_min, 'preco_max' => $filtro_preco_max,
         ];
 
         $anuncioManager = new Anuncio(null, null, null, null, null, null, $conexao);
         $anuncioArray = $anuncioManager->listarAnuncios($filtros);
 
-        foreach ($anuncioArray as $anuncio): ?>
-            <tr>
-                <td>
-                    <img src="<?= htmlspecialchars($anuncio['imagem_url']) ?>" alt="Foto do veículo" style="max-width: 100px; max-height: 60px;">
-                </td>
-                <td> 
-                    <b><?= htmlspecialchars($anuncio['marca_desc'] . ' ' . $anuncio['modelo_desc']) ?></b><br>
-                    <small><?= htmlspecialchars($anuncio['veiculo_versao']) ?></small>
-                </td>
-                <td>R$ <?=number_format($anuncio['anuncio_valor'], 2, ',', '.')?></td>
-                <td><?=htmlspecialchars($anuncio['usuario_nome'])?></td>
-                <td><?=htmlspecialchars($anuncio['cor_desc'])?></td>
-                <td><?=htmlspecialchars($anuncio['chassi_desc'])?></td>
-                <td><?=htmlspecialchars($anuncio['marca_desc'])?></td>
-                <td><?=htmlspecialchars($anuncio['veiculo_quilometragem'])?></td>
-                <td><?=htmlspecialchars($anuncio['veiculo_ano'])?></td>
-                <td><?=htmlspecialchars($anuncio['comb_desc'])?></td>
+        // --- Lógica para destacar o anúncio ID 25 ---
+        $anuncioDestaque = null;
+        $indiceDestaque = -1;
+        // Encontra o anúncio 25 e sua posição no array
+        foreach ($anuncioArray as $key => $anuncio) {
+            if ($anuncio['anuncio_id'] == 25) {
+                $anuncioDestaque = $anuncio;
+                $indiceDestaque = $key;
+                break;
+            }
+        }
+        // Se encontrou, remove da posição original e coloca no início
+        if ($anuncioDestaque) {
+            array_splice($anuncioArray, $indiceDestaque, 1);
+            array_unshift($anuncioArray, $anuncioDestaque);
+        }
 
-                <?php
-                // Ações só aparecem para usuários logados
-                if (estaLogado()):
-                    $id_usuario_logado = getUsuarioIdLogado();
-                    if (eAdmin() || $id_usuario_logado == $anuncio['fk_usuario_id']):
-                ?>
-                        <td>
-                            <form method="post" action="src/php/global/global.php" onsubmit="return confirm('Tem certeza que deseja deletar este anúncio?');">
-                                <input type='hidden' name='anuncio_id' value='<?= $anuncio['anuncio_id'] ?>'>
-                                <input type='submit' value='Deletar' name="deletar_anuncio">
-                            </form>
-                        </td>
-                        <td>
-                            <a href="src/routes/edits.php?anuncio_id=<?=$anuncio['anuncio_id'] ?>">Editar</a>
-                        </td>
-                <?php else: // Se não tem permissão, exibe colunas vazias ?>
-                        <td colspan="2"></td>
-                <?php endif; endif; ?>
-            </tr>
+        foreach ($anuncioArray as $anuncio): ?>
+            <a href="src/routes/card.php?anuncio_id=<?= $anuncio['anuncio_id'] ?>" class="ad-card-link">
+                <div class="ad-card">
+                    <img src="<?= htmlspecialchars($anuncio['imagem_url']) ?>" alt="Foto do veículo" class="ad-image">
+                    <div class="ad-content">
+                        <h3 class="ad-title"><?= htmlspecialchars($anuncio['marca_desc'] . ' ' . $anuncio['modelo_desc']) ?></h3>
+                        <p class="ad-version"><?= htmlspecialchars($anuncio['veiculo_versao']) ?></p>
+                        <p class="ad-price">R$ <?= number_format($anuncio['anuncio_valor'], 2, ',', '.') ?></p>
+                        <p class="ad-details"><?= htmlspecialchars($anuncio['veiculo_ano']) ?> &bull; <?= htmlspecialchars($anuncio['veiculo_quilometragem']) ?> km</p>
+                    </div>
+                </div>
+            </a>
         <?php endforeach; ?>
-    </tbody>
-</table>
+    </div>
+</div>
+
+<script>
+    // Lógica para manter os filtros selecionados após o submit
+    document.addEventListener('DOMContentLoaded', function() {
+        const marcaFiltrada = <?= json_encode($filtro_marca) ?>;
+        const modeloFiltrado = <?= json_encode($filtro_modelo) ?>;
+
+        if (marcaFiltrada) {
+            const marcaSelect = document.getElementById('marcaSelect');
+            if (marcaSelect) {
+                marcaSelect.value = marcaFiltrada;
+                marcaSelect.dispatchEvent(new Event('change')); 
+            }
+        }
+
+        setTimeout(function() {
+            if (modeloFiltrado) {
+                const modeloSelect = document.getElementById('modeloSelect');
+                if (modeloSelect) {
+                    modeloSelect.value = modeloFiltrado;
+                }
+            }
+        }, 150); 
+    });
+</script>
 
 <script src="src/JS/js-functions.js"></script>
+
 </body>
 </html>

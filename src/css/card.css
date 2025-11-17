@@ -1,0 +1,194 @@
+/* ==============================================
+   Estilos para a Página de Detalhe do Anúncio
+   ============================================== */
+
+body {
+    background-color: #f0f2f5;
+}
+
+.ad-detail-page {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.ad-detail-container {
+    display: grid;
+    grid-template-columns: 2fr 1fr; /* 2/3 para imagens, 1/3 para info */
+    gap: 40px;
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+}
+
+/* 1. Galeria de Imagens
+---------------------------------------------- */
+.ad-gallery {
+    display: flex;
+    flex-direction: column;
+}
+
+.main-image-container {
+    position: relative;
+    width: 100%;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 15px;
+}
+
+#main-image {
+    width: 100%;
+    height: 450px;
+    object-fit: cover;
+    display: block;
+}
+
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0,0,0,0.4);
+    color: white;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 10px;
+    transition: background-color 0.2s ease;
+}
+.carousel-btn:hover {
+    background-color: rgba(0,0,0,0.7);
+}
+.prev { left: 10px; }
+.next { right: 10px; }
+
+.thumbnail-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    gap: 10px;
+}
+
+.thumbnail {
+    width: 100%;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 4px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: border-color 0.2s ease;
+}
+
+.thumbnail:hover {
+    border-color: #00AFF0;
+}
+
+.thumbnail.active {
+    border-color: #00AFF0;
+    box-shadow: 0 0 8px rgba(0, 175, 240, 0.5);
+}
+
+/* 2. Informações do Anúncio
+---------------------------------------------- */
+.ad-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.ad-info .ad-title {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #333;
+    margin: 0;
+}
+
+.ad-info .ad-version {
+    font-size: 1.1rem;
+    color: #777;
+    margin: 5px 0 20px 0;
+}
+
+.ad-info .ad-price {
+    font-size: 2.2rem;
+    font-weight: bold;
+    color: #00AFF0;
+    margin-bottom: 25px;
+}
+
+.ad-specs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    padding: 20px 0;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 25px;
+}
+
+.spec-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.spec-item span {
+    font-size: 0.9rem;
+    color: #888;
+}
+
+.spec-item strong {
+    font-size: 1rem;
+    color: #333;
+}
+
+.ad-description h2, .seller-info h2 {
+    font-size: 1.2rem;
+    color: #333;
+    border-bottom: 2px solid #00AFF0;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+}
+
+.ad-description p {
+    line-height: 1.7;
+    color: #555;
+}
+
+.seller-info {
+    margin-top: 30px;
+}
+
+.seller-info p {
+    font-size: 1rem;
+}
+
+.btn-contact {
+    width: 100%;
+    padding: 14px;
+    margin-top: 15px;
+    background-color: #2ecc71;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.btn-contact:hover {
+    background-color: #27ae60;
+}
+
+/* Responsividade */
+@media (max-width: 900px) {
+    .ad-detail-container {
+        grid-template-columns: 1fr; /* Coluna única em telas menores */
+    }
+}
+
+@media (max-width: 500px) {
+    .ad-specs {
+        grid-template-columns: 1fr;
+    }
+    .ad-info .ad-title { font-size: 1.5rem; }
+    .ad-info .ad-price { font-size: 1.8rem; }
+}

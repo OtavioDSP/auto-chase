@@ -50,9 +50,9 @@ $combustiveis = $combustivelManager->listarCombustivel();
 // Inclui o gerenciador de sessão para verificar se o usuário já está logado
 require_once '../config/env/logout.php';
 
-// Se o usuário já estiver logado, redireciona para a página principal
-if (estaLogado()) {
-    header('Location: index.php');
+// CORREÇÃO: Se o usuário NÃO estiver logado, redireciona para a página de login.
+if (!estaLogado()) {
+    header('Location: ../../login.php?status=mustlogin'); // Redireciona para a raiz do site
     exit();
 }
 ?>
@@ -76,7 +76,7 @@ if (estaLogado()) {
         <div class="header-center">
             <nav class="nav-links">
                 <!-- 2. CORREÇÃO: Caminho do link "Comprar" ajustado -->
-                <a href="../../comprar.php">Comprar</a>
+                <a href="compra.php">Comprar</a>
                 <a href="anuncio.php">Anunciar</a>
             </nav>
         </div>

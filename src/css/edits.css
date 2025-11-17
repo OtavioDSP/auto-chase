@@ -1,0 +1,230 @@
+/* edits-style.css */
+/* ==============================================
+   1. Importações e Declarações de Fonte
+   ============================================== */
+
+/* @font-face DEVE sempre vir no TOPO do arquivo */
+@font-face {
+    font-family: 'Creato Display';
+    /* Caminho corrigido para 'voltar' da pasta css */
+    src: url('../font/CreatoDisplay-Light.otf') format('opentype');
+    /* É melhor usar números (300 = Light) */
+    font-weight: 300; 
+}
+/* 
+ * 1. Variáveis de Cor e Estilo
+ * Adapte estas cores para combinar com a identidade visual do seu projeto.
+ */
+:root {
+    --primary-color: #4a90e2; /* Um azul moderno */
+    --secondary-color: #f5f7fa;
+    --text-color: #333;
+    --border-color: #e1e4e8;
+    --success-color: #28a745;
+    --danger-color: #dc3545;
+    --light-gray: #f9f9f9;
+    --dark-gray: #6c757d;
+    --font-family: 'Creato Display', sans-serif;
+    --border-radius: 8px;
+    --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/*
+ * 2. Estilos Gerais e Layout
+ */
+body {
+    background-color: #E6F8FF;
+    color: var(--text-color);
+    font-family: var(--font-family) !important;
+    line-height: 1.6;
+    margin: 0;
+}
+h1{
+    color: #ffffff;
+}
+.container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+.main-header, .main-footer {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.main-header h1 {
+    margin-bottom: 0.5rem;
+}
+
+/*
+ * 3. Estilo do Card
+ * O card agrupa o formulário de edição, criando um foco visual.
+ */
+.card {
+    background-color: #fff;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    overflow: hidden; /* Garante que os cantos arredondados sejam aplicados nos filhos */
+    margin-top: 2rem;
+}
+
+.card-header {
+    background-color: var(--light-gray);
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.card-header h2 {
+    margin: 0;
+    font-size: 1.25rem;
+}
+
+.card-body {
+    padding: 1.5rem;
+}
+
+/*
+ * 4. Estilização do Formulário
+ * Foco em usabilidade e clareza.
+ */
+.edit-form .form-group {
+    margin-bottom: 1.5rem;
+}
+
+.edit-form label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.edit-form input[type="text"],
+.edit-form input[type="email"],
+.edit-form input[type="password"],
+.edit-form input[type="number"],
+.edit-form textarea,
+.edit-form select {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    box-sizing: border-box;
+}
+
+.edit-form input[type="text"]:focus,
+.edit-form input[type="email"]:focus,
+.edit-form input[type="password"]:focus,
+.edit-form input[type="number"]:focus,
+.edit-form textarea:focus,
+.edit-form select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
+}
+
+.edit-form textarea {
+    resize: vertical; /* Permite que o usuário redimensione a altura */
+}
+
+/* Layout em linha para campos menores */
+.form-row {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.form-row .form-group {
+    flex: 1;
+}
+
+/* Estilo para o container da senha com o botão de olho */
+.edit-form .senha-container {
+    position: relative;
+}
+
+.edit-form .senha-container input {
+    width: 100%;
+    /* Adiciona um espaço à direita para o botão não cobrir o texto */
+    padding-right: 40px;
+}
+
+.edit-form .senha-container button {
+    position: absolute;
+    right: 5px; /* Move o ícone um pouco para a esquerda */
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    padding: 0 10px;
+    color: #888;
+    font-size: 1.1rem; /* Aumenta o tamanho do ícone */
+}
+
+/*
+ * 5. Botões e Ações
+ */
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 2rem;
+    border-top: 1px solid var(--border-color);
+    padding-top: 1.5rem;
+}
+
+.btn {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    display: inline-block;
+    text-align: center;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background-color: #3a82d2;
+}
+
+.btn-secondary {
+    background-color: var(--dark-gray);
+    color: #fff;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+/*
+ * 6. Responsividade
+ */
+@media (max-width: 600px) {
+    .form-row {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .form-actions {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .btn {
+        width: 100%;
+    }
+}

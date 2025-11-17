@@ -1,0 +1,304 @@
+/* ==============================================
+   1. Importações e Estilos Gerais
+   ============================================== */
+
+@font-face {
+    font-family: 'Creato Display';
+    src: url('../font/CreatoDisplay-Light.otf') format('opentype');
+    font-weight: 300; 
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    font-family: 'Creato Display', sans-serif;
+    background-color: #E6F8FF;
+}
+
+.logo {
+    height: 48px;
+}
+
+/* ==============================================
+   2. Header (Copiado do index.css)
+   ============================================== */
+
+header {
+    background: #6bbddb;
+    color: #222;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 10px 20px;
+    position: relative;
+    z-index: 100;
+    box-sizing: border-box;
+}
+
+.header-left a .logo {
+    height: 30px;
+    display: block;
+}
+
+.nav-links {
+    display: flex;
+    gap: 40px;
+}
+.header-center {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.nav-link-icon {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    text-decoration: none;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+.nav-link-icon i {
+    font-size: 18px;
+}
+
+.btn-login {
+    text-decoration: none;
+    color: #00AFF0;
+    background-color: #ffffff;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-weight: bold;
+    transition: background-color 0.2s ease;
+}
+
+button.btn-login {
+    padding: 8px 16px;
+    font-size: 16px;
+    font-family: 'Creato Display', sans-serif;
+}
+
+.btn-login:hover {
+    background-color: #f0f0f0;
+}
+
+/* ==============================================
+   3. Componente: Formulário de Cadastro
+   ============================================== */
+
+.register-page-wrapper {
+    position: relative; /* Base para o posicionamento absoluto dos filhos */
+    width: 100%;
+    padding: 40px 20px;
+    min-height: 500px; /* Altura mínima para o posicionamento funcionar */
+    box-sizing: border-box;
+}
+
+.register-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 25px;
+    width: 100%;
+    /* Posicionamento centralizado */
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    max-width: 700px; /* Mais largo para caber mais campos */
+    background: #6bbddb;
+    border-radius: 9px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.register-container h1 {
+    color: #fff;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.register-container h5 {
+    margin: 0;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+    max-width: 600px;
+}
+
+.form-row {
+    display: flex;
+    gap: 15px;
+}
+
+/* NOVO: A div que segura cada campo */
+.form-field {
+    flex: 1; /* Garante que cada campo ocupe metade da linha */
+    display: flex; /* Alinha o conteúdo interno */
+    position: relative; /* Necessário para o <small> e o botão do olho */
+}
+
+.form input {
+    width: 100%;
+    padding: 14px;
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    color: #2e2e2e;
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: 'Creato Display', sans-serif;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form input:focus {
+    outline: none;
+    border-color: #00AFF0;
+    box-shadow: 0 0 5px rgba(0, 175, 240, 0.5);
+}
+
+.senha-container {
+    position: relative;
+}
+
+.senha-container input {
+    width: 100%;
+}
+
+.senha-container button {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    background: none;
+    cursor: pointer;
+    color: #888;
+}
+
+.doc-container {
+    position: relative;
+}
+
+.doc-container small {
+    position: absolute;
+    bottom: -18px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    font-size: 0.8rem;
+    color: #f0f0f0;
+}
+
+.form input[type="submit"] {
+    margin-top: 20px; /* Espaço extra antes do botão */
+    padding: 12px;
+    border-radius: 8px;
+    background-color: #fff;
+    color: #00AFF0;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    border: 1px solid #00AFF0;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.form input[type="submit"]:hover {
+    background-color: #00AFF0;
+    color: #ffffff;
+}
+
+/* ==============================================
+   4. Janela de Feedback (Popup)
+   ============================================== */
+
+.feedback-popup {
+    background-color: #2c3e50; /* Cor escura */
+    color: #ecf0f1; /* Cor clara para o texto */
+    padding: 20px;
+    border-radius: 8px;
+    width: 220px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    position: relative; /* Para o triângulo */
+    /* Posicionamento à direita do formulário */
+    position: absolute;
+    bottom: 140px; /* Alinha com a parte de baixo */
+    left: calc(50% + 350px + 40px); /* 50% + metade da largura do form + gap aumentado */
+    opacity: 0; /* Começa invisível */
+    transform: translateX(20px); /* Começa fora da tela */
+    transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+/* O triângulo que faz parecer um balão de diálogo */
+.feedback-popup::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: -10px; /* Aponta para a esquerda */
+    transform: translateY(-50%);
+    border-width: 10px;
+    border-style: solid;
+    border-color: transparent #2c3e50 transparent transparent;
+}
+
+.feedback-popup.visible {
+    opacity: 1; /* Fica visível */
+    transform: translateX(0); /* Entra na tela */
+}
+
+.feedback-popup p {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.5;
+    text-align: center;
+    transition: color 0.3s ease;
+}
+
+/* Cores de status */
+.feedback-popup.status-success p { color: #2ecc71; } /* Verde */
+.feedback-popup.status-error p { color: #e74c3c; } /* Vermelho */
+.feedback-popup.status-neutral p { color: #f1c40f; } /* Amarelo */
+
+
+/* Responsividade para telas menores */
+@media (max-width: 600px) {
+    .form-row {
+        flex-direction: column;
+    }
+    .register-container {
+        padding: 15px;
+    }
+    /* Em telas pequenas, remove o posicionamento absoluto */
+    .register-page-wrapper, .register-container, .feedback-popup {
+        position: static;
+        transform: none;
+    }
+    .register-page-wrapper {
+        flex-direction: column; /* Empilha o formulário e o feedback */
+    }
+    .feedback-popup::before {
+        left: 50%; /* Centraliza o triângulo */
+        top: -20px; /* Aponta para cima */
+        transform: translateX(-50%);
+        border-color: transparent transparent #2c3e50 transparent;
+    }
+}
