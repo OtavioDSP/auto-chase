@@ -125,6 +125,12 @@ class Anuncio {
     $params = [];
     $types = '';
 
+    if (!empty($filtros['status'])) {
+        $where[] = 'anuncio.anuncio_status = ?';
+        $params[] = $filtros['status'];
+        $types .= 's';
+    }
+
     if (!empty($filtros['marca'])) {
         $where[] = 'marca.marca_id = ?';
         $params[] = $filtros['marca'];
@@ -286,7 +292,42 @@ public static function buscarOpcoesEnum($conexao, $coluna) {
     } else {
         throw new Exception("A coluna '{$coluna}' não parece ser do tipo ENUM.");
     }
-}
+    }
+
+
+    public function listarAnunciosPorUsuario($usuario_id) {
+        $sql = "
+            SELECT 
+                anuncio.anuncio_id,
+                anuncio.anuncio_desc,
+                anuncio.anuncio_valor,
+                anuncio.anuncio_status,
+                veiculo.veiculo_versao,
+                veiculo.veiculo_quilometragem,
+                veiculo.veiculo_ano,
+                modelo.modelo_desc,
+                marca.marca_desc,
+                (SELECT imagem_url FROM imagem WHERE fk_anuncio_id = anuncio.anuncio_id LIMIT 1) as imagem_url
+            FROM anuncio
+            INNER JOIN veiculo ON anuncio.fk_veiculo_id = veiculo.veiculo_id
+            INNER JOIN modelo ON veiculo.fk_modelo_id = modelo.modelo_id
+            INNER JOIN marca ON modelo.fk_marca_id = marca.marca_id
+            WHERE anuncio.fk_usuario_id = ?
+            ORDER BY anuncio.anuncio_data_de_criacao DESC
+        ";
+
+        $stmt = $this->conexao->prepare($sql);
+        $stmt->bind_param('i', $usuario_id);
+        $stmt->execute();
+        $resultado = $stmt->get_result();
+
+        $anuncios = [];
+        while ($anuncio = $resultado->fetch_assoc()) {
+            $anuncios[] = $anuncio;
+        }
+
+        return $anuncios;
+    }
 }
 
 ?>

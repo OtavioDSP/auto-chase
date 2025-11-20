@@ -36,6 +36,10 @@ require_once 'src/config/env/logout.php';
                 <i class="fas fa-comment"></i> 
             </a>
 
+            <a href="src/routes/meus-anuncios.php" class="nav-link-icon">
+                Meus Anúncios
+            </a>
+
             <a href="src/routes/edits.php?usuario_id=<?= htmlspecialchars($_SESSION['user_id']) ?>" class="nav-link-icon">
                 Minha Conta
             </a>
@@ -497,6 +501,7 @@ require_once 'src/config/env/logout.php';
             'marca' => $filtro_marca, 'modelo' => $filtro_modelo, 'cor' => $filtro_cor,
             'chassi' => $filtro_chassi, 'comb' => $filtro_comb, 'ano_min' => $filtro_ano_min,
             'ano_max' => $filtro_ano_max, 'preco_min' => $filtro_preco_min, 'preco_max' => $filtro_preco_max,
+            'status' => 'ativo',
         ];
 
         $anuncioManager = new Anuncio(null, null, null, null, null, null, $conexao);
