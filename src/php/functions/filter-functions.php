@@ -14,23 +14,20 @@
 </script>
 
 
-<label>Marca:</label>
-<select name="fk_marca_id" id="marcaSelect"  required>
-  <option value="">Selecione uma marca</option>
-  <?php foreach ($marcas as $marca): ?>
-    <option value="<?php echo $marca['marca_id']; ?>"><?php echo $marca['marca_desc']; ?></option>
-  <?php endforeach; ?>
-</select>
-<br>
-
-
-<!-- Filtro de Modelo -->
-
-<label>Modelo:</label>
-<select name="fk_modelo_id" id="modeloSelect" required>
-  <option value="">Selecione a marca primeiro</option>
-</select>
-
-<br><br>
-<br><br>
-
+<div class="filter-group">
+    <label for="marcaSelect">Marca:</label>
+    <select name="fk_marca_id" id="marcaSelect" required>
+        <option value="">Selecione uma marca</option>
+        <?php foreach ($marcas as $marca): ?>
+            <option value="<?= $marca['marca_id'] ?>" <?= ($marca['marca_id'] == ($_GET['fk_marca_id'] ?? null)) ? 'selected' : '' ?>>
+                <?= htmlspecialchars($marca['marca_desc']) ?>
+            </option>
+        <?php endforeach; ?>
+    </select>
+</div>
+<div class="filter-group">
+    <label for="modeloSelect">Modelo:</label>
+    <select name="fk_modelo_id" id="modeloSelect" required>
+        <option value="">Selecione a marca primeiro</option>
+    </select>
+</div>

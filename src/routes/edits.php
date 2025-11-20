@@ -17,14 +17,12 @@ include_once '../php/classes/class-imagem.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar Item</title>
-    <style>
-        body { font-family: sans-serif; max-width: 800px; margin: auto; padding: 20px; }
-        form div { margin-bottom: 15px; }
-        label { display: block; margin-bottom: 5px; font-weight: bold; }
-        input, select, textarea { width: 100%; padding: 8px; box-sizing: border-box; }
-        button { padding: 10px 15px; background-color: #007bff; color: white; border: none; cursor: pointer; }
-    </style>
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/edits.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <title>Painel de Edição</title>
+
+    <link rel="icon" type="image/png" href="../img/ac icon.png">
     <script>
         // Função para formatar valor em reais
         function formatarMoeda(input) {
@@ -40,6 +38,48 @@ include_once '../php/classes/class-imagem.php';
 </head>
 <body>
 
+<header>
+    <div class="header-left">
+        <a href="../../index.php">
+            <img src="../img/ac wb 911 white sc.png" alt="Logo" class="logo">
+        </a>
+    </div>
+    <div class="header-center">
+        <nav class="nav-links">
+            <a href="compra.php">Comprar</a>
+            <a href="anuncio.php">Anunciar</a>
+        </nav>
+    </div>
+
+    <div class="header-right">
+        
+        <?php if (estaLogado()): ?>
+            
+            <a href="../../chat.php" class="nav-link-icon">
+                <i class="fas fa-comment"></i> 
+            </a>
+
+            <a href="edits.php?usuario_id=<?= htmlspecialchars($_SESSION['user_id']) ?>" class="nav-link-icon">
+                Minha Conta
+            </a>
+            
+            <form action="../php/global/global.php" method="post" style="display:inline; margin:0;">
+                <button type="submit" name="logout_usuario" class="btn-login" style="border:none;">
+                    Sair
+                </button>
+            </form>
+
+        <?php else: ?>
+            <a href="../../login.php" class="btn-login">Login</a>
+        <?php endif; ?>
+    </div>
+</header>
+
+<div class="container">
+    <header class="main-header">
+        <h1>Painel de Edição</h1>
+        <p>Altere os dados necessários e salve as modificações.</p>
+    </header>
 <?php
 
 // --- ROTA DE EDIÇÃO PARA USUÁRIO ---
@@ -56,26 +96,39 @@ if (isset($_GET['usuario_id'])) {
     $manager = new Usuario(null, null, null, null, null, null, null, null, $conexao);
     $item = $manager->buscarUsuarioPorId($id);
     if ($item) { ?>
-        <h1>Editar Usuário</h1>
-        <form action="../php/global/global.php" method="POST">
-            <input type="hidden" name="usuario_id" value="<?= $item['usuario_id'] ?>">
-            <div><label>Nome:</label><input type="text" name="usuario_nome" value="<?= htmlspecialchars($item['usuario_nome']) ?>" required></div>
-            <div><label>Email:</label><input type="email" name="usuario_email" value="<?= htmlspecialchars($item['usuario_email']) ?>" required></div>
-            <div><label>Endereço:</label><input type="text" name="usuario_endereco" value="<?= htmlspecialchars($item['usuario_endereco']) ?>"></div>
-            <div><label>Telefone:</label><input type="text" name="usuario_telefone" value="<?= htmlspecialchars($item['usuario_telefone']) ?>"></div>
-            <div><label>CPF/CNPJ:</label><input type="text" name="usuario_doc_cpf_cnpj" value="<?= htmlspecialchars($item['usuario_doc_cpf_cnpj']) ?>"></div>
-            <div><label>Nova Senha:</label><input type="password" name="usuario_senha" placeholder="Deixe em branco para não alterar"></div>
-            <?php if (eAdmin()): // Apenas admins podem ver e alterar o nível de acesso ?>
-                <div>
-                    <label>Nível de Acesso:</label>
-                    <select name="usuario_nivel_de_acesso">
-                        <option value="USUARIO" <?= ($item['usuario_nivel_de_acesso'] == 'USUARIO') ? 'selected' : '' ?>>Usuário</option>
-                        <option value="ADMIN" <?= ($item['usuario_nivel_de_acesso'] == 'ADMIN') ? 'selected' : '' ?>>Admin</option>
-                    </select>
-                </div>
-            <?php endif; ?>
-            <button type="submit" name="editar_usuario">Salvar Alterações</button>
-        </form>
+        <div class="card">
+            <div class="card-header"><h2>Editar Usuário</h2></div>
+            <div class="card-body">
+                <form action="../php/global/global.php" method="POST" class="edit-form">
+                    <input type="hidden" name="usuario_id" value="<?= $item['usuario_id'] ?>">
+                    <div class="form-group"><label>Nome:</label><input type="text" name="usuario_nome" value="<?= htmlspecialchars($item['usuario_nome']) ?>" required></div>
+                    <div class="form-group"><label>Email:</label><input type="email" name="usuario_email" value="<?= htmlspecialchars($item['usuario_email']) ?>" required></div>
+                    <div class="form-group"><label>Endereço:</label><input type="text" name="usuario_endereco" value="<?= htmlspecialchars($item['usuario_endereco']) ?>"></div>
+                    <div class="form-group"><label>Telefone:</label><input type="text" name="usuario_telefone" value="<?= htmlspecialchars($item['usuario_telefone']) ?>"></div>
+                    <div class="form-group"><label>CPF/CNPJ:</label><input type="text" name="usuario_doc_cpf_cnpj" value="<?= htmlspecialchars($item['usuario_doc_cpf_cnpj']) ?>"></div>
+                    <div class="form-group">
+                        <label>Nova Senha:</label>
+                        <div class="senha-container">
+                            <input type="password" id="nova_senha" name="usuario_senha" placeholder="Deixe em branco para não alterar">
+                            <button type="button" onclick="toggleSenha('nova_senha')"><i class="fa fa-eye"></i></button>
+                        </div>
+                    </div>
+                    <?php if (eAdmin()): // Apenas admins podem ver e alterar o nível de acesso ?>
+                        <div class="form-group">
+                            <label>Nível de Acesso:</label>
+                            <select name="usuario_nivel_de_acesso">
+                                <option value="USUARIO" <?= ($item['usuario_nivel_de_acesso'] == 'USUARIO') ? 'selected' : '' ?>>Usuário</option>
+                                <option value="ADMIN" <?= ($item['usuario_nivel_de_acesso'] == 'ADMIN') ? 'selected' : '' ?>>Admin</option>
+                            </select>
+                        </div>
+                    <?php endif; ?>
+                    <div class="form-actions">
+                        <a href="javascript:history.back()" class="btn btn-secondary">Cancelar</a>
+                        <button type="submit" name="editar_usuario" class="btn btn-primary">Salvar Alterações</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     <?php } else { echo "<p>Usuário não encontrado.</p>"; }
 
 // --- ROTA DE EDIÇÃO PARA MARCA ---
@@ -84,12 +137,19 @@ if (isset($_GET['usuario_id'])) {
     $manager = new Marca(null, null, $conexao);
     $item = $manager->buscarMarcaPorId($id);
     if ($item) { ?>
-        <h1>Editar Marca</h1>
-        <form action="../php/global/global.php" method="POST">
-            <input type="hidden" name="marca_id" value="<?= $item['marca_id'] ?>">
-            <div><label>Descrição da Marca:</label><input type="text" name="marca_desc" value="<?= htmlspecialchars($item['marca_desc']) ?>" required></div>
-            <button type="submit" name="editar_marca">Salvar Alterações</button>
-        </form>
+        <div class="card">
+            <div class="card-header"><h2>Editar Marca</h2></div>
+            <div class="card-body">
+                <form action="../php/global/global.php" method="POST" class="edit-form">
+                    <input type="hidden" name="marca_id" value="<?= $item['marca_id'] ?>">
+                    <div class="form-group"><label>Descrição da Marca:</label><input type="text" name="marca_desc" value="<?= htmlspecialchars($item['marca_desc']) ?>" required></div>
+                    <div class="form-actions">
+                        <a href="javascript:history.back()" class="btn btn-secondary">Cancelar</a>
+                        <button type="submit" name="editar_marca" class="btn btn-primary">Salvar Alterações</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     <?php } else { echo "<p>Marca não encontrada.</p>"; }
 
 // --- ROTA DE EDIÇÃO PARA COR ---
@@ -98,12 +158,19 @@ if (isset($_GET['usuario_id'])) {
     $manager = new Cor(null, null, $conexao);
     $item = $manager->buscarCorPorId($id);
     if ($item) { ?>
-        <h1>Editar Cor</h1>
-        <form action="../php/global/global.php" method="POST">
-            <input type="hidden" name="cor_id" value="<?= $item['cor_id'] ?>">
-            <div><label>Descrição da Cor:</label><input type="text" name="cor_desc" value="<?= htmlspecialchars($item['cor_desc']) ?>" required></div>
-            <button type="submit" name="editar_cor">Salvar Alterações</button>
-        </form>
+        <div class="card">
+            <div class="card-header"><h2>Editar Cor</h2></div>
+            <div class="card-body">
+                <form action="../php/global/global.php" method="POST" class="edit-form">
+                    <input type="hidden" name="cor_id" value="<?= $item['cor_id'] ?>">
+                    <div class="form-group"><label>Descrição da Cor:</label><input type="text" name="cor_desc" value="<?= htmlspecialchars($item['cor_desc']) ?>" required></div>
+                    <div class="form-actions">
+                        <a href="javascript:history.back()" class="btn btn-secondary">Cancelar</a>
+                        <button type="submit" name="editar_cor" class="btn btn-primary">Salvar Alterações</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     <?php } else { echo "<p>Cor não encontrada.</p>"; }
 
 // --- ROTA DE EDIÇÃO PARA COMBUSTÍVEL ---
@@ -112,12 +179,19 @@ if (isset($_GET['usuario_id'])) {
     $manager = new Combustivel($comb_id, null, $conexao);
     $item = $manager->buscarCombustivelPorId($comb_id);
     if ($item) { ?>
-        <h1>Editar Combustível</h1>
-        <form action="../php/global/global.php" method="POST">
-            <input type="hidden" name="comb_id" value="<?= $item['comb_id'] ?>">
-            <div><label>Descrição do Combustível:</label><input type="text" name="comb_desc" value="<?= htmlspecialchars($item['comb_desc']) ?>" required></div>
-            <button type="submit" name="editar_combustivel">Salvar Alterações</button>
-        </form>
+        <div class="card">
+            <div class="card-header"><h2>Editar Combustível</h2></div>
+            <div class="card-body">
+                <form action="../php/global/global.php" method="POST" class="edit-form">
+                    <input type="hidden" name="comb_id" value="<?= $item['comb_id'] ?>">
+                    <div class="form-group"><label>Descrição do Combustível:</label><input type="text" name="comb_desc" value="<?= htmlspecialchars($item['comb_desc']) ?>" required></div>
+                    <div class="form-actions">
+                        <a href="javascript:history.back()" class="btn btn-secondary">Cancelar</a>
+                        <button type="submit" name="editar_combustivel" class="btn btn-primary">Salvar Alterações</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     <?php } else { echo "<p>Combustível não encontrado.</p>"; }
 
 // --- ROTA DE EDIÇÃO PARA CHASSI ---
@@ -126,12 +200,19 @@ if (isset($_GET['usuario_id'])) {
     $manager = new Chassi(null, null, $conexao);
     $item = $manager->buscarChassiPorId($id);
     if ($item) { ?>
-        <h1>Editar Chassi</h1>
-        <form action="../php/global/global.php" method="POST">
-            <input type="hidden" name="chassi_id" value="<?= $item['chassi_id'] ?>">
-            <div><label>Descrição do Chassi:</label><input type="text" name="chassi_desc" value="<?= htmlspecialchars($item['chassi_desc']) ?>" required></div>
-            <button type="submit" name="editar_chassi">Salvar Alterações</button>
-        </form>
+        <div class="card">
+            <div class="card-header"><h2>Editar Chassi</h2></div>
+            <div class="card-body">
+                <form action="../php/global/global.php" method="POST" class="edit-form">
+                    <input type="hidden" name="chassi_id" value="<?= $item['chassi_id'] ?>">
+                    <div class="form-group"><label>Descrição do Chassi:</label><input type="text" name="chassi_desc" value="<?= htmlspecialchars($item['chassi_desc']) ?>" required></div>
+                    <div class="form-actions">
+                        <a href="javascript:history.back()" class="btn btn-secondary">Cancelar</a>
+                        <button type="submit" name="editar_chassi" class="btn btn-primary">Salvar Alterações</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     <?php } else { echo "<p>Chassi não encontrado.</p>"; }
 
 // --- ROTA DE EDIÇÃO PARA MODELO ---
@@ -145,26 +226,33 @@ if (isset($_GET['usuario_id'])) {
         $marcas = $marcaManager->listarMarca();
 
     ?>
-        <h1>Editar Modelo</h1>
-        <form action="../php/global/global.php" method="POST">
-            <input type="hidden" name="modelo_id" value="<?= $item['modelo_id'] ?>">
-            <div><label>Descrição do Modelo:</label><input type="text" name="modelo_desc" value="<?= htmlspecialchars($item['modelo_desc']) ?>" required></div>
-            <div><label>Valor FIPE:</label>
-                <input type="text" oninput="formatarMoeda(this)" value="<?= number_format($item['modelo_valor_fipe'], 2, ',', '.') ?>" required>
-                <input type="hidden" name="modelo_valor_fipe" id="valorBanco" value="<?= $item['modelo_valor_fipe'] ?>">
+        <div class="card">
+            <div class="card-header"><h2>Editar Modelo</h2></div>
+            <div class="card-body">
+                <form action="../php/global/global.php" method="POST" class="edit-form">
+                    <input type="hidden" name="modelo_id" value="<?= $item['modelo_id'] ?>">
+                    <div class="form-group"><label>Descrição do Modelo:</label><input type="text" name="modelo_desc" value="<?= htmlspecialchars($item['modelo_desc']) ?>" required></div>
+                    <div class="form-group"><label>Valor FIPE:</label>
+                        <input type="text" oninput="formatarMoeda(this)" value="<?= number_format($item['modelo_valor_fipe'], 2, ',', '.') ?>" required>
+                        <input type="hidden" name="modelo_valor_fipe" id="valorBanco" value="<?= $item['modelo_valor_fipe'] ?>">
+                    </div>
+                    <div class="form-group">
+                        <label>Marca:</label>
+                        <select name="fk_Marca_id" required>
+                            <?php foreach ($marcas as $marca): ?>
+                                <option value="<?= $marca['marca_id'] ?>" <?= ($marca['marca_id'] == $item['fk_marca_id']) ? 'selected' : '' ?>>
+                                    <?= htmlspecialchars($marca['marca_desc']) ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                    <div class="form-actions">
+                        <a href="javascript:history.back()" class="btn btn-secondary">Cancelar</a>
+                        <button type="submit" name="editar_modelo" class="btn btn-primary">Salvar Alterações</button>
+                    </div>
+                </form>
             </div>
-            <div>
-                <label>Marca:</label>
-                <select name="fk_Marca_id" required>
-                    <?php foreach ($marcas as $marca): ?>
-                        <option value="<?= $marca['marca_id'] ?>" <?= ($marca['marca_id'] == $item['fk_marca_id']) ? 'selected' : '' ?>>
-                            <?= htmlspecialchars($marca['marca_desc']) ?>
-                        </option>
-                    <?php endforeach; ?>
-                </select>
-            </div>
-            <button type="submit" name="editar_modelo">Salvar Alterações</button>
-        </form>
+        </div>
     <?php } else { echo "<p>Modelo não encontrado.</p>"; }
 
 // --- ROTA DE EDIÇÃO PARA ANÚNCIO ---
@@ -222,10 +310,11 @@ if (isset($_GET['usuario_id'])) {
     const modelosPorMarca = <?= json_encode($modelosAgrupados) ?>;
 </script>
         
-        <h1>Editar Anúncio</h1>
-        <div>
-            <form action="../php/global/global.php" method="POST"  enctype="multipart/form-data">
-        
+        <div class="card">
+            <div class="card-header"><h2>Editar Anúncio</h2></div>
+            <div class="card-body">
+                <form action="../php/global/global.php" method="POST"  enctype="multipart/form-data" class="edit-form">
+            
                 <input type="hidden" name="anuncio_id" value="<?= $item['anuncio_id'] ?>">
                 <input type="hidden" name="veiculo_id" value="<?= $item['fk_veiculo_id'] ?>">
                 <input type="hidden" name="usuario_id" value="<?= $item['fk_usuario_id'] ?>">
@@ -236,11 +325,11 @@ if (isset($_GET['usuario_id'])) {
                         <img src="<?= htmlspecialchars($foto['imagem_url']) ?>" alt="Foto" style="width: 100px; height: auto; margin-right: 10px;">
                     <?php endforeach; ?>
                 </div>
+                <div class="form-group">
+                    <label>Substituir/Adicionar Imagens (Novas imagens irão apagar as antigas):</label>
+                    <input type="file" name="img[]" multiple>
+                </div>
 
-                <p>Substituir/Adicionar Imagens (Novas imagens irão apagar as antigas):</p>
-                <input type="file" name="img[]" multiple>
-                <br><br><br>
-                
                 <?php include '../php/functions/filter-functions.php'; ?>
                 
                 <script>
@@ -266,62 +355,65 @@ if (isset($_GET['usuario_id'])) {
                     });
                 </script>
 
-                <label for="veiculo_ano">Ano:</label>
-                <input type="text" id="veiculo_ano" name="veiculo_ano" pattern="\d{4}" maxlength="4" required placeholder="Ano" value="<?= $veiculos['veiculo_ano'] ?>">
+                <div class="form-group">
+                    <label for="veiculo_ano">Ano:</label>
+                    <input type="text" id="veiculo_ano" name="veiculo_ano" pattern="\d{4}" maxlength="4" required placeholder="Ano" value="<?= $veiculos['veiculo_ano'] ?>">
+                </div>
 
-                <label>Chassi:</label>
-                <select name="fk_chassi_id">
-                    <?php foreach ($chassis as $chassi): ?>
-                        <option value="<?= $chassi['chassi_id'] ?>" <?= ($chassi['chassi_id'] == $veiculos['fk_Chassi_id']) ? 'selected' : '' ?>>
-                        <?= htmlspecialchars($chassi['chassi_desc']) ?>
+                <div class="form-group">
+                    <label>Chassi:</label>
+                    <select name="fk_chassi_id">
+                        <?php foreach ($chassis as $chassi): ?>
+                            <option value="<?= $chassi['chassi_id'] ?>" <?= ($chassi['chassi_id'] == $veiculos['fk_Chassi_id']) ? 'selected' : '' ?>>
+                            <?= htmlspecialchars($chassi['chassi_desc']) ?>
+                        </option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Cor:</label>
+                    <select name="fk_cor_id">
+                    <?php foreach ($cores as $cor): ?>
+                        <option value="<?= $cor['cor_id'] ?>" <?= isset($veiculos) && $cor['cor_id'] == $veiculos['fk_Cor_id'] ? 'selected' : '' ?>><?= htmlspecialchars($cor['cor_desc']) ?>
+                        </option>
+                    <?php endforeach; ?>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Combustível:</label>
+                    <select name="fk_combustivel_id">
+                    <?php foreach ($combustiveis as $comb): ?>
+                        <option value="<?= $comb['comb_id'] ?>" <?= isset($veiculos) && $comb['comb_id'] == $veiculos['fk_combustivel_id'] ? 'selected' : '' ?>>
+                            <?= htmlspecialchars($comb['comb_desc']) ?>
                     </option>
                     <?php endforeach; ?>
-                </select>
-                <br>
+                    </select>
+                </div>
 
-                <label>Cor:</label>
-                <select name="fk_cor_id">
-                <?php foreach ($cores as $cor): ?>
-                    <option value="<?= $cor['cor_id'] ?>" <?= isset($veiculos) && $cor['cor_id'] == $veiculos['fk_Cor_id'] ? 'selected' : '' ?>><?= htmlspecialchars($cor['cor_desc']) ?>
-                    </option>
-                <?php endforeach; ?>
-                </select>
-                <br>
+                <div class="form-group">
+                    <label>Status:</label>
+                    <select name="anuncio_status" required>
+                        <?php foreach ($opcoes_status as $status): ?>
+                        <option value="<?= htmlspecialchars($status) ?>" <?= ($status == $item['anuncio_status']) ? 'selected' : '' ?>>
+                            <?= htmlspecialchars(ucfirst($status)) ?>
+                        </option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
 
-                <label>Combustível:</label>
-                <select name="fk_combustivel_id">
-                <?php foreach ($combustiveis as $comb): ?>
-                    <option value="<?= $comb['comb_id'] ?>" <?= isset($veiculos) && $comb['comb_id'] == $veiculos['fk_combustivel_id'] ? 'selected' : '' ?>>
-                        <?= htmlspecialchars($comb['comb_desc']) ?>
-                </option>
-                <?php endforeach; ?>
-                </select>
-                <br>
+                <div class="form-group"><label>Quilometragem:</label><input type="number" name="veiculo_quilometragem" required value="<?= $veiculos['veiculo_quilometragem'] ?>"></div>
+                <div class="form-group"><label>Versão:</label><input type="text" name="veiculo_versao" required value="<?= $veiculos['veiculo_versao'] ?>"></div>
+                <div class="form-group"><label>Sobre Este Veiculo</label><textarea name="anuncio_desc" rows="4"><?= $item['anuncio_desc'] ?></textarea></div>
+                <div class="form-group"><label>Preço:</label><input type="number" name="anuncio_valor" step="0.01" required value="<?= $item['anuncio_valor'] ?>"></div>
 
-                <label>Status:</label>
-                <select name="anuncio_status" required>
-                    <?php foreach ($opcoes_status as $status): ?>
-                    <option value="<?= htmlspecialchars($status) ?>" <?= ($status == $item['anuncio_status']) ? 'selected' : '' ?>>
-                        <?= htmlspecialchars(ucfirst($status)) ?>
-                    </option>
-                    <?php endforeach; ?>
-                </select>
-                <br>
-
-                <label>Quilometragem:</label>
-                <input type="number" name="veiculo_quilometragem" required value="<?= $veiculos['veiculo_quilometragem'] ?>"><br>
-
-                <label>Versão:</label>
-                <input type="text" name="veiculo_versao" required value="<?= $veiculos['veiculo_versao'] ?>"><br>
-
-                <label>Sobre Este Veiculo</label>
-                <textarea name="anuncio_desc" rows="4"><?= $item['anuncio_desc'] ?></textarea><br>
-
-                <label>Preço:</label>
-                <input type="number" name="anuncio_valor" step="0.01" required value="<?= $item['anuncio_valor'] ?>"><br>
-
-                <input type="submit" value="Salvar Alterações" name="editar_anuncio">
-            </form>
+                <div class="form-actions">
+                    <a href="javascript:history.back()" class="btn btn-secondary">Cancelar</a>
+                    <input type="submit" value="Salvar Alterações" name="editar_anuncio" class="btn btn-primary">
+                </div>
+                </form>
+            </div>
         </div>
             
     <?php } else { echo "<p>Anúncio não encontrado.</p>"; }
@@ -329,10 +421,11 @@ if (isset($_GET['usuario_id'])) {
 
 // --- CASO NENHUM ITEM SEJA SELECIONADO ---
 } else {
-    echo "<h1>Nenhum item selecionado</h1><p>Por favor, selecione um item para editar.</p>";
+    echo "<div class='card'><div class='card-body' style='text-align: center;'><h2>Nenhum item selecionado</h2><p>Por favor, selecione um item para editar a partir da página anterior.</p></div></div>";
 }
 ?>
 
+</div>
 <script src="../JS/js-functions.js"></script>
 </body>
 </html>

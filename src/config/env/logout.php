@@ -76,6 +76,10 @@ function login(array $usuario): void {
     }
     
     session_start();
+    // Garante que a sessão está ativa
+    if (session_status() == PHP_SESSION_NONE) session_start();
+    // Limpa todos os dados da sessão anterior
+    session_unset();
     $_SESSION['user_id'] = (int)$usuario['usuario_id'];
     $_SESSION['user_name'] = $usuario['usuario_nome'];
     $_SESSION['user_level'] = $usuario['usuario_nivel_de_acesso'];

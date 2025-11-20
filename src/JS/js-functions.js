@@ -1,7 +1,7 @@
 const inputValorVisivel = document.getElementById('valor-formatado');
 
-function toggleSenha() {
-    const campo = document.getElementById("senha");
+function toggleSenha(inputId) {
+    const campo = document.getElementById(inputId);
     campo.type = (campo.type === "password") ? "text" : "password";
 }
 
@@ -9,8 +9,9 @@ function toggleSenha() {
    FUNÇÃO DE MÁSCARA E VERIFICAÇÃO DE DOCUMENTO
    ============================================== */
 function maskAndVerifyDocumento(input) {
-    // 1. Pega o elemento de resultado
-    const resultado = document.getElementById('resultado');
+    // 1. Pega os elementos da janela de feedback
+    const popup = document.getElementById('doc-feedback-popup');
+    const textoFeedback = document.getElementById('feedback-text');
 
     // 2. Remove tudo que não for número
     let v = input.value.replace(/\D/g, '');
@@ -42,19 +43,25 @@ function maskAndVerifyDocumento(input) {
     // 4. Devolve o valor formatado para o input
     input.value = resultFormatado;
 
-    // 5. Atualiza o texto de feedback
+    // 5. Mostra a janela e atualiza o texto e a cor
+    popup.classList.add('visible');
+    popup.classList.remove('status-success', 'status-error', 'status-neutral'); // Limpa status antigos
+
     if (v.length === 11) {
-        resultado.textContent = "CPF válido em tamanho.";
-        resultado.style.color = "green";
+        textoFeedback.textContent = "CPF válido em tamanho.";
+        popup.classList.add('status-success');
     } else if (v.length === 14) {
-        resultado.textContent = "CNPJ válido em tamanho.";
-        resultado.style.color = "green";
+        textoFeedback.textContent = "CNPJ válido em tamanho.";
+        popup.classList.add('status-success');
     } else if (v.length === 0) {
-        resultado.textContent = "Seu número de cadastro:";
-        resultado.style.color = "orange";
+        textoFeedback.textContent = "Digite seu CPF ou CNPJ para validação.";
+        popup.classList.add('status-neutral');
+    } else if (v.length > 0) {
+        textoFeedback.textContent = "Documento inválido! Faltando dígitos.";
+        popup.classList.add('status-error');
     } else {
-        resultado.textContent = "Documento inválido! (Faltando dígitos).";
-        resultado.style.color = "red";
+        // Esconde o popup se o campo estiver vazio e não focado
+        popup.classList.remove('visible');
     }
 }
 
@@ -121,3 +128,37 @@ document.addEventListener('DOMContentLoaded', function() {
         marcaSelect.addEventListener('change', carregarModelos);
     }
 });
+
+/* ==============================================
+   LÓGICA DO CARROSSEL DE IMAGENS (PÁGINA card.php)
+   ============================================== */
+let currentImageIndex = 0;
+
+// Função para mostrar uma imagem específica pelo índice
+function showImage(index) {
+    const mainImage = document.getElementById('main-image');
+    const thumbnails = document.querySelectorAll('.thumbnail');
+
+    // Proteção para caso não haja imagens
+    if (!images || images.length === 0) return;
+
+    // Garante que o índice seja válido
+    if (index >= images.length) index = 0;
+    if (index < 0) index = images.length - 1;
+
+    // Atualiza a imagem principal
+    mainImage.src = images[index];
+
+    // Atualiza a classe 'active' nas miniaturas
+    thumbnails.forEach(thumb => thumb.classList.remove('active'));
+    if (thumbnails[index]) {
+        thumbnails[index].classList.add('active');
+    }
+
+    currentImageIndex = index;
+}
+
+// Função para os botões "próximo" e "anterior"
+function changeImage(direction) {
+    showImage(currentImageIndex + direction);
+}

@@ -12,23 +12,13 @@ if (estaLogado()) {
 <html lang="pt-br">
 <head>
     <!-- Head copiado do seu index.php para manter os estilos -->
-    <link rel="stylesheet" href="src/css/index.css">
+    <link rel="stylesheet" href="src/css/login.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="icon" type="image/png" href="src/img/ac icon.png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login ou Cadastro - Autochase</title>
 
-    <!-- Estilo extra para esta página -->
-    <style>
-        .login-page-wrapper {
-            display: flex;
-            flex-direction: column;
-            align-items: center; /* Centraliza o container de login */
-            gap: 40px; /* Espaço entre os dois formulários */
-            padding: 40px 0;
-        }
-    </style>
 </head>
 <body>
 
@@ -41,7 +31,7 @@ if (estaLogado()) {
     </div>
     <div class="header-center">
         <nav class="nav-links">
-            <a href="comprar.php">Comprar</a>
+            <a href="src/routes/compra.php">Comprar</a>
             <a href="src/routes/anuncio.php">Anunciar</a>
         </nav>
     </div>
@@ -79,7 +69,7 @@ if (estaLogado()) {
             <h1>Acessar sua conta</h1>
             
             <?php if (isset($_GET['status']) && $_GET['status'] === 'loginfailed'): ?>
-                <!-- Mensagem de erro estilizada -->
+                
                 <h3 id="resultado" style="color: red; text-align:center;">E-mail ou senha incorretos.</h3>
             <?php endif; ?>
 
@@ -88,9 +78,10 @@ if (estaLogado()) {
                 <div class="senha-container">
                     <!-- ID único para a senha de login (caso precise do "olho" aqui também) -->
                     <input type="password" id="senha_login" name="usuario_senha" placeholder="Sua senha" required>
+                    <button type="button" onclick="toggleSenha('senha_login')"><i class="fa fa-eye"></i></button>
                 </div>
-                <!-- Botão de submit estilizado -->
-                <input type="submit" value="Entrar" name="login_usuario" class="submit">
+                
+                <input type="submit" value="Entrar" name="login_usuario">
             </div>
 
             <p style="text-align: center; margin-top: 20px; color: #fff;">
@@ -101,8 +92,6 @@ if (estaLogado()) {
 
 </div><!-- Fim do .login-page-wrapper -->
 
-<!-- Script necessário para as máscaras do formulário de cadastro -->
 <script src="src/JS/js-functions.js"></script>
-
 </body>
 </html>
