@@ -1,0 +1,160 @@
+/* ==============================================
+   Estilos para o Painel de Admin
+   ============================================== */
+
+/* 1. Container Principal
+---------------------------------------------- */
+.admin-panel {
+    background-color: #f0f2f5;
+    padding: 20px;
+    border-radius: 8px;
+    margin: 20px auto;
+    max-width: 1200px;
+}
+
+.admin-panel h2 {
+    color: #333;
+    font-size: 1.5rem;
+    margin-top: 30px;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+/* 2. Cards para os Formulários de Adição
+---------------------------------------------- */
+.admin-card {
+    background-color: #fff;
+    border: 1px solid #e1e4e8;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+.admin-card form {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 15px;
+}
+
+.admin-card .form-group {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 150px; /* Evita que os campos fiquem muito espremidos */
+}
+
+.admin-card label {
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+.admin-card input[type="text"],
+.admin-card input[type="number"] {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-family: 'Creato Display', sans-serif;
+    font-size: 1rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.admin-card input[type="text"]:focus,
+.admin-card input[type="number"]:focus {
+    outline: none;
+    border-color: #00AFF0;
+    box-shadow: 0 0 0 2px rgba(0, 175, 240, 0.2);
+}
+
+/* Botão de submit com o estilo do login.php */
+.admin-card button {
+    padding: 10px 20px;
+    border-radius: 8px;
+    background-color: #fff;
+    color: #00AFF0;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    border: 1px solid #00AFF0;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    height: 42px; /* Mesma altura dos inputs */
+}
+
+.admin-card button:hover {
+    background-color: #00AFF0;
+    color: #ffffff;
+}
+
+/* 3. Estilização das Tabelas
+---------------------------------------------- */
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 0.9em;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+    background-color: #fff;
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+.admin-table thead tr {
+    background-color: #6bbddb; /* Cor do header principal */
+    color: #ffffff;
+    text-align: left;
+    font-weight: bold;
+}
+
+.admin-table th,
+.admin-table td {
+    padding: 12px 15px;
+    word-break: break-word;
+}
+
+.admin-table tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+.admin-table tbody tr:nth-of-type(even) {
+    background-color: #f8f9fa;
+}
+
+.admin-table tbody tr:last-of-type {
+    border-bottom: 2px solid #6bbddb;
+}
+
+.admin-table tbody tr:hover {
+    background-color: #eaf8ff;
+}
+
+/* 4. Ações nas Tabelas (Editar/Deletar)
+---------------------------------------------- */
+.admin-table .action-edit {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.admin-table .action-edit:hover {
+    text-decoration: underline;
+}
+
+.admin-table .action-delete {
+    background: none;
+    border: none;
+    color: #e74c3c;
+    cursor: pointer;
+    font-weight: bold;
+    padding: 0;
+    font-family: 'Creato Display', sans-serif;
+    font-size: inherit;
+}
+
+.admin-table .action-delete:hover {
+    text-decoration: underline;
+    color: #c0392b;
+}

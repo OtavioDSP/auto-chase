@@ -45,7 +45,9 @@ header {
 }
 
 /* --- Esquerda (Logo) --- */
-.header-left .logo {
+/* CORREÇÃO: Seletor ajustado para ser mais específico e consistente com anuncio.css */
+/* Isso garante que a logo DENTRO do header tenha 30px, e não afete outras logos. */
+.header-left a .logo {
     height: 30px;
     display: block; /* Remove espaço extra de imagem */
 }
@@ -102,150 +104,186 @@ header {
     transition: background-color 0.2s ease;
 }
 
+/*
+ * CORREÇÃO: Garante que o botão "Sair" (que é um <button>)
+ * tenha o mesmo tamanho e estilo do link "Login" (que é um <a>).
+*/
+button.btn-login {
+    padding: 8px 16px;
+    font-size: 16px; /* Mesma fonte dos links de navegação */
+    font-family: 'Creato Display', sans-serif;
+}
+
 .btn-login:hover {
     background-color: #f0f0f0; /* Um cinza claro no hover */
 }
 
 /* ==============================================
-   4. Componente: Formulário de Login
+   4. Filtro de Busca de Veículos
    ============================================== */
+.search-filter-panel {
+    background-color: #fff;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    margin: 40px auto;
+    max-width: 1200px;
+}
 
-/* --- O Container Principal --- */
-.login-container {
+.search-filter-panel h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.search-filter-panel form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    align-items: flex-end;
+}
+
+.filter-group {
     display: flex;
     flex-direction: column;
-    align-items: center; /* Centraliza os itens (logo, H1, .form) */
-
-    margin: 3% auto 0 auto; /* Simplificado */
-    padding: 18px;
-
-    width: 100%;
-    min-width: 200px;
-    max-width: 350px;
-
-    background: #6bbddb;
-    border-radius: 9px;
-    box-shadow: 0 0 8px rgba(255, 255, 255, 0.1);
+    gap: 5px;
+    flex: 1 1 160px; /* Largura base para campos de seleção simples */
 }
 
-.login-container:hover {
-    min-width: 250px; 
-    max-width: 550px;
-    transition: 0.5s ease;
+/* Classe para os campos duplos (ano e preço) */
+.filter-group.filter-group--wide {
+    flex-basis: 200px;
 }
 
-.login-container h5 {
-    text-align: center;
-}
-
-/* --- O Bloco do Formulário (.form) --- */
-.form {
-    display: flex;
-    flex-direction: column;
-    gap: 0px; /* 'margin' nos inputs vai controlar o espaço */
-
-    width: 100%;
-    max-width: 190px; /* CORRIGIDO: Ajustei para 190px (igual aos inputs) */
-    min-width: 10px; /* (Isto não é realmente necessário) */
-    position: relative;
-    right: 20px;
-    /* REMOVIDO: O 'position: relative' e 'right: 20px' 
-       pois o 'align-items: center' no pai já centraliza o bloco. */
-    
-    border-radius: 14px;
-}
-
-.form:hover {
-    max-width: 190px; /* Mantido igual, pois já é o padrão */
-    transition: 0.5s ease;
-    border-radius: 8px;
-}
-
-.form h3 {
-    text-align: center;
-    /* CORRIGIDO: 'size-adjust' não existe. 
-       Você provavelmente queria 'font-size'. */
-    font-size: 1.2rem;
-    padding-left: 11%;
-}
-
-/* --- Inputs Gerais & Senha --- */
-.form input, .form select {
-    width: 100%;
-    max-width: 190px;
-    padding: 14px;
-    margin: 8px 0px; /* Controla o espaço entre os inputs */
-    
-    /* REMOVIDO: 'max-height: 13px' conflitava com 'padding: 14px'. */
-
-    
-    background-color: #ffffff;
-    border: 1px solid #444;
-    color: #2e2e2e;
-    border-radius: 8px;
-    transition: border 0.3s ease, background 0.3s ease, transform 0.3s ease;
-  
-    
-    font-size: 14px;
-    font-family: 'Creato Display';
-}
-.form input[name="usuario_nome"]:hover,
-.form input[type="text"]:hover,
-.form input[type="email"]:hover,
-.form select:hover,
-.senha-container:hover {
-    transform: scale(1.025);
-}
-.senha-container {
-    position: relative;
-    /* display: inline-block; (Desnecessário no flex column) */
-    width: 100%; /* Garante que ocupe o espaço */
-    max-width: 190px;
-    
-}
-/* O input de senha dentro do container precisa de ajustes
-   para o botão não ficar por cima de um input "menor" */
-.senha-container input {
-    width: 100%; /* Ocupa 100% do container */
-}
-.senha-container button {
-    position: absolute;
-    right: 5px;
-    top: 50%;
-    transform: translateY(-50%);
-    border: none;
-    background: none;
-    cursor: pointer;
-}
-
-#resultado {
-    align-items: center;
+.filter-group label {
     font-weight: bold;
-    margin-top: 5px;
-    text-align: center; /* Adicionado para centralizar */
-    font-size: 0.9rem;  /* Adicionado para consistência */
+    font-size: 0.9rem;
+    color: #555;
 }
 
-/* --- Botão Submit --- */
-.form input[type="submit"] {
+.filter-group input,
+.filter-group select {
     width: 100%;
-    max-width: 190px; /* Mantido igual aos outros */
-    display:flex;
-    position: relative;
     padding: 10px;
-    margin: 8px 0px;
-    left:7%;
-    border-radius: 14px;
-    background-color: #fff2f2;
-    color: #000000;
-    font-weight: bold;
-    font-size: 14px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-family: 'Creato Display', sans-serif;
+    font-size: 1rem;
+    box-sizing: border-box;
 }
 
-.form input[type="submit"]:hover {
-    background-color: #ffffff;
-    color: #6bdcff;
-    transform: scale(1.02);
+.filter-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.filter-buttons button,
+.filter-buttons a {
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-weight: bold;
+    text-decoration: none;
+    cursor: pointer;
+    text-align: center;
+}
+
+.filter-buttons button {
+    background-color: #fff; /* Estilo claro que você pediu */
+    color: #00AFF0;
+    border: 1px solid #00AFF0;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.filter-buttons button:hover {
+    background-color: #00AFF0; /* Inverte no hover */
+    color: #fff;
+}
+
+.filter-buttons a {
+    background-color: #95a5a6; /* Um cinza mais suave e moderno */
+    color: white;
+    border: 1px solid #95a5a6;
+    transition: background-color 0.2s ease;
+}
+
+.filter-buttons a:hover {
+    background-color: #7f8c8d; /* Escurece um pouco no hover */
+}
+
+/* ==============================================
+   5. Grid de Anúncios
+   ============================================== */
+.ad-grid-container {
+    max-width: 1200px;
+    margin: 40px auto;
+}
+
+.ad-grid-container h2 {
+    color: #333;
+}
+
+.ad-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 25px;
+}
+
+/* Remove a decoração de link padrão do card */
+.ad-card-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.ad-card {
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.ad-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+}
+
+.ad-card .ad-image {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
+
+.ad-card .ad-content {
+    padding: 15px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.ad-card .ad-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #333;
+    margin: 0 0 5px 0;
+}
+
+.ad-card .ad-version {
+    font-size: 0.9rem;
+    color: #777;
+    margin-bottom: 15px;
+}
+
+.ad-card .ad-price {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #00AFF0;
+    margin-top: auto; /* Empurra o preço para o final do card */
+}
+
+.ad-card .ad-details {
+    font-size: 0.8rem;
+    color: #999;
+    margin-top: 10px;
 }

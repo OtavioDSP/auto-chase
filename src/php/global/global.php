@@ -223,7 +223,6 @@ if (isset($_POST['login_usuario'])) {
         $_POST['marca_desc'],
         $conexao
     );
-    $marca->insereMarca();
     $idRetornado = $marca->insereMarca();
     $modelo = new Modelo(
         null,
@@ -285,6 +284,10 @@ if (isset($_POST['login_usuario'])) {
         $conexao
     );
     $modelo->editarModelo();
+} else if (isset($_POST['deletar_modelo'])) {
+    if (!eAdmin()) { exit("Acesso negado."); }
+    $modelo = new Modelo($_POST['modelo_id'], null, null, null, $conexao);
+    $modelo->deletarModelo();
 }
 
 // Após a execução da ação, redireciona para a página inicial para evitar reenvio do formulário.

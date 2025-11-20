@@ -1,0 +1,120 @@
+/* ==============================================
+   Estilos para a Página de Compra
+   ============================================== */
+
+/* 1. Layout Principal
+---------------------------------------------- */
+.comprar-page-container {
+    display: flex;
+    gap: 30px;
+    max-width: 1400px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+/* 2. Barra Lateral de Filtros
+---------------------------------------------- */
+.filters-sidebar {
+    flex: 0 0 280px; /* Não cresce, não encolhe, base de 280px */
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    
+    /* Faz a barra lateral "grudar" no topo ao rolar */
+    position: sticky;
+    top: 20px; /* Distância do topo da página */
+    align-self: flex-start; 
+}
+
+.filters-sidebar h3 {
+    margin-top: 0;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.filters-sidebar form .filter-group {
+    margin-bottom: 20px;
+}
+
+.filters-sidebar form .filter-group label {
+    font-weight: bold;
+    font-size: 0.9rem;
+    color: #555;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.filters-sidebar form input,
+.filters-sidebar form select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-family: 'Creato Display', sans-serif;
+    font-size: 1rem;
+    box-sizing: border-box;
+}
+
+.filters-sidebar .dual-input {
+    display: flex;
+    gap: 10px;
+}
+
+.filters-sidebar .filter-buttons {
+    display: flex;
+    flex-direction: row; /* Coloca os botões lado a lado */
+    gap: 10px; 
+    margin-top: 20px;
+}
+
+.filters-sidebar .filter-buttons button,
+.filters-sidebar .filter-buttons a {
+    width: 100%;
+    padding: 12px;
+    border-radius: 6px;
+    font-weight: bold;
+    text-decoration: none;
+    cursor: pointer;
+    text-align: center;
+    font-size: 1rem;
+}
+
+.filters-sidebar .filter-buttons button {
+    /* Estilo do botão de login */
+    background-color: #fff;
+    color: #00AFF0;
+    border: 1px solid #00AFF0;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+.filters-sidebar .filter-buttons button:hover {
+    /* Inverte no hover */
+    background-color: #00AFF0;
+    color: #ffffff;
+}
+
+.filters-sidebar .filter-buttons a {
+    background-color: #95a5a6;
+    color: white;
+    border: 1px solid #95a5a6;
+    transition: background-color 0.2s ease;
+}
+.filters-sidebar .filter-buttons a:hover {
+    background-color: #7f8c8d;
+}
+
+/* 3. Grid de Resultados
+---------------------------------------------- */
+.results-grid {
+    flex: 1; /* Ocupa o resto do espaço */
+}
+
+/* Responsividade */
+@media (max-width: 900px) {
+    .comprar-page-container {
+        flex-direction: column;
+    }
+    .filters-sidebar {
+        flex-basis: auto; /* Permite que a sidebar ocupe a largura total */
+    }
+}

@@ -66,7 +66,7 @@ class Anuncio {
             cor.cor_desc, -- ADICIONADO (DESCRIÇÃO DA COR)
 
             -- Foto do anúncio
-            imagem.imagem_url,
+            MAX(imagem.imagem_url) as imagem_url,
             -- Usuário que criou o anúncio
             usuario.usuario_nome,
             
@@ -116,6 +116,9 @@ class Anuncio {
         inner join imagem
             on anuncio.anuncio_id = imagem.fk_anuncio_id
     ";
+
+    // --- LÓGICA DE FILTROS DINÂMICOS ---
+    $where = [];
     
     // --- LÓGICA DE FILTROS DINÂMICOS ---
     $where = [];
@@ -174,6 +177,9 @@ class Anuncio {
         $sql .= " WHERE " . implode(' AND ', $where);
     }
 
+    // Agrupa os resultados pelo ID do anúncio para evitar duplicatas
+    $sql .= " GROUP BY anuncio.anuncio_id ORDER BY anuncio.anuncio_data_de_criacao DESC";
+
     // Preparação e execução
     $stmt = $this->conexao->prepare($sql);
     if (!empty($params)) {
@@ -216,6 +222,34 @@ class Anuncio {
         $result = $stmt->get_result();
         return $result->fetch_assoc();
     }
+
+    public function buscarAnuncioDetalhadoPorId($anuncio_id) {
+        $sql = "
+            SELECT 
+                anuncio.anuncio_id, anuncio.anuncio_desc, anuncio.anuncio_valor, anuncio.anuncio_status,
+                veiculo.veiculo_versao, veiculo.veiculo_quilometragem, veiculo.veiculo_ano,
+                modelo.modelo_desc,
+                marca.marca_desc,
+                cor.cor_desc,
+                combustivel.comb_desc,
+                usuario.usuario_nome
+            FROM anuncio
+            INNER JOIN veiculo ON anuncio.fk_veiculo_id = veiculo.veiculo_id
+            INNER JOIN modelo ON veiculo.fk_modelo_id = modelo.modelo_id
+            INNER JOIN marca ON modelo.fk_marca_id = marca.marca_id
+            INNER JOIN cor ON veiculo.fk_cor_id = cor.cor_id
+            INNER JOIN combustivel ON veiculo.fk_combustivel_id = combustivel.comb_id
+            INNER JOIN usuario ON anuncio.fk_usuario_id = usuario.usuario_id
+            WHERE anuncio.anuncio_id = ?
+            LIMIT 1
+        ";
+        $stmt = $this->conexao->prepare($sql);
+        $stmt->bind_param('i', $anuncio_id);
+        $stmt->execute();
+        $resultado = $stmt->get_result();
+        return $resultado->fetch_assoc();
+    }
+
     // Em: class-anuncio.php
 
 public static function buscarOpcoesEnum($conexao, $coluna) {
