@@ -59,7 +59,7 @@ $filtro_preco_max = $_GET['preco_max'] ?? '';
     </div>
     <div class="header-right">
         <?php if (estaLogado()): ?>
-            <a href="../../chat.php" class="nav-link-icon"><i class="fas fa-comment"></i></a>
+            <a href="meus-anuncios.php" class="nav-link-icon">Meus Anúncios</a>
             <a href="edits.php?usuario_id=<?= htmlspecialchars($_SESSION['user_id']) ?>" class="nav-link-icon">Minha Conta</a>
             <form action="../php/global/global.php" method="post" style="display:inline; margin:0;">
                 <button type="submit" name="logout_usuario" class="btn-login" style="border:none;">Sair</button>
@@ -132,12 +132,12 @@ $filtro_preco_max = $_GET['preco_max'] ?? '';
                 foreach ($anuncioArray as $anuncio): ?>
                     <a href="card.php?anuncio_id=<?= $anuncio['anuncio_id'] ?>" class="ad-card-link">
                         <div class="ad-card">
-                            <img src="<?= htmlspecialchars($anuncio['imagem_url']) ?>" alt="Foto do veículo" class="ad-image">
+                            <img src="../<?= htmlspecialchars(ltrim($anuncio['imagem_url'], 'src/')) ?>" alt="Foto do veículo" class="ad-image">
                             <div class="ad-content">
                                 <h3 class="ad-title"><?= htmlspecialchars($anuncio['marca_desc'] . ' ' . $anuncio['modelo_desc']) ?></h3>
                                 <p class="ad-version"><?= htmlspecialchars($anuncio['veiculo_versao']) ?></p>
-                                <p class="ad-price">R$ <?= number_format($anuncio['anuncio_valor'], 2, ',', '.') ?></p>
-                                <p class="ad-details"><?= htmlspecialchars($anuncio['veiculo_ano']) ?> &bull; <?= htmlspecialchars($anuncio['veiculo_quilometragem']) ?> km</p>
+                                <p class="ad-price">R$ <?= number_format($anuncio['anuncio_valor'], 0, ',', '.') ?></p>
+                                <p class="ad-details"><?= htmlspecialchars($anuncio['veiculo_ano']) ?> &bull; <?= number_format($anuncio['veiculo_quilometragem'], 0, ',', '.') ?> km</p>
                             </div>
                         </div>
                     </a>

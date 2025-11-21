@@ -32,3 +32,10 @@ seguinte agora craque, tem um arquivo chamado compra.php no routes tbm, que eu q
 
 
 abandonem toda a esperança de vcs 
+
+
+arrumar o filtros na compra.php
+arrumar os selects feios pra krl
+ajeitar todas marcas, modelos e anuncios, serão cerca de 125 anuncios no total
+criar barra inferior com informacoes gerais.
+se sobrar tempo criar um classe-cambio kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk

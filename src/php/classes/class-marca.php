@@ -97,7 +97,7 @@
             // Ou 'null' se nenhum usuário for encontrado
             return $result->fetch_assoc();
         }
-        public function buscarMarcaPorDesc($marca_desc) {
+        public function buscarMarcaPorDescricao($marca_desc) {
             $sql = "SELECT * FROM marca WHERE marca_desc = ?";
             
             $stmt = $this->conexao->prepare($sql);

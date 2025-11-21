@@ -62,6 +62,7 @@ if (!estaLogado()) {
 <head>
     <meta charset="UTF-8">
     <title>Criar Anúncio</title>
+    <link rel="stylesheet" href="../css/index.css"> <!-- Estilo base do header -->
     <link rel="stylesheet" href="../css/anuncio.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="icon" type="image/png" href="../img/ac icon.png">
@@ -83,8 +84,8 @@ if (!estaLogado()) {
         <div class="header-right">
             <?php if (estaLogado()): ?>
                 <!-- Mostra as opções do usuário logado -->
-                <a href="../../chat.php" class="nav-link-icon">
-                    <i class="fas fa-comment"></i> 
+                <a href="meus-anuncios.php" class="nav-link-icon">
+                    Meus Anúncios
                 </a>
                 <!-- 3. CORREÇÃO: Caminho do link "Minha Conta" ajustado -->
                 <a href="edits.php?usuario_id=<?= htmlspecialchars($_SESSION['user_id']) ?>" class="nav-link-icon">
@@ -102,11 +103,10 @@ if (!estaLogado()) {
         </div>
     </header>
 
-    <h2>Criar novo anúncio</h2>
-
     <!-- CORREÇÃO: Adicionada a classe "form-anuncio" para que o CSS aplique o estilo de card apenas a este formulário. -->
     <form action="../php/global/global.php" method="POST" enctype="multipart/form-data" class="form-anuncio">
-        <p>Imagem:</p>
+        <h2>Criar novo anúncio</h2>
+        <label>Imagem:</label>
         <input type="file" name="img[]" multiple>
         <br>
         <br>

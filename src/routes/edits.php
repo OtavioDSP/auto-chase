@@ -54,9 +54,9 @@ include_once '../php/classes/class-imagem.php';
     <div class="header-right">
         
         <?php if (estaLogado()): ?>
-            
-            <a href="../../chat.php" class="nav-link-icon">
-                <i class="fas fa-comment"></i> 
+
+            <a href="meus-anuncios.php" class="nav-link-icon">
+                Meus Anúncios
             </a>
 
             <a href="edits.php?usuario_id=<?= htmlspecialchars($_SESSION['user_id']) ?>" class="nav-link-icon">
@@ -233,7 +233,9 @@ if (isset($_GET['usuario_id'])) {
                     <input type="hidden" name="modelo_id" value="<?= $item['modelo_id'] ?>">
                     <div class="form-group"><label>Descrição do Modelo:</label><input type="text" name="modelo_desc" value="<?= htmlspecialchars($item['modelo_desc']) ?>" required></div>
                     <div class="form-group"><label>Valor FIPE:</label>
+                        <!-- CORREÇÃO: O campo visível (para o usuário) não tem 'name' -->
                         <input type="text" oninput="formatarMoeda(this)" value="<?= number_format($item['modelo_valor_fipe'], 2, ',', '.') ?>" required>
+                        <!-- O valor real para o banco é enviado por este campo escondido -->
                         <input type="hidden" name="modelo_valor_fipe" id="valorBanco" value="<?= $item['modelo_valor_fipe'] ?>">
                     </div>
                     <div class="form-group">

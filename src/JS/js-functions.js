@@ -66,18 +66,14 @@ function maskAndVerifyDocumento(input) {
 }
 
 
-function formatarMoeda(element) {
-    let valor = element.value.replace(/\D/g, '');
-    if (valor === "") {
-        element.value = "";
-        return;
-    }
-    let valorNumerico = parseInt(valor) / 100;
-    let valorFormatado = new Intl.NumberFormat('pt-BR', {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
-    }).format(valorNumerico);
-    element.value = valorFormatado;
+function formatarMoeda(input) {
+    let valor = input.value.replace(/\D/g, '');
+    valor = (valor/100).toFixed(2) + '';
+    let valorParaBanco = valor; // Salva o formato numérico (ex: 45000.00)
+    valor = valor.replace('.', ',');
+    valor = valor.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    input.value = valor; // Atualiza o campo visível (ex: 45.000,00)
+    input.parentNode.querySelector('#valorBanco').value = valorParaBanco; // Atualiza o campo escondido
 }
 
 function carregarModelos() {
@@ -162,3 +158,106 @@ function showImage(index) {
 function changeImage(direction) {
     showImage(currentImageIndex + direction);
 }
+
+/* ==============================================
+   Lógica do Lightbox Modal para a página card.php
+   ============================================== */
+
+let slideIndex = 1;
+
+// Função para abrir o lightbox
+function openLightbox(n) {
+    const modal = document.getElementById('lightbox-modal');
+    if (!modal) return; // Só executa se o modal existir na página
+
+    modal.style.display = "flex"; // Usa flex para centralizar
+    
+    // Cria as miniaturas dinamicamente
+    const thumbnailContainer = document.getElementById('lightbox-thumbnail-container');
+    thumbnailContainer.innerHTML = ''; // Limpa antes de adicionar
+    images.forEach((imgSrc, index) => {
+        const thumb = document.createElement('img');
+        thumb.src = imgSrc;
+        thumb.className = 'lightbox-thumbnail';
+        thumb.onclick = () => currentSlide(index + 1);
+        thumbnailContainer.appendChild(thumb);
+    });
+
+    showSlides(slideIndex = n + 1);
+}
+
+// Função para fechar o lightbox
+function closeLightbox() {
+    const modal = document.getElementById('lightbox-modal');
+    if (modal) {
+        modal.style.display = "none";
+    }
+}
+
+// Navegação: Próximo/Anterior
+function plusSlides(n) {
+    showSlides(slideIndex += n);
+}
+
+// Navegação: Miniaturas
+function currentSlide(n) {
+    showSlides(slideIndex = n);
+}
+
+// Função principal que mostra o slide
+function showSlides(n) {
+    const modal = document.getElementById('lightbox-modal');
+    if (!modal) return;
+
+    const mainImage = document.getElementById("lightbox-image");
+    const captionText = document.getElementById("lightbox-caption");
+    const thumbnails = document.getElementsByClassName("lightbox-thumbnail");
+
+    if (n > images.length) { slideIndex = 1 }
+    if (n < 1) { slideIndex = images.length }
+
+    // Mostra a imagem principal
+    mainImage.src = images[slideIndex - 1];
+
+    // Atualiza a legenda (ex: "Imagem 2 de 5")
+    captionText.innerHTML = `Imagem ${slideIndex} de ${images.length}`;
+
+    // Remove a classe 'active' de todas as miniaturas
+    for (let i = 0; i < thumbnails.length; i++) {
+        thumbnails[i].className = thumbnails[i].className.replace(" active", "");
+    }
+
+    // Adiciona a classe 'active' na miniatura correspondente
+    thumbnails[slideIndex - 1].className += " active";
+}
+
+/* ==============================================
+   Lógica para mostrar/ocultar telefone na página card.php
+   ============================================== */
+document.addEventListener('DOMContentLoaded', function() {
+    const btnContato = document.getElementById('btn-contato');
+    const sellerNameLine = document.getElementById('seller-name-line');
+
+    if (btnContato && sellerNameLine) {
+        btnContato.addEventListener('click', function() {
+            const telefone = this.getAttribute('data-telefone');
+            const phoneSpan = document.getElementById('seller-phone-span');
+
+            if (phoneSpan) {
+                // Se o telefone já está visível, remove-o
+                phoneSpan.remove();
+                this.textContent = 'Entrar em contato';
+            } else {
+                // Se o telefone não está visível, cria e adiciona
+                if (telefone) {
+                    const spanTelefone = document.createElement('span');
+                    spanTelefone.id = 'seller-phone-span'; // ID para encontrar e remover depois
+                    spanTelefone.innerHTML = ` <span style="margin-left: 30px;"><strong>Telefone:</strong> ${telefone}</span>`;
+                    sellerNameLine.appendChild(spanTelefone);
+
+                    this.textContent = 'Ocultar contato';
+                }
+            }
+        });
+    }
+});

@@ -1,14 +1,10 @@
-/* edits-style.css */
 /* ==============================================
    1. Importações e Declarações de Fonte
    ============================================== */
 
-/* @font-face DEVE sempre vir no TOPO do arquivo */
 @font-face {
     font-family: 'Creato Display';
-    /* Caminho corrigido para 'voltar' da pasta css */
     src: url('../font/CreatoDisplay-Light.otf') format('opentype');
-    /* É melhor usar números (300 = Light) */
     font-weight: 300; 
 }
 /* 
@@ -39,9 +35,6 @@ body {
     line-height: 1.6;
     margin: 0;
 }
-h1{
-    color: #ffffff;
-}
 .container {
     max-width: 800px;
     margin: 2rem auto;
@@ -54,6 +47,7 @@ h1{
 }
 
 .main-header h1 {
+    color: #ffffff;
     margin-bottom: 0.5rem;
 }
 
@@ -129,16 +123,6 @@ h1{
     resize: vertical; /* Permite que o usuário redimensione a altura */
 }
 
-/* Layout em linha para campos menores */
-.form-row {
-    display: flex;
-    gap: 1.5rem;
-}
-
-.form-row .form-group {
-    flex: 1;
-}
-
 /* Estilo para o container da senha com o botão de olho */
 .edit-form .senha-container {
     position: relative;
@@ -193,32 +177,31 @@ h1{
 }
 
 .btn-primary {
-    background-color: var(--primary-color);
-    color: #fff;
+        background-color: #fff;
+    color: #00AFF0;
+    border: 1px solid #00AFF0; /* Adiciona a borda azul */
+
 }
 
 .btn-primary:hover {
-    background-color: #3a82d2;
-}
-
-.btn-secondary {
-    background-color: var(--dark-gray);
+    background-color: #00AFF0; /* Inverte as cores no hover */
     color: #fff;
+}
+.btn-secondary {
+    background-color: #ffffff; /* Mesmo cinza do botão "Limpar" do index */
+    color: #95a5a6;
+    border: 1px solid #95a5a6;
 }
 
 .btn-secondary:hover {
-    background-color: #5a6268;
+    background-color: #7f8c8d;
+    color: #fff; /* Mesmo hover do botão "Limpar" */
 }
 
 /*
  * 6. Responsividade
  */
 @media (max-width: 600px) {
-    .form-row {
-        flex-direction: column;
-        gap: 0;
-    }
-
     .form-actions {
         flex-direction: column;
         gap: 0.75rem;

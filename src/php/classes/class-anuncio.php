@@ -234,17 +234,19 @@ class Anuncio {
             SELECT 
                 anuncio.anuncio_id, anuncio.anuncio_desc, anuncio.anuncio_valor, anuncio.anuncio_status,
                 veiculo.veiculo_versao, veiculo.veiculo_quilometragem, veiculo.veiculo_ano,
-                modelo.modelo_desc,
+                modelo.modelo_desc, modelo.modelo_valor_fipe,
                 marca.marca_desc,
                 cor.cor_desc,
                 combustivel.comb_desc,
-                usuario.usuario_nome
+                chassi.chassi_desc,
+                usuario.usuario_nome, usuario.usuario_telefone
             FROM anuncio
             INNER JOIN veiculo ON anuncio.fk_veiculo_id = veiculo.veiculo_id
             INNER JOIN modelo ON veiculo.fk_modelo_id = modelo.modelo_id
             INNER JOIN marca ON modelo.fk_marca_id = marca.marca_id
             INNER JOIN cor ON veiculo.fk_cor_id = cor.cor_id
             INNER JOIN combustivel ON veiculo.fk_combustivel_id = combustivel.comb_id
+            INNER JOIN chassi ON veiculo.fk_chassi_id = chassi.chassi_id
             INNER JOIN usuario ON anuncio.fk_usuario_id = usuario.usuario_id
             WHERE anuncio.anuncio_id = ?
             LIMIT 1
@@ -327,6 +329,25 @@ public static function buscarOpcoesEnum($conexao, $coluna) {
         }
 
         return $anuncios;
+    }
+
+    public function buscarAnuncioMaisAntigo() {
+        // Busca o anúncio mais antigo que tenha pelo menos uma imagem
+        $sql = "
+            SELECT 
+                anuncio.anuncio_id,
+                (SELECT imagem_url FROM imagem WHERE fk_anuncio_id = anuncio.anuncio_id LIMIT 1) as imagem_url
+            FROM anuncio
+            WHERE 
+                anuncio.anuncio_status = 'ativo' AND
+                EXISTS (SELECT 1 FROM imagem WHERE fk_anuncio_id = anuncio.anuncio_id)
+            ORDER BY anuncio.anuncio_data_de_criacao ASC
+            LIMIT 1
+        ";
+        $stmt = $this->conexao->prepare($sql);
+        $stmt->execute();
+        $resultado = $stmt->get_result();
+        return $resultado->fetch_assoc();
     }
 }
 

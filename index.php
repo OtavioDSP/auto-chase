@@ -6,7 +6,7 @@ require_once 'src/config/env/logout.php';
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <link rel="stylesheet" href="src/css/index.css">
+    <link rel="stylesheet" href="src/css/index.css"> <!-- Caminho já estava correto, garantindo que aponta para o arquivo certo -->
     <link rel="stylesheet" href="src/css/adminpanel.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="icon" type="image/png" href="src/img/ac icon.png">
@@ -31,10 +31,6 @@ require_once 'src/config/env/logout.php';
     <div class="header-right">
         
         <?php if (estaLogado()): ?>
-            
-            <a href="chat.php" class="nav-link-icon">
-                <i class="fas fa-comment"></i> 
-            </a>
 
             <a href="src/routes/meus-anuncios.php" class="nav-link-icon">
                 Meus Anúncios
@@ -70,8 +66,6 @@ require_once 'src/config/env/logout.php';
 
 <br><br><br><br>
 
-<!-- (O restante do seu conteúdo da index, como filtros e anúncios, viria aqui) -->
-
 <!-- (O script JS pode ser necessário aqui se você tiver filtros na index) -->
 <!-- <script src="src/JS/js-functions.js"></script> -->
 
@@ -102,6 +96,7 @@ require_once 'src/config/env/logout.php';
 
     <?php if (eAdmin()): // Conteúdo exclusivo para administradores (lógica do DEVELOP) ?>
     <div class="admin-panel">
+        <h2>Cadastros de Especificações</h2>
         <div class="admin-card">
             <form action="src/php/global/global.php" method="POST">
                 <div class="form-group"><label>Cor</label><input type="text" placeholder="Ex: Preto" name="cor_desc" required></div>
@@ -113,7 +108,7 @@ require_once 'src/config/env/logout.php';
             <form action="src/php/global/global.php" method="POST">
                 <div class="form-group"><label>Marca</label><input type="text" placeholder="Ex: Volkswagen" name="marca_desc" required></div>
                 <div class="form-group"><label>Modelo</label><input type="text" placeholder="Ex: Gol" name="modelo_desc" required></div>
-                <div class="form-group"><label>Valor FIPE</label><input type="number" step="0.01" placeholder="Ex: 45000.00" name="modelo_valor_fipe" required></div>
+                <div class="form-group"><label>Valor FIPE</label><input type="number" step="0.01" placeholder="Ex: 45.000" name="modelo_valor_fipe" required></div>
                 <button type="submit" name="criar_marca_modelo">Adicionar Marca/Modelo</button>
             </form>
         </div>
@@ -157,13 +152,13 @@ require_once 'src/config/env/logout.php';
                 <td><?=$usuario['usuario_doc_cpf_cnpj']?></td>
                 <td><?=$usuario['usuario_nivel_de_acesso']?></td>
                 <td>
+                    <a href="src/routes/edits.php?usuario_id=<?=$usuario['usuario_id'] ?>" class="action-edit">Editar</a>
+                </td>
+                <td>
                     <form method="post" action="src/php/global/global.php" onsubmit="return confirm('Tem certeza que deseja deletar este usuário?');">
                         <input type='hidden' name='usuario_id' value='<?=$usuario['usuario_id']?>'>
                         <input type='submit' name='deletar_usuario' value='Deletar' class="action-delete">
                     </form>
-                </td>
-                <td>
-                    <a href="src/routes/edits.php?usuario_id=<?=$usuario['usuario_id'] ?>" class="action-edit">Editar</a>
                 </td>
             </tr>
             <?php } ?>
@@ -176,9 +171,9 @@ require_once 'src/config/env/logout.php';
             <tr>
                 <th>ID do Veículo</th>
                 <th>Quilometragem</th>
+                <th>Marca</th>
                 <th>Modelo</th>
                 <th>Versão</th>
-                <th>Marca</th>
                 <th>Carroceria</th>
                 <th>Cor</th>
                 <th>Combustivel</th>
@@ -193,61 +188,26 @@ require_once 'src/config/env/logout.php';
             foreach ($veiculosArray as $veiculo): ?>
             <tr>
                 <td><?=$veiculo['veiculo_id']?></td>
-                <td><?=$veiculo['veiculo_quilometragem']?></td>
+                <td><?=number_format($veiculo['veiculo_quilometragem'], 0, ',', '.')?></td>
+                <td><?=$veiculo['marca_desc']?></td>
                 <td><?=$veiculo['modelo_desc']?></td>
                 <td><?=$veiculo['veiculo_versao']?></td>
-                <td><?=$veiculo['marca_desc']?></td>
                 <td><?=$veiculo['chassi_desc']?></td>
                 <td><?=$veiculo['cor_desc']?></td>
                 <td><?=$veiculo['comb_desc']?></td>
                 <td><?=$veiculo['veiculo_ano']?></td>
+                <td>
+                    <a href="src/routes/edits.php?veiculo_id=<?=$veiculo['veiculo_id'] ?>" class="action-edit">Editar</a>
+                </td>
                 <td>
                     <form method="post" action="src/php/global/global.php" onsubmit="return confirm('Tem certeza que deseja deletar este veículo?');">
                         <input type='hidden' name='veiculo_id' value='<?= $veiculo['veiculo_id'] ?>'>
                         <input type='submit' value='Deletar' name="deletar_veiculo" class="action-delete">
                     </form>
                 </td>
-                <td>
-                    <a href="src/routes/edits.php?veiculo_id=<?=$veiculo['veiculo_id'] ?>" class="action-edit">Editar</a>
-                </td>
             </tr>
             <?php endforeach; ?>
         </tbody>
-    </table>
-
-    <h2>Gerenciamento de Modelos</h2>
-    <table class="admin-table">
-        <thead>
-            <tr>
-                <th>ID do modelo</th>
-                <th>Nome do modelo</th>
-                <th>Modelo Fipe</th>
-                <th>Marca do modelo</th>
-                <th colspan="2">Ações</th>
-            </tr> 
-        </thead>
-        <tbody>
-            <?php
-            // $modeloManager já foi instanciado lá em cima
-            $modelosArray = $modeloManager->listarModelo();
-            foreach ($modelosArray as $modelo): 
-            $valor_formatado = number_format($modelo['modelo_valor_fipe'], 2, ',', '.');?>
-            <tr>
-                <td><?=$modelo['modelo_id']?></td>
-                <td><?=$modelo['modelo_desc']?></td>
-                <td>R$: <?=$valor_formatado?></td>
-                <td><?=$modelo['marca_desc']?></td>
-                <td> <form method="post" action="src/php/global/global.php" onsubmit="return confirm('Tem certeza que deseja deletar este modelo?');">
-                        <input type='hidden' name='modelo_id' value='<?= $modelo['modelo_id'] ?>'>
-                        <input type='submit' value='Deletar' name="deletar_modelo" class="action-delete">
-                    </form>
-                </td>
-                <td>
-                    <a href="src/routes/edits.php?modelo_id=<?=$modelo['modelo_id'] ?>" class="action-edit">Editar</a>
-                </td>
-            </tr>
-            <?php endforeach; ?>
-        </tbody> 
     </table>
 
     <h2>Gerenciamento de Marcas</h2>
@@ -268,13 +228,48 @@ require_once 'src/config/env/logout.php';
                 <td><?=$marca['marca_id']?></td>
                 <td><?=$marca['marca_desc']?></td>
                 <td>
+                    <a href="src/routes/edits.php?marca_id=<?=$marca['marca_id'] ?>" class="action-edit">Editar</a>
+                </td>
+                <td>
                     <form method="post" action="src/php/global/global.php" onsubmit="return confirm('Tem certeza que deseja deletar este modelo?');">
                         <input type='hidden' name='marca_id' value='<?= $marca['marca_id'] ?>'>
                         <input type='submit' value='Deletar' name="deletar_marca" class="action-delete">
                     </form>
                 </td>
+            </tr>
+            <?php endforeach; ?>
+        </tbody> 
+    </table>
+
+    <h2>Gerenciamento de Modelos</h2>
+    <table class="admin-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Marca do modelo</th>
+                <th>Nome do modelo</th>
+                <th>Fipe</th>
+                <th colspan="2">Ações</th>
+            </tr> 
+        </thead>
+        <tbody>
+            <?php
+            // $modeloManager já foi instanciado lá em cima
+            $modelosArray = $modeloManager->listarModelo();
+            foreach ($modelosArray as $modelo): 
+            $valor_formatado = number_format($modelo['modelo_valor_fipe'], 0, ',', '.');?>
+            <tr>
+                <td><?=$modelo['modelo_id']?></td>
+                <td><?=$modelo['marca_desc']?></td>
+                <td><?=$modelo['modelo_desc']?></td>
+                <td>R$: <?=$valor_formatado?></td>
                 <td>
-                    <a href="src/routes/edits.php?marca_id=<?=$marca['marca_id'] ?>" class="action-edit">Editar</a>
+                    <a href="src/routes/edits.php?modelo_id=<?=$modelo['modelo_id'] ?>" class="action-edit">Editar</a>
+                </td>
+                <td><form method="post" action="src/php/global/global.php" onsubmit="return confirm('Tem certeza que deseja deletar este modelo?');">
+                        <input type='hidden' name='modelo_id' value='<?= $modelo['modelo_id'] ?>'>
+                        <input type='submit' value='Deletar' name="deletar_modelo" class="action-delete">
+                    </form>
                 </td>
             </tr>
             <?php endforeach; ?>
@@ -299,13 +294,13 @@ require_once 'src/config/env/logout.php';
                 <td><?=$cor_item['cor_id']?></td>
                 <td><?=$cor_item['cor_desc']?></td>
                 <td>
+                    <a href="src/routes/edits.php?cor_id=<?=$cor_item['cor_id']?>" class="action-edit">Editar</a>
+                </td>
+                <td>
                     <form method="post" action="src/php/global/global.php" onsubmit="return confirm('Tem certeza que deseja deletar este cor?');">
                         <input type='hidden' name='cor_id' value='<?= $cor_item['cor_id'] ?>'>
                         <input type='submit' value='Deletar' name="deletar_cor" class="action-delete">
                     </form>
-                </td>
-                <td>
-                    <a href="src/routes/edits.php?cor_id=<?=$cor_item['cor_id']?>" class="action-edit">Editar</a>
                 </td>
             </tr>
             <?php endforeach; ?>
@@ -330,13 +325,13 @@ require_once 'src/config/env/logout.php';
                 <td><?=$chassi_item['chassi_id']?></td>
                 <td><?=$chassi_item['chassi_desc']?></td>
                 <td>
+                    <a href="src/routes/edits.php?chassi_id=<?=$chassi_item['chassi_id'] ?>" class="action-edit">Editar</a>
+                </td>
+                <td>
                     <form method="post" action="src/php/global/global.php" onsubmit="return confirm('Tem certeza que deseja deletar este modelo?');">
                         <input type='hidden' name='chassi_id' value='<?= $chassi_item['chassi_id'] ?>'>
                         <input type='submit' value='Deletar' name="deletar_chassi" class="action-delete">
                     </form>
-                </td>
-                <td>
-                    <a href="src/routes/edits.php?chassi_id=<?=$chassi_item['chassi_id'] ?>" class="action-edit">Editar</a>
                 </td>
             </tr>
             <?php endforeach; ?>
@@ -361,13 +356,13 @@ require_once 'src/config/env/logout.php';
                 <td><?=$comb_item['comb_id']?></td>
                 <td><?=$comb_item['comb_desc']?></td>
                 <td>
+                    <a href="src/routes/edits.php?comb_id=<?=$comb_item['comb_id'] ?>" class="action-edit">Editar</a>
+                </td>
+                <td>
                     <form method="post" action="src/php/global/global.php" onsubmit="return confirm('Tem certeza que deseja deletar este modelo?');">
                         <input type='hidden' name='comb_id' value='<?= $comb_item['comb_id'] ?>'>
                         <input type='submit' value='Deletar' name="deletar_combustivel" class="action-delete">
                     </form>
-                </td>
-                <td>
-                    <a href="src/routes/edits.php?comb_id=<?=$comb_item['comb_id'] ?>" class="action-edit">Editar</a>
                 </td>
             </tr>
             <?php endforeach; ?>
@@ -378,15 +373,16 @@ require_once 'src/config/env/logout.php';
     <table class="admin-table">
         <thead>
             <tr>
-                <th>ID do Anúncio</th>
-                <th>Descrição</th>
-                <th>Data de Criação</th>
+                <th style="width: 50px;">ID do Anúncio</th>
+                <th style="width: 80px;">Data de Criação</th>
+                <th style="width: 180px;">Descrição</th>
                 <th>Valor</th>
-                <th>Modelo</th> <th>Versão</th>
                 <th>Marca</th>
-                <th>Chassi</th>
-                <th>Combustível</th>
-                <th colspan="2">Ações</th>
+                <th>Modelo</th>
+                <th style="width: 80px;">Versão</th>
+                <th style="width: 80px;">Chassi</th>
+                <th style="width: 80px;">Combustível</th>
+                <th colspan="2" style="width: 130px;">Ações</th>
             </tr>
         </thead>
         <tbody>
@@ -397,22 +393,24 @@ require_once 'src/config/env/logout.php';
             foreach ($anuncioArrayAdmin as $anuncio): ?>
                 <tr>
                     <td><?=$anuncio['anuncio_id']?></td>
-                    <td><?=$anuncio['anuncio_desc']?></td>
                     <td><?=$anuncio['anuncio_data_de_criacao']?></td>
-                    <td><?=number_format($anuncio['anuncio_valor'], 2, ',', '.')?></td>
+                    <td>
+                        <div class="description-cell"><?=$anuncio['anuncio_desc']?></div>
+                    </td> 
+                    <td>R$ <?=number_format($anuncio['anuncio_valor'], 0, ',', '.')?></td>
+                    <td><?=$anuncio['marca_desc']?></td>
                     <td><?=$anuncio['modelo_desc']?></td>
                     <td><?=$anuncio['veiculo_versao']?></td>
-                    <td><?=$anuncio['marca_desc']?></td>
                     <td><?=$anuncio['chassi_desc']?></td>
                     <td><?=$anuncio['comb_desc']?></td>
+                    <td>
+                        <a href="src/routes/edits.php?anuncio_id=<?=$anuncio['anuncio_id'] ?>" class="action-edit">Editar</a>
+                    </td>
                     <td>
                         <form method="post" action="src/php/global/global.php" onsubmit="return confirm('Tem certeza que deseja deletar este anúncio?');">
                             <input type='hidden' name='anuncio_id' value='<?= $anuncio['anuncio_id'] ?>'>
                             <input type='submit' value='Deletar' name="deletar_anuncio" class="action-delete">
                         </form>
-                    </td>
-                    <td>
-                        <a href="src/routes/edits.php?anuncio_id=<?=$anuncio['anuncio_id'] ?>" class="action-edit">Editar</a>
                     </td>
                 </tr>
             <?php endforeach; ?>
@@ -427,7 +425,7 @@ require_once 'src/config/env/logout.php';
     <div class="admin-card">
         <div style="display: flex; flex-wrap: wrap; gap: 10px;">
             <?php foreach($imgArray as $foto):?>
-                <img src="<?= htmlspecialchars($foto['imagem_url']) ?>" alt="imagem" style="max-width: 150px; height: auto; border-radius: 4px;">
+                <img src="<?= htmlspecialchars($foto['imagem_url']) ?>" alt="imagem" class="gallery-image">
             <?php endforeach;?>
         </div>
     </div>
@@ -435,6 +433,8 @@ require_once 'src/config/env/logout.php';
 <?php endif; // Fim do conteúdo de admin ?>
 
 
+<!-- Filtro de pesquisa comentado a pedido do usuário -->
+<!-- 
 <div class="search-filter-panel">
     <h2>Encontre seu próximo veículo</h2>
     <form action="index.php" method="GET">
@@ -450,10 +450,8 @@ require_once 'src/config/env/logout.php';
         $filtro_preco_min = $_GET['preco_min'] ?? '';
         $filtro_preco_max = $_GET['preco_max'] ?? '';
         
-        // CORREÇÃO: Define a variável $todosModelos antes de incluir o filtro.
         $todosModelos = $modeloManager->listarModelo();
 
-        // Inclui os selects de Marca/Modelo e define $modelosAgrupados
         include 'src/php/functions/filter-functions.php'; 
         ?>
 
@@ -477,20 +475,13 @@ require_once 'src/config/env/logout.php';
             </div>
         </div>
 
-        <div class="filter-group filter-group--wide">
-            <label>Preço</label>
-            <div style="display: flex; gap: 5px;">
-                <input type="number" name="preco_min" placeholder="Mínimo" value="<?= htmlspecialchars($filtro_preco_min) ?>">
-                <input type="number" name="preco_max" placeholder="Máximo" value="<?= htmlspecialchars($filtro_preco_max) ?>">
-            </div>
-        </div>
-
         <div class="filter-buttons">
             <button type="submit">Buscar</button>
             <a href="index.php">Limpar</a>
         </div>
     </form>
 </div>
+-->
 
 <div class="ad-grid-container">
     <h2>Anúncios Recentes</h2>
@@ -507,36 +498,41 @@ require_once 'src/config/env/logout.php';
         $anuncioManager = new Anuncio(null, null, null, null, null, null, $conexao);
         $anuncioArray = $anuncioManager->listarAnuncios($filtros);
 
-        // --- Lógica para destacar o anúncio ID 25 ---
-        $anuncioDestaque = null;
-        $indiceDestaque = -1;
-        // Encontra o anúncio 25 e sua posição no array
-        foreach ($anuncioArray as $key => $anuncio) {
-            if ($anuncio['anuncio_id'] == 25) {
-                $anuncioDestaque = $anuncio;
-                $indiceDestaque = $key;
-                break;
-            }
-        }
-        // Se encontrou, remove da posição original e coloca no início
-        if ($anuncioDestaque) {
-            array_splice($anuncioArray, $indiceDestaque, 1);
-            array_unshift($anuncioArray, $anuncioDestaque);
-        }
+        // Busca o anúncio mais antigo para usar no card "Veja Mais"
+        $anuncioMaisAntigo = $anuncioManager->buscarAnuncioMaisAntigo();
 
-        foreach ($anuncioArray as $anuncio): ?>
+        // Limita a exibição a 3 anúncios
+        $count = 0;
+        foreach ($anuncioArray as $anuncio):
+            if ($count >= 3) break;
+        ?>
             <a href="src/routes/card.php?anuncio_id=<?= $anuncio['anuncio_id'] ?>" class="ad-card-link">
                 <div class="ad-card">
                     <img src="<?= htmlspecialchars($anuncio['imagem_url']) ?>" alt="Foto do veículo" class="ad-image">
                     <div class="ad-content">
                         <h3 class="ad-title"><?= htmlspecialchars($anuncio['marca_desc'] . ' ' . $anuncio['modelo_desc']) ?></h3>
                         <p class="ad-version"><?= htmlspecialchars($anuncio['veiculo_versao']) ?></p>
-                        <p class="ad-price">R$ <?= number_format($anuncio['anuncio_valor'], 2, ',', '.') ?></p>
+                        <p class="ad-price">R$ <?= number_format($anuncio['anuncio_valor'], 0, ',', '.') ?></p>
                         <p class="ad-details"><?= htmlspecialchars($anuncio['veiculo_ano']) ?> &bull; <?= htmlspecialchars($anuncio['veiculo_quilometragem']) ?> km</p>
                     </div>
                 </div>
             </a>
-        <?php endforeach; ?>
+        <?php 
+            $count++;
+        endforeach; 
+        ?>
+        <!-- Card "Veja Mais" -->
+        <a href="src/routes/compra.php" class="ad-card-link see-more-link">
+            <div class="ad-card see-more-card">
+                <?php if ($anuncioMaisAntigo && !empty($anuncioMaisAntigo['imagem_url'])): ?>
+                    <img src="<?= htmlspecialchars($anuncioMaisAntigo['imagem_url']) ?>" alt="Anúncio mais antigo" class="see-more-bg">
+                <?php endif; ?>
+                <div class="see-more-overlay">
+                    <span class="plus-icon">+</span>
+                    <span class="see-more-text">Veja mais anúncios</span>
+                </div>
+            </div>
+        </a>
     </div>
 </div>
 
@@ -568,4 +564,5 @@ require_once 'src/config/env/logout.php';
 <script src="src/JS/js-functions.js"></script>
 
 </body>
+</html>
 </html>

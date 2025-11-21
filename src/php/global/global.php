@@ -230,21 +230,30 @@ if (isset($_POST['login_usuario'])) {
 
 } else if (isset($_POST['criar_marca_modelo'])) {
     if (!eAdmin()) { exit("Acesso negado."); }
-    $marca = new Marca(
-        null,
-        $_POST['marca_desc'],
-        $conexao
-    );
-    $idRetornado = $marca->insereMarca();
+
+    $marca_desc = $_POST['marca_desc'];
+    $marcaManager = new Marca(null, null, $conexao);
+
+    // Verifica se a marca já existe
+    $marca_existente = $marcaManager->buscarMarcaPorDescricao($marca_desc);
+
+    if ($marca_existente) {
+        // Se existe, usa o ID dela
+        $id_da_marca_para_o_modelo = $marca_existente['marca_id'];
+    } else {
+        // Se não existe, cria uma nova e pega o ID retornado
+        $nova_marca = new Marca(null, $marca_desc, $conexao);
+        $id_da_marca_para_o_modelo = $nova_marca->insereMarca();
+    }
+
     $modelo = new Modelo(
         null,
         $_POST['modelo_desc'],
         $_POST['modelo_valor_fipe'],
-        $idRetornado, // fk_Marca_id será definido após inserir a marca
+        $id_da_marca_para_o_modelo, // Usa o ID correto (existente ou novo)
         $conexao
     );
     $modelo->insereModelo();
-    
 
 } else if (isset($_POST['deletar_marca'])) {
     if (!eAdmin()) { exit("Acesso negado."); }

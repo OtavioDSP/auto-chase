@@ -1,264 +1,101 @@
 /* ==============================================
-   1. Importações e Declarações de Fonte
+   Estilos para a Página de Criação de Anúncio
    ============================================== */
 
-/* @font-face DEVE sempre vir no TOPO do arquivo */
-@font-face {
-    font-family: 'Creato Display';
-    /* Caminho corrigido para 'voltar' da pasta css */
-    src: url('../font/CreatoDisplay-Light.otf') format('opentype');
-    /* É melhor usar números (300 = Light) */
-    font-weight: 300; 
-}
-
-/* ==============================================
-   2. Estilos Gerais (Body, Globais)
-   ============================================== */
-
-body {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    font-family: 'Creato Display', sans-serif;
-    background-color: #E6F8FF;
-}
-
-.logo {
-    height: 48px;
-}
-
-/* ==============================================
-   3. Header (Cabeçalho)
-   (Mantido do seu index.css para consistência)
-   ============================================== */
-
-header {
-    background: #6bbddb;
-    color: #222;
-    display: flex;
-    justify-content: space-between; /* <-- Isso separa esquerda, meio e direita */
-    align-items: center;
-    width: 100%;
-    padding: 10px 20px; /* Adiciona um espaço nas laterais */
-    position: relative;
-    z-index: 100;
-    box-sizing: border-box; /* Garante que o padding não quebre o layout */
-}
-
-/* --- Esquerda (Logo) --- */
-/* CORREÇÃO: Adicionada a regra para a logo ter o tamanho correto dentro do header */
-.header-left .logo {
-    height: 30px;
-    display: block; /* Remove espaço extra de imagem */
-}
-
-/* --- Meio (Comprar / Anunciar) --- */
-.nav-links {
-    display: flex;
-    gap: 40px; 
-}
-.header-center {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-}
-
-.nav-links a {
-    text-decoration: none;
-    color: #ffffff; /* Cor do texto (branco) */
-    font-weight: bold;
-    font-size: 16px;
-}
-
-/* --- Direita (Salvos / Login) --- */
-.header-right {
-    display: flex;
-    align-items: center;
-    gap: 20px; /* Espaço entre "Salvos" e "Login" */
-}
-
-.nav-link-icon {
-    display: flex;
-    align-items: center;
-    gap: 6px; 
-    text-decoration: none;
-    color: #ffffff;
-    font-weight: bold;
-}
-.nav-link-icon i {
-    font-size: 18px; 
-}
-
-/* Botão de Login */
-.btn-login {
-    text-decoration: none;
-    color: #00AFF0; 
-    background-color: #ffffff; 
-    padding: 8px 16px; 
-    border-radius: 6px;
-    font-weight: bold;
-    transition: background-color 0.2s ease;
-}
-
-/*
- * CORREÇÃO: Garante que o botão "Sair" (que é um <button>)
- * tenha o mesmo tamanho e estilo do link "Login" (que é um <a>).
-*/
-button.btn-login {
-    padding: 8px 16px;
-    font-size: 16px; /* Mesma fonte dos links de navegação */
-    font-family: 'Creato Display', sans-serif;
-}
-
-.btn-login:hover {
-    background-color: #f0f0f0; 
-}
-
-
-/* ==============================================
-   4. Componente: Formulário de Anúncio
-   (Nova seção inspirada no seu login)
-   ============================================== */
-
-h2 {
-    text-align: center;
-    color: #333;
-    margin-top: 20px;
-}
-
-/* 
- * Este é o container principal, inspirado no .login-container do seu index.css.
- * Ele cria o fundo colorido e centraliza o formulário na página.
-*/
-.anuncio-container {
-    max-width: 850px; /* Um pouco mais largo que o form para criar uma borda */
-    margin: 2% auto;
-    padding: 25px;
-    background: #6bbddb; /* Cor de fundo do header, para consistência */
-    border-radius: 9px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    box-sizing: border-box;
-}
-
-/* 
- * Este é o "card" branco interno onde os campos do formulário ficam.
-*/
-/* CORREÇÃO: O seletor foi alterado de 'form' para '.form-anuncio' para não afetar outros formulários (como o botão de logout no header). */
+/* Estilo para o formulário, similar ao de edição */
 .form-anuncio {
-    max-width: 800px; /* Largura boa para um form grande */
-    margin: 0 auto; /* Centraliza dentro do .anuncio-container */
-    padding: 30px;
-    background: #ffffff; /* Fundo branco */
-    border-radius: 9px;
-    box-sizing: border-box;
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: #fff;
+    border: 1px solid #e1e4e8;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
-/* 
- * Transforma as <label>s em blocos.
- * Isso força o input a ir para a linha de baixo, criando um layout limpo.
-*/
+.form-anuncio h2 {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #333;
+}
+
 .form-anuncio label {
     display: block;
-    font-weight: bold;
-    color: #444;
-    margin-top: 18px; /* Espaço ACIMA de cada label */
-    margin-bottom: 8px; /* Espaço entre a label e o input */
+    font-weight: 600;
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
 }
 
-/* 
- * Estilo GERAL para todos os campos do formulário
- * (Inspirado no .form input do seu index.css)
-*/
 .form-anuncio input[type="text"],
 .form-anuncio input[type="number"],
 .form-anuncio input[type="file"],
-.form-anuncio select,
-.form-anuncio textarea {
+.form-anuncio textarea,
+.form-anuncio select {
     width: 100%;
-    padding: 14px;
-    margin: 0; /* A label já cuida da margem */
-    
-    background-color: #ffffff;
-    border: 1px solid #444;
-    color: #2e2e2e;
+    padding: 0.75rem;
+    border: 1px solid #e1e4e8;
     border-radius: 8px;
-    
-    font-size: 14px;
+    font-size: 1rem;
     font-family: 'Creato Display', sans-serif;
-    box-sizing: border-box; /* Importante para o width 100% */
-    
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    box-sizing: border-box;
 }
 
-/* Efeito de foco (quando clica no campo) */
-.form-anuncio input[type="text"]:focus,
-.form-anuncio input[type="number"]:focus,
-.form-anuncio input[type="file"]:focus,
-.form-anuncio select:focus,
-.form-anuncio textarea:focus {
-    outline: none;
-    border-color: #00AFF0; /* Cor do seu header */
-    box-shadow: 0 0 5px rgba(0, 175, 240, 0.5);
-}
-
-/* 
- * Esconde os <br> que você pode ter no HTML,
- * pois o 'display: block' na label e o margin-top já cuidam do espaçamento.
-*/
-.form-anuncio input + br,
-.form-anuncio select + br,
-.form-anuncio textarea + br {
-    display: none; 
-}
-
-/* --- Estilos Específicos --- */
-
-.form-anuncio textarea {
-    resize: vertical; /* Permite ao usuário aumentar a altura */
-    min-height: 120px;
-}
-
-/* Estilizando o botão de "Escolher arquivo" */
+/* Estilo específico para o campo de upload de arquivo */
 .form-anuncio input[type="file"] {
-    padding: 10px;
-    border-style: dashed;
-}
-
-.form-anuncio input[type="file"]::file-selector-button {
-    font-family: 'Creato Display', sans-serif;
-    font-weight: bold;
-    color: #00AFF0;
-    background-color: #ffffff;
-    border: 1px solid #00AFF0;
-    border-radius: 6px;
-    padding: 8px 12px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.form-anuncio input[type="file"]::file-selector-button:hover {
-    background-color: #f0f8ff;
-}
-
-/* Botão de "Publicar Anúncio" */
-.form-anuncio input[type="submit"] {
-    width: 100%;
-    padding: 14px;
-    margin-top: 25px; /* Espaço extra antes do botão final */
-    
-    background-color: #00AFF0; /* Cor azul do botão de login, para consistência */
-    color: #ffffff;
-    font-weight: bold;
-    font-size: 16px;
-    
-    border: none;
-    border-radius: 8px;
-    text-decoration: none; /* Caso use <a> como botão */
+    background-color: #f0f8ff; /* Fundo azul claro */
+    border: 2px dashed #00AFF0; /* Borda pontilhada azul */
+    padding: 1.5rem;
+    text-align: center;
+    color: #555;
     cursor: pointer;
     transition: background-color 0.2s ease;
 }
+.form-anuncio input[type="file"]:hover {
+    background-color: #e6f2ff;
+}
+
+/* Estilo customizado para o botão do input de arquivo */
+.form-anuncio input[type="file"]::file-selector-button {
+    padding: 0.75rem 1.5rem;
+    margin-right: 1rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+    
+    /* Estilo padrão (fundo branco, borda e texto azul) */
+    background-color: #fff;
+    color: #00AFF0;
+    border: 1px solid #00AFF0;
+    font-family: 'Creato Display', sans-serif;
+}
+
+.form-anuncio input[type="file"]::file-selector-button:hover {
+    /* Inverte no hover */
+    background-color: #00AFF0;
+    color: #fff;
+}
+
+/* Estilo do botão de submit */
+.form-anuncio input[type="submit"] {
+    width: 100%;
+    padding: 0.75rem 1.5rem;
+    margin-top: 2rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+    
+    /* Estilo padrão (fundo branco, borda e texto azul) */
+    background-color: #fff;
+    color: #00AFF0;
+    border: 1px solid #00AFF0;
+}
 
 .form-anuncio input[type="submit"]:hover {
-    background-color: #0095d1; /* Tom mais escuro no hover */
+    /* Inverte no hover */
+    background-color: #00AFF0;
+    color: #fff;
 }

@@ -1,34 +1,18 @@
 <?php
-require_once '../config/db/connect.php';
-require_once '../php/classes/class-usuario.php';
-require_once '../php/classes/class-chassi.php';
-require_once '../php/classes/class-modelo.php';
-require_once '../php/classes/class-marca.php';
-require_once '../php/classes/class-cor.php';
-require_once '../php/classes/class-chat.php';
-require_once '../php/classes/class-combustivel.php';
-require_once '../php/classes/class-anuncio.php';
-require_once '../php/classes/class-veiculo.php';
-require_once '../php/classes/class-imagem.php';
-require_once '../php/functions/main-functions.php';
-require_once '../php/functions/salvar-imagens.php';
+// Includes de conexão e de todas as classes
 require_once '../config/env/logout.php';
+require_once '../config/db/connect.php';
+require_once '../php/classes/class-anuncio.php';
 
-
-// Verifica se o usuário está logado
+// Proteção: se não estiver logado, redireciona para o login
 if (!estaLogado()) {
-    header('Location: ../../login.php');
-    exit;
+    header('Location: ../../login.php?status=unauthorized');
+    exit();
 }
 
-$usuario_id = $_SESSION['user_id'];
-
-// Instancia o manager de anúncios
+$usuario_id = getUsuarioIdLogado();
 $anuncioManager = new Anuncio(null, null, null, null, null, null, $conexao);
-
-// Busca todos os anúncios do usuário logado (incluindo ativos, inativos e vendidos)
 $meusAnuncios = $anuncioManager->listarAnunciosPorUsuario($usuario_id);
-
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -36,8 +20,9 @@ $meusAnuncios = $anuncioManager->listarAnunciosPorUsuario($usuario_id);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Meus Anúncios</title>
-    <link rel="stylesheet" href="../css/index.css">
-    <link rel="stylesheet" href="../css/adminpanel.css">
+    <link rel="stylesheet" href="../css/index.css"> <!-- Estilo base e header -->
+    <link rel="stylesheet" href="../css/meus-anuncios.css"> <!-- Novo CSS para esta página -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="icon" type="image/png" href="../img/ac icon.png">
 </head>
 <body>
@@ -67,38 +52,41 @@ $meusAnuncios = $anuncioManager->listarAnunciosPorUsuario($usuario_id);
     </div>
 </header>
 
-<br><br><br><br>
+<div class="container-meus-anuncios">
+    <header class="page-header">
+        <h1>Meus Anúncios</h1>
+        <p>Gerencie, edite ou remova seus anúncios publicados.</p>
+    </header>
 
-<div class="ad-grid-container">
-    <h2>Meus Anúncios</h2>
-    <div class="ad-grid">
+    <div class="grid-meus-anuncios">
         <?php if (empty($meusAnuncios)): ?>
-            <p>Você ainda não criou nenhum anúncio.</p>
+            <div class="no-ads-message">
+                <h3>Você ainda não tem nenhum anúncio.</h3>
+                <p>Que tal anunciar seu veículo agora mesmo?</p>
+                <a href="anuncio.php" class="btn-anunciar-agora">Anunciar Agora</a>
+            </div>
         <?php else: ?>
             <?php foreach ($meusAnuncios as $anuncio): ?>
-                <div class="ad-card">
-                    <a href="card.php?anuncio_id=<?= $anuncio['anuncio_id'] ?>" class="ad-card-link">
-                        <img src="../<?= htmlspecialchars($anuncio['imagem_url']) ?>" alt="Foto do veículo" class="ad-image">
-                        <div class="ad-content">
-                            <h3 class="ad-title"><?= htmlspecialchars($anuncio['marca_desc'] . ' ' . $anuncio['modelo_desc']) ?></h3>
-                            <p class="ad-version"><?= htmlspecialchars($anuncio['veiculo_versao']) ?></p>
-                            <p class="ad-price">R$ <?= number_format($anuncio['anuncio_valor'], 2, ',', '.') ?></p>
-                            <p class="ad-details"><?= htmlspecialchars($anuncio['veiculo_ano']) ?> &bull; <?= htmlspecialchars($anuncio['veiculo_quilometragem']) ?> km</p>
-                            <p class="ad-status">Status: <?= htmlspecialchars(ucfirst($anuncio['anuncio_status'])) ?></p>
+                <div class="card-meu-anuncio">
+                    <a href="card.php?anuncio_id=<?= $anuncio['anuncio_id'] ?>" class="card-main-link"></a>
+                    <img src="../<?= htmlspecialchars(ltrim($anuncio['imagem_url'], 'src/')) ?>" alt="Foto do veículo" class="ad-image">
+                    <div class="card-content">
+                        <span class="ad-status ad-status-<?= strtolower(htmlspecialchars($anuncio['anuncio_status'])) ?>"><?= htmlspecialchars($anuncio['anuncio_status']) ?></span>
+                        <h3 class="ad-title"><?= htmlspecialchars($anuncio['marca_desc'] . ' ' . $anuncio['modelo_desc']) ?></h3>
+                        <p class="ad-version"><?= htmlspecialchars($anuncio['veiculo_versao']) ?></p>
+                        <p class="ad-price">R$ <?= number_format($anuncio['anuncio_valor'], 0, ',', '.') ?></p>
+                        <div class="card-actions">
+                            <form method="post" action="../php/global/global.php" onsubmit="return confirm('Tem certeza que deseja deletar este anúncio? A ação não pode ser desfeita.');" style="display: inline;">
+                                <input type='hidden' name='anuncio_id' value='<?= $anuncio['anuncio_id'] ?>'>
+                                <button type='submit' name='deletar_anuncio' class="action-btn delete-btn">Deletar</button>
+                            </form>
+                            <a href="edits.php?anuncio_id=<?= $anuncio['anuncio_id'] ?>" class="action-btn edit-btn">Editar</a>
                         </div>
-                    </a>
-                    <div class="ad-actions">
-                        <a href="edits.php?anuncio_id=<?= $anuncio['anuncio_id'] ?>" class="action-edit">Editar</a>
-                        <form method="post" action="../php/global/global.php" onsubmit="return confirm('Tem certeza que deseja deletar este anúncio?');" style="display:inline;">
-                            <input type='hidden' name='anuncio_id' value='<?= $anuncio['anuncio_id'] ?>'>
-                            <input type='submit' value='Deletar' name="deletar_anuncio" class="action-delete">
-                        </form>
                     </div>
                 </div>
             <?php endforeach; ?>
         <?php endif; ?>
     </div>
 </div>
-
 </body>
 </html>

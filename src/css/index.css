@@ -1,13 +1,9 @@
 /* ==============================================
    1. Importações e Declarações de Fonte
    ============================================== */
-
-/* @font-face DEVE sempre vir no TOPO do arquivo */
 @font-face {
     font-family: 'Creato Display';
-    /* Caminho corrigido para 'voltar' da pasta css */
     src: url('../font/CreatoDisplay-Light.otf') format('opentype');
-    /* É melhor usar números (300 = Light) */
     font-weight: 300; 
 }
 
@@ -19,7 +15,7 @@ body {
     margin: 0;
     padding: 0;
     width: 100%;
-    font-family: 'Creato Display', sans-serif;
+    font-family: 'Creato Display', sans-serif; /* A fonte já estava correta */
     background-color: #E6F8FF;
 }
 
@@ -35,12 +31,11 @@ header {
     background: #6bbddb;
     color: #222;
     display: flex;
-    justify-content: space-between; /* <-- Isso separa esquerda, meio e direita */
+    justify-content: space-between;
     align-items: center;
     width: 100%;
-    padding: 10px 20px; /* Adiciona um espaço nas laterais */
+    padding: 10px 20px;
     position: relative;
-    z-index: 100;
     box-sizing: border-box; /* Garante que o padding não quebre o layout */
 }
 
@@ -52,7 +47,6 @@ header {
     display: block; /* Remove espaço extra de imagem */
 }
 
-/* --- Meio (Comprar / Anunciar) --- */
 .nav-links {
     display: flex;
     gap: 40px; /* <-- AUMENTADO (era 24px) */
@@ -71,14 +65,12 @@ header {
     font-size: 16px;
 }
 
-/* --- Direita (Salvos / Login) --- */
 .header-right {
     display: flex;
     align-items: center;
     gap: 20px; /* Espaço entre "Salvos" e "Login" */
 }
 
-/* Link "Salvos" (ícone + texto) */
 .nav-link-icon {
     display: flex;
     align-items: center;
@@ -88,12 +80,10 @@ header {
     font-weight: bold;
 }
 
-/* O ícone em si */
 .nav-link-icon i {
     font-size: 18px; /* Tamanho do ícone */
 }
 
-/* Botão de Login */
 .btn-login {
     text-decoration: none;
     color: #00AFF0; /* Cor do texto (azul do header) */
@@ -150,7 +140,6 @@ button.btn-login {
     flex: 1 1 160px; /* Largura base para campos de seleção simples */
 }
 
-/* Classe para os campos duplos (ano e preço) */
 .filter-group.filter-group--wide {
     flex-basis: 200px;
 }
@@ -188,14 +177,14 @@ button.btn-login {
 }
 
 .filter-buttons button {
-    background-color: #fff; /* Estilo claro que você pediu */
+    background-color: #fff;
     color: #00AFF0;
     border: 1px solid #00AFF0;
     transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .filter-buttons button:hover {
-    background-color: #00AFF0; /* Inverte no hover */
+    background-color: #00AFF0;
     color: #fff;
 }
 
@@ -207,7 +196,7 @@ button.btn-login {
 }
 
 .filter-buttons a:hover {
-    background-color: #7f8c8d; /* Escurece um pouco no hover */
+    background-color: #7f8c8d;
 }
 
 /* ==============================================
@@ -228,10 +217,10 @@ button.btn-login {
     gap: 25px;
 }
 
-/* Remove a decoração de link padrão do card */
 .ad-card-link {
     text-decoration: none;
     color: inherit;
+    display: flex; /* Faz o link se comportar como um container flexível */
 }
 
 .ad-card {
@@ -242,6 +231,7 @@ button.btn-login {
     transition: transform 0.2s ease, box-shadow 0.2s ease;
     display: flex;
     flex-direction: column;
+    width: 100%; /* Garante que o card ocupe todo o espaço do link */
 }
 
 .ad-card:hover {
@@ -285,5 +275,54 @@ button.btn-login {
 .ad-card .ad-details {
     font-size: 0.8rem;
     color: #999;
+    margin-top: 10px;
+}
+
+/* Estilo para o card "Veja Mais" */
+.see-more-card {
+    position: relative; /* Essencial para o overlay */
+    justify-content: center;
+    align-items: center;
+    background-color: #f0f2f5;
+    transition: all 0.3s ease;
+    min-height: 335px; /* Garante que o card tenha a mesma altura dos outros */
+}
+
+.see-more-card .see-more-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: blur(4px) brightness(0.7); /* Efeito de desfoque e escurecimento */
+    transition: filter 0.3s ease;
+}
+
+.see-more-card .see-more-overlay {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white; /* Cor do texto sobre a imagem */
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+.see-more-card:hover .see-more-bg {
+    filter: blur(2px) brightness(0.5); /* Efeito mais sutil no hover */
+}
+
+.see-more-card .plus-icon {
+    font-size: 4rem;
+    font-weight: 200;
+    line-height: 1;
+}
+
+.see-more-card .see-more-text {
+    font-size: 1.1rem;
+    font-weight: bold;
     margin-top: 10px;
 }

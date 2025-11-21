@@ -38,9 +38,6 @@ if (estaLogado()) {
     <div class="header-right">
         <?php if (estaLogado()): ?>
             <!-- (Esta parte não deve aparecer aqui, mas mantendo a lógica do seu header) -->
-            <a href="chat.php" class="nav-link-icon">
-                <i class="fas fa-comment"></i> 
-            </a>
             <a href="src/routes/edits.php?usuario_id=<?= htmlspecialchars($_SESSION['user_id']) ?>" class="nav-link-icon">
                 Minha Conta
             </a>

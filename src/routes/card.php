@@ -13,12 +13,9 @@ if (!isset($_GET['anuncio_id']) || empty($_GET['anuncio_id'])) {
 
 $anuncio_id = intval($_GET['anuncio_id']);
 
-// --- TAPA-BURACO ATUALIZADO ---
-// Força a página a sempre mostrar o anúncio de ID 25 (o Vectra).
-$anuncio_id_destaque = 25;
+// Busca os detalhes do anúncio com base no ID da URL
 $anuncioManager = new Anuncio(null, null, null, null, null, null, $conexao);
-$anuncio = $anuncioManager->buscarAnuncioDetalhadoPorId($anuncio_id_destaque);
-$anuncio_id = $anuncio_id_destaque; // Garante que o ID usado para buscar as fotos é o 25
+$anuncio = $anuncioManager->buscarAnuncioDetalhadoPorId($anuncio_id);
 
 // Busca as imagens do anúncio
 $imagemManager = new Foto(null, null, null, $conexao);
@@ -57,7 +54,6 @@ if (!$anuncio) {
     </div>
     <div class="header-right">
         <?php if (estaLogado()): ?>
-            <a href="../../chat.php" class="nav-link-icon"><i class="fas fa-comment"></i></a>
             <a href="edits.php?usuario_id=<?= htmlspecialchars($_SESSION['user_id']) ?>" class="nav-link-icon">Minha Conta</a>
             <form action="../php/global/global.php" method="post" style="display:inline; margin:0;">
                 <button type="submit" name="logout_usuario" class="btn-login" style="border:none;">Sair</button>
@@ -73,17 +69,13 @@ if (!$anuncio) {
         <!-- Coluna da Esquerda: Galeria de Imagens -->
         <div class="ad-gallery">
             <div class="main-image-container">
-                <!-- 
-                    TAPA-BURACO ESTÉTICO:
-                    Força a imagem principal a ser a do Vectra (ID 25) que você especificou.
-                -->
-                <img src="../uploads/D_NQ_NP_2X_798131-MLB97216666515_112025-T-vectra-elite-24-mpfi-16v-flexpower-aut.webp" alt="Foto principal do veículo" id="main-image">
+                <img src="<?= !empty($fotos) ? '../' . htmlspecialchars(ltrim($fotos[0]['imagem_url'], 'src/')) : '../img/placeholder.png' ?>" alt="Foto principal do veículo" id="main-image" onclick="openLightbox(0)">
                 <button class="carousel-btn prev" onclick="changeImage(-1)">&#10094;</button>
                 <button class="carousel-btn next" onclick="changeImage(1)">&#10095;</button>
             </div>
             <div class="thumbnail-container">
                 <?php foreach ($fotos as $index => $foto): ?>
-                    <img src="<?= htmlspecialchars($foto['imagem_url']) ?>" alt="Miniatura do veículo <?= $index + 1 ?>" class="thumbnail <?= $index == 0 ? 'active' : '' ?>" onclick="showImage(<?= $index ?>)">
+                    <img src="../<?= htmlspecialchars(ltrim($foto['imagem_url'], 'src/')) ?>" alt="Miniatura do veículo <?= $index + 1 ?>" class="thumbnail <?= $index == 0 ? 'active' : '' ?>" onclick="showImage(<?= $index ?>); openLightbox(<?= $index ?>);">
                 <?php endforeach; ?>
             </div>
         </div>
@@ -92,7 +84,7 @@ if (!$anuncio) {
         <div class="ad-info">
             <h1 class="ad-title"><?= htmlspecialchars($anuncio['marca_desc'] . ' ' . $anuncio['modelo_desc']) ?></h1>
             <p class="ad-version"><?= htmlspecialchars($anuncio['veiculo_versao']) ?></p>
-            <p class="ad-price">R$ <?= number_format($anuncio['anuncio_valor'], 2, ',', '.') ?></p>
+            <p class="ad-price">R$ <?= number_format($anuncio['anuncio_valor'], 0, ',', '.') ?></p>
 
             <div class="ad-specs">
                 <div class="spec-item">
@@ -111,28 +103,55 @@ if (!$anuncio) {
                     <span>Cor</span>
                     <strong><?= htmlspecialchars($anuncio['cor_desc']) ?></strong>
                 </div>
+                <div class="spec-item">
+                    <span>Carroceria</span>
+                    <strong><?= htmlspecialchars($anuncio['chassi_desc']) ?></strong>
+                </div>
+                <div class="spec-item">
+                    <span>Tabela FIPE</span>
+                    <strong>R$ <?= number_format($anuncio['modelo_valor_fipe'], 0, ',', '.') ?></strong>
+                </div>
             </div>
 
-            <div class="ad-description">
-                <h2>Descrição</h2>
-                <p><?= nl2br(htmlspecialchars($anuncio['anuncio_desc'])) ?></p>
-            </div>
-
-            <div class="seller-info">
+            <div class="seller-info" id="seller-info-container">
                 <h2>Informações do Vendedor</h2>
-                <p><strong>Nome:</strong> <?= htmlspecialchars($anuncio['usuario_nome']) ?></p>
+                <p id="seller-name-line"><strong>Nome:</strong> <?= htmlspecialchars($anuncio['usuario_nome']) ?></p>
                 <!-- Adicionar mais informações se desejar, como localização, etc. -->
-                <button class="btn-contact">Entrar em contato</button>
+                <button class="btn-contact" id="btn-contato" data-telefone="<?= htmlspecialchars($anuncio['usuario_telefone']) ?>">Entrar em contato</button>
             </div>
         </div>
     </div>
+
+    <!-- Nova Seção de Descrição (Largura Total) -->
+    <div class="full-width-description-section">
+        <div class="ad-description">
+            <h2>Descrição</h2>
+            <p><?= nl2br(htmlspecialchars($anuncio['anuncio_desc'])) ?></p>
+        </div>
+    </div>
 </main>
+
+<!-- Modal Lightbox (inicialmente oculto) -->
+<div id="lightbox-modal" class="lightbox-modal">
+    <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+    <div class="lightbox-content">
+        <img id="lightbox-image" src="">
+        <a class="lightbox-prev" onclick="plusSlides(-1)">&#10094;</a>
+        <a class="lightbox-next" onclick="plusSlides(1)">&#10095;</a>
+    </div>
+    <div class="lightbox-caption-container">
+        <p id="lightbox-caption"></p>
+    </div>
+    <div id="lightbox-thumbnail-container" class="lightbox-thumbnail-wrapper">
+        <!-- Miniaturas serão inseridas aqui via JavaScript -->
+    </div>
+</div>
 
 <script>
     // Passa as URLs das imagens para o JavaScript
     const images = [
         <?php foreach ($fotos as $foto): ?>
-            '<?= htmlspecialchars($foto['imagem_url']) ?>',
+            '../<?= htmlspecialchars(ltrim($foto['imagem_url'], "src/")) ?>',
         <?php endforeach; ?>
     ];
 </script>
