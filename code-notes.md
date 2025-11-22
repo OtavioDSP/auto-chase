@@ -29,13 +29,19 @@ https://github.com/TheTechology/Car-Website?tab=readme-ov-file
 seguinte agora craque, tem um arquivo chamado compra.php no routes tbm, que eu quero que nele voce faça o seguinte: lá vai manter o header, como sempre, e o principal, tera uma barra lateral sempre visivel que ocupe uns 20% da tela na esquerda onde voce colocará todos os filtros de pesquisa que tem no index.php, e na direita vão ter todos anuncios do site, no caso agora, os mesmos do anuncios recentes do index.php também, faá isso amiguxo pls
 <!-- manda pro gemini essa porra -->
 
-
+arruma a barra lateral de filtros que ta bagunçada, deixa ela organizada com os campos select lado a lado, e estiliza tbm esses selects, e outra, faz essa barra lateral ficar fixa na tela, no caso quando o usuario scrollar a pagina pra baixo a barra vai continuar ali na esquerda no mesmo lugar acompanhando a pagina
 
 abandonem toda a esperança de vcs 
 
 
-arrumar o filtros na compra.php
-arrumar os selects feios pra krl
-ajeitar todas marcas, modelos e anuncios, serão cerca de 125 anuncios no total
-criar barra inferior com informacoes gerais.
+<!-- DONE arrumar o filtros na compra.php -->
+
+<!-- DONE arrumar os selects feios pra krl -->
+
+A FAZER DURANTE A SEMANA ajeitar todas marcas, modelos e anuncios, serão cerca de 125 anuncios no total
+
+<!-- DONE criar barra inferior com informacoes gerais. -->
+
+<!-- DONE ajustar tamanho dos containers de login e cadastro. -->
+
 se sobrar tempo criar um classe-cambio kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk

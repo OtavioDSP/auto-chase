@@ -18,6 +18,10 @@
     border-radius: 8px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.08);
     align-self: flex-start; /* Alinha ao topo */
+
+    /* --- EFEITO STICKY --- */
+    position: sticky;
+    top: 20px; /* Distância do topo ao "grudar" na tela */
 }
 
 .filters-sidebar h3 {
@@ -32,29 +36,131 @@
 .filters-sidebar form {
     display: flex;
     flex-direction: column;
-    gap: 20px; /* Aumenta o espaço entre cada grupo de filtro */
+    /* O 'gap' foi removido para termos controle total com margens */
+}
+
+/* Adicionado para remover margens que causam espaçamento extra */
+.filter-group {
+    margin-top: 18px; /* Espaçamento vertical padrão entre os filtros */
+}
+
+.filter-group label {
+    margin-bottom: 5px; /* Define uma margem pequena e consistente */
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+/* Usa a nova classe para aproximar os filtros de Ano e Preço, sobrepondo a regra geral */
+.filter-group-range {
+    margin-top: 10px; /* Espaçamento reduzido para estes campos */
+}
+
+/* Adicionado para alinhar Marca e Modelo lado a lado */
+.filter-row {
+    display: flex;
+    gap: 10px;
+}
+
+.filter-row .filter-group {
+    flex: 1;
+}
+
+/* Estilo base para TODOS os campos de formulário na sidebar */
+.filters-sidebar select,
+.filters-sidebar input[type="number"] {
+    box-sizing: border-box; /* Garante que padding não aumente a largura total */
+}
+/* ==============================================
+   ESTILIZAÇÃO CUSTOMIZADA DO SELECT
+   ============================================== */
+
+/* A div que envolve o select */
+.custom-select-wrapper {
+    position: relative; /* Essencial para posicionar a seta customizada */
+    width: 100%;
+}
+
+/* O próprio select, agora sem a aparência padrão */
+.custom-select-wrapper select {
+    /* Remove a aparência padrão do navegador */
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    /* Estilo da caixa */
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background-color: #f8f9fa; /* Um fundo cinza bem claro */
+    font-family: 'Creato Display', sans-serif;
+    font-size: 0.95rem;
+    cursor: pointer;
+}
+
+/* A nossa seta customizada (criada com um pseudo-elemento) */
+.custom-select-wrapper::after {
+    content: '▼'; /* O caractere de seta para baixo */
+    position: absolute;
+    top: 50%;
+    right: 12px;
+    transform: translateY(-50%);
+    font-size: 0.8rem;
+    color: #888;
+    pointer-events: none; /* Permite clicar no select "através" da seta */
+}
+
+/* CORREÇÃO: Estilo para colocar os inputs lado a lado */
+.dual-input {
+    display: flex;
+    gap: 10px; /* Espaço entre os dois inputs */
+}
+
+.dual-input input {
+    flex: 1; /* Garante que os inputs dividam o espaço igualmente */
+    min-width: 0; /* Evita que os inputs quebrem o layout flex */
 }
 
 /* Área de Resultados */
 .results-grid {
     flex: 1; /* Ocupa o espaço restante */
+    width: 100%; /* Garante que o container ocupe o espaço horizontal */
 }
 
-/* Estilo para o botão de filtro na barra lateral */
-.filters-sidebar .filter-buttons button {
-    width: 100%;
+/* Estilo para os botões de filtro na barra lateral */
+.filters-sidebar .filter-buttons {
+    display: flex; /* Coloca os botões lado a lado */
+    gap: 10px; /* Espaço entre os botões */
+    margin-top: 10px; /* Espaço acima dos botões */
+}
+
+.filters-sidebar .filter-buttons button,
+.filters-sidebar .filter-buttons a {
+    flex: 1; /* Faz os botões dividirem o espaço igualmente */
     padding: 12px;
     font-size: 1rem;
-    /* Estilo padrão (fundo branco, borda e texto azul) */
+    border-radius: 6px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+/* Botão "Filtrar" (principal) */
+.filters-sidebar .filter-buttons button {
     background-color: #fff;
     color: #00AFF0;
     border: 1px solid #00AFF0;
-    transition: background-color 0.2s ease, color 0.2s ease;
 }
 .filters-sidebar .filter-buttons button:hover {
     background-color: #00AFF0;
     color: #fff;
 }
+
+/* Botão "Limpar" (secundário) */
 .filters-sidebar .filter-buttons a {
-    display: none; /* Oculta o botão "Limpar" que não faz sentido aqui */
+    background-color: #f1f1f1;
+    color: #888;
+    border: 1px solid #ddd;
 }

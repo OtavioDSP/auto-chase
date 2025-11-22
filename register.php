@@ -17,6 +17,7 @@ if (estaLogado()) {
     
     <!-- CSS da página de registro e ícones -->
     <link rel="stylesheet" href="src/css/register.css">
+    <link rel="stylesheet" href="src/css/footer.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="icon" type="image/png" href="src/img/ac icon.png">
 </head>
@@ -68,10 +69,10 @@ if (estaLogado()) {
                 </div>
                 <div class="form-row">
                     <div class="form-field">
-                        <input type="text" name="usuario_telefone" placeholder="Telefone (Opcional)" oninput="maskTelefone(this)">
+                        <input type="text" name="usuario_telefone" placeholder="Telefone" oninput="maskTelefone(this)">
                     </div>
                     <div class="form-field">
-                        <input type="text" name="usuario_endereco" placeholder="Endereço (Opcional)">
+                        <input type="text" name="usuario_endereco" placeholder="Endereço">
                     </div>
                 </div>
                 <div class="form-row">
@@ -103,5 +104,8 @@ if (estaLogado()) {
 <!-- Scripts JS para máscaras e validações -->
 <script src="src/JS/js-functions.js"></script>
 
+<?php
+include 'src/components/footer.php';
+?>
 </body>
 </html>

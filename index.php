@@ -7,6 +7,9 @@ require_once 'src/config/env/logout.php';
 <html lang="pt-br">
 <head>
     <link rel="stylesheet" href="src/css/index.css"> <!-- Caminho já estava correto, garantindo que aponta para o arquivo certo -->
+    <?php if (!eAdmin()): // Só carrega o CSS do footer se não for admin ?>
+        <link rel="stylesheet" href="src/css/footer.css">
+    <?php endif; ?>
     <link rel="stylesheet" href="src/css/adminpanel.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="icon" type="image/png" href="src/img/ac icon.png">
@@ -58,13 +61,6 @@ require_once 'src/config/env/logout.php';
         
     </div>
 </header>
-
-<!-- 
-    O formulário de "Crie sua Conta" foi removido daqui 
-    e movido para o novo 'login.php'.
--->
-
-<br><br><br><br>
 
 <!-- (O script JS pode ser necessário aqui se você tiver filtros na index) -->
 <!-- <script src="src/JS/js-functions.js"></script> -->
@@ -561,8 +557,11 @@ require_once 'src/config/env/logout.php';
     });
 </script>
 
-<script src="src/JS/js-functions.js"></script>
-
+<?php
+// Apenas inclui o rodapé se o usuário NÃO for um administrador.
+if (!eAdmin()) {
+    include 'src/components/footer.php';
+}
+?>
 </body>
-</html>
 </html>

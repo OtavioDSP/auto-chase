@@ -104,7 +104,7 @@ button.btn-login {
    ============================================== */
 
 .register-page-wrapper {
-    position: relative; /* Base para o posicionamento absoluto dos filhos */
+    position: relative; /* Base para o posicionamento absoluto */
     width: 100%;
     padding: 40px 20px;
     min-height: 500px; /* Altura mínima para o posicionamento funcionar */
@@ -117,7 +117,7 @@ button.btn-login {
     align-items: center;
     padding: 25px;
     width: 100%;
-    /* Posicionamento centralizado */
+    /* --- CORREÇÃO DE CENTRALIZAÇÃO --- */
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
@@ -142,7 +142,6 @@ button.btn-login {
     flex-direction: column;
     gap: 15px;
     width: 100%;
-    max-width: 600px;
 }
 
 .form-row {

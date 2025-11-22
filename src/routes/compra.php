@@ -40,6 +40,7 @@ $filtro_preco_max = $_GET['preco_max'] ?? '';
     <title>Comprar Veículos - Autochase</title>
     <link rel="stylesheet" href="../css/index.css"> <!-- Estilo base e do header -->
     <link rel="stylesheet" href="../css/compra.css"> <!-- Estilo da página -->
+    <link rel="stylesheet" href="../css/footer.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="icon" type="image/png" href="../img/ac icon.png">
 </head>
@@ -74,22 +75,24 @@ $filtro_preco_max = $_GET['preco_max'] ?? '';
     <!-- Barra Lateral de Filtros -->
     <aside class="filters-sidebar">
         <h3>Filtros</h3>
-        <form action="comprar.php" method="GET">
+        <form action="compra.php" method="GET">
             <?php include '../php/functions/filter-functions.php'; ?>
 
             <div class="filter-group">
                 <label for="corSelect">Cor</label>
-                <select name="fk_cor_id" id="corSelect">
-                    <option value="">Qualquer Cor</option>
-                    <?php foreach ($cor->listarCor() as $cor_item): ?>
-                        <option value="<?= $cor_item['cor_id'] ?>" <?= ($cor_item['cor_id'] == $filtro_cor) ? 'selected' : '' ?>>
-                            <?= htmlspecialchars($cor_item['cor_desc']) ?>
-                        </option>
-                    <?php endforeach; ?>
-                </select>
+                <div class="custom-select-wrapper">
+                    <select name="fk_cor_id" id="corSelect">
+                        <option value="">Qualquer Cor</option>
+                        <?php foreach ($cor->listarCor() as $cor_item): ?>
+                            <option value="<?= $cor_item['cor_id'] ?>" <?= ($cor_item['cor_id'] == $filtro_cor) ? 'selected' : '' ?>>
+                                <?= htmlspecialchars($cor_item['cor_desc']) ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
             </div>
 
-            <div class="filter-group">
+            <div class="filter-group filter-group-range">
                 <label>Ano</label>
                 <div class="dual-input">
                     <input type="number" name="ano_min" placeholder="De" value="<?= htmlspecialchars($filtro_ano_min) ?>">
@@ -97,7 +100,7 @@ $filtro_preco_max = $_GET['preco_max'] ?? '';
                 </div>
             </div>
 
-            <div class="filter-group">
+            <div class="filter-group filter-group-range">
                 <label>Preço</label>
                 <div class="dual-input">
                     <input type="number" name="preco_min" placeholder="Mínimo" value="<?= htmlspecialchars($filtro_preco_min) ?>">
@@ -107,7 +110,7 @@ $filtro_preco_max = $_GET['preco_max'] ?? '';
 
             <div class="filter-buttons">
                 <button type="submit">Filtrar</button>
-                <a href="comprar.php">Limpar</a>
+                <a href="compra.php">Limpar</a>
             </div>
         </form>
     </aside>
@@ -174,414 +177,8 @@ $filtro_preco_max = $_GET['preco_max'] ?? '';
 </script>
 <script src="../JS/js-functions.js"></script>
 
+<?php
+include '../components/footer.php';
+?>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
--

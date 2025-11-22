@@ -15,7 +15,7 @@ body {
     margin: 0;
     padding: 0;
     width: 100%;
-    font-family: 'Creato Display', sans-serif; /* A fonte já estava correta */
+    font-family: 'Creato Display', sans-serif;
     background-color: #E6F8FF;
 }
 
@@ -137,7 +137,7 @@ button.btn-login {
     display: flex;
     flex-direction: column;
     gap: 5px;
-    flex: 1 1 160px; /* Largura base para campos de seleção simples */
+    /* flex: 1 1 160px; /* Largura base para campos de seleção simples */
 }
 
 .filter-group.filter-group--wide {

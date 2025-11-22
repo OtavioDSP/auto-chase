@@ -64,6 +64,7 @@ if (!estaLogado()) {
     <title>Criar Anúncio</title>
     <link rel="stylesheet" href="../css/index.css"> <!-- Estilo base do header -->
     <link rel="stylesheet" href="../css/anuncio.css">
+    <link rel="stylesheet" href="../css/footer.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="icon" type="image/png" href="../img/ac icon.png">
 </head>
@@ -157,5 +158,9 @@ if (!estaLogado()) {
     </form>
 
     <script src="../JS/js-functions.js"></script>
+
+    <?php
+    include '../components/footer.php';
+    ?>
 </body>
 </html>

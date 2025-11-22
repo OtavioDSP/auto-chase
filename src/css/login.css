@@ -117,7 +117,7 @@ button.btn-login {
     align-items: center;
     padding: 25px;
     width: 100%;
-    /* Posicionamento centralizado absoluto, igual ao do register.php */
+    /* --- CORREÇÃO DE CENTRALIZAÇÃO --- */
     position: absolute;
     left: 50%;
     transform: translateX(-50%);

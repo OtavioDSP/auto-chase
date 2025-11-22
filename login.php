@@ -13,6 +13,7 @@ if (estaLogado()) {
 <head>
     <!-- Head copiado do seu index.php para manter os estilos -->
     <link rel="stylesheet" href="src/css/login.css">
+    <link rel="stylesheet" href="src/css/footer.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="icon" type="image/png" href="src/img/ac icon.png">
     <meta charset="UTF-8">
@@ -90,5 +91,9 @@ if (estaLogado()) {
 </div><!-- Fim do .login-page-wrapper -->
 
 <script src="src/JS/js-functions.js"></script>
+
+<?php
+include 'src/components/footer.php';
+?>
 </body>
 </html>
