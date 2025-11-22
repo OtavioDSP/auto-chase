@@ -35,6 +35,7 @@ if (!$anuncio) {
     <title><?= htmlspecialchars($anuncio['marca_desc'] . ' ' . $anuncio['modelo_desc']) ?> - Autochase</title>
     <link rel="stylesheet" href="../css/index.css"> <!-- Estilo do header -->
     <link rel="stylesheet" href="../css/card.css"> <!-- Estilo da página -->
+    <link rel="stylesheet" href="../css/footer.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="icon" type="image/png" href="../img/ac icon.png">
 </head>
@@ -54,6 +55,9 @@ if (!$anuncio) {
     </div>
     <div class="header-right">
         <?php if (estaLogado()): ?>
+            <a href="meus-anuncios.php" class="nav-link-icon">
+                Meus Anúncios
+            </a>
             <a href="edits.php?usuario_id=<?= htmlspecialchars($_SESSION['user_id']) ?>" class="nav-link-icon">Minha Conta</a>
             <form action="../php/global/global.php" method="post" style="display:inline; margin:0;">
                 <button type="submit" name="logout_usuario" class="btn-login" style="border:none;">Sair</button>
@@ -157,5 +161,8 @@ if (!$anuncio) {
 </script>
 <script src="../JS/js-functions.js"></script>
 
+<?php
+include '../components/footer.php';
+?>
 </body>
 </html>

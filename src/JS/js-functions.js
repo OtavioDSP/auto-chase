@@ -126,6 +126,39 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 /* ==============================================
+   VALIDAÇÃO DE FORMULÁRIO (MARCA/MODELO)
+   ============================================== */
+function validarFormAnuncio(event) {
+    // Pega os elementos do formulário
+    const marcaSelect = document.getElementById('marcaSelect');
+    const modeloSelect = document.getElementById('modeloSelect');
+    const feedbackPopup = document.getElementById('form-feedback-popup');
+
+    // Função auxiliar para mostrar o aviso
+    const mostrarAviso = (mensagem) => {
+        if (feedbackPopup) {
+            feedbackPopup.textContent = mensagem;
+            feedbackPopup.classList.add('visible', 'status-error');
+            // Esconde o aviso após 4 segundos
+            setTimeout(() => {
+                feedbackPopup.classList.remove('visible');
+            }, 4000);
+        }
+        event.preventDefault(); // Impede o envio do formulário
+    };
+
+    // Verifica se o campo de MARCA existe e está vazio
+    if (marcaSelect && marcaSelect.value === "") {
+        mostrarAviso("Por favor, selecione uma Marca.");
+    }
+    // Verifica se o campo de MODELO existe e está vazio
+    else if (modeloSelect && modeloSelect.value === "") {
+        mostrarAviso("Por favor, selecione um Modelo.");
+    }
+}
+
+
+/* ==============================================
    LÓGICA DO CARROSSEL DE IMAGENS (PÁGINA card.php)
    ============================================== */
 let currentImageIndex = 0;
@@ -193,6 +226,16 @@ function closeLightbox() {
         modal.style.display = "none";
     }
 }
+
+// Adiciona a funcionalidade de fechar o lightbox com a tecla ESC
+document.addEventListener('keydown', function(event) {
+    const modal = document.getElementById('lightbox-modal');
+    // Verifica se o modal está visível e se a tecla pressionada foi a Escape
+    if (modal && modal.style.display === "flex" && event.key === "Escape") {
+        closeLightbox();
+    }
+});
+
 
 // Navegação: Próximo/Anterior
 function plusSlides(n) {

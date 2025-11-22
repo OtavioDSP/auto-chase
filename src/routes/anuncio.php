@@ -105,7 +105,7 @@ if (!estaLogado()) {
     </header>
 
     <!-- CORREÇÃO: Adicionada a classe "form-anuncio" para que o CSS aplique o estilo de card apenas a este formulário. -->
-    <form action="../php/global/global.php" method="POST" enctype="multipart/form-data" class="form-anuncio">
+    <form action="../php/global/global.php" method="POST" enctype="multipart/form-data" class="form-anuncio" onsubmit="validarFormAnuncio(event)">
         <h2>Criar novo anúncio</h2>
         <label>Imagem:</label>
         <input type="file" name="img[]" multiple>

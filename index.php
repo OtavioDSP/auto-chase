@@ -174,7 +174,7 @@ require_once 'src/config/env/logout.php';
                 <th>Cor</th>
                 <th>Combustivel</th>
                 <th>Ano</th>
-                <th colspan="2">Ações</th>
+                <!-- Ações removidas -->
             </tr>
         </thead>
         <tbody>
@@ -192,15 +192,6 @@ require_once 'src/config/env/logout.php';
                 <td><?=$veiculo['cor_desc']?></td>
                 <td><?=$veiculo['comb_desc']?></td>
                 <td><?=$veiculo['veiculo_ano']?></td>
-                <td>
-                    <a href="src/routes/edits.php?veiculo_id=<?=$veiculo['veiculo_id'] ?>" class="action-edit">Editar</a>
-                </td>
-                <td>
-                    <form method="post" action="src/php/global/global.php" onsubmit="return confirm('Tem certeza que deseja deletar este veículo?');">
-                        <input type='hidden' name='veiculo_id' value='<?= $veiculo['veiculo_id'] ?>'>
-                        <input type='submit' value='Deletar' name="deletar_veiculo" class="action-delete">
-                    </form>
-                </td>
             </tr>
             <?php endforeach; ?>
         </tbody>

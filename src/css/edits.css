@@ -21,7 +21,7 @@
     --light-gray: #f9f9f9;
     --dark-gray: #6c757d;
     --font-family: 'Creato Display', sans-serif;
-    --border-radius: 8px;
+    --border-radius: 12px; /* Aumentado para cantos mais suaves */
     --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
@@ -36,7 +36,7 @@ body {
     margin: 0;
 }
 .container {
-    max-width: 800px;
+    max-width: 900px; /* Aumentado para dar mais largura ao formulário */
     margin: 2rem auto;
     padding: 0 1rem;
 }
@@ -123,6 +123,45 @@ body {
     resize: vertical; /* Permite que o usuário redimensione a altura */
 }
 
+/* Estilo para o campo de upload de arquivo, copiado de anuncio.css */
+.edit-form input[type="file"] {
+    background-color: #f0f8ff; /* Fundo azul claro */
+    border: 2px dashed #00AFF0; /* Borda pontilhada azul */
+    padding: 1.5rem;
+    text-align: center;
+    color: #555;
+    cursor: pointer;
+    transition: background-color 0.2s ease;    
+    /* --- AJUSTES SOLICITADOS --- */
+    width: 100%;
+    border-radius: var(--border-radius); /* Usa a variável global para consistência */
+    box-sizing: border-box; /* Garante que o padding não quebre o layout */
+}
+
+.edit-form input[type="file"]:hover {
+    background-color: #e6f2ff;
+}
+
+/* Estilo customizado para o botão "Escolher arquivos" */
+.edit-form input[type="file"]::file-selector-button {
+    padding: 0.75rem 1.5rem;
+    margin-right: 1rem;
+    border-radius: 8px; /* Removido o arredondamento dos cantos */
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+    background-color: #fff;
+    color: #00AFF0;
+    border: 1px solid #00AFF0;
+    font-family: 'Creato Display', sans-serif;
+}
+
+.edit-form input[type="file"]::file-selector-button:hover {
+    background-color: #00AFF0;
+    color: #fff;
+}
+
 /* Estilo para o container da senha com o botão de olho */
 .edit-form .senha-container {
     position: relative;
@@ -196,6 +235,32 @@ body {
 .btn-secondary:hover {
     background-color: #7f8c8d;
     color: #fff; /* Mesmo hover do botão "Limpar" */
+}
+
+/*
+ * 6. Feedback Popup (para validação de formulário)
+ */
+.feedback-popup {
+    flex: 1; /* Ocupa o espaço disponível na linha dos botões */
+    padding: 0.75rem;
+    border-radius: var(--border-radius);
+    text-align: center;
+    font-weight: 600;
+    opacity: 0; /* Começa invisível */
+    transform: translateY(10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    pointer-events: none; /* Não pode ser clicado quando invisível */
+}
+
+.feedback-popup.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.feedback-popup.status-error {
+    background-color: #fff0f0; /* Fundo vermelho claro */
+    color: #c0392b; /* Texto vermelho escuro */
+    border: 1px solid #e74c3c;
 }
 
 /*

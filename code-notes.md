@@ -22,14 +22,7 @@ https://github.com/congtaiho/Dealer-Toyota?tab=readme-ov-file
 
 https://github.com/TheTechology/Car-Website?tab=readme-ov-file
 
-13/11/2025 00:48 - TA BUGADO OS MODELOS DE CARROS, N DA PRA APAGAR NEM EDITAR PELO SITE, SO PELO BANCO DÁ PRA MUDAR, O SITE O CODIGO TA BUGADO
-
 <!-----=======================----->
-17/11/2025 01:05
-seguinte agora craque, tem um arquivo chamado compra.php no routes tbm, que eu quero que nele voce faça o seguinte: lá vai manter o header, como sempre, e o principal, tera uma barra lateral sempre visivel que ocupe uns 20% da tela na esquerda onde voce colocará todos os filtros de pesquisa que tem no index.php, e na direita vão ter todos anuncios do site, no caso agora, os mesmos do anuncios recentes do index.php também, faá isso amiguxo pls
-<!-- manda pro gemini essa porra -->
-
-arruma a barra lateral de filtros que ta bagunçada, deixa ela organizada com os campos select lado a lado, e estiliza tbm esses selects, e outra, faz essa barra lateral ficar fixa na tela, no caso quando o usuario scrollar a pagina pra baixo a barra vai continuar ali na esquerda no mesmo lugar acompanhando a pagina
 
 abandonem toda a esperança de vcs 
 
@@ -38,10 +31,16 @@ abandonem toda a esperança de vcs
 
 <!-- DONE arrumar os selects feios pra krl -->
 
-A FAZER DURANTE A SEMANA ajeitar todas marcas, modelos e anuncios, serão cerca de 125 anuncios no total
-
 <!-- DONE criar barra inferior com informacoes gerais. -->
 
 <!-- DONE ajustar tamanho dos containers de login e cadastro. -->
+
+A FAZER DURANTE A SEMANA ajeitar todas marcas, modelos e anuncios, serão cerca de 125 anuncios no total
+
+<!-- DONE (nao deu muito certo mas deu pro gasto) preencher automaticamente a marca e modelo do carro em editar anuncio -->
+
+ver se futuramente da pra criar paginaçao no projeto (chegar no final da pagina e ir pra pagina 2 e assim por diante)
+
+tentar criar uma versao para mobile kKKKKKKKKKKKK
 
 se sobrar tempo criar um classe-cambio kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk

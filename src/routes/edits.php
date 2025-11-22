@@ -19,6 +19,7 @@ include_once '../php/classes/class-imagem.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/index.css">
     <link rel="stylesheet" href="../css/edits.css">
+    <link rel="stylesheet" href="../css/footer.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <title>Painel de Edição</title>
 
@@ -315,7 +316,7 @@ if (isset($_GET['usuario_id'])) {
         <div class="card">
             <div class="card-header"><h2>Editar Anúncio</h2></div>
             <div class="card-body">
-                <form action="../php/global/global.php" method="POST"  enctype="multipart/form-data" class="edit-form">
+                <form action="../php/global/global.php" method="POST"  enctype="multipart/form-data" class="edit-form" onsubmit="validarFormAnuncio(event)">
             
                 <input type="hidden" name="anuncio_id" value="<?= $item['anuncio_id'] ?>">
                 <input type="hidden" name="veiculo_id" value="<?= $item['fk_veiculo_id'] ?>">
@@ -324,7 +325,7 @@ if (isset($_GET['usuario_id'])) {
                 <p>Imagens Atuais:</p>
                 <div>
                     <?php foreach ($fotos as $foto): ?>
-                        <img src="<?= htmlspecialchars($foto['imagem_url']) ?>" alt="Foto" style="width: 100px; height: auto; margin-right: 10px;">
+                        <img src="../<?= htmlspecialchars(ltrim($foto['imagem_url'], 'src/')) ?>" alt="Foto" style="width: 100px; height: auto; margin-right: 10px;">
                     <?php endforeach; ?>
                 </div>
                 <div class="form-group">
@@ -332,28 +333,52 @@ if (isset($_GET['usuario_id'])) {
                     <input type="file" name="img[]" multiple>
                 </div>
 
-                <?php include '../php/functions/filter-functions.php'; ?>
+                <!-- SUBSTITUIÇÃO DO INCLUDE: Campos de Marca e Modelo diretamente aqui -->
+                <div class="filter-row">
+                    <div class="form-group">
+                        <label for="marcaSelect">Marca</label>
+                        <div class="custom-select-wrapper">
+                            <select name="fk_marca_id" id="marcaSelect">
+                                <option value="">Selecione</option>
+                                <?php foreach ($marcas as $marca): ?>
+                                    <option value="<?= $marca['marca_id'] ?>"><?= htmlspecialchars($marca['marca_desc']) ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="modeloSelect">Modelo</label>
+                        <div class="custom-select-wrapper">
+                            <select name="fk_modelo_id" id="modeloSelect">
+                                <option value="">Selecione a marca primeiro</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
                 
                 <script>
                     document.addEventListener('DOMContentLoaded', function() {
-                        const marcaFiltrada = <?= json_encode($veiculos['fk_marca_id']) ?>;
-                        const modeloFiltrado = <?= json_encode($veiculos['fk_modelo_id']) ?>;
-
+                        // Pega os valores do PHP
+                        const marcaFiltrada = <?= json_encode($veiculos['fk_marca_id'] ?? null) ?>;
+                        const modeloFiltrado = <?= json_encode($veiculos['fk_modelo_id'] ?? null) ?>;
+                        
+                        // Se temos uma marca para pré-selecionar...
                         if (marcaFiltrada) {
                             const marcaSelect = document.getElementById('marcaSelect');
                             if (marcaSelect) {
+                                // 1. Seleciona a marca correta
                                 marcaSelect.value = marcaFiltrada;
-                                marcaSelect.dispatchEvent(new Event('change')); 
-                            }
-                        }
-                        setTimeout(function() {
-                            if (modeloFiltrado) {
+
+                                // 2. Chama a função para carregar os modelos DIRETAMENTE
+                                carregarModelos(); 
+
+                                // 3. Seleciona o modelo correto na lista que acabou de ser carregada
                                 const modeloSelect = document.getElementById('modeloSelect');
-                                if (modeloSelect) {
+                                if (modeloSelect && modeloFiltrado) {
                                     modeloSelect.value = modeloFiltrado;
                                 }
                             }
-                        }, 150); 
+                        }
                     });
                 </script>
 
@@ -411,6 +436,9 @@ if (isset($_GET['usuario_id'])) {
                 <div class="form-group"><label>Preço:</label><input type="number" name="anuncio_valor" step="0.01" required value="<?= $item['anuncio_valor'] ?>"></div>
 
                 <div class="form-actions">
+                    <!-- BALÃO DE AVISO (inicialmente oculto) -->
+                    <div id="form-feedback-popup" class="feedback-popup"></div>
+
                     <a href="javascript:history.back()" class="btn btn-secondary">Cancelar</a>
                     <input type="submit" value="Salvar Alterações" name="editar_anuncio" class="btn btn-primary">
                 </div>
@@ -429,5 +457,8 @@ if (isset($_GET['usuario_id'])) {
 
 </div>
 <script src="../JS/js-functions.js"></script>
+<?php
+include '../components/footer.php';
+?>
 </body>
 </html>

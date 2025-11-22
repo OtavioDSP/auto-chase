@@ -218,7 +218,7 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 30px 0; /* Adiciona 30px de respiro no topo e na base */
+    padding: 15px 0; /* Reduzido o respiro vertical para aproximar os elementos */
 }
 
 .lightbox-content {
@@ -231,7 +231,7 @@ body {
 #lightbox-image {
     width: 100%;
     height: auto;
-    max-height: calc(100vh - 160px); /* Deixa espaço para as miniaturas e legenda */
+    max-height: 60vh; /* Limita a altura a 60% da altura da tela */
     object-fit: contain;
     display: block;
     margin: 0 auto;
@@ -290,7 +290,7 @@ body {
 .lightbox-thumbnail-wrapper {
     /* Removido o 'position: fixed' para que as miniaturas fiquem junto da imagem */
     text-align: center;
-    padding: 15px 0;
+    padding: 20px 0; /* ISSO AQUI REGULA O PREVIEW DAS IMAGENS CARROSSEL DO ANUNCIO NO CARD.PHP*/
     white-space: nowrap;
     overflow-x: auto;
     overflow-y: hidden; /* Proíbe a barra de rolagem vertical */
@@ -300,12 +300,14 @@ body {
     width: 120px;
     height: 80px;
     object-fit: cover;
+    /* object-position: center top; Sobe a imagem para alinhar pelo topo */
     opacity: 0.6;
     cursor: pointer;
     transition: opacity 0.2s ease;
     border: 2px solid transparent;
     border-radius: 4px;
     margin: 0 5px;
+    /* margin-bottom: 20px; */
 }
 
 .lightbox-thumbnail.active,
