@@ -54,6 +54,7 @@ if (isset($_POST['login_usuario'])) {
             exit();
         }
     }
+    exit(); // Adicione esta linha para parar o script após o cadastro
 
 } else if (isset($_POST['deletar_usuario'])) { 
     if (!eAdmin()) {

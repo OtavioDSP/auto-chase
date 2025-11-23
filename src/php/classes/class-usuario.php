@@ -65,7 +65,7 @@ Class Usuario{
         );
         
         if($stmt->execute()){
-            echo "usuario Inserido";
+            // echo "usuario Inserido";
         }else{
             echo "Erro ao inserir usuario". $stmt->error;
         }
