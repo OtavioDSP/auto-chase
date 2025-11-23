@@ -23,22 +23,66 @@ Class Usuario{
         $this->conexao = $conexao;
         
     }
-    public function deletarUsuario(){
+    public function deletarUsuario($usuario_id){
+        $this->conexao->begin_transaction();
 
+        try {
+            // 1. Encontrar todos os anúncios (e veículos associados) do usuário
+            $sql_anuncios = "SELECT anuncio_id, fk_veiculo_id FROM anuncio WHERE fk_usuario_id = ?";
+            $stmt_anuncios = $this->conexao->prepare($sql_anuncios);
+            $stmt_anuncios->bind_param('i', $usuario_id);
+            $stmt_anuncios->execute();
+            $result_anuncios = $stmt_anuncios->get_result();
 
-        $sql = "DELETE FROM Usuario WHERE usuario_id = ?";
+            $anuncios_ids = [];
+            $veiculos_ids = [];
+            while ($row = $result_anuncios->fetch_assoc()) {
+                $anuncios_ids[] = $row['anuncio_id'];
+                $veiculos_ids[] = $row['fk_veiculo_id'];
+            }
+            $stmt_anuncios->close();
 
+            if (!empty($anuncios_ids)) {
+                // 2. Deletar imagens associadas aos anúncios
+                // (ON DELETE CASCADE na tabela imagem já faz isso, mas para garantir)
+                $sql_delete_imagens = "DELETE FROM imagem WHERE fk_anuncio_id IN (" . implode(',', array_fill(0, count($anuncios_ids), '?')) . ")";
+                $stmt_delete_imagens = $this->conexao->prepare($sql_delete_imagens);
+                $stmt_delete_imagens->bind_param(str_repeat('i', count($anuncios_ids)), ...$anuncios_ids);
+                $stmt_delete_imagens->execute();
+                $stmt_delete_imagens->close();
 
-        $stmt = $this->conexao->prepare($sql);
+                // 3. Deletar os anúncios
+                $sql_delete_anuncios = "DELETE FROM anuncio WHERE fk_usuario_id = ?";
+                $stmt_delete_anuncios = $this->conexao->prepare($sql_delete_anuncios);
+                $stmt_delete_anuncios->bind_param('i', $usuario_id);
+                $stmt_delete_anuncios->execute();
+                $stmt_delete_anuncios->close();
+            }
 
+            if (!empty($veiculos_ids)) {
+                // 4. Deletar os veículos
+                $sql_delete_veiculos = "DELETE FROM veiculo WHERE veiculo_id IN (" . implode(',', array_fill(0, count($veiculos_ids), '?')) . ")";
+                $stmt_delete_veiculos = $this->conexao->prepare($sql_delete_veiculos);
+                $stmt_delete_veiculos->bind_param(str_repeat('i', count($veiculos_ids)), ...$veiculos_ids);
+                $stmt_delete_veiculos->execute();
+                $stmt_delete_veiculos->close();
+            }
 
-        $stmt->bind_param('i',$this->usuario_id);
+            // 5. Deletar o usuário
+            $sql_delete_usuario = "DELETE FROM usuario WHERE usuario_id = ?";
+            $stmt_delete_usuario = $this->conexao->prepare($sql_delete_usuario);
+            $stmt_delete_usuario->bind_param('i', $usuario_id);
+            $stmt_delete_usuario->execute();
+            $stmt_delete_usuario->close();
 
+            $this->conexao->commit();
+            return true;
 
-        if($stmt->execute()){
-        echo "Usuario deletado com sucesso";
-
-        } // Dentro da sua classe Usuario
+        } catch (Exception $e) {
+            $this->conexao->rollback();
+            // Opcional: logar o erro $e->getMessage()
+            return false;
+        }
     }
 
 
@@ -65,7 +109,7 @@ Class Usuario{
         );
         
         if($stmt->execute()){
-            return $stmt->insert_id;;
+            return $stmt->insert_id;
         }else{
             echo "Erro ao inserir usuario". $stmt->error;
         }

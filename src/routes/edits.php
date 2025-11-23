@@ -25,6 +25,11 @@ include_once '../php/classes/class-imagem.php';
 
     <link rel="icon" type="image/png" href="../img/ac icon.png">
     <script>
+        function confirmDelete(userId) {
+            if (confirm("Tem certeza que deseja excluir sua conta? Esta ação é irreversível.")) {
+                document.getElementById('delete-form-' + userId).submit();
+            }
+        }
         // Função para formatar valor em reais
         function formatarMoeda(input) {
             let valor = input.value.replace(/\D/g, '');
@@ -126,7 +131,12 @@ if (isset($_GET['usuario_id'])) {
                     <div class="form-actions">
                         <a href="javascript:history.back()" class="btn btn-secondary">Cancelar</a>
                         <button type="submit" name="editar_usuario" class="btn btn-primary">Salvar Alterações</button>
+                        <button type="button" onclick="confirmDelete(<?= $item['usuario_id'] ?>)" class="btn btn-danger">Excluir Conta</button>
                     </div>
+                </form>
+
+                <form id="delete-form-<?= $item['usuario_id'] ?>" action="../php/global/delete_account.php" method="POST" style="display: none;">
+                    <input type="hidden" name="usuario_id" value="<?= $item['usuario_id'] ?>">
                 </form>
             </div>
         </div>

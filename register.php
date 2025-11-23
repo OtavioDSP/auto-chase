@@ -81,11 +81,11 @@ if (estaLogado()) {
                         <button type="button" onclick="toggleSenha('senha')"><i class="fa fa-eye"></i></button>
                     </div>
                     <div class="form-field doc-container">
-                        <input type="text" name="usuario_doc_cpf_cnpj" placeholder="CPF ou CNPJ" required oninput="maskAndVerifyDocumento(this)">
+                        <input type="text" name="doc_cpf_cnpj" placeholder="CPF ou CNPJ" required oninput="maskAndVerifyDocumento(this)">
                     </div>
                 </div>
                 
-                <input type="submit" value="Criar Conta" name="criar_usuario" class="submit">
+                <input type="submit" value="Criar Conta" name="criar_conta" class="submit">
             </div>
 
             <p style="text-align: center; margin-top: 20px; color: #fff;">
