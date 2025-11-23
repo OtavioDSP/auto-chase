@@ -129,9 +129,9 @@ if (isset($_GET['usuario_id'])) {
                         </div>
                     <?php endif; ?>
                     <div class="form-actions">
+                        <button type="button" onclick="confirmDelete(<?= $item['usuario_id'] ?>)" class="btn btn-danger">Excluir Conta</button>
                         <a href="javascript:history.back()" class="btn btn-secondary">Cancelar</a>
                         <button type="submit" name="editar_usuario" class="btn btn-primary">Salvar Alterações</button>
-                        <button type="button" onclick="confirmDelete(<?= $item['usuario_id'] ?>)" class="btn btn-danger">Excluir Conta</button>
                     </div>
                 </form>
 

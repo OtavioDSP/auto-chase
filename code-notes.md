@@ -41,6 +41,8 @@ A FAZER DURANTE A SEMANA ajeitar todas marcas, modelos e anuncios, serão cerca 
 
 ver se futuramente da pra criar paginaçao no projeto (chegar no final da pagina e ir pra pagina 2 e assim por diante)
 
+TIRAR DA LISTAGEM DE ANUNCIOS QUANDO ANUNCIO ESTIVER INATIVO OU VENDIDO REMOVER, NAO ESTA REMOVENDO NO MOMENTO
+
 tentar criar uma versao para mobile kKKKKKKKKKKKK
 
 se sobrar tempo criar um classe-cambio kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk

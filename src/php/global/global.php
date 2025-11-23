@@ -63,7 +63,7 @@ if (isset($_POST['login_usuario'])) {
     }
     $usuario_id = $_POST['usuario_id'];
     $usu = new Usuario($usuario_id, null, null, null, null, null, null, null, $conexao);
-    $usu->deletarUsuario();
+    $usu->deletarUsuario('usuario_id');
 
 } else if (isset($_POST['editar_usuario'])) {
     $doc_formatado = formatarDocumento($_POST['usuario_doc_cpf_cnpj']);

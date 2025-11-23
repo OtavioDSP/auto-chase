@@ -236,7 +236,15 @@ body {
     background-color: #7f8c8d;
     color: #fff; /* Mesmo hover do botão "Limpar" */
 }
-
+.btn-danger{
+    background-color: #fff;
+    color: #e74c3c;
+    font-size: 1rem;
+    border: 1px solid #e74c3c;
+    margin-right: 360px;
+}
+.btn-danger:hover { background-color: #c0392b;
+    color: #fff; }
 /*
  * 6. Feedback Popup (para validação de formulário)
  */

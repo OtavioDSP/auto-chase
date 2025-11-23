@@ -161,7 +161,7 @@ require_once 'src/config/env/logout.php';
         </tbody>
     </table>
 
-    <h2>Gerenciamento de Veículos</h2>
+    <h2>Listagem de Veículos</h2>
     <table class="admin-table">
         <thead>
             <tr>

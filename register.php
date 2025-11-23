@@ -77,7 +77,7 @@ if (estaLogado()) {
                 </div>
                 <div class="form-row">
                     <div class="form-field senha-container">
-                        <input type="password" id="senha" name="usuario_senha" placeholder="Crie uma senha" required>
+                        <input type="password" id="senha" name="usuario_senha" min="8" placeholder="Crie uma senha" required>
                         <button type="button" onclick="toggleSenha('senha')"><i class="fa fa-eye"></i></button>
                     </div>
                     <div class="form-field doc-container">
