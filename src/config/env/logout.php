@@ -108,4 +108,11 @@ function protegerPagina(string $pagina_redirecionamento = 'login.php'): void {
     }
 }
 
+// Bloco de Ação: Verifica se o logout foi solicitado via GET ou POST
+if (isset($_GET['logout']) || isset($_POST['logout_usuario'])) {
+    logout();
+    header("Location: ../../../index.php"); // Redireciona para a página inicial
+    exit();
+}
+
 ?>
