@@ -123,7 +123,7 @@ $filtro_preco_max = $_GET['preco_max'] ?? '';
             $filtros = [
                 'marca' => $filtro_marca, 'modelo' => $filtro_modelo, 'cor' => $filtro_cor,
                 'chassi' => $filtro_chassi, 'comb' => $filtro_comb, 'ano_min' => $filtro_ano_min,
-                'ano_max' => $filtro_ano_max, 'preco_min' => $filtro_preco_min, 'preco_max' => $filtro_preco_max,
+                'ano_max' => $filtro_ano_max, 'preco_min' => $filtro_preco_min, 'preco_max' => $filtro_preco_max, 'status' => 'ativo'
             ];
 
             $anuncioManager = new Anuncio(null, null, null, null, null, null, $conexao);
