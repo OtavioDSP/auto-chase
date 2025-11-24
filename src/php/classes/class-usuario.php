@@ -247,13 +247,4 @@ public function editarUsuario() {
         }
 
 }
-
-
-
-
-
-
-
-
-
 ?>

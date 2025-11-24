@@ -41,11 +41,11 @@ A FAZER DURANTE A SEMANA ajeitar todas marcas, modelos e anuncios, serão cerca 
 
 ver se futuramente da pra criar paginaçao no projeto (chegar no final da pagina e ir pra pagina 2 e assim por diante)
 
-TIRAR DA LISTAGEM DE ANUNCIOS QUANDO ANUNCIO ESTIVER INATIVO OU VENDIDO REMOVER, NAO ESTA REMOVENDO NO MOMENTO
+<!-- TIRAR DA LISTAGEM DE ANUNCIOS QUANDO ANUNCIO ESTIVER INATIVO OU VENDIDO REMOVER, NAO ESTA REMOVENDO NO MOMENTO -->
 
 e a funçao ''esqueci minha senha'' ?
 
-na tela compra mostrar anuncios somente ativos, e na anuncios recentes funciona direito, nao aparecem os inativos e ativos
+<!-- DONE na tela compra mostrar anuncios somente ativos, e na anuncios recentes funciona direito, nao aparecem os inativos e ativos -->
 
 tentar criar uma versao para mobile kKKKKKKKKKKKK
 
