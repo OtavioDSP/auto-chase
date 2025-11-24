@@ -43,6 +43,10 @@ ver se futuramente da pra criar paginaçao no projeto (chegar no final da pagina
 
 TIRAR DA LISTAGEM DE ANUNCIOS QUANDO ANUNCIO ESTIVER INATIVO OU VENDIDO REMOVER, NAO ESTA REMOVENDO NO MOMENTO
 
+e a funçao ''esqueci minha senha'' ?
+
+na tela compra mostrar anuncios somente ativos, e na anuncios recentes funciona direito, nao aparecem os inativos e ativos
+
 tentar criar uma versao para mobile kKKKKKKKKKKKK
 
 se sobrar tempo criar um classe-cambio kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
