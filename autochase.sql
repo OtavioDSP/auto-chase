@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 17/11/2025 às 06:20
+-- Tempo de geração: 24/11/2025 às 19:30
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -32,7 +32,7 @@ CREATE TABLE `anuncio` (
   `anuncio_valor` decimal(10,2) NOT NULL,
   `anuncio_data_de_alteracao` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `anuncio_data_de_criacao` timestamp NOT NULL DEFAULT current_timestamp(),
-  `anuncio_desc` varchar(50) DEFAULT NULL,
+  `anuncio_desc` varchar(2000) DEFAULT NULL,
   `anuncio_status` enum('ATIVO','INATIVO','VENDIDO') NOT NULL DEFAULT 'ATIVO',
   `fk_usuario_id` int(11) NOT NULL,
   `fk_veiculo_id` int(11) NOT NULL COMMENT 'FK do veículo'
@@ -43,25 +43,16 @@ CREATE TABLE `anuncio` (
 --
 
 INSERT INTO `anuncio` (`anuncio_id`, `anuncio_valor`, `anuncio_data_de_alteracao`, `anuncio_data_de_criacao`, `anuncio_desc`, `anuncio_status`, `fk_usuario_id`, `fk_veiculo_id`) VALUES
-(2, 115000.00, '2025-11-02 18:15:14', '2025-11-02 18:15:14', 'Civic 2021', 'ATIVO', 2, 2),
-(3, 140000.00, '2025-11-02 18:15:14', '2025-11-02 18:15:14', 'Fusion 2022', 'INATIVO', 1, 3),
-(4, 55000.00, '2025-11-02 18:15:14', '2025-11-02 18:15:14', 'Gol 2023', 'VENDIDO', 2, 4),
-(6, 8000.00, '2025-11-02 19:11:28', '2025-11-02 19:11:28', 'vovorolla lindo', 'ATIVO', 1, 7),
-(8, 2000.00, '2025-11-07 22:22:13', '2025-11-02 19:21:35', 'RS6', 'ATIVO', 1, 9),
-(9, 11111.00, '2025-11-02 22:27:39', '2025-11-02 22:27:39', '1aaaaa', 'ATIVO', 1, 10),
-(11, 11111.00, '2025-11-02 22:38:08', '2025-11-02 22:38:08', '1111', 'ATIVO', 1, 12),
-(12, 111111.00, '2025-11-02 23:04:16', '2025-11-02 23:04:16', 'TESTE', 'ATIVO', 1, 13),
-(13, 1.00, '2025-11-03 00:03:20', '2025-11-03 00:03:20', 'deve ter so 1', 'ATIVO', 1, 15),
-(14, 10000.00, '2025-11-08 17:27:06', '2025-11-03 00:04:27', 'Audi teste', 'INATIVO', 1, 16),
-(15, 2222.00, '2025-11-07 20:00:00', '2025-11-07 20:00:00', '2222', 'ATIVO', 1, 17),
-(16, 55555.00, '2025-11-07 20:01:01', '2025-11-07 20:01:01', 'gggg', 'ATIVO', 1, 18),
-(17, 4555566.00, '2025-11-07 20:03:11', '2025-11-07 20:03:11', 'ssss', 'ATIVO', 1, 19),
-(18, 55555.00, '2025-11-07 20:08:09', '2025-11-07 20:08:09', 'sadassda', 'ATIVO', 1, 20),
-(20, 1111.00, '2025-11-08 20:18:25', '2025-11-08 20:18:25', 'aaaa', 'ATIVO', 1, 22),
-(22, 33333.00, '2025-11-12 02:30:52', '2025-11-08 21:34:53', 'teste civic', 'ATIVO', 6, 24),
-(23, 99922.00, '2025-11-13 03:35:49', '2025-11-13 03:35:49', 'pica', 'ATIVO', 5, 25),
-(24, 1000900.90, '2025-11-17 04:18:45', '2025-11-16 22:40:34', 'wiger V8 Biturbo 4.8L', 'ATIVO', 5, 26),
-(25, 50100.00, '2025-11-17 04:25:48', '2025-11-17 04:25:48', 'Manual F23 - Exclusivo', 'ATIVO', 5, 27);
+(23, 90900.00, '2025-11-22 04:03:17', '2025-11-13 03:35:49', 'GASOLINA 4P AUTOMÁTICO\r\n', 'ATIVO', 5, 25),
+(24, 899000.00, '2025-11-21 09:26:38', '2025-11-16 22:40:34', 'Veículo com histórico de manutenção rigorosamente em dia na concessionária. Sem retoques, sem stage (mapa), totalmente original. Para quem busca exclusividade e não aceita andar atrás.', 'ATIVO', 5, 26),
+(25, 50100.00, '2025-11-23 06:25:27', '2025-11-17 04:25:48', 'Manual F23 - Exclusivo\r\nEspecial para quem busca conforto, desempenho para viagens e bom custo-benefício no mercado de usados. Seus pontos positivos incluem motor forte e suave, acabamento interno luxuoso e suspensão confortável.', 'ATIVO', 5, 27),
+(26, 10120.00, '2025-11-21 08:43:35', '2025-11-17 22:59:29', 'Golzinho filezinho, pegar e andar. Quem chegar primeiro leva essa relíquia', 'ATIVO', 9, 28),
+(27, 3000000.00, '2025-11-21 08:27:42', '2025-11-17 23:03:00', 'Motor: 4.5L V8 \"F136\" Aspirado, 570cv.\r\nCâmbio F1 Dual-Clutch 7 marchas, Interior com acabamentos em fibra de carbono.\r\nVolante em Carbono + LEDs, Opcional indispensável para a experiência de pilotagem.\r\nEscudos Scuderia Ferrari Embutidos nos para-lamas.\r\nFreios: Carbono-Cerâmica com pinças Giallo Modena.\r\nInterior Couro de alta gramatura em estado de conservação impecável, sem desgastes.\r\nVeículo mantido com rigor técnico absoluto. Revisões em dia. Carro para colecionadores que entendem que a era dos motores aspirados de alto giro acabou.', 'ATIVO', 5, 29),
+(29, 1339300.00, '2025-11-21 06:51:06', '2025-11-21 02:33:02', 'Destaques Técnicos:\r\n\r\nMotor: V8 6.2L LT2 Aspirado | 495cv (Z51 Package).\r\n\r\nCâmbio: Tremec DCT 8 Velocidades (Dupla Embreagem).\r\n\r\nPerformance: 0 a 100 km/h em 2,9s.\r\n\r\nConfiguração & Opcionais:\r\n\r\nPacote Z51 Performance: Freios Brembo maiores, diferencial eLSD, escape esportivo e refrigeração aprimorada.\r\n\r\nFront Lift: Sistema de elevação de eixo dianteiro com memória GPS (item obrigatório para o Brasil).\r\n\r\nInterior 3LT: Acabamento máximo em couro Napa, bancos GT2 em fibra de carbono e teto em Alcantara.\r\n\r\nSom: Bose Performance Series de 14 alto-falantes.\r\n\r\nSuspensão: Magnetic Ride Control 4.0.\r\n\r\nVeículo sem detalhes, com vitrificação de pintura realizada. Documentação 100% em dia. Apenas venda.', 'ATIVO', 5, 31),
+(30, 610000.00, '2025-11-22 01:42:54', '2025-11-22 01:42:54', 'simples carro porsche 0 km', 'ATIVO', 9, 32),
+(31, 1200000.00, '2025-11-23 06:04:28', '2025-11-22 05:32:08', 'inteiro nunca fuçado', 'ATIVO', 5, 33),
+(35, 709900.00, '2025-11-23 06:11:29', '2025-11-23 06:07:00', 'Renault Clio V6 RS super raro', 'INATIVO', 5, 37),
+(36, 10400.00, '2025-11-23 06:11:43', '2025-11-23 06:10:26', 'bom de motor', 'VENDIDO', 5, 38);
 
 -- --------------------------------------------------------
 
@@ -89,8 +80,7 @@ INSERT INTO `chassi` (`chassi_id`, `chassi_desc`) VALUES
 (9, 'Roadster'),
 (10, 'Cabriolet'),
 (11, 'Spyder'),
-(12, 'Barchetta'),
-(13, 'Xibiu');
+(12, 'Barchetta');
 
 -- --------------------------------------------------------
 
@@ -111,7 +101,7 @@ INSERT INTO `combustivel` (`comb_id`, `comb_desc`) VALUES
 (1, 'Gasolina'),
 (2, 'Álcool'),
 (3, 'Diesel'),
-(4, 'GAY'),
+(4, 'Híbrido'),
 (6, 'GNV'),
 (7, 'Flex');
 
@@ -140,8 +130,7 @@ INSERT INTO `cor` (`cor_id`, `cor_desc`) VALUES
 (10, 'Azul'),
 (11, 'Rosa'),
 (12, 'Roxo'),
-(14, 'Cinza'),
-(16, 'AZUL GREMIO');
+(14, 'Cinza');
 
 -- --------------------------------------------------------
 
@@ -163,7 +152,21 @@ CREATE TABLE `imagem` (
 INSERT INTO `imagem` (`imagem_id`, `imagem_url`, `fk_anuncio_id`, `imagem_data_insercao`) VALUES
 (31, 'src/uploads/Jason_and_Lucia_01_landscape.jpg', 23, '2025-11-13 03:35:49'),
 (32, 'src/uploads/G54VbpYW8AAC9FU.jpg', 24, '2025-11-16 22:40:34'),
-(33, 'src/uploads/D_NQ_NP_2X_798131-MLB97216666515_112025-T-vectra-elite-24-mpfi-16v-flexpower-aut.webp', 25, '2025-11-17 04:25:48');
+(34, 'src/uploads/G2C7Ne9XIAAFHKB.jpg', 26, '2025-11-17 22:59:29'),
+(35, 'src/uploads/G54dihzXIAAS7_R.jpg', 27, '2025-11-17 23:03:00'),
+(40, 'src/uploads/chevrolet-corvette---2021-19315689-003.webp', 29, '2025-11-21 02:33:02'),
+(41, 'src/uploads/718 Boxster (2024).webp', 30, '2025-11-22 01:42:54'),
+(53, 'src/uploads/dcx2omb-46a67bd1-e35d-4212-90cf-5f88bb6ac094.jpg', 31, '2025-11-23 02:07:46'),
+(54, 'src/uploads/9uvgylq6ezqwgqh21rflaij38.jpg', 35, '2025-11-23 06:07:00'),
+(55, 'src/uploads/escort-hobby-2p1-7262ce547815a94b2e15614879102516-1024-1024.jpg', 36, '2025-11-23 06:10:26'),
+(88, 'src/uploads/D_NQ_NP_2X_859153-MLB97216360993_112025-F-vectra-elite-24-mpfi-16v-flexpower-aut.webp', 25, '2025-11-23 06:18:09'),
+(89, 'src/uploads/D_NQ_NP_2X_610375-MLB97216360983_112025-F-vectra-elite-24-mpfi-16v-flexpower-aut.webp', 25, '2025-11-23 06:18:09'),
+(90, 'src/uploads/D_NQ_NP_2X_775544-MLB97216666327_112025-F-vectra-elite-24-mpfi-16v-flexpower-aut.webp', 25, '2025-11-23 06:18:09'),
+(91, 'src/uploads/D_NQ_NP_2X_692995-MLB96759583292_112025-F-vectra-elite-24-mpfi-16v-flexpower-aut.webp', 25, '2025-11-23 06:18:09'),
+(92, 'src/uploads/D_NQ_NP_2X_951733-MLB97216360987_112025-F-vectra-elite-24-mpfi-16v-flexpower-aut.webp', 25, '2025-11-23 06:18:09'),
+(93, 'src/uploads/D_NQ_NP_2X_759109-MLB96761635836_112025-F-vectra-elite-24-mpfi-16v-flexpower-aut.webp', 25, '2025-11-23 06:18:09'),
+(94, 'src/uploads/D_NQ_NP_2X_909480-MLB97216360985_112025-F-vectra-elite-24-mpfi-16v-flexpower-aut.webp', 25, '2025-11-23 06:18:09'),
+(95, 'src/uploads/D_NQ_NP_2X_798131-MLB97216666515_112025-F-vectra-elite-24-mpfi-16v-flexpower-aut.webp', 25, '2025-11-23 06:18:09');
 
 -- --------------------------------------------------------
 
@@ -185,11 +188,13 @@ INSERT INTO `marca` (`marca_id`, `marca_desc`) VALUES
 (2, 'Honda'),
 (3, 'Ford'),
 (4, 'Volkswagen'),
-(6, 'Ferrari'),
 (9, 'Audi'),
 (10, 'Mazda '),
-(13, 'KOKOKOx'),
-(15, 'Chevrolet');
+(15, 'Chevrolet'),
+(17, 'Ferrari'),
+(18, 'Corvette'),
+(21, 'Porsche'),
+(22, 'Renault');
 
 -- --------------------------------------------------------
 
@@ -209,15 +214,25 @@ CREATE TABLE `modelo` (
 --
 
 INSERT INTO `modelo` (`modelo_id`, `modelo_desc`, `modelo_valor_fipe`, `fk_Marca_id`) VALUES
-(1, 'Corolla', 0.00, 1),
-(2, 'Civic', 19000.00, 2),
+(1, 'Corolla', 37898.00, 1),
+(2, 'Civic', 190010.00, 2),
 (3, 'Corolla Cross', 300000.00, 1),
 (4, 'Gol', 45000.00, 4),
 (5, 'Fusion', 100000.00, 3),
 (7, 'RS6', 111111.00, 9),
 (8, 'RX7', 70000.00, 10),
-(9, 'XUXUXU2', 2.00, 13),
-(10, 'Vectra', 29857.62, 15);
+(10, 'Vectra', 29857.62, 15),
+(11, '458 Italia', 2600000.00, 17),
+(12, 'C8', 1130000.00, 18),
+(18, '911', 758000.00, 21),
+(19, '718', 550000.00, 21),
+(20, 'Cayenne', 505000.00, 21),
+(21, 'Yaris', 130000.00, 1),
+(22, 'Hilux', 250000.00, 1),
+(23, 'SW4', 421000.00, 1),
+(24, 'Prius', 168000.00, 1),
+(25, 'Clio', 200000.00, 22),
+(26, 'Escort', 8800.00, 3);
 
 -- --------------------------------------------------------
 
@@ -241,12 +256,13 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`usuario_id`, `usuario_nome`, `usuario_senha`, `usuario_nivel_de_acesso`, `usuario_email`, `usuario_telefone`, `usuario_endereco`, `usuario_doc_cpf_cnpj`) VALUES
-(1, 'Administrador', 'admin123', 'ADMIN', 'admin@example.com', '999999999', 'Rua 1, 123', '12345678901'),
-(2, 'Usuário Teste', 'usuario123', 'USUARIO', 'usuario@example.com', '988888888', 'Rua 2, 456', '98765432100'),
-(5, 'teste', '$2y$10$VSLKDlcFhFGVChLp6XiDYuSJNudRWcj90G0NySoTaFQhMZteIWWnm', 'ADMIN', 'teste@gmail.com', 'teste', '2222222', '111.131.111-11'),
+(1, 'Administrador', '$2y$10$NAHCoamqGbr/JEx1l9nbpOpQ1D9DwM.lUXly3NViNMEOtDgPPrmZ2', 'ADMIN', 'admin@example.com', '999999999', 'Rua 1, 123', '123.456.789-01'),
+(2, 'Usuário Teste', '$2y$10$ouKD1dZXNfEMa2Qg/QcUMO1ONdL.rS9ZkzYkLmefwZnn4IopFKvV6', 'USUARIO', 'usuario@example.com', '988888888', 'Rua 2, 456', '987.654.321-00'),
+(5, 'Andrei Admin', '$2y$10$VSLKDlcFhFGVChLp6XiDYuSJNudRWcj90G0NySoTaFQhMZteIWWnm', 'ADMIN', 'teste@gmail.com', '(53) 99971-1852', 'Rua Testador Jafet Mil-anos, 3026', '992.231.052-44'),
 (6, 'usuario teste', '$2y$10$USfTwu700aUcQ.ZS.vUT..pz6aZgMSbQ.zw5QjM4keyJZIWD9be1G', 'USUARIO', 'teste1@gmail.com', '6666666', 'rua ', '111.144.111-88'),
 (7, 'otavio', '$2y$10$OxrVLYgaLiaglzL1Tyxqke.QHqCSUmW3FDSsRYiXLkfBcK4YYuUvy', 'ADMIN', 'otavio@a.a', '(11) 11111-1111', 'ru22321', '222.222.222-22'),
-(9, 'coitado', '$2y$10$xed0tfZGm7n9zUWMszaiBea4oTgpQLlsW9T9ZCo1pCPaQwUuqPrA.', 'USUARIO', 'coitado@1.com', '(11) 11111-1111', '111111111111111111111111111111', '11.111.111/1111-11');
+(9, 'Coitado', '$2y$10$xed0tfZGm7n9zUWMszaiBea4oTgpQLlsW9T9ZCo1pCPaQwUuqPrA.', 'USUARIO', 'coitado@1.com', '(53) 99921-1152', 'Rua General dos Coitados da Silva, 1903532', '17.121.161/1530-22'),
+(10, 'aawodawoid', '$2y$10$3JuVgEfwlJLE97DZ3QDLwOG1qzfLYSV6rbloTJe/Xx1VzPItBD15S', 'USUARIO', 'cu@gmail.com', '(12) 32312-1213', 'adwadawda', '32.121.313/2123-12');
 
 -- --------------------------------------------------------
 
@@ -270,27 +286,17 @@ CREATE TABLE `veiculo` (
 --
 
 INSERT INTO `veiculo` (`veiculo_id`, `veiculo_quilometragem`, `fk_Chassi_id`, `fk_Cor_id`, `fk_Modelo_id`, `fk_combustivel_id`, `veiculo_versao`, `veiculo_ano`) VALUES
-(2, 15000.00, 2, 2, 2, 1, 'Versão 2021', 2021),
-(3, 5000.00, 3, 3, 3, 3, 'Versão 2022', 2022),
-(4, 0.00, 4, 4, 4, 4, 'Versão 2023', 2023),
-(7, 9999.00, 2, 2, 1, 4, 'XEi', 1995),
-(8, 9999.00, 2, 2, 1, 4, 'XEi', 1995),
 (9, 3400.00, 2, 2, 1, 1, 'Avant MHEV Diesel', 2021),
-(10, 111.00, 1, 1, 1, 1, '1111', 1111),
-(12, 1111.00, 1, 1, 2, 1, '1111', 1111),
-(13, 1111.00, 1, 1, 1, 1, 'TESTE ', 1111),
-(14, 111.00, 1, 1, 1, 1, '111', 1111),
-(15, 111.00, 1, 1, 1, 1, '111', 1111),
-(16, 200000.00, 1, 5, 7, 2, '11', 2015),
-(17, 111.00, 1, 1, 1, 1, 'aaa', 1111),
-(18, 888.00, 1, 1, 1, 1, 'hhhh', 8888),
-(19, 5555.00, 1, 1, 1, 1, 'ssdsd', 5555),
-(20, 3333.00, 1, 1, 1, 1, 'asda', 6666),
-(22, 111.00, 1, 1, 2, 1, '1111', 1111),
-(24, 1111.00, 1, 1, 2, 1, 'ssss', 2011),
-(25, 22222222.00, 2, 4, 5, 4, 'hybrid', 2018),
-(26, 10900.00, 1, 1, 7, 1, 'niggamode AVANT', 2018),
-(27, 139000.00, 2, 1, 10, 7, 'Elite 2.4 16v', 2006);
+(25, 123000.00, 2, 4, 5, 4, '2.0 TITANIUM AWD 16V ', 2018),
+(26, 10892.00, 1, 1, 7, 1, '4.0 Avant V8 Twinturbo MHEV Tiptronic', 2021),
+(27, 139000.00, 2, 1, 10, 7, '2.4 16v Elite', 2006),
+(28, 19900.00, 7, 4, 4, 1, '1.0 16v G3', 1999),
+(29, 2120.00, 6, 9, 11, 1, '4.5L V8 Dual-Clutch', 2012),
+(31, 1094.00, 6, 1, 12, 1, '6.2L Stingray V8 Targa', 2021),
+(32, 0.00, 11, 1, 19, 1, '2.0 16V H4 Boxster PDK', 2026),
+(33, 45900.00, 6, 2, 8, 1, '1.3 Manual', 1999),
+(37, 21101.00, 7, 9, 25, 1, '3.0 V6 RS', 2004),
+(38, 259000.00, 7, 2, 26, 1, '1.0 Hobby ', 1986);
 
 --
 -- Índices para tabelas despejadas
@@ -367,7 +373,7 @@ ALTER TABLE `veiculo`
 -- AUTO_INCREMENT de tabela `anuncio`
 --
 ALTER TABLE `anuncio`
-  MODIFY `anuncio_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `anuncio_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT de tabela `chassi`
@@ -391,31 +397,31 @@ ALTER TABLE `cor`
 -- AUTO_INCREMENT de tabela `imagem`
 --
 ALTER TABLE `imagem`
-  MODIFY `imagem_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `imagem_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=97;
 
 --
 -- AUTO_INCREMENT de tabela `marca`
 --
 ALTER TABLE `marca`
-  MODIFY `marca_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `marca_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT de tabela `modelo`
 --
 ALTER TABLE `modelo`
-  MODIFY `modelo_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `modelo_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT de tabela `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `usuario_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `usuario_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT de tabela `veiculo`
 --
 ALTER TABLE `veiculo`
-  MODIFY `veiculo_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `veiculo_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- Restrições para tabelas despejadas

@@ -18,7 +18,7 @@ if (estaLogado()) {
     <link rel="icon" type="image/png" href="src/img/ac icon.png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login ou Cadastro - Autochase</title>
+    <title>Login ou Cadastro | Autochase</title>
 
 </head>
 <body>

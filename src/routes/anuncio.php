@@ -61,7 +61,7 @@ if (!estaLogado()) {
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Criar Anúncio</title>
+    <title>Criar Anúncio | Autochase</title>
     <link rel="stylesheet" href="../css/index.css"> <!-- Estilo base do header -->
     <link rel="stylesheet" href="../css/anuncio.css">
     <link rel="stylesheet" href="../css/footer.css">

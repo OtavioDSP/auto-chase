@@ -13,7 +13,7 @@ if (estaLogado()) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crie sua Conta - Autochase</title>
+    <title>Crie sua Conta | Autochase</title>
     
     <!-- CSS da página de registro e ícones -->
     <link rel="stylesheet" href="src/css/register.css">

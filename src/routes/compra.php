@@ -37,7 +37,7 @@ $filtro_preco_max = $_GET['preco_max'] ?? '';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Comprar Veículos - Autochase</title>
+    <title>Comprar Veículos | Autochase</title>
     <link rel="stylesheet" href="../css/index.css"> <!-- Estilo base e do header -->
     <link rel="stylesheet" href="../css/compra.css"> <!-- Estilo da página -->
     <link rel="stylesheet" href="../css/footer.css">

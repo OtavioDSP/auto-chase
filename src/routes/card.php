@@ -32,7 +32,7 @@ if (!$anuncio) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= htmlspecialchars($anuncio['marca_desc'] . ' ' . $anuncio['modelo_desc']) ?> - Autochase</title>
+    <title><?= htmlspecialchars($anuncio['marca_desc'] . ' ' . $anuncio['modelo_desc']) ?> | Autochase</title>
     <link rel="stylesheet" href="../css/index.css"> <!-- Estilo do header -->
     <link rel="stylesheet" href="../css/card.css"> <!-- Estilo da página -->
     <link rel="stylesheet" href="../css/footer.css">

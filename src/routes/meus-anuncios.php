@@ -19,7 +19,7 @@ $meusAnuncios = $anuncioManager->listarAnunciosPorUsuario($usuario_id);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meus Anúncios</title>
+    <title>Meus Anúncios | Autochase</title>
     <link rel="stylesheet" href="../css/index.css"> <!-- Estilo base e header -->
     <link rel="stylesheet" href="../css/footer.css">
     <link rel="stylesheet" href="../css/meus-anuncios.css"> <!-- Novo CSS para esta página -->

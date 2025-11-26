@@ -21,7 +21,7 @@ include_once '../php/classes/class-imagem.php';
     <link rel="stylesheet" href="../css/edits.css">
     <link rel="stylesheet" href="../css/footer.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <title>Painel de Edição</title>
+    <title>Painel de Edição | Autochase</title>
 
     <link rel="icon" type="image/png" href="../img/ac icon.png">
     <script>
