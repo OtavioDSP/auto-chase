@@ -70,16 +70,16 @@ require_once 'src/config/env/logout.php';
     <?php
     // Includes das classes movidos para cima,
     // para que eAdmin() e os filtros públicos funcionem.
-    include('.\src\config\db\connect.php');
-    include(".\src\php\classes\class-usuario.php");
-    include(".\src\php\classes\class-veiculo.php");
-    include(".\src\php\classes\class-modelo.php");
-    include(".\src\php\classes\class-marca.php");
-    include(".\src\php\classes\class-cor.php");
-    include(".\src\php\classes\class-chassi.php");
-    include(".\src\php\classes\class-combustivel.php");
-    include(".\src\php\classes\class-anuncio.php");
-    include(".\src\php\classes\class-imagem.php");
+    include('./src/config/db/connect.php');
+    include("./src/php/classes/class-usuario.php");
+    include("./src/php/classes/class-veiculo.php");
+    include("./src/php/classes/class-modelo.php");
+    include("./src/php/classes/class-marca.php");
+    include("./src/php/classes/class-cor.php");
+    include("./src/php/classes/class-chassi.php");
+    include("./src/php/classes/class-combustivel.php");
+    include("./src/php/classes/class-anuncio.php");
+    include("./src/php/classes/class-imagem.php");
     
     // Instancia os managers para os filtros PÚBLICOS
     $marcaManager = new Marca(null, null, $conexao);
