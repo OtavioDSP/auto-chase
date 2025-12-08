@@ -92,6 +92,34 @@ $filtro_preco_max = $_GET['preco_max'] ?? '';
                 </div>
             </div>
 
+            <div class="filter-group">
+                <label for="chassiSelect">Chassi</label>
+                <div class="custom-select-wrapper">
+                    <select name="fk_chassi_id" id="chassiSelect">
+                        <option value="">Qualquer Chassi</option>
+                        <?php foreach ($chassi->listarChassi() as $chassi_item): ?>
+                            <option value="<?= $chassi_item['chassi_id'] ?>" <?= ($chassi_item['chassi_id'] == $filtro_chassi) ? 'selected' : '' ?>>
+                                <?= htmlspecialchars($chassi_item['chassi_desc']) ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+            </div>
+
+            <div class="filter-group">
+                <label for="combSelect">Combustível</label>
+                <div class="custom-select-wrapper">
+                    <select name="fk_comb_id" id="combSelect">
+                        <option value="">Qualquer Combustível</option>
+                        <?php foreach ($comb->listarCombustivel() as $comb_item): ?>
+                            <option value="<?= $comb_item['comb_id'] ?>" <?= ($comb_item['comb_id'] == $filtro_comb) ? 'selected' : '' ?>>
+                                <?= htmlspecialchars($comb_item['comb_desc']) ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+            </div>
+
             <div class="filter-group filter-group-range">
                 <label>Ano</label>
                 <div class="dual-input">
