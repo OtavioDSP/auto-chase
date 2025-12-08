@@ -115,7 +115,7 @@ if (isset($_GET['usuario_id'])) {
                     <div class="form-group">
                         <label>Nova Senha:</label>
                         <div class="senha-container">
-                            <input type="password" id="nova_senha" name="usuario_senha" placeholder="Deixe em branco para não alterar">
+                            <input type="password" id="nova_senha" name="usuario_senha" placeholder="Deixe em branco para não alterar" minlength="8" maxlength="255">
                             <button type="button" onclick="toggleSenha('nova_senha')"><i class="fa fa-eye"></i></button>
                         </div>
                     </div>
