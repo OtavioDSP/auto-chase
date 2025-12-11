@@ -1,6 +1,8 @@
 <!-- salvar umas informaçoes importantes aqui, as coisas comentadas em verde são as mais vitais e importantes -->
 https://www.canva.com/design/DAG60TFT9YY/7F3UrV-avQUIw3KT0OQZOw/edit?utm_content=DAG60TFT9YY&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton
 
+https://drive.google.com/drive/folders/16LORjDNS766JoKRr8h48GQK_ziJLqUAR?usp=sharing
+
 body ISSO É IMPORTANTE PRA CARALHO  🔝
 <!--font-family: 'Creato Display', sans-serif;-->
 <!-- background-color: #E6F8FF; -->
