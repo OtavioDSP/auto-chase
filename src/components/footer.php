@@ -1,8 +1,15 @@
+<?php
+
+$_SERVER['SERVER_NAME']== "localhost" ? $URL= "/tcc/auto-chase/" : $URL= "/autochase/";
+
+
+?>
+
 <footer class="site-footer">
     <div class="footer-container">
         <!-- Seção Sobre -->
         <div class="footer-section footer-about">
-            <img src="/andrei/auto-chase/src/img/ac wb 911 white footer.png" alt="Autochase Logo" class="footer-logo">
+            <img src="../img/ac 911 white sc.png" alt="Autochase Logo" class="footer-logo">
             <p>Compre e venda com segurança e confiança<br> Persiga seus sonhos.</p>
         </div>
 
@@ -10,9 +17,9 @@
         <div class="footer-section footer-links">
             <h4>Navegação</h4>
             <ul>
-                <li><a href="/andrei/auto-chase/index.php">Início</a></li>
-                <li><a href="/andrei/auto-chase/src/routes/compra.php">Comprar</a></li>
-                <li><a href="/andrei/auto-chase/src/routes/anuncio.php">Anunciar</a></li>
+                <li><a href="<?= $URL ?>index.php">Início</a></li>
+                <li><a href="<?= $URL ?>src/routes/compra.php">Comprar</a></li>
+                <li><a href="<?= $URL ?>src/routes/anuncio.php">Anunciar</a></li>
                 <li><a href="https://github.com/OtavioDSP/auto-chase/tree/main">Sobre Nós</a></li>
             </ul>
         </div>

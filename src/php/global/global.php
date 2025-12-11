@@ -75,6 +75,13 @@ if (isset($_POST['login_usuario'])) {
         exit();
     }
 
+    // Define o nível de acesso apenas se o usuário for admin.
+    // Se não for admin, o método editarUsuario() não tentará atualizar o campo.
+    $nivel_de_acesso = null;
+    if (eAdmin()) {
+        $nivel_de_acesso = $_POST['usuario_nivel_de_acesso'];
+    }
+
     // CORREÇÃO: $usuario_telefone e $usuario_endereco estavam na ordem errada
     $usuario = new Usuario(
         $_POST['usuario_id'],
@@ -84,7 +91,7 @@ if (isset($_POST['login_usuario'])) {
         $_POST['usuario_telefone'], // 5. Telefone
         $_POST['usuario_endereco'], // 6. Endereço
         $doc_formatado,
-        $_POST['usuario_nivel_de_acesso'],
+        $nivel_de_acesso, // Passa o nível de acesso (ou null se não for admin)
         $conexao
     );
     $usuario->editarUsuario();
