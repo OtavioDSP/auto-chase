@@ -2,6 +2,7 @@
 // Inclui o gerenciador de sessão no início de tudo.
 // Isso permite usar as funções de sessão como estaLogado() em toda a página.
 require_once 'src/config/env/logout.php';
+$_SERVER['SERVER_NAME']== "localhost" ? $URL= "/tcc/auto-chase/" : $URL= "/autochase/";
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -70,10 +71,10 @@ require_once 'src/config/env/logout.php';
     <?php
     // Includes das classes movidos para cima,
     // para que eAdmin() e os filtros públicos funcionem.
-    include('./src/config/db/connect.php');
-    include("./src/php/classes/class-usuario.php");
-    include("./src/php/classes/class-veiculo.php");
-    include("./src/php/classes/class-modelo.php");
+    include('/src/config/db/connect.php');
+    include("/src/php/classes/class-usuario.php");
+    include("/src/php/classes/class-veiculo.php");
+    include("/src/php/classes/class-modelo.php");
     include("./src/php/classes/class-marca.php");
     include("./src/php/classes/class-cor.php");
     include("./src/php/classes/class-chassi.php");
