@@ -1,94 +1,123 @@
 # Autochase 🚗💻
 
-**Autochase** é um projeto de website para busca, anúncios e vendas de veículos de médio e pequeno porte. O sistema funciona como um marketplace acessível e seguro, com foco total no ramo automotivo, especialmente voltado para usuários que desejam comprar ou vender carros novos ou usados de forma prática, eficiente e protegida.
+![Status](https://img.shields.io/badge/Status-Conclu%C3%ADdo-brightgreen)
+![Version](https://img.shields.io/badge/Version-1.0.0-blue)
+![License](https://img.shields.io/badge/License-Academic-lightgrey)
+
+**Autochase** é um sistema web do tipo marketplace automotivo, desenvolvido para facilitar a busca, anúncio e venda de veículos de pequeno e médio porte.
+
+A plataforma foi projetada com foco em **usabilidade**, **segurança**, **organização de dados** e **padronização de informações automotivas**, atendendo tanto vendedores quanto compradores.
 
 ---
 
 ## 🧾 Sobre o Projeto
 
-O Autochase foi desenvolvido como parte do curso Técnico em Desenvolvimento de Sistemas do Instituto Federal Sul-Rio-Grandense – Câmpus - Visconde da Graça.
+O Autochase foi desenvolvido como **Trabalho de Conclusão de Curso (TCC)** do curso Técnico em Desenvolvimento de Sistemas.
 
-- **Autores**: Andrei Buss Farias dos Santos & Otávio da Silva Pacheco  
-- **Orientador**: Dr. Fernando Augusto Treptow Brod  
-- **Ano**: 2025
+> **Instituição:** Instituto Federal Sul-Rio-Grandense – Câmpus Visconde da Graça  
+> **Ano:** 2025  
+> **Orientador:** Dr. Fernando Augusto Treptow Brod
 
----
+### 🎯 Objetivos
 
-## 🎯 Objetivos
+**Objetivo Geral** Desenvolver um sistema web que funcione como um marketplace automotivo, permitindo a compra e venda de veículos de forma prática, segura e eficiente.
 
-### Objetivo Geral
-Desenvolver um website marketplace com foco total em veículos de leve e médio porte.
-
-### Objetivos Específicos
-- Facilitar a compra e a venda de veículos de pequeno e médio porte;
-- Proporcionar uma plataforma segura, intuitiva e com boa usabilidade;
-- Integrar com APIs como Tabela FIPE e histórico de preços;
-- Aplicar técnicas de SEO (Search Engine Optimization) para melhor indexação.
-
----
-
-## ✅ Funcionalidades
-
-| Código | Funcionalidade                      | Descrição |
-|--------|--------------------------------------|-----------|
-| RF1    | Gerenciar Usuário                   | Cadastro com nome, telefone, email, CPF/CNPJ, login e edição de conta. |
-| RF2    | Realizar Login                      | Autenticação via email e senha. |
-| RF3    | Gerenciar Veículo                   | Cadastro, edição e exclusão de veículos com fotos e informações detalhadas. |
-| RF4    | Gerenciar Anúncios                  | Criar, editar e excluir anúncios. |
-| RF5    | Consultar Veículos                  | Filtros por palavras-chave, marca, modelo, ano, etc. |
-| RF6    | Sistema de Chat Interno             | Comunicação segura entre usuários sem expor dados pessoais. |
+**Objetivos Específicos**
+* Permitir o cadastro e gerenciamento de usuários.
+* Possibilitar o cadastro detalhado de veículos.
+* Disponibilizar anúncios com controle de status.
+* Facilitar a busca de veículos por meio de filtros avançados.
+* Padronizar dados automotivos (marca, modelo, combustível, cor, chassi).
+* Garantir segurança no armazenamento de dados sensíveis.
+* Aplicar boas práticas de modelagem de banco de dados.
 
 ---
 
-## 🔒 Requisitos Não-Funcionais
+## 🛠️ Tecnologias Utilizadas
 
-- **Segurança**: Criptografia de senha, exigência de senhas fortes.
-- **Desempenho**: SPA para maior velocidade.
-- **Portabilidade**: Compatível com qualquer plataforma com acesso à internet.
-- **Usabilidade**: Design amigável e conexão com banco de dados MySQL.
-- **Tecnologias**: HTML, CSS, JavaScript.
-- **Legalidade**: Conformidade com legislações locais e LGPD.
+O projeto foi construído utilizando uma arquitetura robusta e tecnologias consolidadas no mercado.
 
----
+**Front-end** ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black)
 
-## 🗃️ Modelagem
+**Back-end & Banco de Dados** ![PHP](https://img.shields.io/badge/PHP-777BB4?style=flat-square&logo=php&logoColor=white)
+![MySQL](https://img.shields.io/badge/MySQL-00000F?style=flat-square&logo=mysql&logoColor=white)
 
-- **Casos de Uso**: Diagramas e descrições das funcionalidades principais.
-- **Modelo ER**: Entidades e relacionamentos essenciais para o banco de dados.
+**Modelagem** * Diagrama Entidade-Relacionamento (DER)
+* UML (Casos de Uso)
 
 ---
 
-## 🗓️ Cronograma de Desenvolvimento
+## ✅ Funcionalidades (Requisitos Funcionais)
 
-| Etapa                          | Junho | Julho | Agosto | Setembro | Outubro | Novembro | Dezembro |
-|-------------------------------|:-----:|:-----:|:------:|:--------:|:-------:|:--------:|:--------:|
-| Levantamento de requisitos    |   X   |       |        |          |         |          |          |
-| Banco de dados                |       |   X   |        |          |         |          |          |
-| Backend e Integração          |       |       |   X    |          |         |          |          |
-| Front-end                     |       |       |        |    X     |         |          |          |
-| Testes                        |       |       |        |          |    X    |          |          |
-| Conclusão do TCC              |       |       |        |          |         |    X     |          |
-| Defesa do TCC                 |       |       |        |          |         |          |    X     |
+| Código | Funcionalidade | Descrição |
+| :--- | :--- | :--- |
+| **RF01** | Gerenciar Usuários | Cadastro, edição e autenticação de usuários. |
+| **RF02** | Autenticação | Login com e-mail e senha criptografada. |
+| **RF03** | Gerenciar Veículos | Cadastro, edição e exclusão de veículos. |
+| **RF04** | Gerenciar Anúncios | Criação, edição, inativação e exclusão de anúncios. |
+| **RF05** | Consulta de Veículos | Busca por marca, modelo, ano, valor e palavras-chave. |
+| **RF06** | Upload de Imagens | Inclusão de múltiplas imagens nos anúncios. |
+| **RF07** | Controle de Status | Controle de anúncios ativos, inativos e vendidos. |
 
----
+### 🔒 Requisitos Não Funcionais
 
-## 🔗 Links Úteis
-
-- [Relatório Completo (Google Docs)](https://docs.google.com/document/d/13U6gm1k4F6qcifSKi5TySDGWiLTYduYAomKqnvopJ1I/edit?usp=sharing)
-
----
-
-## 📄 Licença
-
-Este projeto é de uso acadêmico e segue as diretrizes institucionais do IFSul – Campus Visconde da Graça.
+* **Segurança:** Criptografia de senhas e Controle de níveis de acesso (ADMIN / USUÁRIO).
+* **Desempenho:** Respostas rápidas nas consultas ao banco de dados.
+* **Usabilidade:** Interface intuitiva, responsiva e navegação simples para leigos.
+* **Portabilidade:** Acesso via navegadores modernos em diferentes dispositivos.
+* **Conformidade Legal:** Adequação à LGPD no tratamento de dados pessoais.
 
 ---
 
-## 📫 Contato
+## 🗃️ Modelagem do Banco de Dados
 
-Para dúvidas ou sugestões, entre em contato:
+O banco de dados segue o modelo relacional, com foco em normalização e integridade referencial.
 
-- **[Andrei Buss Farias dos Santos](https://github.com/andreicuruja)**  
-- **[Otávio da Silva Pacheco](https://github.com/OtavioDSP)**
+**Principais Entidades:**
+`usuario`, `anuncio`, `veiculo`, `marca`, `modelo`, `cor`, `combustivel`, `chassi`, `imagem`.
+
+**Destaques da Modelagem:**
+* ✅ Separação entre veículo e anúncio para melhor controle.
+* ✅ Uso de tabelas de domínio para evitar redundância.
+* ✅ Relacionamentos definidos por chaves estrangeiras.
+* ✅ Controle de status via ENUM.
+* ✅ Múltiplas imagens por anúncio.
 
 ---
+
+## 🗓️ Cronograma de Execução
+
+| Etapa | Jun | Jul | Ago | Set | Out | Nov | Dez |
+| :--- | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
+| Levantamento de Requisitos | ✅ | | | | | | |
+| Modelagem do Banco de Dados | | ✅ | | | | | |
+| Desenvolvimento Backend | |  | ✅ | | | | |
+| Desenvolvimento Frontend | | |  | ✅ | | | |
+| Testes do Sistema | | | |  | ✅ | | |
+| Finalização do TCC | | | | |  | ✅ | |
+| Defesa do TCC | | | | | | |✅|
+
+---
+
+## 🔗 Documentação
+
+* 📄 **[Relatório Completo do TCC (Google Docs)](https://docs.google.com/document/d/13U6gm1k4F6qcifSKi5TySDGWiLTYduYAomKqnvopJ1I/edit)**
+
+### Licença
+Este projeto possui finalidade exclusivamente acadêmica, seguindo as diretrizes institucionais do IFSul – Câmpus Visconde da Graça.
+
+---
+
+## 📫 Autores
+
+<div align="center">
+
+| [<img src="https://github.com/andreicuruja.png" width="120px;"/><br /><sub><b>Andrei Buss</b></sub>](https://github.com/andreicuruja)<br />💻 Front-end Developer | [<img src="https://github.com/OtavioDSP.png" width="120px;"/><br /><sub><b>Otávio Pacheco</b></sub>](https://github.com/OtavioDSP)<br />⚙️ Back-end Developer |
+| :---: | :---: |
+
+<br />
+Feito com 💜 por Andrei Buss e Otávio Pacheco.
+
+</div>
